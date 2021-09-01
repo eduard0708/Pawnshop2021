@@ -12,6 +12,7 @@ import { ErrorComponent } from './pages/error.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashCardComponent } from './dash-card/dash-card.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     NotfoundComponent,
     DashboardComponent,
-    
+    DashCardComponent,    
   ],
   imports: [
     BrowserModule,
