@@ -1,15 +1,15 @@
 <mat-toolbar color="primary" class="mat-elevation-z6 bg-primary" style="height: 6vh !important;">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button routerLink='' mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
       </button>
     <span>GoldWin</span>
 
     <div class="header-menu">
         <ul>
-            <li><a>NewLoan</a></li>
-            <li><a>Redeem</a></li>
-            <li><a>Additional</a></li>
-            <li><a>Partial</a></li>          
+            <li routerLink="/transactions/newloan"><a>NewLoan</a></li>
+            <li routerLink="/transactions/redeem"><a>Redeem</a></li>
+            <li routerLink="/transactions/partial"><a>Partial</a></li>
+            <li routerLink="/transactions/additional"><a>Additional</a></li>                 
         </ul>  
     </div>
       

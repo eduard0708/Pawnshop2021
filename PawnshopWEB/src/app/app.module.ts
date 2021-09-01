@@ -11,7 +11,7 @@ import { SidenavComponent } from './layout/sidenav.component';
 import { ErrorComponent } from './pages/error.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
-import { MainComponent } from './main.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { MainComponent } from './main.component';
     ErrorComponent,
     LoginComponent,
     NotfoundComponent,
-    MainComponent
+    DashboardComponent,
+    
   ],
   imports: [
     BrowserModule,
