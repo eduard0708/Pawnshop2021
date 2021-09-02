@@ -14,6 +14,7 @@ import { NotfoundComponent } from './pages/notfound.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashCardComponent } from './dash-card/dash-card.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     NotfoundComponent,
     DashboardComponent,
-    DashCardComponent, 
+    DashCardComponent,
+    DialogTransacitonComponent,
+
+   
   ],
   imports: [
     BrowserModule,

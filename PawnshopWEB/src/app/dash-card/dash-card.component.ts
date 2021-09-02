@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TransactionCard } from '../_model/transaction-card';
 
 @Component({
@@ -9,13 +9,16 @@ import { TransactionCard } from '../_model/transaction-card';
 export class DashCardComponent implements OnInit {
 
   @Input() cardData: TransactionCard;
-
+  transactionName: string = '';
+  @Output() onNewTransaction: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.cardData);
-    
+  }
+
+  newTransaction(transactionName: string){
+  this.onNewTransaction.emit(transactionName)
   }
 
 }

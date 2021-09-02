@@ -1,7 +1,7 @@
 <div
   class="card d-card"
   style="margin: 5em; cursor: pointer"
-  routerLink="/transactions/newloan"
+  (click)="newTransaction(cardData.transactionName)"
 >
   <div class="card-body">
     <h5 class="card-title">{{cardData.transactionName}}</h5>
