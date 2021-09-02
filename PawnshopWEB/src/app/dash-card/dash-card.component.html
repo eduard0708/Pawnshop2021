@@ -4,16 +4,16 @@
   routerLink="/transactions/newloan"
 >
   <div class="card-body">
-    <h5 class="card-title">Newloan</h5>
+    <h5 class="card-title">{{cardData.transactionName}}</h5>
     <div style="display: flex; align-items: center; height: 3rem">
       <p
         class="card-text"
         style="width: 10rem; font-size: 1.4em; margin-top: 0.5em"
       >
-        P 199,000.50
+        {{cardData.transactionTotal | currency}}
       </p>
       <button class="btn btn-primary" style="font-weight: 500" routerLink="">
-        8
+       {{cardData.transactionCount }}
       </button>
     </div>
     <mat-divider> </mat-divider>

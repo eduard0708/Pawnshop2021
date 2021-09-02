@@ -1,0 +1,24 @@
+{
+  "cardData": [
+    {
+      "transactionName": "New Loan",
+      "transactionTotal": 112313.50,
+      "transactionCount": 80
+    },
+    {
+      "transactionName": "Redeem",
+      "transactionTotal": 152313.65,
+      "transactionCount": 53
+    },
+    {
+      "transactionName": "Partial",
+      "transactionTotal": 15233.95,
+      "transactionCount": 28
+    },
+    {
+      "transactionName": "Additional",
+      "transactionTotal": 10233.75,
+      "transactionCount": 13
+    }
+  ]
+}
