@@ -1,7 +1,59 @@
-<h1 matDialogTitle>Search or Create New Pawner</h1>
+<div class="card p-3">
+  <h3 class="text-center p-2 shadow rounded bg-info text-white">
+  {{transactionType}}
+  </h3>
+  <div class="my-2 d-block">
+    <mat-form-field appearance="legacy" style="width: 100%">
+      <mat-label>{{placeHolder}}</mat-label>
+      <input
+        class="text-center"
+        type="number"
+        matInput
+        tabindex="1"
+        [(ngModel)]="contactNumber"
+        (keyup.enter)="findPawner()"
+      />
+      <!-- <mat-icon matSuffix tabindex="2" (click)="search()" (keyup.enter)="search()"> search</mat-icon> -->
+    </mat-form-field>
 
-<mat-form-field appearance="legacy">
-  <mat-label>Contact Number</mat-label>
-  <input type="number" matInput placeholder="Enter Contact Number" />
-  <mat-icon matSuffix>close</mat-icon>
- </mat-form-field>
+    <div *ngIf="buttonNewloan">
+      <button
+        tabindex="2"
+        mat-raised-button
+        class="btn-success"
+        style="width: 49%; margin-right: 2%"
+      >
+        New Pawner
+      </button>
+      <button
+        (click)="cancel()"
+        tabindex="3"
+        mat-raised-button
+        class="btn-danger"
+        style="width: 49%"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <div *ngIf="!buttonNewloan" style="display: flex; justify-content: center;">
+      <button
+        tabindex="2"
+        mat-raised-button
+        class="btn-success"
+        style="width: 49%; margin-right: 2%"
+      >
+       Submit
+      </button>
+      <button
+        (click)="cancel()"
+        tabindex="3"
+        mat-raised-button
+        class="btn-danger"
+        style="width: 49%"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

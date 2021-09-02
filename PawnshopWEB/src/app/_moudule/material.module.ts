@@ -32,7 +32,6 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 
-
 @NgModule({
   declarations: [],
   imports: [

@@ -20,5 +20,29 @@
       "transactionTotal": 10233.75,
       "transactionCount": 13
     }
+  ],
+
+  "pawner":[
+    {
+      "id":"1",
+      "firstName":"mica",
+      "lastName":"fox",
+      "contactNumber":123,
+      "city":"Iloilo"
+    },
+    {
+      "id":"2",
+      "firstName":"fili",
+      "lastName":"mon",
+      "contactNumber":1234,
+      "city":"Passi"
+    },
+    {
+      "id":"3",
+      "firstName":"rom",
+      "lastName":"mel",
+      "contactNumber":12345,
+      "city":"Butuan"
+    }
   ]
 }

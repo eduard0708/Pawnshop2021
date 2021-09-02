@@ -1,4 +1,4 @@
 <div  class="content-config" style="background-color: whitesmoke; display: flex; justify-content:space-evenly;">
-    <app-dash-card [cardData]="data" *ngFor="let data of dataForCard" (click)="openSearchDialog()" (onNewTransaction)="newTransaction($event)" ></app-dash-card>
+    <app-dash-card [cardData]="data" *ngFor="let data of dataForCard"  (onNewTransaction)="newTransaction($event)" ></app-dash-card>
 </div>
 
