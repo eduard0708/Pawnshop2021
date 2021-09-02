@@ -10,6 +10,7 @@
         type="number"
         matInput
         tabindex="1"
+        placeholder="Press Enter to Submit"
         [(ngModel)]="contactNumber"
         (keyup.enter)="findPawner()"
       />
@@ -18,6 +19,7 @@
 
     <div *ngIf="buttonNewloan">
       <button
+        (click)="createPawer()"
         tabindex="2"
         mat-raised-button
         class="btn-success"

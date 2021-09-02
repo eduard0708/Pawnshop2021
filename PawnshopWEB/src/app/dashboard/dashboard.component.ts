@@ -28,13 +28,13 @@ export class DashboardComponent implements OnInit {
   }
 
   openDialog(transactionType) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.position = { top: '5rem' };
-    dialogConfig.disableClose = true;
-    dialogConfig.data = transactionType;
-    dialogConfig.width = '25vw';
+    const config = new MatDialogConfig();
+    config.position = { top: '5rem' };
+    config.disableClose = true;
+    config.data = transactionType;
+    config.width = '25vw';
 
-    this.dialog.open(DialogTransacitonComponent, dialogConfig);
+    this.dialog.open(DialogTransacitonComponent, config);
   }
 
   closeDialog() {
