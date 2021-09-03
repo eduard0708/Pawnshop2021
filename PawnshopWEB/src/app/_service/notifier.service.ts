@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotifierComponent } from '../_dialogs/notifier/notifier.component';
 import { NotifierConfig } from '../_model/notifier-config';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class NotifierService {
 
   
   showNotification(message:string, action: string, config:any){
-    this.snackBar.open(message, action, config )
+   const configT = new NotifierConfig()
+    this.snackBar.openFromComponent(NotifierComponent, configT as any)
   }
 
 }
