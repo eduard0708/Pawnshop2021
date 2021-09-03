@@ -5,3 +5,15 @@
     width: 100vw;
     background-color:azure;
   }
+
+//global class of notifier
+  .error.mat-snack-bar-container{
+    background-color: #cc0000;
+    color: white;
+  }
+  .success.mat-snack-bar-container{
+    background-color: #00cc00;
+    color: white;
+  }
+
+

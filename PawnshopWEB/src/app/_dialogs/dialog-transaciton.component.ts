@@ -65,7 +65,7 @@ export class DialogTransacitonComponent implements OnInit {
   checkPawnerExist(pawners:Pawner[]) {
     if(pawners.length == 0) {
      const config = new NotifierConfig();
-       this.notifierService.showNotification('no contact number found!', 'OK', config );
+       this.notifierService.showNotification('Contact number not Found, Create new Pawner.', 'OK', 'success', {} );
  
       return;
     }

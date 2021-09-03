@@ -8,15 +8,21 @@ import { NotifierConfig } from '../_model/notifier-config';
 })
 export class NotifierService {
 
-
   constructor(private snackBar: MatSnackBar) {
 
    }
-
   
-  showNotification(message:string, action: string, config:any){
-   const configT = new NotifierConfig()
-    this.snackBar.openFromComponent(NotifierComponent, configT as any)
+  showNotification(message:string, action: string, panelclass:string, config: any){
+    this.snackBar.openFromComponent(NotifierComponent, {
+      data:{
+        message:message,
+        errorType:panelclass
+      },
+      verticalPosition:'top',
+      horizontalPosition:'right',
+      duration:2000,
+      panelClass: panelclass
+    })
   }
 
 }
