@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { NotifierConfig } from '../_model/notifier-config';
 import { Pawner } from '../_model/pawner';
 import { NotifierService } from '../_service/notifier.service';
+import { PawnerService } from '../_service/pawner.service';
 import { TestService } from '../_service/test.service';
 import { DialogNewpawnerComponent } from './dialog-newpawner.component';
 
@@ -25,8 +26,8 @@ export class DialogTransacitonComponent implements OnInit {
     private testService: TestService,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private pawnerService: PawnerService
   ) {}
 
   contactNumber: string = '';
@@ -51,7 +52,7 @@ export class DialogTransacitonComponent implements OnInit {
   }
 
   findPawner() {
-    this.testService.findPawner().subscribe((pawners:any) => {
+    this.pawnerService.searchPawner().subscribe((pawners:any) => {
       for (var pawner of pawners) {
         if (pawner.contactNumber.toString() === this.contactNumber.toString()) {
           this.existingPawner.push(pawner)
@@ -65,15 +66,20 @@ export class DialogTransacitonComponent implements OnInit {
   checkPawnerExist(pawners:Pawner[]) {
     if(pawners.length == 0) {
      const config = new NotifierConfig();
-       this.notifierService.showNotification('Contact number not Found, Create new Pawner.', 'OK', 'success', {} );
+       this.notifierService.showNotification('Contact number not Found, Create new Pawner.', 'OK', 'error', {} );
  
       return;
     }
     
     if(pawners.length == 1){
       this.router.navigateByUrl('/transactions/newloan');
+      //single  pawner found 
+
       this.dialogRef.close();
     } else {
+      //multiple pawner found with same contact number
+      console.log(this.existingPawner);
+      
       this.dialogRef.close();
     }  
   }

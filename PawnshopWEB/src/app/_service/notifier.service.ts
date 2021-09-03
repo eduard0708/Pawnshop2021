@@ -13,7 +13,7 @@ export class NotifierService {
    }
   
   showNotification(message:string, action: string, panelclass:string, config: any){
-    this.snackBar.openFromComponent(NotifierComponent, {
+     this.snackBar.openFromComponent(NotifierComponent, {
       data:{
         message:message,
         errorType:panelclass
