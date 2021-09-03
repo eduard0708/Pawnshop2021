@@ -18,7 +18,7 @@ export class DialogTransacitonComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
-  contactNumber;
+  contactNumber:string;
   pawners:Pawner;
   buttonNewloan = false;
   placeHolder = "Enter Transaction Number"
@@ -43,8 +43,10 @@ export class DialogTransacitonComponent implements OnInit {
 
   findPawner(){
       this.testService.findPawner().subscribe(pawners => {
+      
+        
          for(var pawner of pawners){
-          if(pawner.contactNumber === this.contactNumber) 
+          if(pawner.contactNumber.toString() === this.contactNumber.toString()) 
           {
             console.log(pawner);
             this.router.navigateByUrl('transactions/newloan');

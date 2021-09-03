@@ -2,6 +2,6 @@ export interface Pawner {
     id:number;
     firstName:string;
     lastName:string;
-    contactNumber:number;
+    contactNumber:string;
     completeAddress:string;
 }

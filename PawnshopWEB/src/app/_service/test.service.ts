@@ -25,6 +25,7 @@ export class TestService {
   }
 
   newPawner(pawner:Pawner){
-    this.http.post(this.uri + 'pawner', pawner);
+     this.http.post(this.uri + 'pawner', pawner).subscribe(data => console.log(data)
+     );
   }
 }
