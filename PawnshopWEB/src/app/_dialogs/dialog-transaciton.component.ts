@@ -61,10 +61,9 @@ export class DialogTransacitonComponent implements OnInit {
     this.dialogRef.close();
     const config = new MatDialogConfig();
     config.position = { top: '5rem' };
-    config.width='50vh';
+    config.width='75%';
     config.disableClose = true;
-    config.width = '25vw';
-
+  
     this.dialog.open(DialogNewpawnerComponent, config)
   }
 

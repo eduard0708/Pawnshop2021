@@ -1,25 +1,47 @@
-<div class="card">
+<form [formGroup]="pawnerInfo">
+  <div class="container card p-3">
+    <h3 class="text-center p-2 shadow rounded bg-info text-white">
+      Create New Pawner Information
+    </h3>
+    <mat-divider class="pb-3" style="width: 90%; margin: 0 auto"> </mat-divider>
+    <div style="display: flex; justify-content: space-around">
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Contact Number</mat-label>
+        <input type="text" matInput formControlName="contactNumber" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Complete Address</mat-label>
+        <input type="text" matInput formControlName="conpleteAddress" />
+      </mat-form-field>
+    </div>
 
-    <mat-form-field>
-        
-    </mat-form-field>
-
-    <div  style="display: flex; justify-content: center;">
-        <button
-          tabindex="2"
-          mat-raised-button
-          class="btn-success"
-          style="width: 49%; margin-right: 2%"
-        >
-         Submit
-        </button>
-        <button
-          (click)="cancel()"
-          tabindex="3"
-          mat-raised-button
-          class="btn-danger"
-          style="width: 49%"
-        >
-          Cancel
-        </button>
-</div>
+    <div style="display: flex; justify-content: center">
+      <button
+        tabindex="2"
+        mat-raised-button
+        class="btn-success"
+        style="width: 20%; margin-right: 2%"
+        (click)="createPawner()"
+      >
+        Submit
+      </button>
+      <button
+        (click)="cancel()"
+        tabindex="3"
+        mat-raised-button
+        class="btn-danger"
+        style="width: 20%"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

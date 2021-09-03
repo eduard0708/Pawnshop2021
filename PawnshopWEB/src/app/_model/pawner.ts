@@ -3,5 +3,5 @@ export interface Pawner {
     firstName:string;
     lastName:string;
     contactNumber:number;
-    city:string;
+    completeAddress:string;
 }

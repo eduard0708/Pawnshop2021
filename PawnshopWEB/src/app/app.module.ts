@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
+import { PawnerInfoComponent } from './_forms/pawner-info.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component'
     DashCardComponent,
     DialogTransacitonComponent,
     DialogNewpawnerComponent,
-
+    PawnerInfoComponent,
    
   ],
   imports: [

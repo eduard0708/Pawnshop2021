@@ -23,4 +23,8 @@ export class TestService {
   findPawner() {
     return this.http.get<Pawner[]>(this.uri + 'pawner');
   }
+
+  newPawner(pawner:Pawner){
+    this.http.post(this.uri + 'pawner', pawner);
+  }
 }
