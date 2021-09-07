@@ -17,8 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
-import { PawnerInfoComponent } from './_forms/pawner-info.component';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';
+import { PawnerInfoComponent } from './_components/pawner-info.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +33,8 @@ import { NotifierComponent } from './_dialogs/notifier/notifier.component';
     DashCardComponent,
     DialogTransacitonComponent,
     DialogNewpawnerComponent,
-    PawnerInfoComponent,
     NotifierComponent,
-   
+    PawnerInfoComponent,  
   ],
   imports: [
     BrowserModule,

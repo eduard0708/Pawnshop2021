@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { PawnerService } from '../_service/pawner.service';
 import { TestService } from '../_service/test.service';
 
 @Component({
@@ -9,18 +11,20 @@ import { TestService } from '../_service/test.service';
 })
 export class DialogNewpawnerComponent implements OnInit {
   pawnerInfo: FormGroup;
+ 
 
   constructor(
     private dialogRef: MatDialogRef<DialogNewpawnerComponent>,
-    private testService: TestService,
-    private fb:FormBuilder
+    private pawnerService: PawnerService,
+    private fb: FormBuilder,
+    private route: Router
   ) {
     this.pawnerInfo = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       contactNumber: ['', Validators.required],
-      conpleteAddress: ['', Validators.required]
-    })
+      conpleteAddress: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {}
@@ -30,9 +34,13 @@ export class DialogNewpawnerComponent implements OnInit {
   }
 
   createPawner() {
-    this.testService.newPawner(this.pawnerInfo.value);
+    let navigationExtras  = {
+      state: {
+        pawner: this.pawnerInfo.value
+      }
+    };
+    this.pawnerService.createPawner(this.pawnerInfo.value);
     this.dialogRef.close();
-    console.log(this.pawnerInfo.value);
-    
+    this.route.navigateByUrl('/transactions/newloan/', navigationExtras);
   }
 }

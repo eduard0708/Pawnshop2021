@@ -54,7 +54,7 @@ import { CommonModule } from '@angular/common';
     // MatGridListModule,
     MatCardModule,
     // MatStepperModule,
-    // MatTabsModule,
+    MatTabsModule,
     // MatExpansionModule,
     // MatButtonToggleModule,
     MatChipsModule,
@@ -96,7 +96,7 @@ import { CommonModule } from '@angular/common';
     MatDialogModule,
     MatTooltipModule,
     MatSnackBarModule,
-    // MatTableModule,
+    MatTableModule,
     MatSortModule,
     MatPaginatorModule
   ],

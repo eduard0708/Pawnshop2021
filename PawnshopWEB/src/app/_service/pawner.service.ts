@@ -14,4 +14,11 @@ export class PawnerService {
   searchPawner() {
     return this.http.get<Pawner[]>(this.uri + 'pawner');
   }
+
+  createPawner(pawner:Pawner){
+    this.http.post(this.uri + 'pawner', pawner).subscribe(data => {}
+    );
+  }
+
+
 }
