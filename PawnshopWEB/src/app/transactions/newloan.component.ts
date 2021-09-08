@@ -37,6 +37,13 @@ constructor(private activatedRoute: ActivatedRoute,
 
   ngOnInit(): void {
 
+    this.formDates.valueChanges.subscribe( date => {
+      this.formDates.get('dateMature').setValue = this.formDates.get('dateTransaction').value;
+      this.formDates.patchValue(this.formDates.get('dateTransaction').value)
+      
+    }
+      )
+
     if (this.pawner)
       console.log('new panwer: ' + JSON.stringify(this.pawner));
     
