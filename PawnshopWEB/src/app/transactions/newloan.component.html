@@ -1,10 +1,22 @@
 <app-pawner-info [pawner]="pawner"></app-pawner-info>
 
-<div [formGroup]="formDates">
-    <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Date Transaction" formGroupName="dateTransaction">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>   
+<form [formGroup]="formDates" >
+    <mat-form-field >
+        <input matInput [matDatepicker]="dateTransaction" placeholder="Date Trasaction" formControlName="dateTransaction">
+        <mat-datepicker-toggle matSuffix [for]="dateTransaction"></mat-datepicker-toggle>
+        <mat-datepicker #dateTransaction></mat-datepicker>
     </mat-form-field>
+    <br>
+    <mat-form-field >
+        <input matInput [matDatepicker]="dateMature" placeholder="Date Mature" formControlName="dateMature">
+        <mat-datepicker-toggle matSuffix [for]="dateMature"></mat-datepicker-toggle>
+        <mat-datepicker #dateMature></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field >
+        <input matInput [matDatepicker]="dateExpired" placeholder="Date Expire" formControlName="dateExpired">
+        <mat-datepicker-toggle matSuffix [for]="dateExpired"></mat-datepicker-toggle>
+        <mat-datepicker #dateExpired></mat-datepicker>
+    </mat-form-field>
+</form>
 
-</div>
