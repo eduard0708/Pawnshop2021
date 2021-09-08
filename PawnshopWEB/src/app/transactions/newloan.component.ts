@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
+import { __values } from 'tslib';
 import { Pawner } from '../_model/pawner';
 
 @Component({
@@ -8,12 +10,14 @@ import { Pawner } from '../_model/pawner';
   templateUrl: './newloan.component.html',
 })
 export class NewloanComponent implements OnInit {
+  @ViewChild('category') categoryRef :MatSelect
   pawner: Pawner = {} as Pawner;
   formDates: FormGroup;
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
   dataSource = [];
+  isDisable = false;
   items = [
     {
       category: 'Gold',
@@ -41,6 +45,11 @@ export class NewloanComponent implements OnInit {
     { value: 'appliance', viewValue: 'Appliances' },
   ];
 
+  categoryDescriptions = [
+    { value: 'gold', viewValue: '18K gold' },
+    { value: 'gold', viewValue: '21K gold' },
+  ];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -57,19 +66,25 @@ export class NewloanComponent implements OnInit {
       dateGranted: [this.today],
       dateMature: [this.dateMature],
       dateExpired: [this.dateExpire],
-      selectedCategoy: [''],
+      category: [''],
+      categoryDescriptions: [''],
+      
     });
   }
 
   ngOnInit(): void {
     this.dataSource = this.items;
-    
-    this.formDates.valueChanges.subscribe((date) => {
-      this.formDates.get('dateMature').setValue =
-        this.formDates.get('dateTransaction').value;
-      this.formDates.patchValue(this.formDates.get('dateTransaction').value);
-    });
+    setTimeout(() => {
+      this.categoryRef.focus();  
+    }, 100);
 
-    if (this.pawner) console.log('new panwer: ' + JSON.stringify(this.pawner));
   }
+  onCategorySelect(){
+    this.formDates.controls['category'].disable();
+  }
+  onClear(){
+    this.formDates.controls['category'].enable();
+    this.categoryRef.focus();
+  }
+ 
 }
