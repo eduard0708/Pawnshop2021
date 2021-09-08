@@ -80,6 +80,10 @@ export class NewloanComponent implements OnInit {
 
   }
   onCategorySelect(){
+    if(this.formDates.controls['category'].value  === ''){
+      this.categoryRef.focus();
+    }
+    
     this.formDates.controls['category'].disable();
   }
   onClear(){
