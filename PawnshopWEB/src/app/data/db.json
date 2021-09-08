@@ -27,7 +27,9 @@
       "firstName": "mica",
       "lastName": "fox",
       "contactNumber": "123",
-      "city": "Iloilo"
+      "city": "Iloilo",
+      "barangay":"Infante",
+      "conpleteAddress":"Molo Iloilo City"
     },
     {
       "id": "2",

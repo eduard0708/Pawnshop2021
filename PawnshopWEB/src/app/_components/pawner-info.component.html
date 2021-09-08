@@ -1,5 +1,53 @@
-<div class="card" style="width: 30%;">
-    <p>Fist Name: {{pawnerInfo.firstName}}</p>
-    <p>Last Name: {{pawnerInfo.lastName}}</p>
-    <p>Contact Number: {{pawnerInfo.contactNumber}}</p>
+
+<div class="pawner-info">
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="First Name"
+        value="{{ pawnerInfo.firstName }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Last Name"
+        value="{{ pawnerInfo.lastName }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Contact Number"
+        value="{{ pawnerInfo.contactNumber }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="City" value="{{ pawnerInfo.city }}" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Barangay"
+        value="{{ pawnerInfo.barangay }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Complete Address"
+        value="{{ pawnerInfo.completeAddress }}"
+      />
+    </mat-form-field>
+  </div>
 </div>
