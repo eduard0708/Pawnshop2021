@@ -18,10 +18,9 @@ import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';
-import { PawnerInfoComponent } from './_components/pawner-info.component';
 
 @NgModule({
-  declarations: [
+declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -34,7 +33,7 @@ import { PawnerInfoComponent } from './_components/pawner-info.component';
     DialogTransacitonComponent,
     DialogNewpawnerComponent,
     NotifierComponent,
-    PawnerInfoComponent,  
+
   ],
   imports: [
     BrowserModule,
@@ -43,7 +42,7 @@ import { PawnerInfoComponent } from './_components/pawner-info.component';
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,   
   ],
   providers: [],
   bootstrap: [AppComponent]

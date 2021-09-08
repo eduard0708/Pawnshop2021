@@ -3,5 +3,7 @@ export interface Pawner {
     firstName:string;
     lastName:string;
     contactNumber:string;
+    city:string;
+    barangay:string;
     completeAddress:string;
 }

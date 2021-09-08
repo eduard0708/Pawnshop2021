@@ -7,6 +7,9 @@ import { NewloanComponent } from './newloan.component';
 import { RedeemComponent } from './redeem.component';
 import { PartialComponent } from './partial.component';
 import { AdditionalComponent } from './additional.component';
+import { PawnerInfoComponent } from '../_components/pawner-info.component';
+import { MaterialModule } from '../_material-moudule/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,11 +19,15 @@ import { AdditionalComponent } from './additional.component';
     NewloanComponent,
     RedeemComponent,
     PartialComponent,
-    AdditionalComponent
+    AdditionalComponent,
+    PawnerInfoComponent
   ],
   imports: [
     CommonModule,
-    TransactionsRoutingModule
+    TransactionsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
   ]
 })
 export class TransactionsModule { }

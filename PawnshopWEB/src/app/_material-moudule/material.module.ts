@@ -31,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatNativeDateModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatRadioModule,
@@ -74,6 +76,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatRadioModule,
     MatSelectModule,
