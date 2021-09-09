@@ -1,15 +1,18 @@
 <form [formGroup]="newLoan" autocomplete="off">
-  <h1
+  <h2
+  class="shadow"
     style="
       position: absolute;
-      margin: 0 auto;
-      width: 100%;
+      border-radius: 5px;
+      margin: 3px 9.5% 0;
+      width: 50%;
+      padding: 2px;
       background-color: aqua;
       text-align: center;
     "
   >
     New Loan
-  </h1>
+  </h2>
   <div class="newloan-wrapper">
     <div class="pawner-items">
       <div class="info-date">
@@ -196,7 +199,7 @@
               <button class="text-info" mat-icon-button>
                 <mat-icon>edit</mat-icon>
               </button>
-              <button (click)="delete(pawner)" class="text-danger" mat-icon-button>
+              <button  (click)="delete(pawner)" class="text-danger" mat-icon-button>
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -204,14 +207,49 @@
          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[3]" showFirstLastButtons ></mat-paginator>      
+        <mat-paginator class="shadow" [pageSizeOptions]="[3]" showFirstLastButtons ></mat-paginator>      
       </div>
       <!-- table end -->
     </div>
+    <h2
+    class="shadow font-monospace text-white "
+      style="
+        position: absolute;
+        border-radius: 5px;
+        margin: 8px 72% 0;
+        width: 26%;
+        padding: 4px;
+        background-color: rgb(31, 97, 241);
+        text-align: center;
+      "
+    >
+      New Loan Computation
+    </h2>
     <div class="computation">
-      asdfasf
-      <!-- <button mat-raised-button>text</button>
-      <button mat-raised-button>text</button> -->
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Appraisal Value</span>
+        <input class="form-control" type="number" />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Total Loan</span>
+        <input class="form-control" type="number" />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Interest</span>
+        <input class="form-control" type="number" />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Advance Interest</span>
+        <input class="form-control" type="number" />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Advance Interest</span>
+        <input class="form-control" type="number" />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Advance Interest</span>
+        <input class="form-control" type="number" />
+      </div>
     </div>
   </div>
 </form>
