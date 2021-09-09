@@ -44,24 +44,40 @@
       height: 5rem;
 
       .category{
-        width: 10rem;
+        width: 7rem;
       }
       .category-description{
-        width: 22rem;
+        width: 16rem;
       }
       .description{
-        width: 27rem;
+        width: 18rem;
       }
       .appraisal-value{
-        width: 8rem;
+        width: 7rem;
       }
     }
     .items-table {
       padding: 0 1rem;
       table{
           width: 100%;
-          margin: 1rem auto;
+          margin: .5rem auto 0;
       }
+      .mat-column-category {
+        width: 12% !important;
+        }
+      .mat-column-categoryDescription {
+        width: 25% !important;
+        }
+      .mat-column-description {
+        width: 30% !important;
+        }
+      .mat-column-appraisalValue {
+        width: 15% !important;
+        }
+      .mat-column-action {
+        width: 12% !important;
+        }
+    
     }
   }
   .computation {

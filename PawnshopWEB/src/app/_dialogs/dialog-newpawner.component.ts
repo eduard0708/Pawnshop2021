@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PawnerService } from '../_service/pawner.service';
-import { TestService } from '../_service/test.service';
+
 
 @Component({
   selector: 'app-dialog-newpawner',
@@ -27,7 +27,11 @@ export class DialogNewpawnerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    Object.keys(this.pawnerInfo).forEach( (key)=> {
+      this.pawnerInfo.get(key).disabled;
+    })
+  }
 
   cancel() {
     this.dialogRef.close();

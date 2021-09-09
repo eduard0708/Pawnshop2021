@@ -2,8 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogTransacitonComponent } from '../_dialogs/dialog-transaciton.component';
 import { TransactionCard } from '../_model/transaction-card';
-import { TestService } from '../_service/test.service';
-
+import { DashboardService } from '../_service/dashboard.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,10 +13,10 @@ export class DashboardComponent implements OnInit {
   ];
   transactionType: string;
 
-  constructor(private testService: TestService, private dialog: MatDialog) {}
+  constructor(private dashboardService:DashboardService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.testService.getCardDetails().subscribe((data) => {
+    this.dashboardService.getCardDetails().subscribe((data) => {
       this.dataForCard = data;
     });
   }
