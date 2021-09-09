@@ -4,13 +4,15 @@ import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { __values } from 'tslib';
 import { Pawner } from '../_model/pawner';
+import { NotifierService } from '../_service/notifier.service';
 
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
 })
+
 export class NewloanComponent implements OnInit {
-  @ViewChild('category') categoryRef :MatSelect;
+  @ViewChild('category') categoryRef: MatSelect;
   @ViewChild('newLoan') newloanform;
   pawner: Pawner = {} as Pawner;
   newLoan: FormGroup;
@@ -55,6 +57,7 @@ export class NewloanComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    private notifierService: NotifierService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -67,45 +70,46 @@ export class NewloanComponent implements OnInit {
       dateGranted: [this.today],
       dateMature: [this.dateMature],
       dateExpired: [this.dateExpire],
-      category: [ ,[Validators.required]],
+      category: [, [Validators.required]],
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: ['', [Validators.required]],
-      
+
     });
   }
 
   ngOnInit(): void {
     this.dataSource = this.items;
     setTimeout(() => {
-      this.categoryRef.focus();  
+      this.categoryRef.focus();
     }, 100);
 
   }
-  onCategorySelect(){
-    if(this.newLoan.controls.category.value  === ''){
+  onCategorySelect() {
+    if (this.newLoan.get('category').value === ''
+      || this.newLoan.get('category').value === null) {
+      this.notifierService.showNotification('Category Required','action','error','');
       this.categoryRef.focus();
-      console.log(this.newLoan.controls.category.value);
+    } else {
+      this.newLoan.controls.category.disable();
     }
-    
-    this.newLoan.controls['category'].disable();
   }
-  onClear(){
+  onClear() {
     this.newLoan.get('category').enable();
     this.categoryRef.focus();
     this.newLoan.controls.categoryDescriptions.setValue('');
     this.newLoan.controls.category.setValue('');
     this.newLoan.controls.descriptions.setValue('');
     this.newLoan.controls.appraisalValue.setValue('');
-    Object.keys(this.newLoan.controls).forEach( key => {
+    Object.keys(this.newLoan.controls).forEach(key => {
       this.newLoan.get(key).setErrors(null);
     })
   }
 
-  setTransacitonDate(){
+  setTransacitonDate() {
     this.newLoan.controls.dateTransaction.setValue(this.today);
     console.log(this.today);
-    
+
   }
- 
+
 }
