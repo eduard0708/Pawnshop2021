@@ -1,4 +1,4 @@
-<form [formGroup]="formDates">
+<form [formGroup]="newLoan">
   <h1 style="position: absolute; margin: 0 auto; width: 100%;background-color: aqua;text-align: center;">New Loan</h1>  
   <div class="newloan-wrapper">
     <div class="pawner-items">
@@ -91,10 +91,10 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="description">
-              <input matInput placeholder="Description" type="text" tabindex="3">
+              <input matInput placeholder="Description" type="text" formControlName="descriptions" tabindex="3">
           </mat-form-field>
           <mat-form-field class="appraisal-value">
-              <input matInput placeholder="Appraisal Value" type="number" tabindex="4">
+              <input matInput placeholder="Appraisal Value" type="number" formControlName="appraisalValue" tabindex="4">
           </mat-form-field>
           <div>
             <button tabindex="4" class="mx-1" mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>

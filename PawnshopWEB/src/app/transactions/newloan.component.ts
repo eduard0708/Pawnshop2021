@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { __values } from 'tslib';
@@ -10,9 +10,10 @@ import { Pawner } from '../_model/pawner';
   templateUrl: './newloan.component.html',
 })
 export class NewloanComponent implements OnInit {
-  @ViewChild('category') categoryRef :MatSelect
+  @ViewChild('category') categoryRef :MatSelect;
+  @ViewChild('newLoan') newloanform;
   pawner: Pawner = {} as Pawner;
-  formDates: FormGroup;
+  newLoan: FormGroup;
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
@@ -53,7 +54,7 @@ export class NewloanComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -61,13 +62,15 @@ export class NewloanComponent implements OnInit {
       }
     });
 
-    this.formDates = fb.group({
+    this.newLoan = fb.group({
       dateTransaction: [this.today],
       dateGranted: [this.today],
       dateMature: [this.dateMature],
       dateExpired: [this.dateExpire],
-      category: [''],
-      categoryDescriptions: [''],
+      category: [ ,[Validators.required]],
+      categoryDescriptions: ['', [Validators.required]],
+      descriptions: ['', [Validators.required]],
+      appraisalValue: ['', [Validators.required]],
       
     });
   }
@@ -80,15 +83,29 @@ export class NewloanComponent implements OnInit {
 
   }
   onCategorySelect(){
-    if(this.formDates.controls['category'].value  === ''){
+    if(this.newLoan.controls.category.value  === ''){
       this.categoryRef.focus();
+      console.log(this.newLoan.controls.category.value);
     }
     
-    this.formDates.controls['category'].disable();
+    this.newLoan.controls['category'].disable();
   }
   onClear(){
-    this.formDates.controls['category'].enable();
+    this.newLoan.get('category').enable();
     this.categoryRef.focus();
+    this.newLoan.controls.categoryDescriptions.setValue('');
+    this.newLoan.controls.category.setValue('');
+    this.newLoan.controls.descriptions.setValue('');
+    this.newLoan.controls.appraisalValue.setValue('');
+    Object.keys(this.newLoan.controls).forEach( key => {
+      this.newLoan.get(key).setErrors(null);
+    })
+  }
+
+  setTransacitonDate(){
+    this.newLoan.controls.dateTransaction.setValue(this.today);
+    console.log(this.today);
+    
   }
  
 }
