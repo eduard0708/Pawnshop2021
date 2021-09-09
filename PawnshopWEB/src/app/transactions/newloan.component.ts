@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { __values } from 'tslib';
+import { Item } from '../_model/item';
 import { Pawner } from '../_model/pawner';
 import { NotifierService } from '../_service/notifier.service';
 
@@ -19,22 +21,9 @@ export class NewloanComponent implements OnInit {
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
-  dataSource = [];
+  dataSource = new MatTableDataSource<Item>();
   isDisable = false;
-  items = [
-    {
-      category: 'Gold',
-      categoryDescription: '18k Bracelet',
-      description: '17" bracelet gold',
-      appraisalValue: 17000,
-    },
-    {
-      category: 'Gold',
-      categoryDescription: '18k Bracelet',
-      description: '17" bracelet gold',
-      appraisalValue: 1500,
-    },
-  ];
+  isAddItem = true;
   displayColumns: string[] = [
     'category',
     'categoryDescription',
@@ -70,16 +59,18 @@ export class NewloanComponent implements OnInit {
       dateGranted: [this.today],
       dateMature: [this.dateMature],
       dateExpired: [this.dateExpire],
-      category: [, [Validators.required]],
+      category: ['', [Validators.required]],
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: ['', [Validators.required]],
-
     });
   }
 
   ngOnInit(): void {
-    this.dataSource = this.items;
+    this.newLoan.statusChanges.subscribe( ()=> {
+      this.isAddItem = !this.newLoan.valid;
+    });
+
     setTimeout(() => {
       this.categoryRef.focus();
     }, 100);
@@ -88,12 +79,25 @@ export class NewloanComponent implements OnInit {
   onCategorySelect() {
     if (this.newLoan.get('category').value === ''
       || this.newLoan.get('category').value === null) {
-      this.notifierService.showNotification('Category Required','action','error','');
-      this.categoryRef.focus();
+      this.notifierService.showNotification('Category Required', 'action', 'error', '');
+      // this.categoryRef.focus();
     } else {
       this.newLoan.controls.category.disable();
     }
   }
+
+  onAdd() {
+    let item: Item = {
+      category: this.newLoan.controls.category.value,
+      categoryDescription: this.newLoan.controls.categoryDescriptions.value,
+      description: this.newLoan.controls.descriptions.value,
+      appraisalValue: this.newLoan.controls.appraisalValue.value
+    }
+    this.dataSource.data.push(item);
+    this.dataSource.data = this.dataSource.data; //update the table changes
+    this.onClear();
+  }
+
   onClear() {
     this.newLoan.get('category').enable();
     this.categoryRef.focus();
@@ -103,7 +107,11 @@ export class NewloanComponent implements OnInit {
     this.newLoan.controls.appraisalValue.setValue('');
     Object.keys(this.newLoan.controls).forEach(key => {
       this.newLoan.get(key).setErrors(null);
-    })
+    });
+    Object.keys(this.newLoan.controls).forEach(key => {
+      this.newLoan.get(key).updateValueAndValidity();
+    });
+    // this.newLoan.reset();
   }
 
   setTransacitonDate() {

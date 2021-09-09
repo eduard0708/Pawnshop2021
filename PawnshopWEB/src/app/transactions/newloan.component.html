@@ -1,5 +1,15 @@
 <form [formGroup]="newLoan">
-  <h1 style="position: absolute; margin: 0 auto; width: 100%;background-color: aqua;text-align: center;">New Loan</h1>  
+  <h1
+    style="
+      position: absolute;
+      margin: 0 auto;
+      width: 100%;
+      background-color: aqua;
+      text-align: center;
+    "
+  >
+    New Loan
+  </h1>
   <div class="newloan-wrapper">
     <div class="pawner-items">
       <div class="info-date">
@@ -8,7 +18,7 @@
         </div>
         <!-- newloan dates start -->
         <div class="newloan-dates">
-          <div >
+          <div>
             <mat-form-field class="form-date">
               <input
                 matInput
@@ -23,7 +33,7 @@
               <mat-datepicker #dateTransaction></mat-datepicker>
             </mat-form-field>
           </div>
-          <div >
+          <div>
             <mat-form-field class="form-date">
               <input
                 matInput
@@ -38,7 +48,7 @@
               <mat-datepicker #dateGranted></mat-datepicker>
             </mat-form-field>
           </div>
-          <div >
+          <div>
             <mat-form-field class="form-date">
               <input
                 matInput
@@ -53,7 +63,7 @@
               <mat-datepicker #dateMature></mat-datepicker>
             </mat-form-field>
           </div>
-          <div >
+          <div>
             <mat-form-field class="form-date">
               <input
                 matInput
@@ -73,70 +83,124 @@
       </div>
       <!-- items start -->
       <div class="items-entry">
-          <mat-form-field class="category">
-            <mat-select placeholder="Category" formControlName="category" #category 
-            (blur)="onCategorySelect()"  
+        <mat-form-field class="category">
+          <mat-select
+            placeholder="Category"
+            formControlName="category"
+            #category
+            required
+            (blur)="onCategorySelect()"
             tabindex="1"
+          >
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.value"
             >
-                <mat-option *ngFor="let category of categories" [value]="category.value">
-                    {{category.viewValue}}
-                </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="category-description" >
-            <mat-select placeholder="Category Description" formControlName="categoryDescriptions" tabindex="2" >
-                <mat-option *ngFor="let categoryDescription of categoryDescriptions" [value]="categoryDescription.value">
-                    {{categoryDescription.viewValue}}
-                </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="description">
-              <input matInput placeholder="Description" type="text" formControlName="descriptions" tabindex="3">
-          </mat-form-field>
-          <mat-form-field class="appraisal-value">
-              <input matInput placeholder="Appraisal Value" type="number" formControlName="appraisalValue" tabindex="4">
-          </mat-form-field>
-          <div>
-            <button tabindex="4" class="mx-1" mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
-            <button tabindex="5" (click)="onClear()" mat-raised-button color="accent">Clear</button>
-          </div>
-       
+              {{ category.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="category-description">
+          <button matSuffix mat-icon-button mat-raised-button color="accent" >
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-select
+            placeholder="Category Description"
+            formControlName="categoryDescriptions"
+            tabindex="2"
+          >
+            <mat-option
+              *ngFor="let categoryDescription of categoryDescriptions"
+              [value]="categoryDescription.value"
+            >
+              {{ categoryDescription.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="description">
+          <input
+            matInput
+            placeholder="Description"
+            type="text"
+            formControlName="descriptions"
+            tabindex="3"
+          />
+        </mat-form-field>
+        <mat-form-field class="appraisal-value">
+          <input
+            matInput
+            placeholder="Appraisal Value"
+            type="number"
+            formControlName="appraisalValue"
+            tabindex="4"
+          />
+        </mat-form-field>
+        <div>
+          <button
+            tabindex="4"
+            [disabled]="isAddItem"
+            (click)="onAdd()"
+            class="mx-1"
+            mat-mini-fab
+            color="primary"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            tabindex="5"
+            (click)="onClear()"
+            mat-raised-button
+            color="accent"
+          >
+            Clear
+          </button>
+        </div>
       </div>
       <!-- items end -->
 
       <!-- table start -->
       <div class="items-table">
-        <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef> Category </th>
-                <td mat-cell *matCellDef="let items"> {{items.category}} </td>
-            </ng-container>
-            <ng-container matColumnDef="categoryDescription">
-                <th mat-header-cell *matHeaderCellDef> Category Description </th>
-                <td mat-cell *matCellDef="let items"> {{items.categoryDescription}} </td>
-            </ng-container>
-            <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Items Description </th>
-                <td mat-cell *matCellDef="let items"> {{items.description}} </td>
-            </ng-container>
-            <ng-container matColumnDef="appraisalValue">
-                <th mat-header-cell *matHeaderCellDef> Appraisal Value </th>
-                <td mat-cell *matCellDef="let items"> {{items.appraisalValue}} </td>
-            </ng-container>
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let pawner">
-                  <button class="text-info" mat-icon-button><mat-icon>edit</mat-icon></button>
-                  <button class="text-danger" mat-icon-button ><mat-icon>delete</mat-icon></button>
-                </td>
-              </ng-container>
-            
-            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+        <table
+          mat-table
+          #table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let items">{{ items.category }}</td>
+          </ng-container>
+          <ng-container matColumnDef="categoryDescription">
+            <th mat-header-cell *matHeaderCellDef>Category Description</th>
+            <td mat-cell *matCellDef="let items">
+              {{ items.categoryDescription }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Items Description</th>
+            <td mat-cell *matCellDef="let items">{{ items.description }}</td>
+          </ng-container>
+          <ng-container matColumnDef="appraisalValue">
+            <th mat-header-cell *matHeaderCellDef>Appraisal Value</th>
+            <td mat-cell *matCellDef="let items">{{ items.appraisalValue }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let pawner">
+              <button class="text-info" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="text-danger" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
       </div>
       <!-- table end -->
-
     </div>
     <div class="computation">
       asdfasf
