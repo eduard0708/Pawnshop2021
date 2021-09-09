@@ -1,13 +1,13 @@
 <form [formGroup]="newLoan" autocomplete="off">
   <h2
-  class="shadow"
+  class="shadow font-monospace text-white "
     style="
       position: absolute;
       border-radius: 5px;
       margin: 3px 9.5% 0;
       width: 50%;
       padding: 2px;
-      background-color: aqua;
+      background-color: rgb(31, 97, 241);
       text-align: center;
     "
   >
@@ -228,28 +228,34 @@
     <div class="computation">
       <div class="input-group mb-2 shadow-sm font-monospace">
         <span class="btn-primary">Appraisal Value</span>
-        <input class="form-control" type="number" />
+        <input class="form-control" type="text" readonly value="13,132.10" />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Total Loan</span>
-        <input class="form-control" type="number" />
+        <span class="btn-primary">Principal Loan</span>
+        <input class="form-control" type="text" />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Interest</span>
-        <input class="form-control" type="number" />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Advance Interest</span>
-        <input class="form-control" type="number" />
+        <span class="btn-primary">Interest Rate</span>
+        <input class="form-control" type="text" />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
         <span class="btn-primary">Advance Interest</span>
-        <input class="form-control" type="number" />
+        <input class="form-control" type="text" />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Advance Interest</span>
-        <input class="form-control" type="number" />
+        <span class="btn-primary">Adv. Service Charge</span>
+        <input class="form-control" type="text" />
       </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Net Proceed</span>
+        <input class="form-control" type="text" />
+      </div>
+      <div class="mt-3" style="display: flex; justify-content: space-around;">
+        <button mat-raised-button color="primary">Save <mat-icon>save</mat-icon> <mat-icon>print</mat-icon></button>
+        <button mat-raised-button color="warn">Reset <mat-icon>restart_alt</mat-icon></button>
+        <button (click)="home()" mat-raised-button>Home <mat-icon>home</mat-icon></button>
+      </div>
+      
     </div>
   </div>
 </form>

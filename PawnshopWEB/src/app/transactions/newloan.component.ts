@@ -164,4 +164,8 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.serviceSubscribe.unsubscribe();
   }
+
+  home(){
+    this.router.navigateByUrl('/dashboard');
+  }
 }

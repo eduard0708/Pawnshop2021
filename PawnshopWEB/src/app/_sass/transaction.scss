@@ -95,3 +95,10 @@
     background-color: rgb(209, 230, 240);
   }
 }
+//remove input number arrow up/down
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
