@@ -10,6 +10,7 @@ import { AdditionalComponent } from './additional.component';
 import { PawnerInfoComponent } from '../_components/pawner-info.component';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 
 
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TransactionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    InputMaskModule
   ]
 })
 export class TransactionsModule { }

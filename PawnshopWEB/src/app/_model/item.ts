@@ -1,7 +1,9 @@
 export interface Item{
     id:number;
-    category:string;
-    categoryDescription:string;
+    categoryId:number
+    categoryName:string;
+    categoryDescriptionId:number;
+    categoryDescriptionName:string;
     description:string;
     appraisalValue:number;
 }

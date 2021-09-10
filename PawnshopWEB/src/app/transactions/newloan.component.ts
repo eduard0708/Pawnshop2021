@@ -1,22 +1,42 @@
-import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { createMask } from '@ngneat/input-mask';
 import { Subscription } from 'rxjs';
 import { Item } from '../_model/item';
 import { Pawner } from '../_model/pawner';
 import { Select } from '../_model/select';
 import { ItemService } from '../_service/item.service';
+import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
+  template: `
+  <input [inputMask]="currencyInputMask" placeholder="$ 0.00">
+`,
 })
 export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  currencyInputMask = createMask({
+    alias: 'numeric',
+    groupSeparator: ',',
+    digits: 2,
+    digitsOptional: false,
+    prefix: '₱ ',
+    placeholder: '0',
+  });
+
   @ViewChild('category') categoryRef: MatSelect;
   @ViewChild('categoryDescriptionRef') categoryDescriptionRef;
   @ViewChild('newLoan') newloanform;
@@ -26,6 +46,8 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
+  totalAppraial = 0;
+  principalLoan = 0;
 
   isDisable = false;
   isAddItem = true;
@@ -36,7 +58,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     'appraisalValue',
     'action',
   ];
-
   categories: Select[] = [];
   categoryDescriptions: Select[] = [];
 
@@ -48,7 +69,8 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private fb: FormBuilder,
     private notifierService: NotifierService,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private newLoanService: NewloanService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -67,6 +89,12 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: ['', [Validators.required]],
+      totalAppraisal: [0.00],
+      principalLoan: [0.00],
+      interestRate: ['0.00 %'],
+      advanceInterest: [0.00],
+      advanceServiceCharge: [0.0],
+      netProceed: [0.0]
     });
   }
 
@@ -76,9 +104,63 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
-    this.serviceSubscribe = this.itemService.items$.subscribe(
-      (response) => (this.dataSource.data = response)
-    );
+    //set advace service charge
+    this.newLoan.controls.principalLoan.valueChanges.subscribe((pLoan) => {
+      let principal = pLoan;
+      let principalLoan = 0;
+      let advInt = 0;
+      let intRate: string = this.newLoan.controls.interestRate.value;
+      let interestRate = +intRate.toString().charAt(0);
+      
+      principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
+
+      if (principalLoan > this.newLoanService.getTotalAppraisal()) {
+        this.newLoan.controls.principalLoan.setValue(
+          this.newLoanService.getTotalAppraisal()
+        );
+        principalLoan = this.newLoanService.getTotalAppraisal();
+      }
+
+      if (principal) {
+        let totalAppraisal = this.newLoanService.getTotalAppraisal();
+        if (principalLoan < totalAppraisal) {
+          advInt = principalLoan * (interestRate / 100);
+          // this.newLoan.controls.advanceInterest.setValue(advInt);
+        }
+        if (principalLoan > totalAppraisal) {
+          advInt = totalAppraisal * (interestRate / 100);
+          // this.newLoan.controls.advanceInterest.setValue(advInt);
+        }
+        
+        console.log('Rate in +> ' + this.newLoanService.getInterestRate());
+        console.log('totalAppraisal in +> ' + totalAppraisal);
+        console.log('advInt in +> ' + advInt);
+        console.log('totalAppraisal in +> ' + totalAppraisal);
+        console.log('principal in +> ' + principalLoan);
+
+        // this.newLoan
+        // .get('advanceServiceCharge')
+        // .setValue(this.newLoanService.getAdvanceServiceCharge(principalLoan));
+
+      }
+      
+      // netProceed = advInt + principalLoan + this.newLoanService.getAdvanceServiceCharge(principalLoan);
+      // if(principalLoan > totalAppraisal )
+      //     netProceed = advInt + principalLoan + totalAppraisal;
+    });
+
+    this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
+      this.dataSource.data = items;
+
+      let intRate = '0%';
+      this.newLoan.controls.totalAppraisal.setValue(
+        this.newLoanService.getTotalAppraisal()
+      );
+
+      // if (items.some((s) => s.category === 'Gold')) intRate = '3.00 %';
+      // if (items.some((s) => s.category === 'Appliance')) intRate = '5.00 %';
+      this.newLoan.controls.interestRate.setValue(intRate);
+    });
 
     setTimeout(() => {
       this.categoryRef.focus();
@@ -91,6 +173,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       .getCategoryDescription()
       .subscribe((data) => (this.categoryDescriptions = data));
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
@@ -107,6 +190,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onAdd() {
     let id = this.dataSource.data.length + 1;
+      
     let categoryName: Select = this.categories.find(
       ({ id }) => id == this.newLoan.controls.category.value
     );
@@ -116,8 +200,10 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let item: Item = {
       id: id,
-      category: categoryName.name,
-      categoryDescription: catDescName.name,
+      categoryId: this.newLoan.controls.category.value,
+      categoryName: categoryName.name,
+      categoryDescriptionId: this.newLoan.controls.categoryDescriptions.value,
+      categoryDescriptionName: catDescName.name,
       description: this.newLoan.controls.descriptions.value,
       appraisalValue: this.newLoan.controls.appraisalValue.value,
     };
@@ -165,7 +251,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     this.serviceSubscribe.unsubscribe();
   }
 
-  home(){
+  home() {
     this.router.navigateByUrl('/dashboard');
   }
 }

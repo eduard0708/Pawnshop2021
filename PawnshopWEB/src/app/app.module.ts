@@ -18,6 +18,7 @@ import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
 declarations: [
@@ -43,6 +44,7 @@ declarations: [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,   
+    InputMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

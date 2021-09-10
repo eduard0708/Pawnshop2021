@@ -24,12 +24,12 @@ export class ItemService {
    }
 
    edit(item:Item){
-    let findElem = this.items.find(p => p.id == item.id);
-    findElem.appraisalValue = item.appraisalValue;
-    findElem.category = item.category;
-    findElem.categoryDescription = item.categoryDescription;
-    findElem.description = item.description;
-    this.items$.next(this.items);
+    // let findElem = this.items.find(p => p.id == item.id);
+    // findElem.appraisalValue = item.appraisalValue;
+    // findElem.category = item.category;
+    // findElem.categoryDescription = item.categoryDescription;
+    // findElem.description = item.description;
+    // this.items$.next(this.items);
    }
 
    delete(id:number){
