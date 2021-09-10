@@ -1,4 +1,110 @@
 
+.newloan-wrapper {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  height: 89vh;
+  //   overflow: hidden;
+
+  .pawner-items {
+    // background-color: springgreen;
+
+    .info-date {
+      background-color: ghostwhite;
+      margin: 1.5rem 1rem 0rem;
+      border-radius: 0.5em;
+      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+      display: flex;
+      padding: .5rem 1rem;
+      height: 9rem;
+
+      .newloan-pawner {
+        width: 100%;
+        // background-color: yellowgreen;
+      }
+      .newloan-dates {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+
+        .form-date {
+          width: 8rem;
+        }
+      }
+      .newloan-items {
+        width: 100%;
+      }
+    }
+    .items-entry {
+      margin: 0.5rem 1rem;
+      border-radius: 0.5em;
+      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      height: 5rem;
+
+      .category {
+        width: 7rem;
+      }
+      .category-description {
+        width: 14rem;
+      }
+      .description {
+        width: 16rem;
+      }
+      .appraisal-value {
+        width: 7rem;
+      }
+    }
+    .items-table {
+      padding: 0 1rem;
+      table {
+        width: 100%;
+        margin: 0.5rem auto 0;
+
+        mat-icon{
+          font-size: 20px;
+        }
+      }
+      .mat-column-category {
+        width: 12% !important;
+      }
+      .mat-column-categoryDescription {
+        width: 25% !important;
+      }
+      .mat-column-description {
+        width: 30% !important;
+      }
+      .mat-column-appraisalValue {
+        width: 15% !important;
+      }
+      .mat-column-action {
+        width: 12% !important;
+      }
+
+      // .mat-header-row  .mat-row {
+      //   height: 1rem !important;
+      // }
+      .mat-row{ height: 25px !important;  }
+
+    }
+  }
+  .computation {
+    padding: 4rem 2.5rem 0;
+    background-color: rgb(209, 230, 240);
+  }
+}
+//remove input number arrow up/down
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
 .btn-primary{
     background: rgb(72, 127, 247) !important;
     width: 11rem;
@@ -11,4 +117,9 @@
 .form-control{
     border-top-right-radius: 10px !important;
     
+}
+
+.net-proceed{
+    font-weight: bolder !important;
+    color: red !important;
 }

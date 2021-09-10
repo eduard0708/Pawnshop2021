@@ -23,6 +23,11 @@ export class ItemService {
     this.items$.next(this.items);
    }
 
+   clear(){
+     this.items = [];
+     this.items$.next(this.items);
+   }
+
    edit(item:Item){
     // let findElem = this.items.find(p => p.id == item.id);
     // findElem.appraisalValue = item.appraisalValue;

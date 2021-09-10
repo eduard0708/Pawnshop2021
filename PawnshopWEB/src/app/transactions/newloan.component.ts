@@ -6,6 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,12 +24,9 @@ import { NotifierService } from '../_service/notifier.service';
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
-  template: `
-  <input [inputMask]="currencyInputMask" placeholder="$ 0.00">
-`,
+  template: ` <input [inputMask]="currencyInputMask" placeholder="$ 0.00" /> `,
 })
 export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
-
   currencyInputMask = createMask({
     alias: 'numeric',
     groupSeparator: ',',
@@ -37,6 +36,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     placeholder: '0',
   });
 
+  @ViewChild('principalLoanRef') principalLoanRef: MatInput;
   @ViewChild('category') categoryRef: MatSelect;
   @ViewChild('categoryDescriptionRef') categoryDescriptionRef;
   @ViewChild('newLoan') newloanform;
@@ -46,9 +46,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
-  totalAppraial = 0;
-  principalLoan = 0;
-
   isDisable = false;
   isAddItem = true;
   displayColumns: string[] = [
@@ -68,15 +65,14 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private notifierService: NotifierService,
     private itemService: ItemService,
     private newLoanService: NewloanService
   ) {
+    // get the pawner information from the params of the link
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pawner = this.router.getCurrentNavigation().extras.state.pawner;
       }
-
       this.dataSource = new MatTableDataSource<Item>();
     });
 
@@ -89,77 +85,56 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: ['', [Validators.required]],
-      totalAppraisal: [0.00],
-      principalLoan: [0.00],
+      totalAppraisal: [0.0],
+      principalLoan: [0.0],
       interestRate: ['0.00 %'],
-      advanceInterest: [0.00],
+      advanceInterest: [0.0],
       advanceServiceCharge: [0.0],
-      netProceed: [0.0]
+      netProceed: [0.0],
     });
   }
 
   ngOnInit(): void {
     this.newLoan.statusChanges.subscribe(() => {
-      this.isAddItem = !this.newLoan.valid;
+      this.validateItemEntery();
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
-    //set advace service charge
-    this.newLoan.controls.principalLoan.valueChanges.subscribe((pLoan) => {
-      let principal = pLoan;
-      let principalLoan = 0;
-      let advInt = 0;
-      let intRate: string = this.newLoan.controls.interestRate.value;
-      let interestRate = +intRate.toString().charAt(0);
-      
-      principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
-
-      if (principalLoan > this.newLoanService.getTotalAppraisal()) {
+    //compute during input of principal loan
+    this.newLoan.controls.principalLoan.valueChanges.subscribe((principal) => {
+      let principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
+      let totalApp: number = this.newLoanService.getTotalAppraisal();
+      if (principalLoan > totalApp) {
         this.newLoan.controls.principalLoan.setValue(
           this.newLoanService.getTotalAppraisal()
         );
         principalLoan = this.newLoanService.getTotalAppraisal();
       }
 
-      if (principal) {
-        let totalAppraisal = this.newLoanService.getTotalAppraisal();
-        if (principalLoan < totalAppraisal) {
-          advInt = principalLoan * (interestRate / 100);
-          // this.newLoan.controls.advanceInterest.setValue(advInt);
-        }
-        if (principalLoan > totalAppraisal) {
-          advInt = totalAppraisal * (interestRate / 100);
-          // this.newLoan.controls.advanceInterest.setValue(advInt);
-        }
-        
-        console.log('Rate in +> ' + this.newLoanService.getInterestRate());
-        console.log('totalAppraisal in +> ' + totalAppraisal);
-        console.log('advInt in +> ' + advInt);
-        console.log('totalAppraisal in +> ' + totalAppraisal);
-        console.log('principal in +> ' + principalLoan);
+      let advanceInterest =
+        this.newLoanService.getAdvanceInterest(principalLoan);
+      this.newLoan.controls.advanceInterest.setValue(advanceInterest);
+      let advanceServiceCharge =
+        this.newLoanService.getAdvanceServiceCharge(principalLoan);
+      this.newLoan.controls.advanceServiceCharge.setValue(advanceServiceCharge);
+      let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
+      this.newLoan.controls.netProceed.setValue(netProceed);
 
-        // this.newLoan
-        // .get('advanceServiceCharge')
-        // .setValue(this.newLoanService.getAdvanceServiceCharge(principalLoan));
-
-      }
-      
-      // netProceed = advInt + principalLoan + this.newLoanService.getAdvanceServiceCharge(principalLoan);
-      // if(principalLoan > totalAppraisal )
-      //     netProceed = advInt + principalLoan + totalAppraisal;
-    });
+      this.newLoan.controls.category.disable();
+      this.newLoan.controls.categoryDescriptions.disable();
+      this.newLoan.controls.descriptions.disable();
+      this.newLoan.controls.appraisalValue.disable();
+    }); //end of computetation
 
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
 
-      let intRate = '0%';
+      let intRate = this.newLoanService.getInterestRate();
       this.newLoan.controls.totalAppraisal.setValue(
         this.newLoanService.getTotalAppraisal()
       );
 
-      // if (items.some((s) => s.category === 'Gold')) intRate = '3.00 %';
-      // if (items.some((s) => s.category === 'Appliance')) intRate = '5.00 %';
-      this.newLoan.controls.interestRate.setValue(intRate);
+      this.newLoan.controls.interestRate.setValue(intRate.toFixed(2) + ' %');
     });
 
     setTimeout(() => {
@@ -190,7 +165,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onAdd() {
     let id = this.dataSource.data.length + 1;
-      
+
     let categoryName: Select = this.categories.find(
       ({ id }) => id == this.newLoan.controls.category.value
     );
@@ -208,16 +183,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       appraisalValue: this.newLoan.controls.appraisalValue.value,
     };
     this.itemService.add(item);
-    this.resetAddItems();
-  }
-
-  onClear() {
-    Object.keys(this.newLoan.controls).forEach((key) => {
-      this.newLoan.get(key).setErrors(null);
-    });
-    Object.keys(this.newLoan.controls).forEach((key) => {
-      this.newLoan.get(key).updateValueAndValidity();
-    });
     this.resetAddItems();
   }
 
@@ -251,7 +216,40 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     this.serviceSubscribe.unsubscribe();
   }
 
+  toCompute() {
+    document.getElementById('principal').focus();
+    this.newLoan.controls.principalLoan.setValue('');
+    this.reset();
+  }
+
   home() {
+    this.itemService.clear();
     this.router.navigateByUrl('/dashboard');
+  }
+
+  reset() {
+    if (this.itemService.items.length == 0) {
+      this.newLoan.controls.category.enable();
+      this.categoryRef.focus();
+    }
+
+    this.newLoan.controls.categoryDescriptions.enable();
+    this.newLoan.controls.descriptions.enable();
+    this.newLoan.controls.appraisalValue.enable();
+  }
+
+  validateItemEntery() {
+    let appVal: string = this.newLoan.controls.appraisalValue.value;
+
+    if (
+      this.newLoan.controls.descriptions.valid &&
+      this.newLoan.controls.category.value !== '' &&
+      this.newLoan.controls.categoryDescriptions.valid &&
+      !(+appVal.toString().replace(/[^\d.-]/g, '') == 0 && appVal === '')
+    ) {
+      this.isAddItem = false;
+    } else {
+      this.isAddItem = true;
+    }
   }
 }
