@@ -113,9 +113,9 @@
               {{ category.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="newLoan.get('category').hasError('required')"
+          <!-- <mat-error *ngIf="newLoan.get('category').hasError('required')"
             >Category Required</mat-error
-          >
+          > -->
         </mat-form-field>
         <mat-form-field class="category-description">
           <button
@@ -140,10 +140,10 @@
               {{ categoryDescription.name }}
             </mat-option>
           </mat-select>
-          <mat-error
+          <!-- <mat-error
             *ngIf="newLoan.get('categoryDescriptions').hasError('required')"
             >Category Desccription Required</mat-error
-          >
+          > -->
         </mat-form-field>
         <mat-form-field class="description">
           <input
@@ -153,9 +153,9 @@
             formControlName="descriptions"
             tabindex="3"
           />
-          <mat-error *ngIf="newLoan.get('descriptions').hasError('required')"
+          <!-- <mat-error *ngIf="newLoan.get('descriptions').hasError('required')"
             >Item Desccription Required</mat-error
-          >
+          > -->
         </mat-form-field>
         <mat-form-field class="appraisal-value">
           <input
@@ -167,9 +167,9 @@
             formControlName="appraisalValue"
             tabindex="4"
           />
-          <mat-error *ngIf="newLoan.get('appraisalValue').hasError('required')"
+          <!-- <mat-error *ngIf="newLoan.get('appraisalValue').hasError('required')"
             >Appraisal Value Required</mat-error
-          >
+          > -->
         </mat-form-field>
         <div>
           <button
@@ -282,6 +282,7 @@
         <input
           #principalLoanRef
           id="principal"
+          [inputMask]="currencyInputMask"
           class="form-control"
           maxlength="15"
           tabindex="8"

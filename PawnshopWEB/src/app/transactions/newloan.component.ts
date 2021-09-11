@@ -84,7 +84,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       category: ['', [Validators.required]],
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
-      appraisalValue: ['', [Validators.required]],
+      appraisalValue: [0.0, [Validators.required]],
       totalAppraisal: [0.0],
       principalLoan: [0.0],
       interestRate: ['0.00 %'],
@@ -95,13 +95,16 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.newLoan.statusChanges.subscribe(() => {
+    this.newLoan.valueChanges.subscribe(() => {
       this.validateItemEntery();
+            
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
+
     //compute during input of principal loan
     this.newLoan.controls.principalLoan.valueChanges.subscribe((principal) => {
+      
       let principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
       let totalApp: number = this.newLoanService.getTotalAppraisal();
       if (principalLoan > totalApp) {
@@ -120,11 +123,12 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
       this.newLoan.controls.netProceed.setValue(netProceed);
 
-      this.newLoan.controls.category.disable();
-      this.newLoan.controls.categoryDescriptions.disable();
-      this.newLoan.controls.descriptions.disable();
-      this.newLoan.controls.appraisalValue.disable();
+      // this.newLoan.controls.category.disable();
+      // this.newLoan.controls.categoryDescriptions.disable();
+      // this.newLoan.controls.descriptions.disable();
+      // this.newLoan.controls.appraisalValue.disable();
     }); //end of computetation
+
 
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
@@ -232,7 +236,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       this.newLoan.controls.category.enable();
       this.categoryRef.focus();
     }
-
     this.newLoan.controls.categoryDescriptions.enable();
     this.newLoan.controls.descriptions.enable();
     this.newLoan.controls.appraisalValue.enable();
