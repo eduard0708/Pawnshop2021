@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Pawner } from '../_model/pawner';
 
 @Component({
@@ -28,7 +28,11 @@ export class PawnerInfoComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     this.pawnerInfo = this.pawner;
+    console.log(this.pawnerInfo.firstName);
+    console.log(this.pawner);
+    
   }
+
 
   writeValue(obj: any): void {
     throw new Error('Method not implemented.');
@@ -42,22 +46,5 @@ export class PawnerInfoComponent implements OnInit, ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
   }
-
-
-  // pawnerInfo:FormGroup;
-
-  // constructor(private fb: FormBuilder) { 
-  //   this.pawnerInfo = this.fb.group({
-  //     id:[Validators.required],
-  //     firstName:[Validators.required],
-  //     lastName:[Validators.required],
-  //     contactNumber:[Validators.required],
-  //     city:[Validators.required],
-  //     barangay:[Validators.required],
-  //     completeAddress:[Validators.required]
-  //   });
-  // }
-
-
 
 }

@@ -8,11 +8,10 @@ import { DashboardService } from '../_service/dashboard.service';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  dataForCard: TransactionCard[] = [
-    { transactionCount: 0, transactionName: '', transactionTotal: 0 },
-  ];
-  transactionType: string;
 
+  dataForCard: TransactionCard[] = [];
+  transactionType: string;
+  
   constructor(private dashboardService:DashboardService, private dialog: MatDialog) {}
 
   ngOnInit(): void {

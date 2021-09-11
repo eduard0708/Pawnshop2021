@@ -3,7 +3,6 @@
     {{ transactionType }}
   </h3>
 
-
   <div class="my-2 d-block">
     <ng-container *ngIf="!isDataSource">
     <mat-form-field appearance="legacy" style="width: 100%">
@@ -15,9 +14,9 @@
         matInput
         tabindex="1"
         placeholder="Press Enter to Submit"
-        #elContactNumber
-        [(ngModel)]="contactNumber"
-        (keyup.enter)="findPawner()"
+        #searchIdRef
+        [(ngModel)]="searchId"
+        (keyup.enter)="getTransaction(transactionType)"
       />
       <!-- <mat-icon matSuffix tabindex="2" (click)="search()" (keyup.enter)="search()"> search</mat-icon> -->
     </mat-form-field>

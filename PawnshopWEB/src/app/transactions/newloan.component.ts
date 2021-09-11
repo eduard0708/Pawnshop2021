@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
@@ -17,9 +16,11 @@ import { Subscription } from 'rxjs';
 import { Item } from '../_model/item';
 import { Pawner } from '../_model/pawner';
 import { Select } from '../_model/select';
+import { Transaction } from '../_model/transaction';
 import { ItemService } from '../_service/item.service';
 import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
+import { RedeemService } from '../_service/redeem.service';
 
 @Component({
   selector: 'app-newloan',
@@ -48,6 +49,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
   isDisable = false;
   isAddItem = true;
+  isBtnSave = true;
   displayColumns: string[] = [
     'category',
     'categoryDescription',
@@ -66,7 +68,9 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private fb: FormBuilder,
     private itemService: ItemService,
-    private newLoanService: NewloanService
+    private newLoanService: NewloanService,
+    private notifier: NotifierService,
+    private redeem: RedeemService
   ) {
     // get the pawner information from the params of the link
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -77,6 +81,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.newLoan = fb.group({
+      pawner: [],
       dateTransaction: [this.today],
       dateGranted: [this.today],
       dateMature: [this.dateMature],
@@ -85,26 +90,28 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: [0.0, [Validators.required]],
+      pawnedItems: [],
       totalAppraisal: [0.0],
       principalLoan: [0.0],
       interestRate: ['0.00 %'],
       advanceInterest: [0.0],
       advanceServiceCharge: [0.0],
       netProceed: [0.0],
+      test: [],
     });
   }
 
   ngOnInit(): void {
+
+    this.newLoan.controls.principalLoan.disable();
     this.newLoan.valueChanges.subscribe(() => {
       this.validateItemEntery();
-            
+
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
-
     //compute during input of principal loan
     this.newLoan.controls.principalLoan.valueChanges.subscribe((principal) => {
-      
       let principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
       let totalApp: number = this.newLoanService.getTotalAppraisal();
       if (principalLoan > totalApp) {
@@ -113,9 +120,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
         );
         principalLoan = this.newLoanService.getTotalAppraisal();
       }
-
-      let advanceInterest =
-        this.newLoanService.getAdvanceInterest(principalLoan);
+  let advanceInterest = this.newLoanService.getAdvanceInterest(principalLoan);
       this.newLoan.controls.advanceInterest.setValue(advanceInterest);
       let advanceServiceCharge =
         this.newLoanService.getAdvanceServiceCharge(principalLoan);
@@ -123,8 +128,12 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
       this.newLoan.controls.netProceed.setValue(netProceed);
 
+      if (principalLoan > 0) {
+        this.isBtnSave = false;
+      } else {
+        this.isBtnSave = true;
+      }
     }); //end of computetation
-
 
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
@@ -133,8 +142,12 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       this.newLoan.controls.totalAppraisal.setValue(
         this.newLoanService.getTotalAppraisal()
       );
-
       this.newLoan.controls.interestRate.setValue(intRate.toFixed(2) + ' %');
+      if (items.length == 0) {
+        this.newLoan.controls.principalLoan.disable();
+      } else {
+        this.newLoan.controls.principalLoan.enable();
+      }
     });
 
     setTimeout(() => {
@@ -164,6 +177,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onAdd() {
+    
     let id = this.dataSource.data.length + 1;
 
     let categoryName: Select = this.categories.find(
@@ -237,6 +251,43 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     this.newLoan.controls.categoryDescriptions.enable();
     this.newLoan.controls.descriptions.enable();
     this.newLoan.controls.appraisalValue.enable();
+  }
+
+  principalLoanFocus() {
+    this.newLoan.controls.categoryDescriptions.disable();
+    this.newLoan.controls.descriptions.disable();
+    this.newLoan.controls.appraisalValue.disable();
+
+    console.log(this.newLoan.controls.categoryDescriptions.valid);
+  }
+
+  onSave() {
+    let pawner = this.pawner;
+    let items = this.itemService.items;
+    let intRate: string = this.newLoan.controls.interestRate.value;
+    this.newLoan.controls.pawnedItems.setValue(items);
+    this.newLoan.controls.pawner.setValue(pawner);
+
+    let transaction: Transaction = {
+      transactionId:1,
+      pawner: pawner,
+      dateTransaction: this.newLoan.controls.dateTransaction.value,
+      dateGranted: this.newLoan.controls.dateGranted.value,
+      dateMature: this.newLoan.controls.dateMature.value,
+      dateExpired: this.newLoan.controls.dateExpired.value,
+      pawnedItems: items,
+      totalAppraisal: this.newLoan.controls.totalAppraisal.value,
+      principalLoan: this.newLoan.controls.principalLoan.value,
+      interestRate: parseFloat(intRate.toString().replace(/[^\d.-]/g, '')),
+      advanceInterest: this.newLoan.controls.advanceInterest.value,
+      advanceServiceCharge: this.newLoan.controls.advanceServiceCharge.value,
+      netProceed: this.newLoan.controls.netProceed.value,
+    };
+    this.notifier.showNotification('Success new loan' ,'ok','success',{})
+    console.log(transaction);
+    this.itemService.clear();
+    this.newLoanService.addTrasaction(transaction);
+    this.router.navigateByUrl('/dashboard')
   }
 
   validateItemEntery() {

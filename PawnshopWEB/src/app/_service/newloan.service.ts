@@ -1,11 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Transaction } from '../_model/transaction';
 import { ItemService } from './item.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewloanService {
-  constructor(private itemService: ItemService) {}
+
+  uri:string = 'http://localhost:3000/';
+
+  constructor(private itemService: ItemService, private http:HttpClient) {}
 
   getAdvanceServiceCharge(principalLoan: number) {
     let advanceInterest = 0;
@@ -30,10 +35,9 @@ export class NewloanService {
       this.itemService.items.forEach((s) => {
         totalAppraisal =
           +s.appraisalValue.toString().replace(/[^\d.-]/g, '') + totalAppraisal;
-      })
-    } return totalAppraisal
-    
-    
+      });
+    }
+    return totalAppraisal;
   }
 
   getAdvanceInterest(principalLoan: number) {
@@ -46,4 +50,9 @@ export class NewloanService {
 
     return 0;
   }
+  
+  addTrasaction(transaction:Transaction){
+    this.http.post(this.uri+ 'transaction', transaction).subscribe();
+  }
+    
 }

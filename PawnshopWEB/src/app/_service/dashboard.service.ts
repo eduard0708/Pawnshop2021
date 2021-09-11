@@ -14,4 +14,6 @@ export class DashboardService {
   getCardDetails() {
     return this.http.get<TransactionCard[]>(this.uri + 'cardData');
   }
+
+  
 }

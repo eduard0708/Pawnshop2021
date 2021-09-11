@@ -1,43 +1,74 @@
 {
-
-  "category":[
+  "transaction": [
     {
-      "id":1,
-      "name":"Gold"
-    },
-    {
-      "id":2,
-      "name":"Appliance"
+      
+      "transactionId": 1,
+      "advanceInterest": 25,
+      "advanceServiceCharge": 5,
+      "dateExpired": "Tue Jan 11 2022 13:42:11 GMT+0300 (Arabian Standard Time)",
+      "dateGranted": "Sat Sep 11 2021 13:42:11 GMT+0300 (Arabian Standard Time)",
+      "dateMature": "Mon Oct 11 2021 13:42:11 GMT+0300 (Arabian Standard Time)",
+      "dateTransaction": " Sat Sep 11 2021 13:42:11 GMT+0300 (Arabian Standard Time)",
+      "netProceed": 530,
+      "pawnedItems": [
+        {
+          "id": 1,
+          "categoryId": 2,
+          "categoryName": "Appliance",
+          "categoryDescriptionId": 1,
+          "categoryDescriptionName": "18k Bracelet"
+        }
+      ],
+      "pawner": [
+        {
+          "id": 1,
+          "firstName": "Filimon",
+          "lastName": "Tropico",
+          "contactNumber": 1,
+          "city": "Passi"
+        }
+      ],
+      "principalLoan": "₱ 500.00"
     }
   ],
 
-  "categoryDescription":[
+  "category": [
     {
-      "id":1,
-      "name":"18k Bracelet"
+      "id": 1,
+      "name": "Gold"
     },
     {
-      "id":2,
-      "name":"21k Necklace"
-    },
-    {
-      "id":3,
-      "name":"18k Bracelet"
-    },
-    {
-      "id":4,
-      "name":"21k Necklace"
-    },
-    {
-      "id":5,
-      "name":"18k Bracelet"
-    },
-    {
-      "id":6,
-      "name":"21k Necklace"
+      "id": 2,
+      "name": "Appliance"
     }
   ],
-  
+
+  "categoryDescription": [
+    {
+      "id": 1,
+      "name": "18k Bracelet"
+    },
+    {
+      "id": 2,
+      "name": "21k Necklace"
+    },
+    {
+      "id": 3,
+      "name": "18k Bracelet"
+    },
+    {
+      "id": 4,
+      "name": "21k Necklace"
+    },
+    {
+      "id": 5,
+      "name": "18k Bracelet"
+    },
+    {
+      "id": 6,
+      "name": "21k Necklace"
+    }
+  ],
 
   "cardData": [
     {
@@ -64,159 +95,30 @@
   "pawner": [
     {
       "id": "1",
-      "firstName": "mica",
-      "lastName": "fox",
+      "firstName": "Mica",
+      "lastName": "Fox",
       "contactNumber": "123",
       "city": "Iloilo",
-      "barangay":"Infante",
-      "conpleteAddress":"Molo Iloilo City"
+      "barangay": "Infante",
+      "conpleteAddress": "Molo Iloilo City"
     },
     {
-      "id": "2",
-      "firstName": "fili",
-      "lastName": "mon",
-      "contactNumber": "1234",
-      "city": "Passi"
-    },
-    {
-      "id": "3",
-      "firstName": "rom",
-      "lastName": "mel",
-      "contactNumber": "12345",
-      "city": "Butuan"
-    },
-    {
-      "firstName": "asdfa",
-      "lastName": "sadfa",
-      "contactNumber": "1",
-      "conpleteAddress": "asfa",
-      "id": "bwb0RCV"
-    },
-    {
-      "firstName": "bebang",
-      "lastName": "amao",
-      "contactNumber": "10",
-      "conpleteAddress": "adfa",
-      "id": "bBV44A_"
-    },
-    {
-      "firstName": "",
-      "lastName": "",
-      "contactNumber": "",
-      "conpleteAddress": "",
-      "id": "HvgllyR"
-    },
-    {
-      "firstName": "kissy",
-      "lastName": "amao",
-      "contactNumber": "10",
-      "conpleteAddress": "sfa",
-      "id": "fDYkBK9"
-    },
-    {
-      "firstName": "sdgsdgqsd",
-      "lastName": "",
-      "contactNumber": "",
-      "conpleteAddress": "",
-      "id": "W-nmo2A"
-    },
-    {
-      "firstName": "asdfasd",
-      "lastName": "123",
-      "contactNumber": "asfsadf",
-      "conpleteAddress": "123",
-      "id": "XxCtE7i"
-    },
-    {
-      "firstName": "adfasf",
-      "lastName": "asfda",
-      "contactNumber": "132132",
-      "conpleteAddress": "asdfasdf",
-      "id": "mHgVP08"
-    },
-    {
-      "firstName": "sadfas",
-      "lastName": "wsdfasf",
-      "contactNumber": "123132",
-      "conpleteAddress": "sdfa",
-      "id": "hd3pgT5"
-    },
-    {
-      "firstName": "sdfas",
-      "lastName": "asdfqs",
-      "contactNumber": "1213",
-      "conpleteAddress": "123",
-      "id": "jGrHSXL"
-    },
-    {
-      "firstName": "safas",
-      "lastName": "sdfasf",
-      "contactNumber": "asdfas",
-      "conpleteAddress": "1231",
-      "id": "nWITfpR"
-    },
-    {
-      "firstName": "afa",
-      "lastName": "sfsa",
-      "contactNumber": "sdfas",
-      "conpleteAddress": "132132",
-      "id": "EwZLJln"
-    },
-    {
-      "firstName": "asdAD",
-      "lastName": "SDADF132",
-      "contactNumber": "SAD1F31",
-      "conpleteAddress": "FA",
-      "id": "RMwt-24"
-    },
-    {
-      "firstName": "asdfa",
-      "lastName": "asfda",
-      "contactNumber": "adf",
-      "conpleteAddress": "adf",
-      "id": "4q8W8pe"
-    },
-    {
-      "firstName": "dfa",
-      "lastName": "asdf",
-      "contactNumber": "asdf",
-      "conpleteAddress": "safa",
-      "id": "KRcKSJc"
-    },
-    {
-      "firstName": "asfa",
-      "lastName": "asf",
-      "contactNumber": "asdfa",
-      "conpleteAddress": "asdfa",
-      "id": "NAZzR2B"
-    },
-    {
-      "firstName": "eduard",
-      "lastName": "uyo",
+      "id": "1",
+      "firstName": "Romel",
+      "lastName": "Paclibar",
       "contactNumber": "123",
-      "conpleteAddress": "asdf",
-      "id": "Nn3YlPW"
+      "city": "Butuan",
+      "barangay": "Barangay Butuan",
+      "conpleteAddress": "Butuan City"
     },
     {
-      "firstName": "mica",
-      "lastName": "sdafa",
-      "contactNumber": "asdfas",
-      "conpleteAddress": "sadfas",
-      "id": "bsyvaDV"
-    },
-    {
-      "firstName": "asdf",
-      "lastName": "asdfa",
-      "contactNumber": "asd12313",
-      "conpleteAddress": "1321",
-      "id": "xddD9vj"
-    },
-    {
-      "firstName": "eduard",
-      "lastName": "uytoco",
-      "contactNumber": "1122",
-      "conpleteAddress": "Iloilo",
-      "id": "TPuRUif"
+      "id": "1",
+      "firstName": "Filimon",
+      "lastName": "Tropico",
+      "contactNumber": "1",
+      "city": "Passei",
+      "barangay": "Barangay Passi",
+      "conpleteAddress": "Purok passi city"
     }
   ]
 }

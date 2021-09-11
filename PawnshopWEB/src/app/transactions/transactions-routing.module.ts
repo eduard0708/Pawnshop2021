@@ -9,7 +9,7 @@ import { TransactionsComponent } from './transactions.component';
 const routes: Routes = [{ path: '', component: TransactionsComponent,
 children:[
   {path:'newloan/:pawner', component:NewloanComponent},
-  {path:'redeem', component:RedeemComponent},
+  {path:'redeem/:transaction', component:RedeemComponent},
   {path:'partial', component:PartialComponent},
   {path:'additional', component:AdditionalComponent},
 ]
