@@ -123,10 +123,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
       let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
       this.newLoan.controls.netProceed.setValue(netProceed);
 
-      // this.newLoan.controls.category.disable();
-      // this.newLoan.controls.categoryDescriptions.disable();
-      // this.newLoan.controls.descriptions.disable();
-      // this.newLoan.controls.appraisalValue.disable();
     }); //end of computetation
 
 
@@ -193,6 +189,8 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   delete(item: Item) {
     this.itemService.delete(item.id);
     if (this.dataSource.data.length == 0) this.resetAddItems();
+
+    this.reset();
   }
 
   setTransacitonDate() {
