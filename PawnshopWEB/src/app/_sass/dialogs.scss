@@ -1,26 +1,61 @@
-.material-icons {
-  :hover {
-    background-color: aquamarine !important;
+//start dailog-newpawner.component new pawner dialog scss
+.newpawner-wrapper {
+  display: grid;
+  grid-template-columns: 14% 14% 12% 15% 18% 20%;
+  align-items: center;
+  gap: 0.6rem;
+  mat-form-field {
+    width: 100%;
   }
 }
-//dailog-newpawner.component new pawner dialog scss
-.newpawner-wrapper {
-    display: grid;
-    grid-template-columns: 15% 15% 10% 15% 20% 25% ;
-    mat-form-field{
-        width: 90%;
-    }
-    margin: 1rem auto;
-}
-.button-wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    button{
-        width: 15%;
-        margin: 1rem;
-    }   
-}
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
 
+  button {
+    width: 15%;
+    margin: 1rem;
+  }
+}
+//end dailog-newpawner.component new pawner dialog scss
+//start dialog-newcity.component scxx
+.newcity-header{
+  width: 32%;
+  position: absolute;
+  margin: -3rem 0 0;
+  .city-title{
+    color: white;
+    padding: .5rem;
+    text-align: center;
+    font-weight: 50;
+    font-size: large;
+    font-family: monospace;
+  }
+  
+}
+.newcity-wrapper {
+  margin: 0 auto;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .city-input {
+    width: 11rem;
+  }
+}
+.ciyt-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  .btn-city {
+    width: 30%;
+    margin: 0.5rem;
+  }
+}
+//end dialog-newcity.component scxx

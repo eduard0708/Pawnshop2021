@@ -1,0 +1,43 @@
+<form [formGroup]="cityForm" autocomplete="off">
+    <div class="newcity-header">
+        <h3 class="city-title  shadow rounded bg-info">Add-Edit City</h3>
+    </div>
+  <mat-divider class="pb-3" style="width: 90%; margin: 0 auto"> </mat-divider>
+
+  <div class="newcity-wrapper">
+    <div>
+      <mat-form-field>
+        <mat-label class="font-monospace">City Name</mat-label>
+        <input class="city-input font-monospace" #cityNameRef tabindex="1" type="text" matInput formControlName="cityName" />
+      </mat-form-field>
+    </div>
+    <div>
+      <button [disabled]="isAdd" (click)="add()" class="btn-primary" tabindex="2" mat-mini-fab><mat-icon>add</mat-icon></button>
+    </div>
+    <div>
+        <button [disabled]="isAdd" (click)="search()" class="btn-info" tabindex="3" mat-mini-fab><mat-icon>search</mat-icon></button>
+       </div>
+  </div>
+
+  <div class="ciyt-button-wrapper">
+    <button
+
+      (click)="reset()"
+      tabindex="4"
+      mat-raised-button
+      class="btn-primary font-monospace btn-city"
+    >
+      <mat-icon>restart_alt</mat-icon>
+      Reset
+    </button>
+    <button
+      (click)="cancel()"
+      tabindex="5"
+      mat-raised-button
+      class="btn-danger font-monospace btn-city" 
+    >
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </div>
+</form>

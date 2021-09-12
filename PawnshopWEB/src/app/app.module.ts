@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { DialogNewcityComponent } from './_dialogs/dialog-newcity.component';
+import { DialogNewbarangayComponent } from './_dialogs/dialog-newbarangay.component';
 
 @NgModule({
 declarations: [
@@ -34,6 +36,8 @@ declarations: [
     DialogTransacitonComponent,
     DialogNewpawnerComponent,
     NotifierComponent,
+    DialogNewcityComponent,
+    DialogNewbarangayComponent,
   ],
   imports: [
     BrowserModule,

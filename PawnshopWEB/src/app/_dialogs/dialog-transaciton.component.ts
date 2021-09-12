@@ -15,7 +15,6 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NotifierConfig } from '../_model/notifier-config';
 import { Pawner } from '../_model/pawner';

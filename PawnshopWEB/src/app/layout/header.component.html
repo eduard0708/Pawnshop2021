@@ -3,7 +3,7 @@
         <mat-icon>menu</mat-icon>
       </button>
     <span>GoldWin</span>
-
+   
     <div class="header-menu">
         <ul>
             <li tabindex="-1" routerLink="/transactions/newloan/{}"><a>NewLoan</a></li>
@@ -14,9 +14,23 @@
     </div>
       
     <span class="header-spacer"></span>
-    <button tabindex="-1" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
+    <button tabindex="-1" [matMenuTriggerFor]="menu" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>settings</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="addCity()">
+        <mat-icon>layers</mat-icon>
+        <span>City</span>
+      </button>
+      <button mat-menu-item (click)="addBarangay()">
+        <mat-icon>terrain</mat-icon>
+        <span>Barangay</span>
+      </button>
+      <button mat-menu-item (click)="addPawner()">
+        <mat-icon>person_add_alt</mat-icon>
+        <span>Pawner</span>
+      </button>
+    </mat-menu>
     <button tabindex="-1" routerLink='' mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>logout</mat-icon>
     </button>

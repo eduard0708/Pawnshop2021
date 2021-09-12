@@ -8,7 +8,7 @@
       <div>
         <mat-form-field>
           <mat-label>First Name</mat-label>
-          <input tabindex="1" type="text" matInput formControlName="firstName" />
+          <input #firstNameRef tabindex="1" type="text" matInput formControlName="firstName" />
         </mat-form-field>
       </div>
       <div>
@@ -25,14 +25,14 @@
       </div>
       <div>
         <mat-form-field>
-          <mat-select tabindex="4" placeholder="City"  name="city">
+          <mat-select tabindex="4" placeholder="City"  name="city" formControlName="city">
             <mat-option *ngFor="let city of cities " [value]="city.id">{{city.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <mat-select tabindex="5" placeholder="Barangay"  name="city">
+          <mat-select tabindex="5" placeholder="Barangay" name="city" formControlName="barangay">
             <mat-option *ngFor="let barangay of barangays " [value]="barangay.id">{{barangay.name}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -49,13 +49,14 @@
       <button
         tabindex="7"
         mat-raised-button
+        [disabled]="isSave"
         class="btn-success font-monospace"
         (click)="createPawner()"
       >  <mat-icon>save</mat-icon>
         Save
       </button>
       <button
-        (click)="cancel()"
+        (click)="reset()"
         tabindex="8"
         mat-raised-button
         class="btn-primary font-monospace"
