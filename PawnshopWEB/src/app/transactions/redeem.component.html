@@ -10,7 +10,6 @@
 
   <!-- start wrapper for 70% pawner and 30% computation -->
   <div class="transaction-wrapper">
-
     <div class="pawner-items-wrapper">
       <!--start pawner information -->
       <div class="pawner-information">
@@ -21,38 +20,38 @@
       <!--end pawner information -->
 
       <!-- start dates computation  -->
-        <div class="dates-computation">
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Years</span>
-            <input
-              tabindex="-1"
-              class="form-control dates-input"
-              type="text"
-              value="1"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Months</span>
-            <input
-              tabindex="-1"
-              class="form-control" 
-              type="text"
-              value="5"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Days</span>
-            <input
-              tabindex="-1"
-              class="form-control"
-              type="text"
-              value="23"
-              readonly
-            />
-          </div>
+      <div class="dates-computation">
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label">Years</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input"
+            type="text"
+            value="1"
+            readonly
+          />
         </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label">Months</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            type="text"
+            value="5"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label">Days</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            type="text"
+            value="23"
+            readonly
+          />
+        </div>
+      </div>
       <!-- start dates computation -->
 
       <!-- start mat-table here -->
@@ -98,7 +97,7 @@
         </table>
         <mat-paginator
           class="shadow"
-          [pageSizeOptions]="[3,5,10]"
+          [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
         ></mat-paginator>
       </div>
@@ -108,20 +107,7 @@
     </div>
 
     <!-- start computation title -->
-    <h2
-      class="shadow font-monospace text-white"
-      style="
-        position: absolute;
-        border-radius: 5px;
-        margin: 8px 72% 0;
-        width: 26%;
-        padding: 4px;
-        background-color: rgb(31, 97, 241);
-        text-align: center;
-      "
-    >
-      New Loan Computation
-    </h2>
+    <h2 class="shadow font-monospace computation-title">New Loan Computation</h2>
     <!-- start computation title -->
 
     <div class="computation">

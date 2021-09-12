@@ -8,3 +8,14 @@
     }   
 }
 //end scss of component pawner information 
+
+//start for newloan only scss of component pawner information 
+.newloan-pawner-component{
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 20% 25% 25% 15% 15%;
+    mat-form-field{
+        width: 90%;
+    }   
+}
+//end for newloan only scss of component pawner information //end scss of component pawner information 

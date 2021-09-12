@@ -1,26 +1,19 @@
-<form [formGroup]="newLoan" (ngSubmit)="onSave()" autocomplete="off">
-  <h2
-    class="shadow font-monospace text-white"
-    style="
-      position: absolute;
-      border-radius: 5px;
-      margin: 3px 9.5% 0;
-      width: 50%;
-      padding: 2px;
-      background-color: rgb(31, 97, 241);
-      text-align: center;
-    "
-  >
-    New Loan Pawner Information
-  </h2>
+<form [formGroup]="newLoanForm" (ngSubmit)="onSave()" autocomplete="off">
+  <div class="shadow-sm text-white newloan-title">
+    <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
+    <h2 class="text-center font-monospace trasaction-title">
+      New Laon Pawner Information
+    </h2>
+  </div>
+
   <div class="newloan-wrapper">
     <div class="pawner-items">
       <div class="info-date">
         <div class="newloan-pawner">
-          <app-pawner-info [pawner]="pawner"></app-pawner-info>
+          <app-pawner-info [pawnerInfo]="pawnerInfo"></app-pawner-info>
         </div>
         <!-- newloan dates start -->
-        <div class="newloan-dates">
+        <!-- <div class="newloan-dates">
           <div>
             <mat-form-field class="form-date">
               <input
@@ -93,7 +86,7 @@
               <mat-datepicker #dateExpired></mat-datepicker>
             </mat-form-field>
           </div>
-        </div>
+        </div> -->
         <!-- newloan dates end -->
       </div>
       <!-- items start -->
@@ -113,7 +106,7 @@
               {{ category.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="newLoan.get('category').hasError('required')"
+          <mat-error *ngIf="newLoanForm.get('category').hasError('required')"
             >Category Required</mat-error
           >
         </mat-form-field>
@@ -141,7 +134,7 @@
             </mat-option>
           </mat-select>
           <mat-error
-            *ngIf="newLoan.get('categoryDescriptions').hasError('required')"
+            *ngIf="newLoanForm.get('categoryDescriptions').hasError('required')"
             >Category Desccription Required</mat-error
           >
         </mat-form-field>
@@ -153,7 +146,8 @@
             formControlName="descriptions"
             tabindex="3"
           />
-          <mat-error *ngIf="newLoan.get('descriptions').hasError('required')"
+          <mat-error
+            *ngIf="newLoanForm.get('descriptions').hasError('required')"
             >Item Desccription Required</mat-error
           >
         </mat-form-field>
@@ -167,7 +161,8 @@
             formControlName="appraisalValue"
             tabindex="4"
           />
-          <mat-error *ngIf="newLoan.get('appraisalValue').hasError('required')"
+          <mat-error
+            *ngIf="newLoanForm.get('appraisalValue').hasError('required')"
             >Appraisal Value Required</mat-error
           >
         </mat-form-field>
@@ -252,18 +247,7 @@
       <!-- table end -->
       <!-- computation start -->
     </div>
-    <h2
-      class="shadow font-monospace text-white"
-      style="
-        position: absolute;
-        border-radius: 5px;
-        margin: 8px 72% 0;
-        width: 26%;
-        padding: 4px;
-        background-color: rgb(31, 97, 241);
-        text-align: center;
-      "
-    >
+    <h2 class="shadow font-monospace computation-title">
       New Loan Computation
     </h2>
     <div class="computation">

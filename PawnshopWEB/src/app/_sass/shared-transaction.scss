@@ -1,5 +1,4 @@
 // this scss is share to same with additional partial and reedem
-
 //start pawner information title and transaction number
 .pawner-title {
   position: absolute;
@@ -82,14 +81,26 @@
       .mat-row {
         height: 2rem !important;
       }
-    }
-  
+    } 
   }
+
+  .computation-title{
+    position: absolute;
+    border-radius: 5px;
+    margin: 8px 72% 0;
+    width: 26%;
+    padding: 4px;
+    color:white;
+    background-color: rgb(31, 97, 241);
+    text-align: center;
+  }
+
 
   // computation 30% area
   .computation {
     padding: 4rem 2.5rem 0;
     background-color: rgb(209, 230, 240);
+    
   }
 }
 //remove input number arrow up/down
