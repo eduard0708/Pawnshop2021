@@ -79,8 +79,8 @@ export class DialogTransacitonComponent implements OnInit {
 
       if (transactionType === 'New Loan') this.newLoan(+this.searchId);
       if (transactionType === 'Redeem') url = '/transactions/redeem/';
-      if (transactionType === 'Additional') url = '/transactions/additional';
-      if (transactionType === 'Partial') url = '/transactions/partial';
+      if (transactionType === 'Additional') url = '/transactions/additional/';
+      if (transactionType === 'Partial') url = '/transactions/partial/';
      
       let navigationExtras = {
         state: {

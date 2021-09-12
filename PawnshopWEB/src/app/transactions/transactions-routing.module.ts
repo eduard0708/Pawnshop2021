@@ -10,8 +10,8 @@ const routes: Routes = [{ path: '', component: TransactionsComponent,
 children:[
   {path:'newloan/:pawner', component:NewloanComponent},
   {path:'redeem/:transaction', component:RedeemComponent},
-  {path:'partial', component:PartialComponent},
-  {path:'additional', component:AdditionalComponent},
+  {path:'partial/:transaction', component:PartialComponent},
+  {path:'additional/:transaction', component:AdditionalComponent},
 ]
 }];
 

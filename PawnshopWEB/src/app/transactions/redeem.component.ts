@@ -15,7 +15,6 @@ import { RedeemService } from '../_service/redeem.service';
 })
 
 export class RedeemComponent implements OnInit {
-  public hello:string ='';
   redeemForm:FormGroup;
   public pawner:Pawner;
   public transaction:Transaction;
@@ -76,6 +75,6 @@ export class RedeemComponent implements OnInit {
   }
 
   home(){
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/dashboard');
   }
 }
