@@ -1,6 +1,9 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Pawner } from '../_model/pawner';
+import { PawnerInfo } from '../_model/pawnerInfo';
+import { Transaction } from '../_model/transaction';
+
 
 @Component({
   selector: 'app-pawner-info',
@@ -22,18 +25,14 @@ import { Pawner } from '../_model/pawner';
 export class PawnerInfoComponent implements OnInit, ControlValueAccessor {
   @Input() pawner;
 
-  pawnerInfo: Pawner;
-
   constructor() { }
 
   ngOnInit(): void {
-    this.pawnerInfo = this.pawner;
-    console.log(this.pawnerInfo.firstName);
+
     console.log(this.pawner);
     
-  }
 
-
+}
   writeValue(obj: any): void {
     throw new Error('Method not implemented.');
   }

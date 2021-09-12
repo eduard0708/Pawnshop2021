@@ -17,6 +17,7 @@ export class AdditionalComponent implements OnInit {
 
   redeemForm:FormGroup;
   public pawner:Pawner;
+  pawnerInfoWithDate = {} as any;
   public transaction:Transaction;
   displayColumns: string[] = 
   [
@@ -48,7 +49,7 @@ export class AdditionalComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       
       if (this.router.getCurrentNavigation().extras.state) {
-        this.transaction = this.router.getCurrentNavigation().extras.state.transaction;
+        this.pawnerInfoWithDate = this.router.getCurrentNavigation().extras.state.transaction;
       }
 
     });

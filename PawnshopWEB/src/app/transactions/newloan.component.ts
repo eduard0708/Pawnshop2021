@@ -44,9 +44,11 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pawner: Pawner = {} as Pawner;
   newLoan: FormGroup;
+  pawnerInfoWithDate = {} as any;
   today = new Date();
   dateMature = new Date(new Date().setMonth(new Date().getMonth() + 1));
   dateExpire = new Date(new Date().setMonth(new Date().getMonth() + 4));
+  transactionType="NewLoan";
   isDisable = false;
   isAddItem = true;
   isBtnSave = true;
@@ -102,7 +104,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+ 
     this.newLoan.controls.principalLoan.disable();
     this.newLoan.valueChanges.subscribe(() => {
       this.validateItemEntery();

@@ -34,7 +34,6 @@ declarations: [
     DialogTransacitonComponent,
     DialogNewpawnerComponent,
     NotifierComponent,
-
   ],
   imports: [
     BrowserModule,

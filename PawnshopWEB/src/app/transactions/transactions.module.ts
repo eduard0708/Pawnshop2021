@@ -7,10 +7,11 @@ import { NewloanComponent } from './newloan.component';
 import { RedeemComponent } from './redeem.component';
 import { PartialComponent } from './partial.component';
 import { AdditionalComponent } from './additional.component';
-import { PawnerInfoComponent } from '../_components/pawner-info.component';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { TransactionsPawnerInfoComponent } from '../_components/transactions-pawner-info.component';
+import { PawnerInfoComponent } from '../_components/pawner-info.component';
 
 
 
@@ -21,6 +22,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
     RedeemComponent,
     PartialComponent,
     AdditionalComponent,
+    TransactionsPawnerInfoComponent,
     PawnerInfoComponent
   ],
   imports: [

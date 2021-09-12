@@ -1,6 +1,10 @@
-//component  pawner information 
+//start scss of component pawner information 
 .pawner-info{
     padding: 1rem;
     display: grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns: 20% 25% 25% 15% 15%;
+    mat-form-field{
+        width: 90%;
+    }   
 }
+//end scss of component pawner information 

@@ -1,0 +1,136 @@
+<div class="pawner-info">
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="Contact Number"
+        value="{{ pawnerInfo.contactNumber }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="First Name"
+        value="{{ pawnerInfo.firstName }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="Last Name"
+        value="{{ pawnerInfo.lastName }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-date">
+      <input
+        tabindex="-1"
+        readonly
+        matInput
+        [matDatepicker]="dateTransaction"
+        placeholder="Date Transaction"
+        [(ngModel)]="pawnerInfo.dateTransaction"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateTransaction"
+        disabled
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateTransaction></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-date">
+      <input
+        readonly
+        tabindex="-1"
+        matInput
+        [matDatepicker]="dateGranted"
+        placeholder="Date Granted"
+        [(ngModel)]="pawnerInfo.dateGranted"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateGranted"
+        disabled
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateGranted></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="City"
+        value="{{ pawnerInfo.city }}"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="Barangay"
+        value="{{ pawnerInfo.barangay }}"
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input
+        disabled
+        matInput
+        placeholder="Complete Address"
+        value="{{ pawner.completeAddress }}"
+      />
+    </mat-form-field>
+  </div>
+ 
+  <div>
+    <mat-form-field class="form-date">
+      <input
+        readonly
+        tabindex="-1"
+        matInput
+        [matDatepicker]="dateMature"
+        placeholder="Date Mature"
+        [(ngModel)]="pawnerInfo.dateMatured"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateMature"
+        disabled
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateMature></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-date">
+      <input
+        readonly
+        tabindex="-1"
+        matInput
+        [matDatepicker]="dateExpired"
+        placeholder="Date Expire"
+        [(ngModel)]="pawnerInfo.dateExpired"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateExpired"
+        disabled
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateExpired></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
