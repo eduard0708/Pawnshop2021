@@ -57,6 +57,8 @@ export class DialogTransacitonComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    //check if newlona it will change the transaction title
+    // and the palce holder of the dialog
     if (this.transactionType === 'New Loan') {
       this.buttonNewloan = true;
       this.placeHolder = 'Contact Number';
@@ -74,22 +76,19 @@ export class DialogTransacitonComponent implements OnInit {
   getTransaction(transactionType: string) {
     // dummy only the service in real must find the transaction id
     this.dialogService.getTransaction().subscribe((data) => {
-      let url: string;
+      let url:string='';
       this.transaction = data[0];
 
       if (transactionType === 'New Loan') this.newLoan(+this.searchId);
       if (transactionType === 'Redeem') url = '/transactions/redeem/';
       if (transactionType === 'Additional') url = '/transactions/additional/';
       if (transactionType === 'Partial') url = '/transactions/partial/';
-     
       let navigationExtras = {
         state: {
           transaction: this.transaction,
         },
       };
-
       this.router.navigateByUrl(url, navigationExtras);
-
       this.dialogRef.close();
     });
   }
@@ -143,7 +142,8 @@ export class DialogTransacitonComponent implements OnInit {
     this.dialogRef.close();
     const config = new MatDialogConfig();
     config.position = { top: '5rem' };
-    config.width = '75%';
+    config.width = '90rem';
+    config.height = 'auto';
     config.disableClose = true;
 
     this.dialog.open(DialogNewpawnerComponent, config);

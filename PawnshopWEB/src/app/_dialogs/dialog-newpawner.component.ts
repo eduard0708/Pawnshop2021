@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Select } from '../_model/select';
+import { DialogsService } from '../_service/dialogs.service';
 import { PawnerService } from '../_service/pawner.service';
 
 
@@ -10,27 +12,35 @@ import { PawnerService } from '../_service/pawner.service';
   templateUrl: './dialog-newpawner.component.html',
 })
 export class DialogNewpawnerComponent implements OnInit {
-  pawnerInfo: FormGroup;
- 
+  pawnerForm: FormGroup;
+  cities:Select[]=[];
+  barangays:Select[]=[];
 
   constructor(
     private dialogRef: MatDialogRef<DialogNewpawnerComponent>,
     private pawnerService: PawnerService,
     private fb: FormBuilder,
-    private route: Router
+    private route: Router,
+    private dialogService:DialogsService
   ) {
-    this.pawnerInfo = fb.group({
+    this.pawnerForm = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       contactNumber: ['', Validators.required],
+      city: ['', Validators.required],
+      barangay: ['', Validators.required],
       conpleteAddress: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    Object.keys(this.pawnerInfo).forEach( (key)=> {
-      this.pawnerInfo.get(key).disabled;
-    })
+    // Object.keys(this.pawnerForm).forEach( (key)=> {
+    //   this.pawnerForm.get(key).disabled;
+    // })
+
+    this.dialogService.getCity().subscribe(city => this.cities = city);
+    this.dialogService.getCity().subscribe(barangay => this.barangays = barangay);
+
   }
 
   cancel() {
@@ -40,10 +50,10 @@ export class DialogNewpawnerComponent implements OnInit {
   createPawner() {
     let navigationExtras  = {
       state: {
-        pawner: this.pawnerInfo.value
+        pawner: this.pawnerForm.value
       }
     };
-    this.pawnerService.createPawner(this.pawnerInfo.value);
+    this.pawnerService.createPawner(this.pawnerForm.value);
     this.dialogRef.close();
     this.route.navigateByUrl('/transactions/newloan/', navigationExtras);
   }

@@ -1,5 +1,26 @@
-.material-icons{
-    :hover {
-        background-color: aquamarine !important;
-    }
+.material-icons {
+  :hover {
+    background-color: aquamarine !important;
+  }
 }
+//dailog-newpawner.component new pawner dialog scss
+.newpawner-wrapper {
+    display: grid;
+    grid-template-columns: 15% 15% 10% 15% 20% 25% ;
+    mat-form-field{
+        width: 90%;
+    }
+    margin: 1rem auto;
+}
+.button-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    button{
+        width: 15%;
+        margin: 1rem;
+    }   
+}
+
