@@ -7,19 +7,20 @@
   align-items: center;
   place-items: center;
   border-radius: 5px;
-  margin: 3px 9.5% 0;
-  width: 50%;
-  height: 3rem;
+  margin: 5px 6% 0;
+  width: 58%;
+  height: 2.5rem;
   padding-top: 1rem;
   background-color: rgb(55, 74, 114);
   .transaction-number {
-    width: 25%;
-    padding-left: 1rem;
+    width: 30%;
+    padding-left: 0.5rem;
+    font-size: 1rem;
     color: turquoise;
   }
   .trasaction-title {
     width: 50%;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
   }
 }
 //start pawner information and layout of the transaction
@@ -29,55 +30,64 @@
   display: grid;
   grid-template-columns: 70% 30%;
   height: 89vh;
-  //   overflow: hidden;
-
+  
   // pawner wrapper 70% area
   .pawner-items-wrapper {
-    .pawner-info {
-      // background-color: ghostwhite;
-      // width: 100%;
-      // margin: 1.5rem 1rem 0rem;
-      // border-radius: 0.5em;
-      // box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-      // padding: 0.5rem 1rem;
-      // height: 9rem;
+    .pawner-information {
+      height: 9.5rem;
+      padding-top: 1.5rem;
+      margin: 1.3rem 1rem 1rem;
+      border-radius: 0.5em;
+      background-color: rgb(224, 250, 253);
+      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
     }
-
+    .dates-computation{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      background-color: rgb(224, 250, 253);
+      height: 4rem;
+      margin: 1rem;
+      border-radius: 5px;
+      .input-group{
+        width: 8rem;
+        .dates-label{
+          width: 4rem;
+        }
+      }
+      
+    }
     .items-table {
       padding: 0 1rem;
+      
       table {
         width: 100%;
         margin: 0.5rem auto 0;
-  
-        mat-icon {
-          font-size: 20px;
-        }
       }
       .mat-column-category {
-        width: 12% !important;
+        width: 15% !important;
       }
       .mat-column-categoryDescription {
-        width: 25% !important;
+        width: 30% !important;
       }
       .mat-column-description {
-        width: 30% !important;
+        width: 40% !important;
       }
       .mat-column-appraisalValue {
         width: 15% !important;
       }
-      .mat-column-action {
-        width: 12% !important;
-      }
-  
       // .mat-header-row  .mat-row {
       //   height: 1rem !important;
       // }
+      .mat-header-row{
+        height: 2.5rem !important;
+      }
       .mat-row {
-        height: 25px !important;
+        height: 2rem !important;
       }
     }
   
-
   }
 
   // computation 30% area

@@ -1,6 +1,6 @@
 <form [formGroup]="redeemForm" (ngSubmit)="onSave()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
-  <div class="shadow text-white pawner-title">
+  <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
       Redeem Pawner Information
@@ -8,20 +8,52 @@
   </div>
   <!-- end pawner info title and transaction number -->
 
+  <!-- start wrapper for 70% pawner and 30% computation -->
   <div class="transaction-wrapper">
+
     <div class="pawner-items-wrapper">
       <!--start pawner information -->
-      <div class="pawner-info" >
-        <app-transactions-pawner-info style="background-color: tomato; width:100%"
+      <div class="pawner-information">
+        <app-transactions-pawner-info
           [transaction]="transaction"
         ></app-transactions-pawner-info>
       </div>
+      <!--end pawner information -->
 
-      <!--start pawner information -->
-
-      <!-- items start -->
-
-      <!-- items start -->
+      <!-- start dates computation  -->
+        <div class="dates-computation">
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Years</span>
+            <input
+              tabindex="-1"
+              class="form-control dates-input"
+              type="text"
+              value="1"
+              readonly
+            />
+          </div>
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Months</span>
+            <input
+              tabindex="-1"
+              class="form-control" 
+              type="text"
+              value="5"
+              readonly
+            />
+          </div>
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Days</span>
+            <input
+              tabindex="-1"
+              class="form-control"
+              type="text"
+              value="23"
+              readonly
+            />
+          </div>
+        </div>
+      <!-- start dates computation -->
 
       <!-- start mat-table here -->
       <div class="items-table">
@@ -66,7 +98,7 @@
         </table>
         <mat-paginator
           class="shadow"
-          [pageSizeOptions]="[3]"
+          [pageSizeOptions]="[3,5,10]"
           showFirstLastButtons
         ></mat-paginator>
       </div>
@@ -74,6 +106,7 @@
 
       <!-- computation start -->
     </div>
+
     <!-- start computation title -->
     <h2
       class="shadow font-monospace text-white"
@@ -169,7 +202,7 @@
       </div>
       <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
     </div>
+    <!-- computation end -->
   </div>
-
-  <!-- computation end -->
+  <!-- start wrapper for 70% pawner and 30% computation -->
 </form>
