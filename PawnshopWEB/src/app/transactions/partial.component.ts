@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Item } from '../_model/item';
-import { Pawner } from '../_model/pawner';
+import { PawnerInfo } from '../_model/pawnerInfo';
 import { Transaction } from '../_model/transaction';
 import { RedeemService } from '../_service/redeem.service';
 
@@ -14,10 +15,12 @@ import { RedeemService } from '../_service/redeem.service';
   templateUrl: './partial.component.html'
 })
 export class PartialComponent implements OnInit {
-  redeemForm:FormGroup;
-  public pawner:Pawner;
-  pawnerInfoWithDate = {} as any;
-  public transaction:Transaction;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  transaction:Transaction = {} as Transaction;
+  items:Item[] = [];
+  pawnerInfo:PawnerInfo = {} as PawnerInfo;
+  partialForm:FormGroup;
+ 
   displayColumns: string[] = 
   [
     'category',
@@ -44,32 +47,37 @@ export class PartialComponent implements OnInit {
     private router: Router
     ) 
     { 
-    // get the pawner information from the params of the link
+    // get the pawner information from the params of the link, from dialog-transaction component
+    // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
-      
       if (this.router.getCurrentNavigation().extras.state) {
-        this.pawnerInfoWithDate = this.router.getCurrentNavigation().extras.state.transaction;
+       this.transaction = this.router.getCurrentNavigation().extras.state.transaction;
+       this.items = this.transaction.pawnedItems;
+       
       }
-
     });
 
-      this.redeemForm = fb.group({
+      this.partialForm = fb.group({
         redeemAmount:[],
         dateTransaction:[],
         dateGranted:[],
-        dateMature:[],
-        dateExpire:[],
+        dateMatured:[],
+        dateExpired:[],
         totalAppraisal:[],
         transaction:[]
       });
 
+      this.dataSource = new MatTableDataSource<Item>();
     }
 
   ngOnInit(): void {
-    this.pawner = this.transaction.pawner[0];
-    
+    this.dataSource.data = this.items;
   }
 
+  ngAfterViewInit():void{
+    this.dataSource.paginator = this.paginator;
+    
+  }
   onSave(){
    
   }

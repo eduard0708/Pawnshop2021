@@ -7,88 +7,11 @@
   </div>
 
   <div class="newloan-wrapper">
-    <div class="pawner-items">
-      <div class="info-date">
-        <div class="newloan-pawner">
-          <app-pawner-info [pawnerInfo]="pawnerInfo"></app-pawner-info>
-        </div>
-        <!-- newloan dates start -->
-        <!-- <div class="newloan-dates">
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                tabindex="-1"
-                readonly
-                matInput
-                [matDatepicker]="dateTransaction"
-                placeholder="Date Transaction"
-                formControlName="dateTransaction"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateTransaction"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateTransaction></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateGranted"
-                placeholder="Date Granted"
-                formControlName="dateGranted"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateGranted"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateGranted></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateMature"
-                placeholder="Date Mature"
-                formControlName="dateMature"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateMature"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateMature></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateExpired"
-                placeholder="Date Expire"
-                formControlName="dateExpired"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateExpired></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div> -->
-        <!-- newloan dates end -->
+    <div class="pawner-items-wrapper">
+      <div class="newloan-pawner">
+        <app-pawner-info [pawnerInfo]="pawnerInfo"></app-pawner-info>
       </div>
+  
       <!-- items start -->
       <div class="items-entry">
         <mat-form-field class="category">
@@ -177,7 +100,6 @@
           >
             <mat-icon>add</mat-icon>
           </button>
-
           <button
             tabindex="6"
             type="button"
@@ -240,7 +162,7 @@
         </table>
         <mat-paginator
           class="shadow"
-          [pageSizeOptions]="[3]"
+          [pageSizeOptions]="[3,5,10]"
           showFirstLastButtons
         ></mat-paginator>
       </div>

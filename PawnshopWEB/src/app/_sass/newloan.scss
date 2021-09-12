@@ -1,11 +1,10 @@
-
 .newloan-title {
   position: absolute;
   display: flex;
   align-items: center;
   place-items: center;
   border-radius: 5px;
-  margin: 5px 6% 0;
+  margin: 8px 6% 0;
   width: 58%;
   height: 2.5rem;
   padding-top: 1rem;
@@ -26,38 +25,17 @@
   display: grid;
   grid-template-columns: 70% 30%;
   height: 89vh;
-  //   overflow: hidden;
 
-  .pawner-items {
-    // background-color: springgreen;
-
-    .info-date {
+  .pawner-items-wrapper {
+    .newloan-pawner {
       background-color: ghostwhite;
-      margin: 1.5rem 1rem 0rem;
       border-radius: 0.5em;
       box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-      display: flex;
-      padding: .5rem 1rem;
+      margin: 1.5rem 1rem 0rem;
+      padding: 0.9rem 1rem 0rem;
       height: 9rem;
-
-      .newloan-pawner {
-        width: 100%;
-        // background-color: yellowgreen;
-      }
-      .newloan-dates {
-        padding: 1rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1em;
-
-        .form-date {
-          width: 8rem;
-        }
-      }
-      .newloan-items {
-        width: 100%;
-      }
     }
+
     .items-entry {
       margin: 0.5rem 1rem;
       border-radius: 0.5em;
@@ -86,7 +64,7 @@
         width: 100%;
         margin: 0.5rem auto 0;
 
-        mat-icon{
+        mat-icon {
           font-size: 20px;
         }
       }
@@ -106,22 +84,21 @@
         width: 12% !important;
       }
 
-      .mat-header-row{
+      .mat-header-row {
         height: 2.5rem !important;
       }
       .mat-row {
         height: 2rem !important;
       }
-
     }
   }
-  .computation-title{
+  .computation-title {
     position: absolute;
     border-radius: 5px;
     margin: 8px 72% 0;
     width: 26%;
     padding: 4px;
-    color:white;
+    color: white;
     background-color: rgb(31, 97, 241);
     text-align: center;
   }
@@ -137,21 +114,20 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.btn-primary{
-    background: rgb(72, 127, 247) !important;
-    width: 11rem;
-    padding: 8px;
-    font-weight: 800;
-    font-size: .9rem;
-    border-bottom-left-radius: 10px;
+.btn-primary {
+  background: rgb(72, 127, 247) !important;
+  width: 11rem;
+  padding: 8px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border-bottom-left-radius: 10px;
 }
 
-.form-control{
-    border-top-right-radius: 10px !important;
-    
+.form-control {
+  border-top-right-radius: 10px !important;
 }
 
-.net-proceed{
-    font-weight: bolder !important;
-    color: red !important;
+.net-proceed {
+  font-weight: bolder !important;
+  color: red !important;
 }

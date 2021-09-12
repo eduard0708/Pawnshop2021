@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Item } from '../_model/item';
-import { PawnedItem } from '../_model/pawnedItem';
 import { PawnerInfo } from '../_model/pawnerInfo';
 import { Transaction } from '../_model/transaction';
 import { RedeemService } from '../_service/redeem.service';
@@ -22,8 +21,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   items:Item[] = [];
   pawnerInfo:PawnerInfo = {} as PawnerInfo;
   redeemForm:FormGroup;
-  pawner;
-
+ 
   displayColumns: string[] = 
   [
     'category',

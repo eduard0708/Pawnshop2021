@@ -1,0 +1,185 @@
+<form [formGroup]="partialForm" (ngSubmit)="onSave()" autocomplete="off">
+    <!-- start pawner info title and transaction number -->
+    <div class="shadow-sm text-white pawner-title">
+      <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
+      <h2 class="text-center font-monospace trasaction-title">
+        Partial Pawner Information
+      </h2>
+    </div>
+    <!-- end pawner info title and transaction number -->
+  
+    <!-- start wrapper for 70% pawner and 30% computation -->
+    <div class="transaction-wrapper">
+      <div class="pawner-items-wrapper">
+        <!--start pawner information -->
+        <div class="pawner-information">
+          <app-transactions-pawner-info
+            [transaction]="transaction"
+          ></app-transactions-pawner-info>
+        </div>
+        <!--end pawner information -->
+  
+        <!-- start dates computation  -->
+        <div class="dates-computation">
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Years</span>
+            <input
+              tabindex="-1"
+              class="form-control dates-input"
+              type="text"
+              value="1"
+              readonly
+            />
+          </div>
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Months</span>
+            <input
+              tabindex="-1"
+              class="form-control"
+              type="text"
+              value="5"
+              readonly
+            />
+          </div>
+          <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Days</span>
+            <input
+              tabindex="-1"
+              class="form-control"
+              type="text"
+              value="23"
+              readonly
+            />
+          </div>
+        </div>
+        <!-- start dates computation -->
+  
+        <!-- start mat-table here -->
+        <div class="items-table">
+          <table
+            tabindex="-1"
+            mat-table
+            #table
+            [dataSource]="dataSource"
+            class="mat-elevation-z8"
+          >
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef>Category</th>
+              <td mat-cell *matCellDef="let items">{{ items.categoryName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="categoryDescription">
+              <th mat-header-cell *matHeaderCellDef>Category Description</th>
+              <td mat-cell *matCellDef="let items">
+                {{ items.categoryDescriptionName }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Items Description</th>
+              <td mat-cell *matCellDef="let items">{{ items.description }}</td>
+            </ng-container>
+            <ng-container matColumnDef="appraisalValue">
+              <th mat-header-cell *matHeaderCellDef>Appraisal Value</th>
+              <td mat-cell *matCellDef="let items">{{ items.appraisalValue | currency:'₱ '}}</td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+          </table>
+          <mat-paginator
+            class="shadow"
+            [pageSizeOptions]="[3, 5, 10]"
+            showFirstLastButtons
+          ></mat-paginator>
+        </div>
+        <!-- end mat-table here -->
+  
+        <!-- computation start -->
+      </div>
+  
+      <!-- start computation title -->
+      <h2 class="shadow font-monospace computation-title">Partial Computation</h2>
+      <!-- start computation title -->
+  
+      <div class="computation">
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Appraisal Value</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Principal Loan</span>
+          <input
+            #principalLoanRef
+            matInput
+            id="principal"
+            [inputMask]="currencyInputMask"
+            class="form-control"
+            maxlength="15"
+            tabindex="8"
+            type="text"
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Interest Rate</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            type="text"
+            readonly
+            style="text-align: right"
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Advance Interest</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Adv. Service Charge</span>
+          <input
+            tabindex="-1"
+            class="form-control"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Net Proceed</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+  
+        <div class="mt-3" style="display: flex; justify-content: space-around">
+          <button type="submit" tabindex="9" mat-raised-button color="primary">
+            <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
+          </button>
+          <button type="button" tabindex="10" mat-raised-button color="warn">
+            Reset <mat-icon>restart_alt</mat-icon>
+          </button>
+          <button type="button" tabindex="11" (click)="home()" mat-raised-button>
+            Home <mat-icon>home</mat-icon>
+          </button>
+        </div>
+        <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
+      </div>
+      <!-- computation end -->
+    </div>
+    <!-- start wrapper for 70% pawner and 30% computation -->
+  </form>
+  
