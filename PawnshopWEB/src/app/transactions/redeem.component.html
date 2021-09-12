@@ -1,138 +1,29 @@
 <form [formGroup]="redeemForm" (ngSubmit)="onSave()" autocomplete="off">
-  <div
-    class="shadow  text-white"
-    style="
-      position: absolute;
-      display: flex;
-      align-items: center;
-      place-items: center;
-      border-radius: 5px;
-      margin: 3px 9.5% 0;
-      width: 50%;
-      height: 3rem;
-      padding-top: 1rem;
-      background-color: rgb(55, 74, 114);
-    "
-  >
-    <h2 class="font-monospace"
-      style="width: 25%; padding-left: 1rem; color: turquoise;"
-    >
-      Transaction #: 10050
+  <!-- start pawner info title and transaction number -->
+  <div class="shadow text-white pawner-title">
+    <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
+    <h2 class="text-center font-monospace trasaction-title">
+      Redeem Pawner Information
     </h2>
-    <h2 class="text-center font-monospace" style="width: 50%; font-size: 1.6rem;">Redeem Pawner Information</h2>
   </div>
+  <!-- end pawner info title and transaction number -->
 
-  <div class="newloan-wrapper">
-    <div class="pawner-items">
-      <div class="info-date">
-        <div class="newloan-pawner">
-          <app-transactions-pawner-info
-            [transaction]="transaction"
-          ></app-transactions-pawner-info>
-        </div>
+  <div class="transaction-wrapper">
+    <div class="pawner-items-wrapper">
+      <!--start pawner information -->
+      <div class="pawner-info" >
+        <app-transactions-pawner-info style="background-color: tomato; width:100%"
+          [transaction]="transaction"
+        ></app-transactions-pawner-info>
       </div>
-      <!-- items start -->
-      <!-- <div class="items-entry">
-          <mat-form-field class="category">
-            <mat-select
-              placeholder="Category"
-              formControlName="category"
-              #category
-              (blur)="onCategorySelect()"
-              tabindex="1"
-            >
-              <mat-option
-                *ngFor="let category of categories"
-                [value]="category.id"
-              >
-                {{ category.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="newLoan.get('category').hasError('required')"
-              >Category Required</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field class="category-description">
-            <button
-              tabindex="-1"
-              matSuffix
-              mat-icon-button
-              mat-raised-button
-              color="accent"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-            <mat-select
-              placeholder="Category Description"
-              formControlName="categoryDescriptions"
-              #categoryDescriptionRef
-              tabindex="2"
-            >
-              <mat-option
-                *ngFor="let categoryDescription of categoryDescriptions"
-                [value]="categoryDescription.id"
-              >
-                {{ categoryDescription.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="newLoan.get('categoryDescriptions').hasError('required')"
-              >Category Desccription Required</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field class="description">
-            <input
-              matInput
-              placeholder="Description"
-              type="text"
-              formControlName="descriptions"
-              tabindex="3"
-            />
-            <mat-error *ngIf="newLoan.get('descriptions').hasError('required')"
-              >Item Desccription Required</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field class="appraisal-value">
-            <input
-              matInput
-              [inputMask]="currencyInputMask"
-              maxlength="15"
-              placeholder="Appraisal Value"
-              type="text"
-              formControlName="appraisalValue"
-              tabindex="4"
-            />
-            <mat-error *ngIf="newLoan.get('appraisalValue').hasError('required')"
-              >Appraisal Value Required</mat-error
-            >
-          </mat-form-field>
-          <div>
-            <button
-              tabindex="5"
-              [disabled]="isAddItem"
-              (click)="onAdd()"
-              class="mx-1"
-              mat-mini-fab
-              color="primary"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-  
-            <button
-              tabindex="6"
-              type="button"
-              (click)="resetAddItems()"
-              mat-raised-button
-              color="accent"
-              class="mx-1"
-            >
-              Reset
-            </button>
-          </div>
-        </div> -->
-      <!-- items end -->
 
-      <!-- table start -->
+      <!--start pawner information -->
+
+      <!-- items start -->
+
+      <!-- items start -->
+
+      <!-- start mat-table here -->
       <div class="items-table">
         <table
           tabindex="-1"
@@ -159,6 +50,17 @@
             <th mat-header-cell *matHeaderCellDef>Appraisal Value</th>
             <td mat-cell *matCellDef="let items">{{ items.appraisalValue }}</td>
           </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let pawner">
+              <button class="text-info" tabindex="-1" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button tabindex="-1" class="text-danger" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
@@ -168,9 +70,11 @@
           showFirstLastButtons
         ></mat-paginator>
       </div>
-      <!-- table end -->
+      <!-- end mat-table here -->
+
       <!-- computation start -->
     </div>
+    <!-- start computation title -->
     <h2
       class="shadow font-monospace text-white"
       style="
@@ -185,6 +89,8 @@
     >
       New Loan Computation
     </h2>
+    <!-- start computation title -->
+
     <div class="computation">
       <div class="input-group mb-2 shadow-sm font-monospace">
         <span class="btn-primary">Appraisal Value</span>
