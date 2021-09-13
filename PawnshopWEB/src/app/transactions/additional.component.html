@@ -22,6 +22,16 @@
         <!-- start dates computation  -->
         <div class="dates-computation">
           <div class="input-group mb-2 shadow-sm font-monospace">
+            <span class="btn-primary dates-label">Status</span>
+            <input
+              tabindex="-1"
+              class="form-control dates-input"
+              type="text"
+              value="Ok"
+              readonly
+            />
+          </div>
+          <div class="input-group mb-2 shadow-sm font-monospace">
             <span class="btn-primary dates-label">Years</span>
             <input
               tabindex="-1"
@@ -145,7 +155,7 @@
           />
         </div>
         <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary">Adv. Service Charge</span>
+          <span class="btn-primary">Due Amount</span>
           <input
             tabindex="-1"
             class="form-control"
@@ -155,7 +165,57 @@
           />
         </div>
         <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Addional Amount</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">New Balance</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Advance Interest</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Adv. Service Charge</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
           <span class="btn-primary">Net Proceed</span>
+          <input
+            tabindex="-1"
+            class="form-control net-proceed"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary">Redeem Amount</span>
           <input
             tabindex="-1"
             class="form-control net-proceed"

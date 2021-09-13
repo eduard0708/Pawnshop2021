@@ -154,6 +154,11 @@
       "transactionName": "Additional",
       "transactionTotal": 10233.75,
       "transactionCount": 13
+    },
+    {
+      "transactionName": "Renew",
+      "transactionTotal": 10233.75,
+      "transactionCount": 65
     }
   ],
   "pawner": [

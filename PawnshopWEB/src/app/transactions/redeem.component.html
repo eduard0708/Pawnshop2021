@@ -22,6 +22,26 @@
       <!-- start dates computation  -->
       <div class="dates-computation">
         <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label">Redeem Date</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input"
+            type="text"
+            value="Date"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label">Status</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input"
+            type="text"
+            value="Matured"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
           <span class="btn-primary dates-label">Years</span>
           <input
             tabindex="-1"
@@ -102,7 +122,7 @@
 
     <div class="computation">
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Appraisal Value</span>
+        <span class="btn-primary">Principal Loan</span>
         <input
           tabindex="-1"
           class="form-control"
@@ -112,16 +132,13 @@
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Principal Loan</span>
+        <span class="btn-primary">Due Amount</span>
         <input
-          #principalLoanRef
-          matInput
-          id="principal"
-          [inputMask]="currencyInputMask"
+          tabindex="-1"
           class="form-control"
-          maxlength="15"
-          tabindex="8"
+          [inputMask]="currencyInputMask"
           type="text"
+          readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
@@ -129,13 +146,13 @@
         <input
           tabindex="-1"
           class="form-control"
+          [inputMask]="currencyInputMask"
           type="text"
           readonly
-          style="text-align: right"
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Advance Interest</span>
+        <span class="btn-primary">Discount</span>
         <input
           tabindex="-1"
           class="form-control"
@@ -145,7 +162,7 @@
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Adv. Service Charge</span>
+        <span class="btn-primary">Service Charge</span>
         <input
           tabindex="-1"
           class="form-control"
@@ -155,7 +172,27 @@
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Net Proceed</span>
+        <span class="btn-primary">Amount Redeem</span>
+        <input
+          tabindex="-1"
+          class="form-control"
+          [inputMask]="currencyInputMask"
+          type="text"
+          readonly
+        />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Amount Received</span>
+        <input
+          tabindex="-1"
+          class="form-control"
+          [inputMask]="currencyInputMask"
+          type="text"
+          readonly
+        />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="btn-primary">Change</span>
         <input
           tabindex="-1"
           class="form-control net-proceed"
