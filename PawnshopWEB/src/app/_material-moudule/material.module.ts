@@ -32,6 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatRippleModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSnackBarModule,
     // MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatRippleModule
   ],
   exports: [
     MatCheckboxModule,
@@ -101,7 +103,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatRippleModule
   ],
 })
 export class MaterialModule {}
