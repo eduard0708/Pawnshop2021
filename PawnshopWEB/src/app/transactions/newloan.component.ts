@@ -122,7 +122,6 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     this. newLoanForm.controls.principalLoan.disable();
     this. newLoanForm.valueChanges.subscribe(() => {
       this.validateItemEntery();
-
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 

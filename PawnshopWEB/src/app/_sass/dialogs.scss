@@ -21,8 +21,8 @@
   }
 }
 //end dailog-newpawner.component new pawner dialog scss
-//start dialog-newcity.component scxx
 
+//start dialog-newcity.component scxx
 .newcity-header {
   // width: 23%;
   // position: absolute;
@@ -47,7 +47,7 @@
     width: 11rem;
   }
 }
-.ciyt-button-wrapper {
+.city-button-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -58,4 +58,45 @@
     margin: 0.5rem;
   }
 }
+.city-table-wrapper{
+  
+}
+.barangay-table-wrapper{
+
+}
 //end dialog-newcity.component scxx
+.newbarangay-header {
+  // width: 23%;
+  // position: absolute;
+  // margin: -7rem 0 0;
+  .barangay-title {
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 50;
+    font-size: large;
+    font-family: monospace;
+  }
+}
+.newbarangay-wrapper {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  
+  .barangay-input {
+    width: 11rem;
+  }
+}
+.barangay-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  .btn-barangay {
+    width: 30%;
+    margin: 0.5rem;
+  }
+}

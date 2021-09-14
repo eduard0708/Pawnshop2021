@@ -22,17 +22,16 @@ export class HeaderComponent implements OnInit {
 
   addCity() {
     const config = new MatDialogConfig();
-    config.position = { top: '6rem' };
-    config.width = '30rem';
+    config.position = { top: '3rem' };
+    config.width = 'auto';
     config.height = 'auto';
     config.disableClose = true;
-
     this.dialog.open(DialogNewcityComponent, config);
   }
 
   addBarangay() {
     const config = new MatDialogConfig();
-    config.position = { top: '6rem' };
+    config.position = { top: '3rem' };
     config.width = 'auto';
     config.height = 'auto';
     config.disableClose = true;
