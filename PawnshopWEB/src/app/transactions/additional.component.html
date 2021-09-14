@@ -19,8 +19,11 @@
         </div>
         <!--end pawner information -->
   
-        <!-- start dates computation  -->
-        <div class="dates-computation">
+        <!-- start dates status  -->
+        <div class="status-dates-warapper">
+
+ 
+        <div class="dstatus-wrapper">
           <div class="input-group mb-2 shadow-sm font-monospace">
             <span class="btn-primary dates-label">Status</span>
             <input
@@ -63,17 +66,81 @@
           </div>
           <div class="dates-wrapper">
             <div>
-              <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="title">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <button matSuffix [matDatepickerToggle]="picker"></button>
-                <mat-datepicker #picker></mat-datepicker>
+              <mat-form-field class="form-date">
+                <input
+                  readonly
+                  tabindex="-1"
+                  matInput
+                  [matDatepicker]="dateTransaction"
+                  placeholder="Date Transaction"
+                  [(ngModel)]="pawnerInfo.dateExpired"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="dateTransaction"
+                  disabled
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dateTransaction></mat-datepicker>
               </mat-form-field>
-              
+            </div>
+            <div>
+              <mat-form-field class="form-date">
+                <input
+                  readonly
+                  tabindex="-1"
+                  matInput
+                  [matDatepicker]="dateGranted"
+                  placeholder="Date Granted"
+                  [(ngModel)]="pawnerInfo.dateExpired"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="dateGranted"
+                  disabled
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dateGranted></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="form-date">
+                <input
+                  readonly
+                  tabindex="-1"
+                  matInput
+                  [matDatepicker]="dateMatured"
+                  placeholder="Date Mature"
+                  [(ngModel)]="pawnerInfo.dateMatured"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="dateExpired"
+                  disabled
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dateMatured></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="form-date">
+                <input
+                  readonly
+                  tabindex="-1"
+                  matInput
+                  [matDatepicker]="dateExpired"
+                  placeholder="Date Expire"
+                  [(ngModel)]="pawnerInfo.dateExpired"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="dateExpired"
+                  disabled
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dateExpired></mat-datepicker>
+              </mat-form-field>
             </div>
           </div>
         </div>
-        <!-- start dates computation -->
+      </div>
+        <!-- end dates status -->
   
         <!-- start mat-table here -->
         <div class="items-table">
