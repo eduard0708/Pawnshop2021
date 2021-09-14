@@ -92,19 +92,62 @@
       }
     }
   }
+  .computation-wrapper {
+    position: relative;
+    // background-color: tomato;
   .computation-title {
-    position: absolute;
-    border-radius: 5px;
-    margin: 8px 72% 0;
-    width: 26%;
-    padding: 4px;
-    color: white;
-    background-color: rgb(31, 97, 241);
-    text-align: center;
-  }
-  .computation {
-    padding: 4rem 2.5rem 0;
-    background-color: rgb(209, 230, 240);
+      border-radius: 5px;
+      margin: .5rem auto 0;
+      width: 90%;
+      padding: 4px;
+      color: white;
+      background-color: #0d6efd;
+      text-align: center;
+    }
+    // computation 30% area
+    .computation {
+      width: 80%;
+      border-radius: 10px;
+      margin: .5rem auto 0;
+      padding: .5rem 1.3rem ;
+      background-color: rgb(209, 230, 240);
+    
+      // background-color: violet;
+      .input-group{
+        width: 100%;
+        margin-bottom: .3rem;
+        font-size: large;
+        font-family: monospace;
+        font-weight: 550;
+        .col-form-label-sm{
+          padding-left: .5rem;
+          color: white;
+          background-color: #0d6efd;
+          border-bottom-right-radius: 8px;
+          border-top-right-radius: 8px;
+          width: 55%;
+        }
+        .form-control{
+          width: 45%;
+          border-radius: 10px;
+          border: 1.5px solid blue;
+          background-color: white;
+        }
+      }
+    }
+    .button-wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // background-color: tomato;
+      padding: 0 1rem;
+      .save-print{
+        width: 100%;
+      }
+      button{
+         width: 70%;
+      }
+    }
   }
 }
 //remove input number arrow up/down
@@ -114,14 +157,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.btn-primary {
-  background: rgb(72, 127, 247) !important;
-  width: 11rem;
-  padding: 8px;
-  font-weight: 800;
-  font-size: 0.9rem;
-  border-bottom-left-radius: 10px;
-}
 
 .form-control {
   border-top-right-radius: 10px !important;
