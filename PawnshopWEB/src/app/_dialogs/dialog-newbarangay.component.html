@@ -1,30 +1,33 @@
 <form [formGroup]="barangayForm" autocomplete="off">
-    <div class="card p-1">
-    <div class="newbarangay-header">
-      <h3 class="barangay-title shadow rounded bg-info">Add-Edit Barangay</h3>
-    </div>
-    <mat-divider class="pb-3" style="width: 90%; margin: 0 auto"> </mat-divider>
-    <div class="newbarangay-wrapper">
+  <div class="card p-1">
+      <div class="newbarangay-header">
+        <h3 class="barangay-title shadow rounded bg-info">Add-Edit Barangay</h3>
+      </div>
+      <mat-divider class="pb-3" style="width: 90%; margin: 0 auto">
+      </mat-divider>
+      <div class="newbarangay-wrapper">
         <div>
-          <mat-form-field class="font-monospace">
+          <mat-form-field class="font-monospace city-select">
             <mat-select placeholder="Select City" formControlName="city">
-                <mat-option *ngFor="let city of cities " [value]="city.id">{{city.name}}</mat-option>
+              <mat-option *ngFor="let city of cities" [value]="city.id">{{
+                city.name
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div>
-            <mat-form-field>
-              <mat-label class="font-monospace">Barangay Name</mat-label>
-              <input
-                class="barangay-input font-monospace"
-                #barangayNameRef
-                tabindex="1"
-                type="text"
-                matInput
-                formControlName="barangayName"
-              />
-            </mat-form-field>
-          </div>
+          <mat-form-field>
+            <mat-label class="font-monospace">Barangay Name</mat-label>
+            <input
+              class="barangay-input font-monospace"
+              #barangayNameRef
+              tabindex="1"
+              type="text"
+              matInput
+              formControlName="barangayName"
+            />
+          </mat-form-field>
+        </div>
         <div>
           <button
             [disabled]="isAdd"
@@ -32,70 +35,65 @@
             tabindex="2"
             mat-mini-fab
           >
-            <mat-icon
-           >add</mat-icon>
+            <mat-icon>add</mat-icon>
           </button>
         </div>
+      </div>
+      <div class="barangay-button-wrapper">
+        <button
+          (click)="reset()"
+          tabindex="4"
+          mat-raised-button
+          class="btn-primary font-monospace btn-city"
+        >
+          <mat-icon>restart_alt</mat-icon>
+          Reset
+        </button>
+        <button
+          (click)="cancel()"
+          tabindex="5"
+          mat-raised-button
+          class="btn-danger font-monospace btn-barangay"
+        >
+          <mat-icon>cancel</mat-icon>
+          Cancel
+        </button>
+      </div>
+
+      <div class="barangay-table-wrapper">
+        <mat-table [dataSource]="barangayDataSource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let barangay"> {{ barangay.id }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Barangay Name</mat-header-cell>
+            <mat-cell *matCellDef="let barangay">
+              {{ barangay.name }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let barangay">
+              <button class="text-info" tabindex="-1" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button tabindex="-1" class="text-danger" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator
+          class="shadow"
+          [pageSizeOptions]="[5, 10, 15]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
     </div>
-    <div class="barangay-button-wrapper">
-      <button
-        (click)="reset()"
-        tabindex="4"
-        mat-raised-button
-        class="btn-primary font-monospace btn-city"
-      >
-        <mat-icon>restart_alt</mat-icon>
-        Reset
-      </button>
-      <button
-        (click)="cancel()"
-        tabindex="5"
-        mat-raised-button
-        class="btn-danger font-monospace btn-barangay"
-      >
-        <mat-icon>cancel</mat-icon>
-        Cancel
-      </button>
-    </div>
-  
-    <div class="barangay-table-wrapper">
-      <mat-table [dataSource]="barangayDataSource">
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef> Id
-          </mat-header-cell>
-          <mat-cell *matCellDef="let barangay"> {{barangay.id}} </mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Barangay Name</mat-header-cell>
-          <mat-cell *matCellDef="let barangay"> {{barangay.name}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
-          <td mat-cell *matCellDef="let barangay">
-            <button class="text-info" tabindex="-1" mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              tabindex="-1"
-              class="text-danger"
-              mat-icon-button
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-       
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-paginator
-      class="shadow"
-      [pageSizeOptions]="[5,10,15]"
-      showFirstLastButtons
-    ></mat-paginator>
-    </div>
-  </div>
-  </form>
-  
+</form>

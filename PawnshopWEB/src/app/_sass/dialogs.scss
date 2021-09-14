@@ -42,7 +42,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  
+
   .city-input {
     width: 11rem;
   }
@@ -58,45 +58,53 @@
     margin: 0.5rem;
   }
 }
-.city-table-wrapper{
-  
+.city-table-wrapper {
 }
-.barangay-table-wrapper{
 
+.barangay-table-wrapper {
+  .city-select {
+    size: 3rem;
+  }
 }
 //end dialog-newcity.component scxx
-.newbarangay-header {
-  // width: 23%;
-  // position: absolute;
-  // margin: -7rem 0 0;
-  .barangay-title {
-    color: white;
-    padding: 0.5rem;
-    text-align: center;
-    font-weight: 50;
-    font-size: large;
-    font-family: monospace;
+
+
+  .newbarangay-header {
+    // width: 23%;
+    // position: absolute;
+    // margin: -7rem 0 0;
+    .barangay-title {
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      font-weight: 50;
+      font-size: large;
+      font-family: monospace;
+    }
   }
-}
-.newbarangay-wrapper {
-  width: 75%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  
-  .barangay-input {
-    width: 11rem;
+  .newbarangay-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    div {
+      margin-right: 0.5rem;
+    }
+    .city-select {
+      // width: 8rem;
+    }
+    .barangay-input {
+      // width: 5rem;
+    }
   }
-}
-.barangay-button-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 3rem;
-  .btn-barangay {
-    width: 30%;
-    margin: 0.5rem;
+  .barangay-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    .btn-barangay {
+      width: 30%;
+      margin: 0.5rem;
+    }
   }
-}
