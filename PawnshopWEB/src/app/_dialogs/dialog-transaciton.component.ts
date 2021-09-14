@@ -82,6 +82,7 @@ export class DialogTransacitonComponent implements OnInit {
       if (transactionType === 'Redeem') url = '/transactions/redeem/';
       if (transactionType === 'Additional') url = '/transactions/additional/';
       if (transactionType === 'Partial') url = '/transactions/partial/';
+      if (transactionType === 'Renew') url = '/transactions/renew/';
       let navigationExtras = {
         state: {
           transaction: this.transaction,

@@ -4,6 +4,7 @@ import { AdditionalComponent } from './additional.component';
 import { NewloanComponent } from './newloan.component';
 import { PartialComponent } from './partial.component';
 import { RedeemComponent } from './redeem.component';
+import { RenewComponent } from './renew.component';
 import { TransactionsComponent } from './transactions.component';
 
 const routes: Routes = [{ path: '', component: TransactionsComponent,
@@ -12,6 +13,7 @@ children:[
   {path:'redeem/:transaction', component:RedeemComponent},
   {path:'partial/:transaction', component:PartialComponent},
   {path:'additional/:transaction', component:AdditionalComponent},
+  {path:'renew/:transaction', component:RenewComponent},
 ]
 }];
 

@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TransactionsPawnerInfoComponent } from '../_components/transactions-pawner-info.component';
 import { PawnerInfoComponent } from '../_components/pawner-info.component';
+import { RenewComponent } from './renew.component';
 
 
 
@@ -23,7 +24,8 @@ import { PawnerInfoComponent } from '../_components/pawner-info.component';
     PartialComponent,
     AdditionalComponent,
     TransactionsPawnerInfoComponent,
-    PawnerInfoComponent
+    PawnerInfoComponent,
+    RenewComponent
   ],
   imports: [
     CommonModule,
