@@ -19,50 +19,128 @@
         </div>
         <!--end pawner information -->
   
-        <!-- start dates computation  -->
-        <div class="dates-computation">
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Status</span>
-            <input
-              tabindex="-1"
-              class="form-control dates-input"
-              type="text"
-              value="Ok"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Years</span>
-            <input
-              tabindex="-1"
-              class="form-control dates-input"
-              type="text"
-              value="1"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Months</span>
-            <input
-              tabindex="-1"
-              class="form-control"
-              type="text"
-              value="5"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label">Days</span>
-            <input
-              tabindex="-1"
-              class="form-control"
-              type="text"
-              value="23"
-              readonly
-            />
-          </div>
+     <!-- start dates status  -->
+     <div class="status-dates-warapper">
+      <div class="status-wrapper">
+        <div class="input-group mb-2 shadow-sm font-monospace status">
+          <span class="btn-primary dates-label col-form-label-sm">Status</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            value="Expired"
+            readonly
+          />
         </div>
-        <!-- start dates computation -->
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label col-form-label-sm">Years</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            value="1"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label col-form-label-sm">Months</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            value="5"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-2 shadow-sm font-monospace">
+          <span class="btn-primary dates-label col-form-label-sm">Days</span>
+          <input
+            tabindex="-1"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            value="23"
+            readonly
+          />
+        </div>
+      </div>
+      <mat-divider class="pb-3" style="width: 95%; margin: 0 auto"> </mat-divider>
+      <div class="dates-wrapper">
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateTransaction"
+              placeholder="Date Transaction"
+              formControlName="dateTransaction"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateTransaction"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateTransaction></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateGranted"
+              placeholder="Date Granted"
+              formControlName="dateGranted"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateGranted"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateGranted></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateMatured"
+              placeholder="Date Mature"
+              formControlName="dateMatured"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateExpired"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateMatured></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateExpired"
+              placeholder="Date Expire"
+              formControlName="dateExpired"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateExpired"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateExpired></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+    <!-- end dates status -->
   
         <!-- start mat-table here -->
         <div class="items-table">

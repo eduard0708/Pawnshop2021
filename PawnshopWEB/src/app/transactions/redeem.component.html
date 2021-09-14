@@ -19,61 +19,128 @@
       </div>
       <!--end pawner information -->
 
-      <!-- start dates computation  -->
-      <div class="dates-computation">
-        <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary dates-label">Redeem Date</span>
+     <!-- start dates status  -->
+     <div class="status-dates-warapper">
+      <div class="status-wrapper">
+        <div class="input-group mb-2 shadow-sm font-monospace status">
+          <span class="btn-primary dates-label col-form-label-sm">Status</span>
           <input
             tabindex="-1"
-            class="form-control dates-input"
+            class="form-control dates-input form-control-sm"
             type="text"
-            value="Date"
+            value="Expired"
             readonly
           />
         </div>
         <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary dates-label">Status</span>
+          <span class="btn-primary dates-label col-form-label-sm">Years</span>
           <input
             tabindex="-1"
-            class="form-control dates-input"
-            type="text"
-            value="Matured"
-            readonly
-          />
-        </div>
-        <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary dates-label">Years</span>
-          <input
-            tabindex="-1"
-            class="form-control dates-input"
+            class="form-control dates-input form-control-sm"
             type="text"
             value="1"
             readonly
           />
         </div>
         <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary dates-label">Months</span>
+          <span class="btn-primary dates-label col-form-label-sm">Months</span>
           <input
             tabindex="-1"
-            class="form-control"
+            class="form-control dates-input form-control-sm"
             type="text"
             value="5"
             readonly
           />
         </div>
         <div class="input-group mb-2 shadow-sm font-monospace">
-          <span class="btn-primary dates-label">Days</span>
+          <span class="btn-primary dates-label col-form-label-sm">Days</span>
           <input
             tabindex="-1"
-            class="form-control"
+            class="form-control dates-input form-control-sm"
             type="text"
             value="23"
             readonly
           />
         </div>
       </div>
-      <!-- start dates computation -->
+      <mat-divider class="pb-3" style="width: 95%; margin: 0 auto"> </mat-divider>
+      <div class="dates-wrapper">
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateTransaction"
+              placeholder="Date Transaction"
+              formControlName="dateTransaction"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateTransaction"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateTransaction></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateGranted"
+              placeholder="Date Granted"
+              formControlName="dateGranted"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateGranted"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateGranted></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateMatured"
+              placeholder="Date Mature"
+              formControlName="dateMatured"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateExpired"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateMatured></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-date">
+            <input
+              readonly
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateExpired"
+              placeholder="Date Expire"
+              formControlName="dateExpired"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateExpired"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateExpired></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
 
+    </div>
+    <!-- end dates status -->
       <!-- start mat-table here -->
       <div class="items-table">
         <table
@@ -122,80 +189,99 @@
 
     <div class="computation">
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Principal Loan</span>
+        <span class="col-form-label-sm  btn-primary">Appraisal Value</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Due Amount</span>
+        <span class="col-form-label-sm  btn-primary">Principal Loan</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Interest Rate</span>
+        <span class="col-form-label-sm  btn-primary">Due Amount</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Discount</span>
+        <span class="col-form-label-sm  btn-primary">Penalty</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Service Charge</span>
+        <span class="col-form-label-sm  btn-primary">Interest Rate</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Amount Redeem</span>
+        <span class="col-form-label-sm  btn-primary">Discount</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Amount Received</span>
+        <span class="col-form-label-sm  btn-primary">Service Charge</span>
         <input
           tabindex="-1"
-          class="form-control"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
         />
       </div>
       <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="btn-primary">Change</span>
+        <span class="col-form-label-sm  btn-primary">Amount Redeem</span>
         <input
           tabindex="-1"
-          class="form-control net-proceed"
+          class="form-control form-control-sm"
+          [inputMask]="currencyInputMask"
+          type="text"
+          readonly
+        />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="col-form-label-sm  btn-primary">Amount Received</span>
+        <input
+          tabindex="-1"
+          class="form-control form-control-sm"
+          [inputMask]="currencyInputMask"
+          type="text"
+        />
+      </div>
+      <div class="input-group mb-2 shadow-sm font-monospace">
+        <span class="col-form-label-sm  btn-primary">Change</span>
+        <input
+          tabindex="-1"
+          class="form-control form-control-sm"
           [inputMask]="currencyInputMask"
           type="text"
           readonly
