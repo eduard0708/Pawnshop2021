@@ -207,7 +207,7 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Principal Value</span>
+          <span class="col-form-label-sm">Principal Loan</span>
           <input
             tabindex="-1"
             maxlength="14"
@@ -247,7 +247,17 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Service Charge</span>
+          <span class="col-form-label-sm">Advance Interest</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
             tabindex="-1"
             maxlength="14"
@@ -267,7 +277,17 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Amount Redeem</span>
+          <span class="col-form-label-sm">Net Payment</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Partial Pay</span>
           <input
             tabindex="-1"
             maxlength="14"
