@@ -26,6 +26,7 @@ import { RedeemService } from '../_service/redeem.service';
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
+  styleUrls: ['../_sass/newloan.scss'],
   template: ` <input [inputMask]="currencyInputMask" placeholder="$ 0.00" /> `,
 })
 export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {

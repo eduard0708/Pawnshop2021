@@ -12,7 +12,8 @@ import { RedeemService } from '../_service/redeem.service';
 
 @Component({
   selector: 'app-partial',
-  templateUrl: './partial.component.html'
+  templateUrl: './partial.component.html',
+  styleUrls: ['../_sass/shared-transaction.scss']
 })
 export class PartialComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

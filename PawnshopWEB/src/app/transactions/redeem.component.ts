@@ -12,7 +12,8 @@ import { RedeemService } from '../_service/redeem.service';
 
 @Component({
   selector: 'app-redeem',
-  templateUrl: './redeem.component.html'
+  templateUrl: './redeem.component.html',
+  styleUrls: ['../_sass/shared-transaction.scss']
 })
 
 export class RedeemComponent implements OnInit, AfterViewInit {

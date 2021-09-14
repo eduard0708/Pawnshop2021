@@ -7,9 +7,9 @@
     </h2>
   </div>
   <!-- end pawner info title and transaction number -->
-
-  <!-- start wrapper for 70% pawner and 30% computation -->
-  <div class="transaction-wrapper">
+  <!-- start body wrapper for 70% pawner and 30% computation -->
+  <div class="transaction-body">
+    <!--70% start pawner-items-wrapper -->
     <div class="pawner-items-wrapper">
       <!--start pawner information -->
       <div class="pawner-information">
@@ -18,12 +18,13 @@
         ></app-transactions-pawner-info>
       </div>
       <!--end pawner information -->
-
       <!-- start dates status  -->
       <div class="status-dates-warapper">
         <div class="status-wrapper">
           <div class="input-group mb-2 shadow-sm font-monospace status">
-            <span class="btn-primary dates-label col-form-label-sm">Status</span>
+            <span class="btn-primary dates-label col-form-label-sm"
+              >Status</span
+            >
             <input
               tabindex="-1"
               class="form-control dates-input form-control-sm"
@@ -43,7 +44,9 @@
             />
           </div>
           <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm">Months</span>
+            <span class="btn-primary dates-label col-form-label-sm"
+              >Months</span
+            >
             <input
               tabindex="-1"
               class="form-control dates-input form-control-sm"
@@ -63,7 +66,8 @@
             />
           </div>
         </div>
-        <mat-divider class="pb-3" style="width: 95%; margin: 0 auto"> </mat-divider>
+        <mat-divider class="pb-3" style="width: 95%; margin: 0 auto">
+        </mat-divider>
         <div class="dates-wrapper">
           <div>
             <mat-form-field class="form-date">
@@ -138,10 +142,8 @@
             </mat-form-field>
           </div>
         </div>
-
       </div>
       <!-- end dates status -->
-
       <!-- start mat-table here -->
       <div class="items-table">
         <table
@@ -182,131 +184,139 @@
         ></mat-paginator>
       </div>
       <!-- end mat-table here -->
-
-      <!-- computation start -->
     </div>
+    <!--70% start pawner-items-wrapper -->
 
-    <!-- start computation title -->
-    <h2 class="shadow font-monospace computation-title">
-      Additional Computation
-    </h2>
-    <!-- start computation title -->
-
-    <div class="computation">
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Appraisal Value</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
+    <!-- computation start 30% -->
+    <div class="computation-wrapper">
+      <!-- start computation title -->
+      <h2 class="shadow font-monospace computation-title">
+        Additional Computation
+      </h2>
+      <!-- start computation title -->
+      <div class="computation shadow">
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Appraisal Value</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+            disabled
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Principal Value</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Amount Due</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Penalty</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Interest Rate</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Service Charge</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Amount Redeem</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Amount Received</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Change</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
       </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Principal Loan</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Interest Rate</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Advance Interest</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Due Amount</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Addional Amount</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">New Balance</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Advance Interest</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Adv. Service Charge</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Net Proceed</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-      <div class="input-group mb-2 shadow-sm font-monospace">
-        <span class="col-form-label-sm btn-primary">Redeem Amount</span>
-        <input
-          tabindex="-1"
-          class="form-control form-control-sm"
-          [inputMask]="currencyInputMask"
-          type="text"
-        />
-      </div>
-
-      <div class="mt-3" style="display: flex; justify-content: space-around">
-        <button type="submit" tabindex="9" mat-raised-button color="primary">
+      <div class="button-wrapper">
+        <button
+          type="submit"
+          class="save-print"
+          tabindex="9"
+          mat-raised-button
+          class="btn-success"
+        >
           <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
         </button>
-        <button type="button" tabindex="10" mat-raised-button color="warn">
+        <button type="button" tabindex="10" mat-raised-button class="btn-danger">
           Reset <mat-icon>restart_alt</mat-icon>
         </button>
-        <button type="button" tabindex="11" (click)="home()" mat-raised-button>
+        <button type="button" tabindex="11" (click)="home()" mat-raised-button class="btn-primary">
           Home <mat-icon>home</mat-icon>
         </button>
       </div>
-      <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
     </div>
-    <!-- computation end -->
+    <!-- computation end 30% -->
   </div>
-  <!-- start wrapper for 70% pawner and 30% computation -->
+  <!-- start body wrapper for 70% pawner and 30% computation -->
 </form>

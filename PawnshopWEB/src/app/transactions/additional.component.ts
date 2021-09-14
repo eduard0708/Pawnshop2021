@@ -13,7 +13,8 @@ import { RedeemService } from '../_service/redeem.service';
 
 @Component({
   selector: 'app-additional',
-  templateUrl: './additional.component.html'
+  templateUrl: './additional.component.html',
+  styleUrls: ['../_sass/shared-transaction.scss']
 })
 export class AdditionalComponent implements OnInit {
 

@@ -13,7 +13,7 @@ import { RedeemService } from '../_service/redeem.service';
 @Component({
   selector: 'app-renew',
   templateUrl: './renew.component.html',
-  styleUrls: ['./renew.component.scss']
+  styleUrls: ['../_sass/shared-transaction.scss']
 })
 export class RenewComponent implements OnInit {
 
@@ -21,7 +21,7 @@ export class RenewComponent implements OnInit {
   transaction:Transaction = {} as Transaction;
   items:Item[] = [];
   pawnerInfo:PawnerInfo = {} as PawnerInfo;
-  additionalForm:FormGroup;
+  renewForm:FormGroup;
 
   displayColumns: string[] = 
   [
@@ -58,7 +58,7 @@ export class RenewComponent implements OnInit {
       }
     });
 
-      this.additionalForm = fb.group({
+      this.renewForm = fb.group({
         redeemAmount:[],
         dateTransaction:[],
         dateGranted:[],

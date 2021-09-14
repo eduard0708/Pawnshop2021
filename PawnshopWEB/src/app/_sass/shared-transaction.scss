@@ -25,7 +25,7 @@
 //start pawner information and layout of the transaction
 //pawner information tabel and computation
 
-.transaction-wrapper {
+.transaction-body {
   display: grid;
   grid-template-columns: 70% 30%;
   height: 89vh;
@@ -44,7 +44,7 @@
       display: grid;
       grid-template-columns: 1fr;
       background-color: rgb(224, 250, 253);
-      border-radius:  .5rem;
+      border-radius: 0.5rem;
       margin: 1rem;
       box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
       .status-wrapper {
@@ -54,9 +54,9 @@
         text-align: center;
         width: 100%;
         height: 2.5rem;
-        margin: .5rem;
+        margin: 0.5rem;
         border-radius: 5px;
-        .status{
+        .status {
           width: 10rem !important;
         }
         .input-group {
@@ -65,7 +65,7 @@
             width: 4rem;
             text-align: center;
           }
-          .dates-input{
+          .dates-input {
             text-align: center;
             font-weight: bold;
             background-color: white;
@@ -105,23 +105,65 @@
       }
     }
   }
-
+  .computation-wrapper {
+    position: relative;
+    // background-color: tomato;
   .computation-title {
-    position: absolute;
-    border-radius: 5px;
-    margin: 8px 72% 0;
-    width: 26%;
-    padding: 4px;
-    color: white;
-    background-color: rgb(31, 97, 241);
-    text-align: center;
-  }
-  // computation 30% area
-  .computation {
-    padding: 4rem 2.5rem 0;
-    background-color: rgb(209, 230, 240);
+      border-radius: 5px;
+      margin: .5rem auto 0;
+      width: 90%;
+      padding: 4px;
+      color: white;
+      background-color: #0d6efd;
+      text-align: center;
+    }
+    // computation 30% area
+    .computation {
+      width: 80%;
+      border-radius: 10px;
+      margin: .5rem auto 0;
+      padding: .5rem 1.3rem ;
+      background-color: rgb(209, 230, 240);
+    
+      // background-color: violet;
+      .input-group{
+        width: 100%;
+        margin-bottom: .3rem;
+        font-size: large;
+        font-family: monospace;
+        font-weight: 550;
+        .col-form-label-sm{
+          padding-left: .5rem;
+          color: white;
+          background-color: #0d6efd;
+          border-bottom-right-radius: 8px;
+          border-top-right-radius: 8px;
+          width: 55%;
+        }
+        .form-control{
+          width: 45%;
+          border-radius: 10px;
+          border: 1.5px solid blue;
+          background-color: white;
+        }
+      }
+    }
+    .button-wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // background-color: tomato;
+      padding: 0 1rem;
+      .save-print{
+        width: 100%;
+      }
+      button{
+         width: 70%;
+      }
+    }
   }
 }
+
 //remove input number arrow up/down
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

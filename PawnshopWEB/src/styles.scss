@@ -9,12 +9,9 @@ html, body {
 body { margin: 0; font-family: monospace, Roboto, "Helvetica Neue", sans-serif; }
 
 @import './app/_sass/layout';
-@import './app/_sass/shared-transaction.scss';
 @import './app/_sass/shared.scss';
 @import './app/_sass/dialogs.scss';
 @import './app/_sass/components.scss';
-@import './app/_sass/newloan.scss';
-@import './app/_sass/redeem.scss';
 @import './app/_sass/pages.scss';
 
 
