@@ -4,10 +4,10 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { DialogNewVoucherComponent } from '../_dialogs/dialog-new-voucher.component';
 import { DialogNewbarangayComponent } from '../_dialogs/dialog-newbarangay.component';
 import { DialogNewcityComponent } from '../_dialogs/dialog-newcity.component';
 import { DialogNewpawnerComponent } from '../_dialogs/dialog-newpawner.component';
+import { DialogNewvoucherComponent } from '../_dialogs/dialog-newvoucher.component';
 
 @Component({
   selector: 'app-header',
@@ -51,10 +51,10 @@ export class HeaderComponent implements OnInit {
   voucher() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
-    config.width = '70rem';
+    config.width = '30rem';
     config.height = 'auto';
     config.disableClose = true;
 
-    this.dialog.open(DialogNewVoucherComponent, config);
+    this.dialog.open(DialogNewvoucherComponent, config);
   }
 }

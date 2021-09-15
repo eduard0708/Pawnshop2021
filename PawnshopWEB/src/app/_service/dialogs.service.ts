@@ -36,5 +36,6 @@ export class DialogsService {
   getAllBarangay(){
     return this.http.get<Barangay[]>(this.uri + 'barangay');
   }
+
   
 }

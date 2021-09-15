@@ -1,0 +1,80 @@
+<form [formGroup]="voucherForm" (ngSubmit)="addVoucher()" autocomplete="off">
+  <div class="voucher-wrapper">
+    <div class="voucher-header">
+      <h2>Create Voucher</h2>
+    </div>
+    <div class="card">
+      <div class="voucher-body">
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="transactionDate"
+            [matDatepicker]="transactionDate"
+            placeholder="Transaction Date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="transactionDate"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #transactionDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select
+            placeholder="Chose Code"
+            formControlName="transactionCode"
+            name="transactionCode"
+          >
+            <mat-option
+              *ngFor="let code of transactionCodes"
+              [value]="code.id"
+              >{{ code.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select
+            placeholder="Chose Type"
+            formControlName="transactionType"
+            name="transactionType"
+          >
+            <mat-option
+              *ngFor="let type of trasactionTypes"
+              [value]="type.id"
+              >{{ type.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select
+            placeholder="Cash/Cheque"
+            formControlName="cashCheque"
+            name="Cash/cashCheque"
+          >
+            <mat-option
+              *ngFor="let cashCheque of cashCheques"
+              [value]="cashCheque.id"
+              >{{ cashCheque.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="amount" placeholder="Amount" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="remarks" placeholder="Remarks" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="voucher-footer">
+      <button mat-raised-button class="btn-success">
+        <mat-icon>save</mat-icon> Save
+      </button>
+      <button mat-raised-button class="btn-danger">
+        <mat-icon>save</mat-icon> Reset
+      </button>
+      <button mat-raised-button class="btn-primary" (click)="close()">
+        <mat-icon>save</mat-icon> Cancel
+      </button>
+    </div>
+  </div>
+</form>

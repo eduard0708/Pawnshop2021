@@ -21,7 +21,7 @@ import { NotifierComponent } from './_dialogs/notifier/notifier.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { DialogNewcityComponent } from './_dialogs/dialog-newcity.component';
 import { DialogNewbarangayComponent } from './_dialogs/dialog-newbarangay.component';
-import { DialogNewVoucherComponent } from './_dialogs/dialog-new-voucher.component';
+import { DialogNewvoucherComponent } from './_dialogs/dialog-newvoucher.component';
 
 @NgModule({
 declarations: [
@@ -39,7 +39,7 @@ declarations: [
     NotifierComponent,
     DialogNewcityComponent,
     DialogNewbarangayComponent,
-    DialogNewVoucherComponent,
+    DialogNewvoucherComponent,
 
   ],
   imports: [

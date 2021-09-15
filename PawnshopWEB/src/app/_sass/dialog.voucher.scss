@@ -1,0 +1,19 @@
+.voucher-wrapper{
+    width: 100%;
+    .voucher-header{
+        padding: 2rem;
+    }
+    .voucher-body{
+        padding: 2rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        
+    }
+    .voucher-footer{
+        padding: 1rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
