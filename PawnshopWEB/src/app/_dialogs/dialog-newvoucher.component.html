@@ -7,12 +7,14 @@
       <div class="voucher-body">
         <mat-form-field>
           <input
+          tabindex="-1"
             matInput
             formControlName="transactionDate"
             [matDatepicker]="transactionDate"
             placeholder="Transaction Date"
           />
           <mat-datepicker-toggle
+          tabindex="-1"
             matSuffix
             [for]="transactionDate"
           ></mat-datepicker-toggle>
@@ -20,6 +22,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select
+          tabindex="1"
             placeholder="Chose Code"
             formControlName="transactionCode"
             name="transactionCode"
@@ -33,6 +36,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select
+          tabindex="2"
             placeholder="Chose Type"
             formControlName="transactionType"
             name="transactionType"
@@ -46,6 +50,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select
+          tabindex="3"
             placeholder="Cash/Cheque"
             formControlName="cashCheque"
             name="Cash/cashCheque"
@@ -58,22 +63,23 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <input matInput formControlName="amount" placeholder="Amount" />
+          <input tabindex="4" matInput formControlName="amount" placeholder="Amount" />
         </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="remarks" placeholder="Remarks" />
+        <mat-form-field class="txt-remarks" appearance="legacy">
+          <mat-label>Remarks</mat-label>
+          <textarea tabindex="5" matInput formControlName="remarks" placeholder="Remarks"></textarea>
         </mat-form-field>
       </div>
     </div>
     <div class="voucher-footer">
-      <button mat-raised-button class="btn-success">
+      <button tabindex="6" mat-raised-button class="btn-success">
         <mat-icon>save</mat-icon> Save
       </button>
-      <button mat-raised-button class="btn-danger">
-        <mat-icon>save</mat-icon> Reset
+      <button tabindex="7" mat-raised-button class="btn-danger">
+        <mat-icon>restart_alt</mat-icon> Reset
       </button>
-      <button mat-raised-button class="btn-primary" (click)="close()">
-        <mat-icon>save</mat-icon> Cancel
+      <button tabindex="8" mat-raised-button class="btn-primary" (click)="close()">
+        <mat-icon>cancel</mat-icon> Cancel
       </button>
     </div>
   </div>

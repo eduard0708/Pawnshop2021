@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
   voucher() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
-    config.width = '30rem';
+    config.width = 'auto';
     config.height = 'auto';
     config.disableClose = true;
 
