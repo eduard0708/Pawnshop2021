@@ -4,6 +4,7 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { DialogNewVoucherComponent } from '../_dialogs/dialog-new-voucher.component';
 import { DialogNewbarangayComponent } from '../_dialogs/dialog-newbarangay.component';
 import { DialogNewcityComponent } from '../_dialogs/dialog-newcity.component';
 import { DialogNewpawnerComponent } from '../_dialogs/dialog-newpawner.component';
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  addCity() {
+  city() {
     const config = new MatDialogConfig();
     config.position = { top: '3rem' };
     config.width = 'auto';
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(DialogNewcityComponent, config);
   }
 
-  addBarangay() {
+  barangay() {
     const config = new MatDialogConfig();
     config.position = { top: '3rem' };
     config.width = 'auto';
@@ -38,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(DialogNewbarangayComponent, config);
   }
-  addPawner() {
+  pawner() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
     config.width = '70rem';
@@ -46,5 +47,14 @@ export class HeaderComponent implements OnInit {
     config.disableClose = true;
 
     this.dialog.open(DialogNewpawnerComponent, config);
+  }
+  voucher() {
+    const config = new MatDialogConfig();
+    config.position = { top: '6rem' };
+    config.width = '70rem';
+    config.height = 'auto';
+    config.disableClose = true;
+
+    this.dialog.open(DialogNewVoucherComponent, config);
   }
 }

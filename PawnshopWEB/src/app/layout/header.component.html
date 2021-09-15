@@ -4,31 +4,35 @@
       </button>
     <span>GoldWin</span>
    
-    <div class="header-menu">
+    <!-- <div class="header-menu">
         <ul>
             <li tabindex="-1" routerLink="/transactions/newloan/{}"><a>NewLoan</a></li>
             <li tabindex="-1" routerLink="/transactions/redeem"><a>Redeem</a></li>
             <li tabindex="-1" routerLink="/transactions/partial"><a>Partial</a></li>
             <li tabindex="-1" routerLink="/transactions/additional"><a>Additional</a></li>                 
         </ul>  
-    </div>
+    </div> -->
       
     <span class="header-spacer"></span>
     <button tabindex="-1" [matMenuTriggerFor]="menu" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="addCity()">
+      <button mat-menu-item (click)="city()">
         <mat-icon>layers</mat-icon>
         <span>City</span>
       </button>
-      <button mat-menu-item (click)="addBarangay()">
+      <button mat-menu-item (click)="barangay()">
         <mat-icon>terrain</mat-icon>
         <span>Barangay</span>
       </button>
-      <button mat-menu-item (click)="addPawner()">
+      <button mat-menu-item (click)="pawner()">
         <mat-icon>person_add_alt</mat-icon>
         <span>Pawner</span>
+      </button>
+      <button mat-menu-item (click)="voucher()">
+        <mat-icon>receipt</mat-icon>
+        <span>Voucher</span>
       </button>
     </mat-menu>
     <button tabindex="-1" routerLink='' mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
