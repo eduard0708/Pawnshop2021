@@ -11,7 +11,7 @@
             matInput
             formControlName="transactionDate"
             [matDatepicker]="transactionDate"
-            placeholder="Transaction Date"
+            placeholder="Date"
           />
           <mat-datepicker-toggle
           tabindex="-1"
@@ -20,10 +20,11 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #transactionDate></mat-datepicker>
         </mat-form-field>
+        <div></div>  <!-- spcer only  -->
         <mat-form-field>
           <mat-select
           tabindex="1"
-            placeholder="Chose Code"
+            placeholder="Code"
             formControlName="transactionCode"
             name="transactionCode"
           >
@@ -37,7 +38,7 @@
         <mat-form-field>
           <mat-select
           tabindex="2"
-            placeholder="Chose Type"
+            placeholder="Type"
             formControlName="transactionType"
             name="transactionType"
           >
