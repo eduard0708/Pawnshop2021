@@ -1,63 +1,69 @@
-<form >
-<div class="employee-wrapper">
+<form [formGroup]="employeeForm" autocomplete="off">
+  <div class="employee-wrapper">
     <div class="employee-header">
-        <h2>Employee CRUD</h2>
+      <h2 class="bg-info shadow rounded">Employee CRUD</h2>
     </div>
     <div class="employee-content">
-
       <div>
         <mat-form-field>
-        <input matInput formControlName="firstName" placeholder="First Name">
-      </mat-form-field>
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="First Name"
+          />
+        </mat-form-field>
       </div>
       <div>
         <mat-form-field>
-          <input matInput formControlName="lastName" placeholder="Last Name">
+          <input matInput formControlName="lastName" placeholder="Last Name" />
         </mat-form-field>
       </div>
-       <div>
+      <div>
         <mat-form-field>
-          <input matInput formControlName="firstName" placeholder="Contact Number">
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="Contact Number"
+          />
         </mat-form-field>
-       </div>
-        <div>
-          <mat-form-field>
-            <input matInput formControlName="firstName" placeholder="First Name">
-          </mat-form-field>
-        </div>
-    </div>
-    <div class="employee-header">
-
+      </div>
+      <div>
+        <mat-select placeholder="Position" formControlName="contorl">
+          <mat-option *ngFor="let position of positions" [value]="position.id">{{
+            position.name
+          }}</mat-option>
+        </mat-select>
+      </div>
     </div>
     <div class="employee-footer">
-        <button
-          tabindex="7"
-          mat-raised-button
-          [disabled]="isSave"
-          class="btn-success font-monospace"
-          (click)="save()"
-        >  <mat-icon>save</mat-icon>
-          Save
-        </button>
-        <button
-          (click)="reset()"
-          tabindex="8"
-          mat-raised-button
-          class="btn-primary font-monospace"
-        >
+      <button
+        tabindex="7"
+        mat-raised-button
+        [disabled]="isSave"
+        class="btn-success font-monospace"
+        (click)="save()"
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+      <button
+        (click)="reset()"
+        tabindex="8"
+        mat-raised-button
+        class="btn-primary font-monospace"
+      >
         <mat-icon>restart_alt</mat-icon>
-          Reset
-        </button>
-        <button
-          (click)="cancel()"
-          tabindex="8"
-          mat-raised-button
-          class="btn-danger font-monospace"
-        >
+        Reset
+      </button>
+      <button
+        (click)="cancel()"
+        tabindex="9"
+        mat-raised-button
+        class="btn-danger font-monospace"
+      >
         <mat-icon>cancel</mat-icon>
-          Cancel
-        </button>
-      </div>
-</div>
-
+        Cancel
+      </button>
+    </div>
+  </div>
 </form>
