@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnshopAPI", "PawnshopAPI.csproj", "{584580AB-D420-49EE-8FA9-98767E285C5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{584580AB-D420-49EE-8FA9-98767E285C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584580AB-D420-49EE-8FA9-98767E285C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584580AB-D420-49EE-8FA9-98767E285C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584580AB-D420-49EE-8FA9-98767E285C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93BA6DD8-7B91-4707-8371-58D2F8DD06BA}
+	EndGlobalSection
+EndGlobal
