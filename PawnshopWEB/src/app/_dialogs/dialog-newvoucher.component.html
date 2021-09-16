@@ -1,29 +1,38 @@
-<form #f="ngForm" [formGroup]="voucherForm" (ngSubmit)="addVoucher()" autocomplete="off">
+<form
+  #f="ngForm"
+  [formGroup]="voucherForm"
+  (ngSubmit)="addVoucher()"
+  autocomplete="off"
+>
   <div class="voucher-wrapper">
-    <div class="voucher-header">
-      <h2>Create Voucher</h2>
-    </div>
     <div class="card">
+      <div class="voucher-header ">
+        <h2 class="shadow rounded bg-info font-monospace">Create Voucher</h2>
+      </div>
+      <mat-divider class="pb-3" style="width: 90%; margin: 0 auto">
+      </mat-divider>
       <div class="voucher-body">
         <mat-form-field>
           <input
-          tabindex="-1"
+            tabindex="-1"
             matInput
             formControlName="transactionDate"
             [matDatepicker]="transactionDate"
             placeholder="Date"
           />
           <mat-datepicker-toggle
-          tabindex="-1"
+            tabindex="-1"
             matSuffix
             [for]="transactionDate"
           ></mat-datepicker-toggle>
           <mat-datepicker #transactionDate></mat-datepicker>
         </mat-form-field>
-        <div></div>  <!-- spcer only  -->
+        <div></div>
+        <!-- spcer only  -->
         <mat-form-field>
           <mat-select
-          tabindex="1"
+            #codeRef
+            tabindex="1"
             placeholder="Code"
             formControlName="transactionCode"
             name="transactionCode"
@@ -37,7 +46,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select
-          tabindex="2"
+            tabindex="2"
             placeholder="Type"
             formControlName="transactionType"
             name="transactionType"
@@ -51,7 +60,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-select
-          tabindex="3"
+            tabindex="3"
             placeholder="Cash/Cheque"
             formControlName="cashCheque"
             name="Cash/cashCheque"
@@ -64,22 +73,49 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <input tabindex="4" maxlength="15"  [inputMask]="currencyInputMask" matInput formControlName="amount" placeholder="Amount" />
+          <input
+            tabindex="4"
+            maxlength="15"
+            [inputMask]="currencyInputMask"
+            matInput
+            formControlName="amount"
+            placeholder="Amount"
+          />
         </mat-form-field>
         <mat-form-field class="txt-remarks" appearance="legacy">
           <mat-label>Remarks</mat-label>
-          <textarea tabindex="5" matInput formControlName="remarks" placeholder="Remarks"></textarea>
+          <textarea
+            tabindex="5"
+            matInput
+            formControlName="remarks"
+            placeholder="Remarks"
+          ></textarea>
         </mat-form-field>
       </div>
     </div>
     <div class="voucher-footer">
-      <button tabindex="6" [disabled]="isBtnSave" mat-raised-button class="btn-success">
+      <button
+        tabindex="6"
+        [disabled]="isBtnSave"
+        mat-raised-button
+        class="btn-success"
+      >
         <mat-icon>save</mat-icon> Save
       </button>
-      <button (click)="reset()" tabindex="7" mat-raised-button class="btn-danger">
+      <button
+        (click)="reset()"
+        tabindex="7"
+        mat-raised-button
+        class="btn-danger"
+      >
         <mat-icon>restart_alt</mat-icon> Reset
       </button>
-      <button tabindex="8" mat-raised-button class="btn-primary" (click)="close()">
+      <button
+        tabindex="8"
+        mat-raised-button
+        class="btn-primary"
+        (click)="close()"
+      >
         <mat-icon>cancel</mat-icon> Cancel
       </button>
     </div>

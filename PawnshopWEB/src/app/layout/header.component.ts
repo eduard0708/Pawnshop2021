@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { DialogNewbarangayComponent } from '../_dialogs/dialog-newbarangay.component';
 import { DialogNewcityComponent } from '../_dialogs/dialog-newcity.component';
+import { DialogNewemployeeComponent } from '../_dialogs/dialog-newemployee.component';
 import { DialogNewpawnerComponent } from '../_dialogs/dialog-newpawner.component';
 import { DialogNewvoucherComponent } from '../_dialogs/dialog-newvoucher.component';
 
@@ -57,4 +58,15 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(DialogNewvoucherComponent, config);
   }
+
+  employee(){
+    const config = new MatDialogConfig();
+    config.position = { top: '6rem' };
+    config.width = 'auto';
+    config.height = 'auto';
+    config.disableClose = true;
+
+    this.dialog.open(DialogNewemployeeComponent, config);
+  }
+
 }

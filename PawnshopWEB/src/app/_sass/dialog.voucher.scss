@@ -1,11 +1,13 @@
 .voucher-wrapper{
     width: 100%;
+    .card{
+        padding: .3rem;
+    }
     .voucher-header{
         text-align: center;
         h2{
-            border-radius: 8px;
-            padding: .8rem;
-            background-color:rgb(77, 153, 197);
+            padding: .5rem;
+            color: white;
         }
     }
     .voucher-body{

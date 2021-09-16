@@ -22,6 +22,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
 import { DialogNewcityComponent } from './_dialogs/dialog-newcity.component';
 import { DialogNewbarangayComponent } from './_dialogs/dialog-newbarangay.component';
 import { DialogNewvoucherComponent } from './_dialogs/dialog-newvoucher.component';
+import { DialogNewemployeeComponent } from './_dialogs/dialog-newemployee.component';
 
 @NgModule({
 declarations: [
@@ -40,6 +41,7 @@ declarations: [
     DialogNewcityComponent,
     DialogNewbarangayComponent,
     DialogNewvoucherComponent,
+    DialogNewemployeeComponent,
 
   ],
   imports: [
