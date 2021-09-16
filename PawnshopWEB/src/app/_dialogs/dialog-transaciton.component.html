@@ -18,10 +18,8 @@
         [(ngModel)]="searchId"
         (keyup.enter)="getTransaction(transactionType)"
       />
-      <!-- <mat-icon matSuffix tabindex="2" (click)="search()" (keyup.enter)="search()"> search</mat-icon> -->
     </mat-form-field>
-
-      <div *ngIf="buttonNewloan">
+    <div *ngIf="buttonNewloan">
         <button
           (click)="createPawer()"
           tabindex="2"
