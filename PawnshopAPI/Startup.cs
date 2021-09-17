@@ -35,7 +35,7 @@ namespace PawnshopAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
