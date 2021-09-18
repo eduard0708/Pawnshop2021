@@ -9,7 +9,7 @@ using PawnshopAPI.Entities;
 namespace PawnshopAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
@@ -19,14 +19,14 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers(){
-            return await _context.Users.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Employee>>> GetUsers(){
+            return await _context.Employees.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUser(int id){
+        public async Task<ActionResult<Employee>> GetUser(int id){
              
-            return Ok(await _context.Users.FindAsync(id));
+            return Ok(await _context.Employees.FindAsync(id));
         }
     }
 }

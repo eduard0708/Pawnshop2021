@@ -15,9 +15,9 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService:DashboardService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.dashboardService.getCardDetails().subscribe((data) => {
-      this.dataForCard = data;
-    });
+    // this.dashboardService.getCardDetails().subscribe((data) => {
+    //   this.dataForCard = data;
+    // });
   }
 
   newTransaction(transactionType: string) {

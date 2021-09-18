@@ -9,6 +9,8 @@ namespace PawnshopAPI.Data
         {
         }
 
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Pawner> Pawners { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }
