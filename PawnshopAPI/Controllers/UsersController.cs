@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
@@ -17,12 +18,12 @@ namespace PawnshopAPI.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetUsers(){
             return await _context.Employees.ToListAsync();
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetUser(int id){
              
