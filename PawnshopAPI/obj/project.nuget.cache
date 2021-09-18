@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BJrqE7x+Cus6zs64/clGsBlV5Xv0+sB1qrBsqa3qQTEto7QA9djgh5OO0HfO6zpKEvXEfrx56n7r44WhUB6KLA==",
+  "dgSpecHash": "+MGRqoZ9DIkY2RS3sFRfdxPpEneWu6CIlFcWwuYXJA/sPMgr6hewg9bV1c/WTdCBD4RZKd+MrN8WdRoBH6YjxA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LIGHT\\Desktop\\2021-GoldWin\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+  "projectFilePath": "C:\\Users\\LIGHT\\Desktop\\2021-GoldWin\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
