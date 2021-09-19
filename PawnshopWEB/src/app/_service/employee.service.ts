@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmployeeService {
   url ="http://localhost:5000/account/";
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
+
   constructor(
     private http: HttpClient,
     private router: Router

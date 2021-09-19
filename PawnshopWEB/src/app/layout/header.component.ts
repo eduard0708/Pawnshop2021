@@ -4,6 +4,7 @@ import {
   MatDialogConfig,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DialogNewbarangayComponent } from '../_dialogs/dialog-newbarangay.component';
 import { DialogNewcityComponent } from '../_dialogs/dialog-newcity.component';
 import { DialogNewemployeeComponent } from '../_dialogs/dialog-newemployee.component';
@@ -19,17 +20,19 @@ export class HeaderComponent implements OnInit {
   isLoggedIn:boolean = false;
   constructor(
     private dialog: MatDialog,
-    private employeeService:EmployeeService
+    public employeeService:EmployeeService,
+    private router:Router
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
   ) {}
 
   ngOnInit() {
-    console.log(this.isLoggedIn );
-     this.employeeService.currentUser$.subscribe( user => {
-        this.isLoggedIn = !!user;
-        console.log(this.isLoggedIn);
-    });
-    
+    this.setCurrentUser();
+  }
+
+  setCurrentUser(){
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.employeeService.setCurrentUser(user);
+    this.isLoggedIn = !!user;
   }
 
   city() {
@@ -78,7 +81,12 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(DialogNewemployeeComponent, config);
   }
+  
   logout(){
     this.employeeService.logout();
+  }
+  home(){
+     if(!this.employeeService.currentUser$) 
+        this.router.navigateByUrl('login');      
   }
 }

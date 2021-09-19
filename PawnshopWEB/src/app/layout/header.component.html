@@ -5,7 +5,7 @@
 >
   <button
     tabindex="-1"
-    routerLink="dashboard"
+    (click)="home()"
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
@@ -24,7 +24,10 @@
     </div> -->
 
   <span class="header-spacer"></span>
-  <ng-container *ngIf="isLoggedIn">
+  <ng-container *ngIf="(employeeService.currentUser$ | async) as user">
+    <ng-container>
+      <div>Welcome <span>{{user.username| titlecase}}</span></div>
+    </ng-container>
     <button
       tabindex="-1"
       [matMenuTriggerFor]="menu"
