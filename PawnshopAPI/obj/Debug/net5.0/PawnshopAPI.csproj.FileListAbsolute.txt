@@ -53,7 +53,6 @@ C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\Pa
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\ref\PawnshopAPI.dll
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.pdb
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.genruntimeconfig.cache
-C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\appsettings.json
@@ -113,3 +112,5 @@ C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\ref\PawnshopAPI
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.pdb
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.genruntimeconfig.cache
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache
+C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\bin\Debug\net5.0\package-lock.json
+C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache

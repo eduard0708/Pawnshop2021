@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PawnshopAPI.Data;
+using PawnshopAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,32 +20,32 @@ namespace PawnshopAPI.Controllers
         {
             _context = context;
         }
-
+        [Authorize]
         [HttpGet("auth")]
         public ActionResult<string> GetSecret()
         {
             return "secret";
         }
         [HttpGet("not-found")]
-        public ActionResult<string> GetNotFound()
+        public ActionResult<Employee> GetNotFound()
         {
-            var thing = _context.Users.Find(-1)
-            return thing;
+            var thing = _context.Pawners.Find(-1);
+            if (thing == null) return NotFound();
+            return Ok(thing);
         }
-        [HttpGet("auth")]
-        public ActionResult<string> GetSecret()
+        [HttpGet("server-error")]
+        public ActionResult<string> GetServerError()
         {
-            return "secret";
+            var thing = _context.Pawners.Find(-1);
+            var thingToReturn = thing.ToString();
+
+            return thingToReturn;
         }
-        [HttpGet("auth")]
-        public ActionResult<string> GetSecret()
+        [HttpGet("bad-request")]
+        public ActionResult<string> GetBadRequest()
         {
-            return "secret";
+            return BadRequest("This is not a good request!");
         }
-        [HttpGet("auth")]
-        public ActionResult<string> GetSecret()
-        {
-            return "secret";
-        }
+     
     }
 }

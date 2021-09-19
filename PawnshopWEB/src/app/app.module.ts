@@ -13,7 +13,7 @@ import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashCardComponent } from './dash-card/dash-card.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
@@ -23,6 +23,8 @@ import { DialogNewcityComponent } from './_dialogs/dialog-newcity.component';
 import { DialogNewbarangayComponent } from './_dialogs/dialog-newbarangay.component';
 import { DialogNewvoucherComponent } from './_dialogs/dialog-newvoucher.component';
 import { DialogNewemployeeComponent } from './_dialogs/dialog-newemployee.component';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
 
 @NgModule({
 declarations: [
@@ -42,6 +44,7 @@ declarations: [
     DialogNewbarangayComponent,
     DialogNewvoucherComponent,
     DialogNewemployeeComponent,
+    TestErrorsComponent,
 
   ],
   imports: [
@@ -54,7 +57,9 @@ declarations: [
     ReactiveFormsModule,   
     InputMaskModule
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
