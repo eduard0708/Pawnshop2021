@@ -14,7 +14,7 @@ export class NotfoundComponent implements OnInit {
   }
 
   home(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/error');
   }
 
 }

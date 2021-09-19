@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-errors',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-errors.component.scss'],
 })
 export class TestErrorsComponent implements OnInit {
+  validationError:string[] = [];
   url = 'http://localhost:5000/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router:Router) {}
 
   ngOnInit(): void {}
 
@@ -50,7 +52,14 @@ export class TestErrorsComponent implements OnInit {
       (response) => {
         console.log(response);
       },
-      (error) => console.log(error)
+      (error) =>{
+        
+        this.validationError = error;
+        console.log(this.validationError);
+      } 
     );
+  }
+  home(){
+    this.router.navigateByUrl('')
   }
 }

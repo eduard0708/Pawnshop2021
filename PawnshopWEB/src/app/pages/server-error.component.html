@@ -1,0 +1,12 @@
+
+<div class="container mt-5">
+    <h4>Internal Server Error - refreshing the page will disappear the error!</h4>
+    <ng-container *ngIf="error">
+        <h2 class="text-danger">Status: {{error.statusCode}}</h2>
+        <h5 class="text-danger">Error Message: {{error.message}}</h5>
+    </ng-container>  
+    <div class="mt-5">
+        <h5 class="text-danger bg-white">Error Details: {{error.details}}</h5>
+    </div>
+    <button (click)="home()" class="btn btn-primary">Home Error</button>
+</div>

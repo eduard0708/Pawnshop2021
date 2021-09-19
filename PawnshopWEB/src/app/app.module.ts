@@ -25,6 +25,7 @@ import { DialogNewvoucherComponent } from './_dialogs/dialog-newvoucher.componen
 import { DialogNewemployeeComponent } from './_dialogs/dialog-newemployee.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { ServerErrorComponent } from './pages/server-error.component';
 
 @NgModule({
 declarations: [
@@ -45,6 +46,7 @@ declarations: [
     DialogNewvoucherComponent,
     DialogNewemployeeComponent,
     TestErrorsComponent,
+    ServerErrorComponent,
 
   ],
   imports: [

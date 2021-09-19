@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                       modalStateErrors.push(error.error.errors[key])
                     }
                   }
-                  throw modalStateErrors;
+                  throw modalStateErrors.flat();
                 }else{
                   this.notifier.showNotification(error.status + ' ' + error.statusText, '','error', {})
                 }
@@ -40,12 +40,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                   this.router.navigateByUrl('/not-found');
                 break;
                 case 500:
-                  const navigationExtras: NavigationExtras={state:{error:error.state}};
-                  this.router.navigateByUrl('/error', navigationExtras);
+                  const navigationExtras: NavigationExtras={state:{error:error.error}};
+                  this.router.navigateByUrl('/server-error', navigationExtras);
                 break;
               default:
                 this.notifier.showNotification('something went wrong','','error',{});
-                console.log(error);
+                console.log(error); 
                 break;
             }
           }
