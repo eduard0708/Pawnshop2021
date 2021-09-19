@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PawnshopAPI.Data;
-using PawnshopAPI.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PawnshopAPI.Data;
+using PawnshopAPI.DTO;
+using PawnshopAPI.Entities;
 
 namespace PawnshopAPI.Controllers
 {
@@ -21,20 +22,25 @@ namespace PawnshopAPI.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<City>> Cities() {
-            return await _context.Cities.ToListAsync();
+        //[HttpPost("add-city")]
+        //public async Task<ActionResult>  AddCity(AddCityDto city)
+        //{
+        //   await _context.Cities.AddAsync(city);
+        //   await _context.SaveChangesAsync();
+        //    return Ok();
+        //}
+
+        [HttpGet("cities")]
+        public async Task<ActionResult<City>> Cities(){
+            return  Ok(await _context.Cities.ToListAsync());
         }
 
-        [HttpPost("add-city")]
-        public ActionResult AddCity(City city) {
-
-            _context.Cities.Add(city);
-            _context.SaveChanges();
-
+          [HttpPost("add-barangay")]
+        public async Task<ActionResult> AddBarangay(Barangay barangay)
+        {
+            await _context.Barangays.AddAsync(barangay);
+           await _context.SaveChangesAsync();
             return Ok();
-    
         }
-        
     }
 }

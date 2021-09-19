@@ -11,6 +11,7 @@ namespace PawnshopAPI.Data
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Pawner> Pawners { get; set; }
+        public DbSet<Barangay> Barangays { get; set; }
         public DbSet<City> Cities { get; set; }
     }
 }
