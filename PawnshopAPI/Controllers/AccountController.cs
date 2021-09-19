@@ -39,7 +39,9 @@ namespace PawnshopAPI.Controllers
             {
                 UserName = employeeDto.UserName.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(employeeDto.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                FirstName = employeeDto.FirstName,
+                LastName = employeeDto.LastName
             };
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
