@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "AFiu75RU4Etzl11PQo7AHqBD9+vbKeT6gFRl2gAkC7lCqvB/Swbpoa6A3vMpiPbXApYpNHXtnqUrA/ZZa2orsg==",
+  "dgSpecHash": "9z1EhWuZQ4bIatpuqNN0QU23Nb4cMf7OH+8cIqedJgOMm6l1lC+LuGanBsZRczHfAXTfMB+UCPQIykMNrgDDMg==",
   "success": true,
   "projectFilePath": "C:\\Users\\LIGHT\\Desktop\\2021-GoldWin\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\LIGHT\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.10\\microsoft.aspnetcore.authentication.jwtbearer.5.0.10.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
