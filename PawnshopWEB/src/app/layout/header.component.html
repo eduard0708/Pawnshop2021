@@ -1,10 +1,20 @@
-<mat-toolbar color="primary" class="mat-elevation-z6 bg-primary" style="height: 6vh !important;">
-    <button tabindex="-1" routerLink='dashboard' mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
-    <span>GoldWin</span>
-   
-    <!-- <div class="header-menu">
+<mat-toolbar
+  color="primary"
+  class="mat-elevation-z6 bg-primary"
+  style="height: 6vh !important"
+>
+  <button
+    tabindex="-1"
+    routerLink="dashboard"
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>GoldWin</span>
+
+  <!-- <div class="header-menu">
         <ul>
             <li tabindex="-1" routerLink="/transactions/newloan/{}"><a>NewLoan</a></li>
             <li tabindex="-1" routerLink="/transactions/redeem"><a>Redeem</a></li>
@@ -12,9 +22,16 @@
             <li tabindex="-1" routerLink="/transactions/additional"><a>Additional</a></li>                 
         </ul>  
     </div> -->
-      
-    <span class="header-spacer"></span>
-    <button tabindex="-1" [matMenuTriggerFor]="menu" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+
+  <span class="header-spacer"></span>
+  <ng-container *ngIf="isLoggedIn">
+    <button
+      tabindex="-1"
+      [matMenuTriggerFor]="menu"
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -39,7 +56,16 @@
         <span>Employee</span>
       </button>
     </mat-menu>
-    <button tabindex="-1" routerLink='' mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+
+    <button
+      (click)="logout()"
+      tabindex="-1"
+      routerLink=""
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
       <mat-icon>logout</mat-icon>
     </button>
+  </ng-container>
 </mat-toolbar>

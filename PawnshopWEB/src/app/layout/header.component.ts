@@ -9,18 +9,28 @@ import { DialogNewcityComponent } from '../_dialogs/dialog-newcity.component';
 import { DialogNewemployeeComponent } from '../_dialogs/dialog-newemployee.component';
 import { DialogNewpawnerComponent } from '../_dialogs/dialog-newpawner.component';
 import { DialogNewvoucherComponent } from '../_dialogs/dialog-newvoucher.component';
+import { EmployeeService } from '../_service/employee.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
+  isLoggedIn:boolean = false;
   constructor(
     private dialog: MatDialog,
+    private employeeService:EmployeeService
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    console.log(this.isLoggedIn );
+     this.employeeService.currentUser$.subscribe( user => {
+        this.isLoggedIn = !!user;
+        console.log(this.isLoggedIn);
+    });
+    
+  }
 
   city() {
     const config = new MatDialogConfig();
@@ -68,5 +78,7 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(DialogNewemployeeComponent, config);
   }
-
+  logout(){
+    this.employeeService.logout();
+  }
 }
