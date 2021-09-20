@@ -5,8 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { City } from '../_model/city';
-import { Select } from '../_model/select';
+import { AddressService } from '../_service/address.service';
 import { DialogsService } from '../_service/dialogs.service';
+import { NotifierService } from '../_service/notifier.service';
 
 @Component({
   selector: 'app-dialog-newcity',
@@ -16,7 +17,8 @@ export class DialogNewcityComponent implements OnInit {
   @ViewChild('cityNameRef', { static: true }) cityNameRef: any;
   cityForm: FormGroup;
   isAdd: boolean = true;
-  city:City[]=[];
+  city:City;
+  cities:City[]=[];
   displayedColumns:string[] =['id','name','action']
   public dataSource:MatTableDataSource<City>;
   private serviceSubscribe: Subscription;
@@ -25,7 +27,9 @@ export class DialogNewcityComponent implements OnInit {
     private fb: FormBuilder, 
     private route: Router, 
     private dialogRef:MatDialogRef<DialogNewcityComponent>,
-    private dialogService:DialogsService
+    private dialogService:DialogsService,
+    private addressService:AddressService,
+    private notifier: NotifierService
     
     ) {
     this.cityForm = fb.group({
@@ -57,6 +61,14 @@ export class DialogNewcityComponent implements OnInit {
   }
 
   add() {
+    const city ={
+      "cityName":this.cityForm.controls.cityName.value
+    } 
+    this.addressService.addCity(city).subscribe(
+      city => { this.city = city
+         this.notifier.showNotification(` ${this.city.cityName} city added.`,'','success',{}) 
+       }
+    )
     this.cityForm.reset();
     this.cityNameRef.nativeElement.focus();
   }

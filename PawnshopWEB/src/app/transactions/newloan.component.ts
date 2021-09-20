@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Subscription } from 'rxjs';
+import { Category } from '../_model/category';
 import { Item } from '../_model/item';
 import { Pawner } from '../_model/pawner';
 import { PawnerInfo } from '../_model/pawnerInfo';
@@ -59,7 +60,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     'appraisalValue',
     'action',
   ];
-  categories: Select[] = [];
+  categories: Category[] = [];
   categoryDescriptions: Select[] = [];
 
   public dataSource: MatTableDataSource<Item>;
@@ -170,8 +171,9 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 100);
 
     this.itemService
-      .getCategory()
+      .getCategories()
       .subscribe((data) => (this.categories = data));
+
     this.itemService
       .getCategoryDescription()
       .subscribe((data) => (this.categoryDescriptions = data));
@@ -195,9 +197,10 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     
     let id = this.dataSource.data.length + 1;
 
-    let categoryName: Select = this.categories.find(
-      ({ id }) => id == this.newLoanForm.controls.category.value
+    let categoryName: Category = this.categories.find(
+      ({ categoryId }) => id == this.newLoanForm.controls.category.value
     );
+
     let catDescName: Select = this.categoryDescriptions.find(
       ({ id }) => id == this.newLoanForm.controls.categoryDescriptions.value
     );
@@ -205,7 +208,7 @@ export class NewloanComponent implements OnInit, OnDestroy, AfterViewInit {
     let item: Item = {
       id: id,
       categoryId: this.newLoanForm.controls.category.value,
-      categoryName: categoryName.name,
+      categoryName: categoryName.categoryName,
       categoryDescriptionId: this.newLoanForm.controls.categoryDescriptions.value,
       categoryDescriptionName: catDescName.name,
       description: this.newLoanForm.controls.descriptions.value,

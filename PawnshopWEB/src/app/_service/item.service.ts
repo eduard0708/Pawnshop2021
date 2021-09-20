@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AddCategoryDescription } from '../_model/add-category-description';
+import { Category } from '../_model/category';
 import { Item } from '../_model/item';
 import { Select } from '../_model/select';
 
@@ -11,6 +14,8 @@ export class ItemService {
   uri = 'http://localhost:3000/';
   baseUrl:string ="http://localhost:5000/"
 
+  apiUrl = environment.baseUrl +'item'
+
   items$: BehaviorSubject<Item[]>;
   items: Array<Item> =[];
 
@@ -20,8 +25,13 @@ export class ItemService {
    }
 
    addCategoryDescription(categoryDescription:AddCategoryDescription){
-     return this.http.post(this.baseUrl + 'item')
+     return this.http.post(this.apiUrl + 'item', categoryDescription);
    }
+
+   getCategories(){
+     return this.http.get<Category[]>(this.apiUrl + 'category');
+   }
+
 
    add(item:Item){
     this.items.push(item)

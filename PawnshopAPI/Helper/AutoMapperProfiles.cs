@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PawnshopAPI.DTO;
+using PawnshopAPI.DTO.AddressDTO;
 using PawnshopAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,18 @@ namespace PawnshopAPI.Helper
             CreateMap<AddBarangayDto, Barangay>();
             CreateMap<Barangay, BarangayDto>();
             CreateMap<City, ListCityDto>();
-            CreateMap<AddCategoryDto, Category>();
-            CreateMap<AddCategoryDto, Category>();
-            CreateMap<AddCategoryDescriptionDto, CategoryDescription>();
+   
             CreateMap<Pawner, PawnerDto>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
 
+            //Address Mappings
+            CreateMap<City, ReturnCityDto>();
+          
+            //Items Mappings
+            CreateMap<Category, ListCategoryDto>();
+            CreateMap<AddCategoryDto, Category>();
+            CreateMap<AddCategoryDto, Category>();
+            CreateMap<AddCategoryDescriptionDto, CategoryDescription>();
         }
     }
 }

@@ -1,7 +1,7 @@
 import { Barangay } from "./barangay";
 
 export interface City{
-    id:number;
-    name:string;
+    cityId:number;
+    cityName:string;
     barangay:Barangay[]
  }

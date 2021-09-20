@@ -24,9 +24,9 @@
           >
             <mat-option
               *ngFor="let category of categories"
-              [value]="category.id"
+              [value]="category.categoryId"
             >
-              {{ category.name }}
+              {{ category.categoryName }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="newLoanForm.get('category').hasError('required')"

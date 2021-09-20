@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
 using PawnshopAPI.DTO;
 using PawnshopAPI.Entities;
@@ -32,6 +33,14 @@ namespace PawnshopAPI.Controllers
            await _context.SaveChangesAsync();
 
             return Ok();    
+        }
+
+        [HttpGet("category")]
+        public async Task<ActionResult<IEnumerable<ListCategoryDto>>> Categories()
+        {
+            var category = await _context.Categories.ToListAsync();
+            var categoryReturn = _mapper.Map<IEnumerable<ListCategoryDto>> (category);
+            return Ok(categoryReturn);
         }
 
         [HttpPost("add-category-description")]

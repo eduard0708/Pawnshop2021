@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
 using PawnshopAPI.DTO;
+using PawnshopAPI.DTO.AddressDTO;
 using PawnshopAPI.Entities;
 
 namespace PawnshopAPI.Controllers
@@ -26,12 +27,13 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost("add-city")]
-        public async Task<ActionResult> AddCity(AddCityDto newcity)
+        public async Task<ActionResult<ReturnCityDto>> AddCity(AddCityDto newcity)
         {
             var city = _mapper.Map<City>(newcity);
             await _context.Cities.AddAsync(city);
             await _context.SaveChangesAsync();
-            return Ok();
+            var returnCity = _mapper.Map<ReturnCityDto>(city);
+            return Ok(returnCity);
         }
 
         [HttpGet("cities")]
