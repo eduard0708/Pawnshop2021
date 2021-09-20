@@ -46,7 +46,8 @@ namespace PawnshopAPI.Controllers
                var cities = await _context.Cities
                     .Include(x => x.Barangays) 
                     .ToListAsync();
-          return Ok(_mapper.Map<IEnumerable<ListCityDto>>(cities));
+            var listcity = _mapper.Map<IEnumerable<ListCityDto>>(cities);
+          return Ok(listcity);
 
 
         }

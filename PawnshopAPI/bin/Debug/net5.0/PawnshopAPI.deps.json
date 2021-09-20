@@ -33,7 +33,6 @@
     ".NETCoreApp,Version=v5.0": {
       "PawnshopAPI/1.0.0": {
         "dependencies": {
-          "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.10",
           "Microsoft.EntityFrameworkCore": "5.0.10",

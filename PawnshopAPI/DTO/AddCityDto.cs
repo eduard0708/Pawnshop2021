@@ -7,6 +7,6 @@ namespace PawnshopAPI.DTO
 {
     public class AddCityDto
     {
-        public string Name { get; set; }
+        public string CityName { get; set; }
     }
 }

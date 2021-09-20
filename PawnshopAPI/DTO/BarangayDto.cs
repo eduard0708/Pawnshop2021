@@ -4,8 +4,8 @@ namespace PawnshopAPI.DTO
 {
     public class BarangayDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-   
+        public int BarangayId { get; set; }
+        public string BarangayName { get; set; }
+
     }
 }

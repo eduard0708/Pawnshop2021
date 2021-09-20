@@ -7,9 +7,9 @@ namespace PawnshopAPI.DTO
 {
     public class AddBarangayDto
     {
-        public int Id { get; set; }
+        public int BarangayId { get; set; }
         public int CityId { get; set; }
-        public string Name { get; set; }
+        public string BarangayName { get; set; }
 
     }
 }

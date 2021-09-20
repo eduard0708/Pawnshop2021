@@ -7,8 +7,8 @@ namespace PawnshopAPI.DTO
 {
     public class ListCityDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public ICollection<BarangayDto> Barangays { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public IEnumerable<BarangayDto> Barangays { get; set; }
     }
 }

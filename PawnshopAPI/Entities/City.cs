@@ -8,8 +8,8 @@ namespace PawnshopAPI.Entities
 {
     public class City
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
         public IEnumerable<Barangay> Barangays { get; set; }
     }
 }
