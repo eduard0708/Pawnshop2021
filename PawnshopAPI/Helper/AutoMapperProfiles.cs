@@ -16,6 +16,9 @@ namespace PawnshopAPI.Helper
             CreateMap<AddBarangayDto, Barangay>();
             CreateMap<Barangay, BarangayDto>();
             CreateMap<City, ListCityDto>();
+            CreateMap<AddCategoryDto, Category>();
+            CreateMap<AddCategoryDto, Category>();
+            CreateMap<AddCategoryDescriptionDto, CategoryDescription>();
             CreateMap<Pawner, PawnerDto>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
 
