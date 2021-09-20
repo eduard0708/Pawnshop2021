@@ -10,6 +10,6 @@ namespace PawnshopAPI.Entities
     {
         public int CityId { get; set; }
         public string CityName { get; set; }
-        public IEnumerable<Barangay> Barangays { get; set; }
+        public ICollection<Barangay> Barangays { get; set; }
     }
 }

@@ -4,6 +4,7 @@ namespace PawnshopAPI.DTO
 {
     public class PawnerDto
     {
+       
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int ContactNumber { get; set; }
