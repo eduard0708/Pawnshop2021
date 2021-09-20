@@ -13,6 +13,8 @@ namespace PawnshopAPI.Helper
         public AutoMapperProfiles()
         {
             CreateMap<AddCityDto, City>();
+            CreateMap<AddBarangayDto, Barangay>();
+            CreateMap<City, ListCityDto>();
         }
     }
 }

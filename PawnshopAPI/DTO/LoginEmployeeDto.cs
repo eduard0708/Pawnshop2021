@@ -1,4 +1,4 @@
-﻿namespace PawnshopAPI.Controllers
+﻿namespace PawnshopAPI.DTO
 {
     public class LoginEmployeeDto
     {

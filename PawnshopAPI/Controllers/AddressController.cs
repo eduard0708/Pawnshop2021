@@ -35,16 +35,36 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpGet("cities")]
-        public async Task<ActionResult<City>> Cities(){
-            return  Ok(await _context.Cities.ToListAsync());
+        public async Task<ActionResult<City>> Cities()
+        {
+            return Ok(await _context.Cities.ToListAsync());
         }
 
-          [HttpPost("add-barangay")]
-        public async Task<ActionResult> AddBarangay(Barangay barangay)
+        [HttpGet("city-barangay")]
+        public async Task<ActionResult<IEnumerable<City>>> CityBarangay()
         {
-            await _context.Barangays.AddAsync(barangay);
-           await _context.SaveChangesAsync();
+               var cities = await _context.Cities
+                    .Include(x => x.Barangays) 
+                    .ToListAsync();
+          return Ok(_mapper.Map<IEnumerable<ListCityDto>>(cities));
+
+
+        }
+
+        [HttpPost("add-barangay")]
+        public async Task<ActionResult> AddBarangay(AddBarangayDto barangay)
+        {
+            var brgy = _mapper.Map<Barangay>(barangay);
+
+            await _context.Barangays.AddAsync(brgy);
+            await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("barangays")]
+        public async Task<ActionResult<Barangay>> Barangays()
+        {
+            return Ok(await _context.Barangays.ToListAsync());         
         }
     }
 }
