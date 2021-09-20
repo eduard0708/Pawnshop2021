@@ -9,6 +9,7 @@ import { Select } from '../_model/select';
 })
 export class ItemService {
   uri = 'http://localhost:3000/';
+  baseUrl:string ="http://localhost:5000/"
 
   items$: BehaviorSubject<Item[]>;
   items: Array<Item> =[];
@@ -16,6 +17,10 @@ export class ItemService {
   constructor(private http: HttpClient) {
     this.items$ = new BehaviorSubject([]);
     this.items = [];   
+   }
+
+   addCategoryDescription(categoryDescription:AddCategoryDescription){
+     return this.http.post(this.baseUrl + 'item')
    }
 
    add(item:Item){
