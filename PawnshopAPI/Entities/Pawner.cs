@@ -11,7 +11,7 @@ namespace PawnshopAPI.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int ContactNumber { get; set; }
-        public string CompleteAddress { get; set; }
+        public ICollection<Address>  Addresses { get; set; }
 
     }
 }

@@ -19,6 +19,32 @@ namespace PawnshopAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PawnshopAPI.Entities.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BarangayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompleteAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PawnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("PawnerId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("PawnshopAPI.Entities.Barangay", b =>
                 {
                     b.Property<int>("BarangayId")
@@ -88,9 +114,6 @@ namespace PawnshopAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CompleteAddress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ContactNumber")
                         .HasColumnType("int");
 
@@ -103,6 +126,17 @@ namespace PawnshopAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pawners");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Address", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities.Pawner", "Pawner")
+                        .WithMany("Addresses")
+                        .HasForeignKey("PawnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pawner");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.Barangay", b =>
@@ -119,6 +153,11 @@ namespace PawnshopAPI.Migrations
             modelBuilder.Entity("PawnshopAPI.Entities.City", b =>
                 {
                     b.Navigation("Barangays");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PawnshopAPI.Migrations
 {
-    public partial class init1 : Migration
+    public partial class Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,8 +45,7 @@ namespace PawnshopAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactNumber = table.Column<int>(type: "int", nullable: false),
-                    CompleteAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ContactNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,6 +72,33 @@ namespace PawnshopAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BarangayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompleteAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PawnerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Address_Pawners_PawnerId",
+                        column: x => x.PawnerId,
+                        principalTable: "Pawners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Address_PawnerId",
+                table: "Address",
+                column: "PawnerId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Barangays_CityId",
                 table: "Barangays",
@@ -81,6 +107,9 @@ namespace PawnshopAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Address");
+
             migrationBuilder.DropTable(
                 name: "Barangays");
 
