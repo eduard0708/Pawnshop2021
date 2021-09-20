@@ -41,7 +41,7 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpGet("city-barangay")]
-        public async Task<ActionResult<IEnumerable<City>>> CityBarangay()
+        public async Task<ActionResult<IEnumerable<ListCityDto>>> CityBarangay()
         {
                var cities = await _context.Cities
                     .Include(x => x.Barangays) 
