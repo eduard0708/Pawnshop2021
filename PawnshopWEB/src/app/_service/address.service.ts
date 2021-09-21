@@ -15,4 +15,7 @@ export class AddressService {
     return this.http.post<City>(this.apiUrl + 'add-city', city);
   }
 
+  getCities(){
+    return this.http.get<City[]>(this.apiUrl + 'cities');
+  }
 }

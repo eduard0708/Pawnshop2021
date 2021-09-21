@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { City } from '../_model/city';
 import { AddressService } from '../_service/address.service';
 import { DialogsService } from '../_service/dialogs.service';
@@ -15,27 +14,27 @@ import { NotifierService } from '../_service/notifier.service';
 })
 export class DialogNewcityComponent implements OnInit {
   @ViewChild('cityNameRef', { static: true }) cityNameRef: any;
+
   cityForm: FormGroup;
   isAdd: boolean = true;
-  city:City;
-  cities:City[]=[];
-  displayedColumns:string[] =['id','name','action']
-  public dataSource:MatTableDataSource<City>;
-  private serviceSubscribe: Subscription;
-  
+  city: City;
+  cities: City[] = [];
+  displayedColumns: string[] = ['id', 'name', 'action'];
+  public dataSource: MatTableDataSource<City>;
+
   constructor(
-    private fb: FormBuilder, 
-    private route: Router, 
-    private dialogRef:MatDialogRef<DialogNewcityComponent>,
-    private dialogService:DialogsService,
-    private addressService:AddressService,
+    private fb: FormBuilder,
+    private route: Router,
+    private dialogRef: MatDialogRef<DialogNewcityComponent>,
+    private dialogService: DialogsService,
+    private addressService: AddressService,
     private notifier: NotifierService
-    
-    ) {
+  ) {
     this.cityForm = fb.group({
       id: [],
       cityName: ['', Validators.required],
     });
+
     this.dataSource = new MatTableDataSource<City>();
   }
 
@@ -44,9 +43,9 @@ export class DialogNewcityComponent implements OnInit {
       this.isAdd = !this.cityForm.valid;
     });
 
-    this.dialogService.getAllCity().subscribe( city => {
-      this.dataSource = city as any;
-    })
+    this.addressService.getCities().subscribe((cities) => {
+      this.dataSource = cities as any;
+    });
   }
 
   search() {}
@@ -61,14 +60,14 @@ export class DialogNewcityComponent implements OnInit {
   }
 
   add() {
-    const city ={
-      "cityName":this.cityForm.controls.cityName.value
-    } 
-    this.addressService.addCity(city).subscribe(
-      city => { this.city = city
-         this.notifier.showNotification(` ${this.city.cityName} city added.`,'','success',{}) 
-       }
-    )
+    const city = {
+      cityName: this.cityForm.controls.cityName.value,
+    };
+    this.addressService.addCity(city).subscribe((city) => {
+      this.city = city;
+      this.notifier.showNotification(
+        ` ${this.city.cityName} city added.`,'','success',{});
+    });
     this.cityForm.reset();
     this.cityNameRef.nativeElement.focus();
   }

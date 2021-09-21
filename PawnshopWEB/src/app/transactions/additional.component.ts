@@ -77,9 +77,9 @@ export class AdditionalComponent implements OnInit {
   }
 
   ngAfterViewInit():void{
-    this.dataSource.paginator = this.paginator;
-    
+    this.dataSource.paginator = this.paginator; 
   }
+  
   onSave(){
    
   }

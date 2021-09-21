@@ -37,6 +37,7 @@ export class DialogNewbarangayComponent implements OnInit {
       city: ['', Validators.required],
       barangayName: ['', Validators.required],
     });
+
     this.cityDataSource = new MatTableDataSource<City>();
     this.barangayDataSource = new MatTableDataSource<Barangay>();
   }
@@ -48,8 +49,7 @@ export class DialogNewbarangayComponent implements OnInit {
 
     this.dialogService.getAllCity().subscribe( city => {
       this.cityDataSource = city as any;
-      this.cities = city as any;
-       
+      this.cities = city as any;     
     })
 
     this.dialogService.getAllBarangay().subscribe( barangay => {
