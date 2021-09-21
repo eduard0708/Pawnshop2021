@@ -1,4 +1,4 @@
 export interface Barangay{
-    id:number;
+    barangayId:number;
     barangayName:string;    
 }

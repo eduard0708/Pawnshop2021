@@ -23,6 +23,7 @@ namespace PawnshopAPI.Helper
 
             //Address Mappings
             CreateMap<City, ReturnCityDto>();
+            CreateMap<Barangay, ReturnBarangayDto>();
           
             //Items Mappings
             CreateMap<Category, ListCategoryDto>();
