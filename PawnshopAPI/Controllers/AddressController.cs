@@ -61,7 +61,7 @@ namespace PawnshopAPI.Controllers
 
             await _context.Barangays.AddAsync(brgy);
             await _context.SaveChangesAsync();
-            return Ok(brgy);
+            return Ok(_mapper.Map<ReturnBarangayDto>(brgy));
         }
 
         [HttpGet("barangays")]
