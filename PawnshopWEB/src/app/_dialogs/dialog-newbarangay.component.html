@@ -8,9 +8,9 @@
       <div class="newbarangay-wrapper">
         <div>
           <mat-form-field class="font-monospace city-select">
-            <mat-select placeholder="Select City" formControlName="city">
-              <mat-option *ngFor="let city of cities" [value]="city.id">{{
-                city.name
+            <mat-select placeholder="Select City" formControlName="city" #cityRef>
+              <mat-option *ngFor="let city of cities" [value]="city.cityId">{{
+                city.cityName
               }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -20,7 +20,6 @@
             <mat-label class="font-monospace">Barangay Name</mat-label>
             <input
               class="barangay-input font-monospace"
-              #barangayNameRef
               tabindex="1"
               type="text"
               matInput
@@ -30,6 +29,7 @@
         </div>
         <div>
           <button
+            (click)="add()"
             [disabled]="isAdd"
             class="btn-primary"
             tabindex="2"
@@ -64,13 +64,13 @@
         <mat-table [dataSource]="barangayDataSource">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let barangay"> {{ barangay.id }} </mat-cell>
+            <mat-cell *matCellDef="let barangay"> {{ barangay.barangayId }} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef> Barangay Name</mat-header-cell>
             <mat-cell *matCellDef="let barangay">
-              {{ barangay.name }}
+              {{ barangay.barangayName }}
             </mat-cell>
           </ng-container>
 

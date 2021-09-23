@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { City } from '../_model/city';
@@ -12,8 +13,9 @@ import { NotifierService } from '../_service/notifier.service';
   selector: 'app-dialog-newcity',
   templateUrl: './dialog-newcity.component.html',
 })
-export class DialogNewcityComponent implements OnInit {
+export class DialogNewcityComponent implements OnInit, AfterViewInit {
   @ViewChild('cityNameRef', { static: true }) cityNameRef: any;
+  @ViewChild('paginatorRef', { static: false }) paginator: MatPaginator;
 
   cityForm: FormGroup;
   isAdd: boolean = true;
@@ -28,7 +30,8 @@ export class DialogNewcityComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogNewcityComponent>,
     private dialogService: DialogsService,
     private addressService: AddressService,
-    private notifier: NotifierService
+    private notifier: NotifierService,
+    private dtf: ChangeDetectorRef
   ) {
     this.cityForm = fb.group({
       id: [],
@@ -38,17 +41,21 @@ export class DialogNewcityComponent implements OnInit {
     this.dataSource = new MatTableDataSource<City>();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.cityForm.valueChanges.subscribe(() => {
       this.isAdd = !this.cityForm.valid;
-    });
-
-    this.addressService.getCities().subscribe((cities) => {
-      this.dataSource = cities as any;
-    });
+    }, (error) => { console.log(error) }
+    );
+   this.getCity();
   }
 
-  search() {}
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+    }, 5000);
+  }
+
+  search() { }
 
   cancel() {
     this.dialogRef.close();
@@ -66,9 +73,16 @@ export class DialogNewcityComponent implements OnInit {
     this.addressService.addCity(city).subscribe((city) => {
       this.city = city;
       this.notifier.showNotification(
-        ` ${this.city.cityName} city added.`,'','success',{});
+        ` ${this.city.cityName} city added.`, '', 'success', {});
     });
     this.cityForm.reset();
     this.cityNameRef.nativeElement.focus();
+    this.getCity();
+  }
+
+  getCity() {
+    this.addressService.getCities().subscribe((cities) => {
+      this.dataSource = cities as any;
+    },error => console.log(error));   
   }
 }
