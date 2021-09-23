@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PawnshopAPI.DTO.PawnerDTO;
 
 namespace PawnshopAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace PawnshopAPI.Controllers
             await _context.AddAsync(pawner);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(_mapper.Map<ReturnPawnerDto>(pawner));
 
         }
 
