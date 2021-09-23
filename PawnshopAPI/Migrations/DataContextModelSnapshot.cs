@@ -147,7 +147,7 @@ namespace PawnshopAPI.Migrations
 
             modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PawnerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -161,7 +161,7 @@ namespace PawnshopAPI.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PawnerId");
 
                     b.ToTable("Pawners");
                 });

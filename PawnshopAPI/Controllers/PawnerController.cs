@@ -41,7 +41,7 @@ namespace PawnshopAPI.Controllers
         public async Task<ActionResult<PawnerDto>> Pawner(int id)
         {
             var pawner = await _context.Pawners
-                .Include(x => x.Addresses.Where(x => x.IsActive == true)).FirstOrDefaultAsync(x => x.Id == id);
+                .Include(x => x.Addresses.Where(x => x.IsActive == true)).FirstOrDefaultAsync(x => x.PawnerId == id);
     
             return Ok(_mapper.Map<PawnerDto>(pawner));
 

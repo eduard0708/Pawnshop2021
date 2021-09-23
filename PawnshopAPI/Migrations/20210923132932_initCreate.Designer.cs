@@ -10,8 +10,8 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210920082134_create")]
-    partial class Create
+    [Migration("20210923132932_initCreate")]
+    partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace PawnshopAPI.Migrations
 
                     b.Property<string>("CompleteAddress")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PawnerId")
                         .HasColumnType("int");
@@ -65,6 +68,41 @@ namespace PawnshopAPI.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Barangays");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.CategoryDescription", b =>
+                {
+                    b.Property<int>("CategoryDescriptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryDescriptionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryDescriptionId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryDescriptions");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.City", b =>
@@ -111,7 +149,7 @@ namespace PawnshopAPI.Migrations
 
             modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PawnerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -125,7 +163,7 @@ namespace PawnshopAPI.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PawnerId");
 
                     b.ToTable("Pawners");
                 });
@@ -150,6 +188,22 @@ namespace PawnshopAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.CategoryDescription", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities.Category", "Categories")
+                        .WithMany("Barangays")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Category", b =>
+                {
+                    b.Navigation("Barangays");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.City", b =>
