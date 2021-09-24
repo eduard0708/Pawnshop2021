@@ -47,5 +47,12 @@ namespace PawnshopAPI.Controllers
 
         }
 
+        [HttpGet("contact-number/{contact}")]
+        public ActionResult<Pawner> GetPawnerByContactNumber(int contact)
+        {
+            var pawner = _context.Pawners.Where(x => x.ContactNumber == contact);
+            return Ok(pawner);
+        }
+
     }
 }
