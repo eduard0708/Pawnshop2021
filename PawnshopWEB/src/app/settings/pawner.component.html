@@ -1,1 +1,116 @@
-<p>pawner works!</p>
+<form [formGroup]="pawnerForm" autocomplete="off">
+  <div class="pawner-container">
+    <h3 class="text-center p-2 shadow rounded bg-info text-white">
+      Create New Pawner Information
+    </h3>
+    <mat-divider class="pb-3" style="width: 90%; margin: 0 auto;"></mat-divider>
+
+    <div class="newpawner-wrapper">
+      <div>
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input
+            #firstNameRef
+            tabindex="1"
+            type="text"
+            matInput
+            formControlName="firstName"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input tabindex="2" type="text" matInput formControlName="lastName" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Contact Number</mat-label>
+          <input
+            tabindex="3"
+            type="text"
+            matInput
+            formControlName="contactNumber"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select
+            tabindex="4"
+            placeholder="City"
+            name="city"
+            formControlName="city"
+          >
+            <mat-option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-select
+            tabindex="5"
+            placeholder="Barangay"
+            name="city"
+            formControlName="barangay"
+          >
+            <mat-option
+              *ngFor="let barangay of barangays"
+              [value]="barangay.id"
+            >
+              {{ barangay.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="address">
+        <mat-form-field>
+          <mat-label>Complete Address</mat-label>
+          <input
+            tabindex="6"
+            type="text"
+            matInput
+            formControlName="conpleteAddress"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="button-wrapper">
+      <button
+        class="btn btn-success"
+        type="submit"
+        tabindex="9"
+        mat-raised-button
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+      <button
+        class="btn btn-danger"
+        type="button"
+        (click)="reset()"
+        tabindex="10"
+        mat-raised-button
+        mat-raised-button
+      >
+        <mat-icon>restart_alt</mat-icon>
+        Reset
+      </button>
+      <button
+        class="btn btn-primary"
+        type="button"
+        tabindex="11"
+        (click)="home()"
+        mat-raised-button
+        mat-raised-button
+      >
+        <mat-icon>home</mat-icon>
+        Home
+      </button>
+    </div>
+  </div>
+</form>

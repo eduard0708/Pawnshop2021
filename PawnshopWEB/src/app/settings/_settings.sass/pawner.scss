@@ -1,0 +1,29 @@
+//start dailog-newpawner.component new pawner dialog scss
+
+.pawner-container {
+  position: relative;
+  width: 50%;
+  margin: 1rem auto 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  .newpawner-wrapper {
+    margin: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+  .button-wrapper {
+    height: auto;
+    margin: -1rem auto 0;
+    width: 80%;
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    .btn {
+      width: 100%;
+      transform: scaleY(0.85);
+      border-radius: 2rem;
+    }
+  }
+}
+
+//end dailog-newpawner.component new pawner dialog scss

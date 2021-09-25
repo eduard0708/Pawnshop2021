@@ -17,19 +17,19 @@ import { EmployeeService } from '../_service/employee.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn:boolean = false;
+  isLoggedIn: boolean = false;
   constructor(
     private dialog: MatDialog,
-    public employeeService:EmployeeService,
-    private router:Router
+    public employeeService: EmployeeService,
+    private router: Router
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setCurrentUser();
   }
 
-  setCurrentUser(){
+  setCurrentUser() {
     const user = JSON.parse(localStorage.getItem('user'));
     this.employeeService.setCurrentUser(user);
     this.isLoggedIn = !!user;
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
   //   this.dialog.open(DialogNewcityComponent, config);
   // }
 
-  city(){
+  city() {
     this.router.navigateByUrl('settings/city');
   }
   // barangay() {
@@ -57,18 +57,22 @@ export class HeaderComponent implements OnInit {
   //   this.dialog.open(DialogNewbarangayComponent, config);
   // }
 
-barangay(){
-  this.router.navigateByUrl('settings/barangay');
-}
-  pawner() {
-    const config = new MatDialogConfig();
-    config.position = { top: '6rem' };
-    config.width = '70rem';
-    config.height = 'auto';
-    config.disableClose = true;
-
-    this.dialog.open(DialogNewpawnerComponent, config);
+  barangay() {
+    this.router.navigateByUrl('settings/barangay');
   }
+
+  pawner() {
+    this.router.navigateByUrl('settings/pawner')
+  }
+  // pawner() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '6rem' };
+  //   config.width = '70rem';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
+
+  //   this.dialog.open(DialogNewpawnerComponent, config);
+  // }
   voucher() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
@@ -79,7 +83,7 @@ barangay(){
     this.dialog.open(DialogNewvoucherComponent, config);
   }
 
-  employee(){
+  employee() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
     config.width = 'auto';
@@ -88,14 +92,14 @@ barangay(){
 
     this.dialog.open(DialogNewemployeeComponent, config);
   }
-  
-  logout(){
+
+  logout() {
     this.employeeService.logout();
   }
-  home(){
+  home() {
     //  if(!this.employeeService.currentUser$) 
     //     this.router.navigateByUrl('login');      
 
-  this.router.navigateByUrl('')
+    this.router.navigateByUrl('')
   }
 }
