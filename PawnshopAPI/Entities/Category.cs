@@ -10,6 +10,6 @@ namespace PawnshopAPI.Entities
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public ICollection<CategoryDescription> Barangays { get; set; }
+        public ICollection<CategoryDescription> CategoryDescriptions { get; set; }
     }
 }

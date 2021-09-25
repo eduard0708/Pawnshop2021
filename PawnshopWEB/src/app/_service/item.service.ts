@@ -11,7 +11,7 @@ import { Select } from '../_model/select';
   providedIn: 'root'
 })
 export class ItemService {
-  uri = 'http://localhost:3000/';
+  jsonUrl = 'http://localhost:3000/';
   baseUrl:string ="http://localhost:5000/"
 
   apiUrl = environment.baseUrl +'item'
@@ -29,7 +29,7 @@ export class ItemService {
    }
 
    getCategories(){
-     return this.http.get<Category[]>(this.apiUrl + 'category');
+     return this.http.get<Category[]>(this.jsonUrl + 'category');
    }
 
 
@@ -60,11 +60,11 @@ export class ItemService {
    }
 
   getCategory(){
-    return this.http.get<Select[]>(this.uri + 'category');
+    return this.http.get<Select[]>(this.jsonUrl + 'category');
   }
 
   getCategoryDescription(){
-   return this.http.get<Select[]>(this.uri + 'categoryDescription');
+   return this.http.get<Select[]>(this.jsonUrl + 'categoryDescription');
   }
 
 

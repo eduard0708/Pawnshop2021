@@ -6,6 +6,7 @@ import { ErrorComponent } from './pages/error.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { ServerErrorComponent } from './pages/server-error.component';
+import { NewloanComponent } from './transactions/newloan.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path:'', component: LoginComponent},
   { path:'error', component: TestErrorsComponent},
   { path:'not-found', component: NotfoundComponent},
-  { path:'server-error', component: ServerErrorComponent},
+{ path:'server-error', component: ServerErrorComponent},
   {
     path: 'transactions',
     loadChildren: () =>

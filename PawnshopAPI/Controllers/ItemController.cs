@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
 using PawnshopAPI.DTO;
+using PawnshopAPI.DTO.ItemDTO;
 using PawnshopAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,21 @@ namespace PawnshopAPI.Controllers
         public async Task<ActionResult<IEnumerable<ListCategoryDto>>> Categories()
         {
             var category = await _context.Categories.ToListAsync();
+
             var categoryReturn = _mapper.Map<IEnumerable<ListCategoryDto>> (category);
+            return Ok(categoryReturn);
+        }
+
+
+        [HttpGet("category-description")]
+        public async Task<ActionResult<IEnumerable<CategoryWithDescriptionDto>>> CategoryWithDescription()
+        {
+            var category = await _context.Categories
+             .Include(x => x.CategoryDescriptions)
+             .ToListAsync();
+
+            var categoryReturn = _mapper.Map<IEnumerable<CategoryWithDescriptionDto>>(category);
+
             return Ok(categoryReturn);
         }
 

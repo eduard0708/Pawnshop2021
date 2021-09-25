@@ -27,8 +27,9 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './pages/server-error.component';
 
+
 @NgModule({
-declarations: [
+  declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -47,7 +48,6 @@ declarations: [
     DialogNewemployeeComponent,
     TestErrorsComponent,
     ServerErrorComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -56,12 +56,13 @@ declarations: [
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,   
-    InputMaskModule
+    ReactiveFormsModule,
+    InputMaskModule,
+
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor, multi:true}
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

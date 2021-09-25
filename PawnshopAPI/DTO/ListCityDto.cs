@@ -9,6 +9,6 @@ namespace PawnshopAPI.DTO
     {
         public int CityId { get; set; }
         public string CityName { get; set; }
-        public IEnumerable<BarangayDto> Barangays { get; set; }
+        public ICollection<BarangayDto> Barangays { get; set; }
     }
 }

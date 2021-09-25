@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PawnshopAPI.DTO;
 using PawnshopAPI.DTO.AddressDTO;
+using PawnshopAPI.DTO.ItemDTO;
 using PawnshopAPI.DTO.PawnerDTO;
 using PawnshopAPI.Entities;
 using System;
@@ -30,8 +31,12 @@ namespace PawnshopAPI.Helper
             //Items Mappings
             CreateMap<Category, ListCategoryDto>();
             CreateMap<AddCategoryDto, Category>();
-            CreateMap<AddCategoryDto, Category>();
+
+            //CreateMap<AddCategoryDto, Category>();
             CreateMap<AddCategoryDescriptionDto, CategoryDescription>();
+            CreateMap<Category, CategoryWithDescriptionDto>();
+            CreateMap<Category, CategoryDescriptionDto>();
+
         }
     }
 }

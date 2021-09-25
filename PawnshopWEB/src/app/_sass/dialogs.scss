@@ -23,49 +23,59 @@
 //end dailog-newpawner.component new pawner dialog scss
 
 //start dialog-newcity.component scxx
-.newcity-header {
-  // width: 23%;
-  // position: absolute;
-  // margin: -7rem 0 0;
-  .city-title {
-    color: white;
-    padding: 0.5rem;
-    text-align: center;
-    font-weight: 50;
-    font-size: large;
-    font-family: monospace;
-  }
-}
-.newcity-wrapper {
-  width: 75%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 
-  .city-input {
-    width: 11rem;
+.city-wrapper{
+ 
+  .newcity-header {
+    // width: 23%;
+    // position: absolute;
+    // margin: -7rem 0 0;
+    .city-title {
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      font-weight: 50;
+      font-size: large;
+      font-family: monospace;
+    }
   }
-}
-.city-button-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 3rem;
-  .btn-city {
-    width: 30%;
-    margin: 0.5rem;
+  .newcity-wrapper {
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  
+    .city-input {
+      width: 11rem;
+    }
   }
-}
-.city-table-wrapper {
+  .city-button-wrapper {
+    transform: scale(.8);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    .btn-city {
+      width: 30%;
+      margin: 0.5rem;
+    }
+  }
+  .city-table-wrapper {
+
+  }
+  
+  .barangay-table-wrapper {
+    .city-select {
+      size: 3rem;
+    }
+  }
+  .city-paginator{
+    
+  }
 }
 
-.barangay-table-wrapper {
-  .city-select {
-    size: 3rem;
-  }
-}
 //end dialog-newcity.component scxx
 
 

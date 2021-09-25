@@ -5,13 +5,12 @@
       New Laon Pawner Information
     </h2>
   </div>
-
   <div class="newloan-wrapper">
+    <!-- 70% start pawner and items  -->
     <div class="pawner-items-wrapper">
       <div class="newloan-pawner">
         <app-pawner-info [pawnerInfo]="pawnerInfo"></app-pawner-info>
       </div>
-  
       <!-- items start -->
       <div class="items-entry">
         <mat-form-field class="category">
@@ -19,7 +18,7 @@
             placeholder="Category"
             formControlName="category"
             #category
-            (blur)="onCategorySelect()"
+            (selectionChange)="onCategorySelect($event)"
             tabindex="1"
           >
             <mat-option
@@ -50,10 +49,10 @@
             tabindex="2"
           >
             <mat-option
-              *ngFor="let categoryDescription of categoryDescriptions"
-              [value]="categoryDescription.id"
+              *ngFor="let cd of categoryDescriptions"
+              [value]="cd.categoryDescriptionId"
             >
-              {{ categoryDescription.name }}
+              {{ cd.categoryDescriptionName }}
             </mat-option>
           </mat-select>
           <mat-error
@@ -94,7 +93,7 @@
             tabindex="5"
             [disabled]="isAddItem"
             (click)="onAdd()"
-            class="mx-1"
+            class="mx-1 btn-add"
             mat-mini-fab
             color="primary"
           >
@@ -117,7 +116,7 @@
       <!-- table start -->
       <div class="items-table">
         <table
-          style="border-radius: 5% !important;"
+          style="border-radius: 5% !important"
           tabindex="-1"
           mat-table
           #table
@@ -162,104 +161,146 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
         <mat-paginator
-          class="shadow"
-          [pageSizeOptions]="[3,5,10]"
+          class="newloan-paginator"
+          [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
         ></mat-paginator>
       </div>
       <!-- table end -->
+
       <!-- computation start -->
     </div>
-      <!-- computation start 30% -->
-      <div class="computation-wrapper">
-        <!-- start computation title -->
-        <h2 class="shadow font-monospace computation-title">
-          Renew Computation
-        </h2>
-        <!-- start computation title -->
-        <div class="computation shadow">
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Appraisal Value</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-              disabled
-            />
-          </div>
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Principal Loan</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-            />
-          </div>
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Interest Rate</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-            />
-          </div>
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Advance Interest</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-            />
-          </div>
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Adv. Service Charge</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-            />
-          </div>
-          <div class="input-group shadow-sm">
-            <span class="col-form-label-sm">Net Proceed</span>
-            <input
-              tabindex="-1"
-              maxlength="14"
-              class="form-control form-control-sm"
-              [inputMask]="currencyInputMask"
-              type="text"
-            />
-          </div>
-          <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
+    <!-- 70% end pawner and items  -->
+
+    <!-- computation start 30% -->
+    <div class="computation-wrapper">
+      <!-- start computation title -->
+      <h2 class="shadow font-monospace computation-title">Renew Computation</h2>
+      <!-- start computation title -->
+      <div class="computation shadow">
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Appraisal Value</span>
+          <input
+            formControlName="totalAppraisal"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
         </div>
-        <div class="button-wrapper">
-          <button
-            type="submit"
-            class="save-print"
-            tabindex="9"
-            mat-raised-button
-            class="btn-success"
-          >
-            <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
-          </button>
-          <button type="button" tabindex="10" mat-raised-button class="btn-danger">
-            Reset <mat-icon>restart_alt</mat-icon>
-          </button>
-          <button type="button" tabindex="11" (click)="home()" mat-raised-button class="btn-primary">
-            Home <mat-icon>home</mat-icon>
-          </button>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Principal Loan</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Interest Rate</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Advance Interest</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Adv. Service Charge</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Net Proceed</span>
+          <input
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
         </div>
       </div>
-      <!-- computation end 30% -->
+      <!-- <div class="button-wrapper">
+        <button
+          type="submit"
+          tabindex="9"
+          mat-raised-button
+          class="btn-success"
+        >
+          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
+        </button>
+        <button
+          type="button"
+          tabindex="10"
+          mat-raised-button
+          class="btn-danger"
+        >
+          Reset <mat-icon>restart_alt</mat-icon>
+        </button>
+        <button
+          type="button"
+          tabindex="11"
+          (click)="home()"
+          mat-raised-button
+          class="btn-primary"
+        >
+          Home <mat-icon>home</mat-icon>
+        </button>
+      </div> -->
+
+      <div class="button-wrapper">
+        <button
+          class="btn btn-success"
+          type="submit"
+          tabindex="9"
+          mat-raised-button
+        >
+          <mat-icon>save</mat-icon> Home
+        </button>
+        <button
+          class="btn btn-danger"
+          type="button"
+          tabindex="10"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>restart_alt</mat-icon> Home
+        </button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          tabindex="11"
+          (click)="home()"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>home</mat-icon> Home
+        </button>
+      </div>
+    </div>
+
+    <!-- computation end 30% -->
   </div>
   <!-- computation end -->
 </form>

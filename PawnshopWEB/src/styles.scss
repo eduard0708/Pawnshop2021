@@ -5,15 +5,16 @@ html, body {
      margin: 0;
      padding: 0;
      box-sizing: border-box;
+     font-family: monospace,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
      }
-body { margin: 0; font-family: monospace, Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;}
 
 @import './app/_sass/layout';
 @import './app/_sass/shared.scss';
 @import './app/_sass/dialogs.scss';
 @import './app/_sass/components.scss';
 @import './app/_sass/pages.scss';
-
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css'
 
 
 

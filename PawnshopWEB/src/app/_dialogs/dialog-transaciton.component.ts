@@ -107,7 +107,7 @@ export class DialogTransacitonComponent implements OnInit {
     );
   }
 
-  checkPawnerExist(pawners: Pawner[]) {
+checkPawnerExist(pawners: Pawner[]) {
     if (pawners.length == 0) {
       const config = new NotifierConfig();
       this.notifierService.showNotification(
