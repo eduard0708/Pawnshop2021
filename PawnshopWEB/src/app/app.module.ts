@@ -26,6 +26,11 @@ import { DialogNewemployeeComponent } from './_dialogs/dialog-newemployee.compon
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './pages/server-error.component';
+import { CityComponent } from './settings/city.component';
+import { BarangayComponent } from './settings/barangay.component';
+import { PawnerComponent } from './settings/pawner.component';
+import { EmployeeComponent } from './settings/employee.component';
+import { VoucherComponent } from './settings/voucher.component';
 
 
 @NgModule({
@@ -48,6 +53,11 @@ import { ServerErrorComponent } from './pages/server-error.component';
     DialogNewemployeeComponent,
     TestErrorsComponent,
     ServerErrorComponent,
+    CityComponent,
+    BarangayComponent,
+    PawnerComponent,
+    EmployeeComponent,
+    VoucherComponent,  
   ],
   imports: [
     BrowserModule,

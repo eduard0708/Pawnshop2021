@@ -93,7 +93,7 @@
             tabindex="5"
             [disabled]="isAddItem"
             (click)="onAdd()"
-            class="mx-1 btn-add"
+            class="btn-add btn-info"
             mat-mini-fab
             color="primary"
           >
@@ -103,11 +103,11 @@
             tabindex="6"
             type="button"
             (click)="resetAddItems()"
-            mat-raised-button
+            mat-mini-fab
             color="accent"
-            class="mx-1"
+            class="btn-add btn-danger"
           >
-            Reset
+            <mat-icon>restart_alt</mat-icon>
           </button>
         </div>
       </div>
@@ -161,7 +161,7 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
         <mat-paginator
-        tabindex="-1"
+          tabindex="-1"
           class="newloan-paginator"
           [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
@@ -194,7 +194,8 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
-          formControlName="principalLoan"
+          (focus)="principalLoanFocus()"
+            formControlName="principalLoan"
             tabindex="7"
             maxlength="14"
             class="form-control form-control-sm"
@@ -205,6 +206,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+            formControlName="interestRate"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -215,6 +217,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -225,6 +228,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -235,6 +239,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
+            formControlName="netProceed"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -250,7 +255,7 @@
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon> 
+          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
         </button>
         <button
           class="btn btn-danger"

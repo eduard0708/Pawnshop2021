@@ -1,0 +1,86 @@
+<div class="city-wrapper">
+  <form [formGroup]="cityForm" autocomplete="off">
+    <div class="card p-1">
+      <div class="newcity-header">
+        <h3 class="city-title shadow rounded bg-info">Add-Edit City</h3>
+      </div>
+      <div class="newcity-wrapper">
+        <mat-form-field>
+          <mat-label class="font-monospace">City Name</mat-label>
+          <input
+            class="city-input font-monospace"
+            #cityRef
+            tabindex="1"
+            type="text"
+            matInput
+            formControlName="cityName"
+          />
+        </mat-form-field>
+        <button
+          (click)="add()"
+          tabindex="2"
+          matSuffix
+          mat-icon-button
+          mat-raised-button
+          color="accent"
+          class="btn btn-success"
+          [disabled]="isAdd"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="city-button-wrapper">
+        <button
+          (click)="reset()"
+          tabindex="3"
+          mat-raised-button
+          class="btn btn-primary font-monospace"
+        >
+          <mat-icon>restart_alt</mat-icon>
+          Reset
+        </button>
+        <button
+          (click)="cancel()"
+          tabindex="4"
+          mat-raised-button
+          class="btn btn-danger font-monospace"
+        >
+          <mat-icon>cancel</mat-icon>
+          Cancel
+        </button>
+      </div>
+
+      <div class="city-table-wrapper">
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>City Id</mat-header-cell>
+            <mat-cell *matCellDef="let city">{{ city.cityId }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>City Name</mat-header-cell>
+            <mat-cell *matCellDef="let city">{{ city.cityName }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let city">
+              <button class="text-info" tabindex="-1" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button tabindex="-1" class="text-danger" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator
+          [length]="tableLength"
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 15]"
+        ></mat-paginator>
+      </div>
+    </div>
+  </form>
+</div>

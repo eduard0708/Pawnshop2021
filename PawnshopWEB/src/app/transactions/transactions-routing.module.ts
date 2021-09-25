@@ -7,14 +7,15 @@ import { RedeemComponent } from './redeem.component';
 import { RenewComponent } from './renew.component';
 import { TransactionsComponent } from './transactions.component';
 
-const routes: Routes = [{ path: '', component: TransactionsComponent,
-children:[
-  {path:'newloan/:pawner', component:NewloanComponent},
-  {path:'redeem/:transaction', component:RedeemComponent},
-  {path:'partial/:transaction', component:PartialComponent},
-  {path:'additional/:transaction', component:AdditionalComponent},
-  {path:'renew/:transaction', component:RenewComponent},
-]
+const routes: Routes = [{
+  path: '', component: TransactionsComponent,
+  children: [
+    { path: 'newloan/:pawner', component: NewloanComponent },
+    { path: 'redeem/:transaction', component: RedeemComponent },
+    { path: 'partial/:transaction', component: PartialComponent },
+    { path: 'additional/:transaction', component: AdditionalComponent },
+    { path: 'renew/:transaction', component: RenewComponent },
+  ]
 }];
 
 @NgModule({

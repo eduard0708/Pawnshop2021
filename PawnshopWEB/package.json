@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~12.2.4",
     "@angular/router": "~12.2.4",
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@ngneat/input-mask": "^1.1.0",
+    "@ngneat/input-mask": "^3.0.0",
     "@popperjs/core": "^2.9.3",
     "bootstrap": "^5.0.0-beta3",
     "inputmask": "^5.0.6",

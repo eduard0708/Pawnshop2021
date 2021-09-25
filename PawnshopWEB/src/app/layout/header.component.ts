@@ -17,51 +17,62 @@ import { EmployeeService } from '../_service/employee.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn:boolean = false;
+  isLoggedIn: boolean = false;
   constructor(
     private dialog: MatDialog,
-    public employeeService:EmployeeService,
-    private router:Router
+    public employeeService: EmployeeService,
+    private router: Router
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setCurrentUser();
   }
 
-  setCurrentUser(){
+  setCurrentUser() {
     const user = JSON.parse(localStorage.getItem('user'));
     this.employeeService.setCurrentUser(user);
     this.isLoggedIn = !!user;
   }
 
+  // city() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '3rem' };
+  //   config.width = 'auto';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
+  //   this.dialog.open(DialogNewcityComponent, config);
+  // }
+
   city() {
-    const config = new MatDialogConfig();
-    config.position = { top: '3rem' };
-    config.width = 'auto';
-    config.height = 'auto';
-    config.disableClose = true;
-    this.dialog.open(DialogNewcityComponent, config);
+    this.router.navigateByUrl('settings/city');
   }
+  // barangay() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '3rem' };
+  //   config.width = 'auto';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
+
+  //   this.dialog.open(DialogNewbarangayComponent, config);
+  // }
 
   barangay() {
-    const config = new MatDialogConfig();
-    config.position = { top: '3rem' };
-    config.width = 'auto';
-    config.height = 'auto';
-    config.disableClose = true;
-
-    this.dialog.open(DialogNewbarangayComponent, config);
+    this.router.navigateByUrl('settings/barangay');
   }
+
   pawner() {
-    const config = new MatDialogConfig();
-    config.position = { top: '6rem' };
-    config.width = '70rem';
-    config.height = 'auto';
-    config.disableClose = true;
-
-    this.dialog.open(DialogNewpawnerComponent, config);
+    this.router.navigateByUrl('settings/pawner')
   }
+  // pawner() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '6rem' };
+  //   config.width = '70rem';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
+
+  //   this.dialog.open(DialogNewpawnerComponent, config);
+  // }
   voucher() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
@@ -72,7 +83,7 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(DialogNewvoucherComponent, config);
   }
 
-  employee(){
+  employee() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };
     config.width = 'auto';
@@ -81,12 +92,15 @@ export class HeaderComponent implements OnInit {
 
     this.dialog.open(DialogNewemployeeComponent, config);
   }
-  
-  logout(){
+
+  logout() {
     this.employeeService.logout();
+    this.router.navigateByUrl('login')
   }
-  home(){
-     if(!this.employeeService.currentUser$) 
-        this.router.navigateByUrl('login');      
+  home() {
+    //  if(!this.employeeService.currentUser$) 
+    //     this.router.navigateByUrl('login');      
+
+    this.router.navigateByUrl('')
   }
 }
