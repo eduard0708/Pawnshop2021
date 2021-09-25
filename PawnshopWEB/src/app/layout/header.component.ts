@@ -45,17 +45,21 @@ export class HeaderComponent implements OnInit {
   // }
 
   city(){
-    this.router.navigateByUrl('settings/city')
+    this.router.navigateByUrl('settings/city');
   }
-  barangay() {
-    const config = new MatDialogConfig();
-    config.position = { top: '3rem' };
-    config.width = 'auto';
-    config.height = 'auto';
-    config.disableClose = true;
+  // barangay() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '3rem' };
+  //   config.width = 'auto';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
 
-    this.dialog.open(DialogNewbarangayComponent, config);
-  }
+  //   this.dialog.open(DialogNewbarangayComponent, config);
+  // }
+
+barangay(){
+  this.router.navigateByUrl('settings/barangay');
+}
   pawner() {
     const config = new MatDialogConfig();
     config.position = { top: '6rem' };

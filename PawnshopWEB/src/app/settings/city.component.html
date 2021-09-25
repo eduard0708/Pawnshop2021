@@ -4,51 +4,46 @@
       <div class="newcity-header">
         <h3 class="city-title shadow rounded bg-info">Add-Edit City</h3>
       </div>
-      <mat-divider
-        class="pb-3"
-        style="width: 90%; margin: 0 auto;"
-      ></mat-divider>
       <div class="newcity-wrapper">
-        <div>
-          <mat-form-field>
-            <mat-label class="font-monospace">City Name</mat-label>
-            <input
-              class="city-input font-monospace"
-              #cityNameRef
-              tabindex="1"
-              type="text"
-              matInput
-              formControlName="cityName"
-            />
-          </mat-form-field>
-        </div>
-        <div>
-          <button
-            (click)="add()"
-            [disabled]="isAdd"
-            tabindex="2"
-            class="btn-success"
-            mat-raised-button
-          >
-            <mat-icon>add_circle_outline</mat-icon>
-          </button>
-        </div>
+        <mat-form-field>
+          <mat-label class="font-monospace">City Name</mat-label>
+          <input
+            class="city-input font-monospace"
+            #cityRef
+            tabindex="1"
+            type="text"
+            matInput
+            formControlName="cityName"
+          />
+        </mat-form-field>
+        <button
+          (click)="add()"
+          tabindex="2"
+          matSuffix
+          mat-icon-button
+          mat-raised-button
+          color="accent"
+          class="btn btn-success"
+          [disabled]="isAdd"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
       <div class="city-button-wrapper">
         <button
           (click)="reset()"
-          tabindex="4"
+          tabindex="3"
           mat-raised-button
-          class="btn-primary font-monospace btn-city"
+          class="btn btn-primary font-monospace"
         >
           <mat-icon>restart_alt</mat-icon>
           Reset
         </button>
         <button
           (click)="cancel()"
-          tabindex="5"
+          tabindex="4"
           mat-raised-button
-          class="btn-danger font-monospace btn-city"
+          class="btn btn-danger font-monospace"
         >
           <mat-icon>cancel</mat-icon>
           Cancel
