@@ -53,15 +53,15 @@ export class PawnerComponent implements OnInit {
     this.firstNameRef.nativeElement.focus();  
   }
 
-  add() {
+  save() {
     console.log(this.pawnerForm.value);
     
-    let navigationExtras  = {
-      state: {
-        pawner: this.pawnerForm.value
-      }
-    };
-    this.pawnerService.createPawner(this.pawnerForm.value);
-    this.router.navigateByUrl('/transactions/newloan/', navigationExtras);
+    // let navigationExtras  = {
+    //   state: {
+    //     pawner: this.pawnerForm.value
+    //   }
+    // };
+    // this.pawnerService.createPawner(this.pawnerForm.value);
+    // this.router.navigateByUrl('/transactions/newloan/', navigationExtras);
   }
 }

@@ -20,7 +20,7 @@ const routes: Routes = [
   
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: '', component: DashboardComponent },
+  { path: '', component: LoginComponent },
   { path: 'error', component: TestErrorsComponent },
   { path: 'not-found', component: NotfoundComponent },
   { path: 'server-error', component: ServerErrorComponent },

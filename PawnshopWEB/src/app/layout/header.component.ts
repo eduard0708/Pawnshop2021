@@ -95,6 +95,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.employeeService.logout();
+    this.router.navigateByUrl('login')
   }
   home() {
     //  if(!this.employeeService.currentUser$) 
