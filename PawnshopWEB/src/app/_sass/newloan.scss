@@ -36,6 +36,7 @@
       margin: 1.5rem 1rem 0rem;
       padding: 0.9rem 1rem 0rem;
       height: 9rem;
+      color: black;
     }
 
     .items-entry {
@@ -60,7 +61,7 @@
         width: 7rem;
       }
       .btn-add {
-        transform: scale(0.8);
+        transform: scale(0.7);
       }
     }
     .items-table {
@@ -154,6 +155,8 @@
       grid-template-columns: 1.2fr 1fr 1fr;
       column-gap: .3rem;
       .btn{
+        font-size: .8rem;
+        transform: scaleY(.9);
         margin: 0;
         border-radius: 5rem;
       width: 100%;

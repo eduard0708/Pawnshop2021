@@ -41,7 +41,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   @ViewChild('principalLoanRef') principalLoanRef: MatInput;
   @ViewChild('category') categoryRef: MatSelect;
-  @ViewChild('categoryDescriptionRef') categoryDescriptionRef;
+  @ViewChild('categoryDescriptionRef') categoryDescriptionRef:MatSelect;
   @ViewChild('newLoan') newloanform;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -132,7 +132,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     //compute during input of principal loan
     this.newLoanForm.controls.principalLoan.valueChanges.subscribe(
       (principal) => {
-        let principalLoan = +principal.toString().replace(/[^\d.-]/g, '');
+        let principalLoan = +(principal ?? "").toString().replace(/[^\d.-]/g, '');
         let totalApp: number = this.newLoanService.getTotalAppraisal();
         if (principalLoan > totalApp) {
           this.newLoanForm.controls.principalLoan.setValue(
@@ -257,13 +257,18 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-    if (this.itemService.items.length == 0) {
-      this.newLoanForm.controls.category.enable();
-      this.categoryRef.focus();
-    }
+    // if (this.itemService.items.length == 0) {
+    //   this.newLoanForm.controls.category.enable();
+    //   this.categoryRef.focus();
+    // }
+
+    this.newLoanForm.reset();
+    this.itemService.clear();
     this.newLoanForm.controls.categoryDescriptions.enable();
     this.newLoanForm.controls.descriptions.enable();
     this.newLoanForm.controls.appraisalValue.enable();
+    this.newLoanForm.controls.category.enable();
+    this.categoryRef.focus();
   }
 
   principalLoanFocus() {
@@ -310,7 +315,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.newLoanForm.controls.descriptions.valid &&
       this.newLoanForm.controls.category.value !== '' &&
       this.newLoanForm.controls.categoryDescriptions.valid &&
-      !(+appVal.toString().replace(/[^\d.-]/g, '') == 0 && appVal === '')
+      !(+(appVal ?? '').toString().replace(/[^\d.-]/g, '') == 0 && appVal === '')
     ) {
       this.isAddItem = false;
     } else {
