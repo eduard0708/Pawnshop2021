@@ -161,6 +161,7 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
         <mat-paginator
+        tabindex="-1"
           class="newloan-paginator"
           [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
@@ -193,7 +194,8 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
-            tabindex="-1"
+          formControlName="principalLoan"
+            tabindex="7"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -241,34 +243,6 @@
           />
         </div>
       </div>
-      <!-- <div class="button-wrapper">
-        <button
-          type="submit"
-          tabindex="9"
-          mat-raised-button
-          class="btn-success"
-        >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
-        </button>
-        <button
-          type="button"
-          tabindex="10"
-          mat-raised-button
-          class="btn-danger"
-        >
-          Reset <mat-icon>restart_alt</mat-icon>
-        </button>
-        <button
-          type="button"
-          tabindex="11"
-          (click)="home()"
-          mat-raised-button
-          class="btn-primary"
-        >
-          Home <mat-icon>home</mat-icon>
-        </button>
-      </div> -->
-
       <div class="button-wrapper">
         <button
           class="btn btn-success"
@@ -276,7 +250,7 @@
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Home
+          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon> 
         </button>
         <button
           class="btn btn-danger"
@@ -285,7 +259,7 @@
           mat-raised-button
           mat-raised-button
         >
-          <mat-icon>restart_alt</mat-icon> Home
+          <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
           class="btn btn-primary"
