@@ -300,19 +300,31 @@
       </div>
       <div class="button-wrapper">
         <button
+          class="btn btn-success"
           type="submit"
-          class="save-print"
           tabindex="9"
           mat-raised-button
-          class="btn-success"
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
+          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon> 
         </button>
-        <button type="button" tabindex="10" mat-raised-button class="btn-danger">
-          Reset <mat-icon>restart_alt</mat-icon>
+        <button
+          class="btn btn-danger"
+          type="button"
+          tabindex="10"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>restart_alt</mat-icon> Reset
         </button>
-        <button type="button" tabindex="11" (click)="home()" mat-raised-button class="btn-primary">
-          Home <mat-icon>home</mat-icon>
+        <button
+          class="btn btn-primary"
+          type="button"
+          tabindex="11"
+          (click)="home()"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>home</mat-icon> Home
         </button>
       </div>
     </div>
