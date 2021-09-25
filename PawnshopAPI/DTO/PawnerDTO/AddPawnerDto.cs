@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PawnshopAPI.DTO
+namespace PawnshopAPI.DTO.PawnerDTO
 {
-    public class PawnerDto
+    public class AddPawnerDto
     {
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int ContactNumber { get; set; }
@@ -14,5 +15,8 @@ namespace PawnshopAPI.DTO
         public DateTime? DateUpdated { get; set; }
         public bool IsActive { get; set; }
         public ICollection<AddressDto> Addresses { get; set; }
+
     }
 }
+
+

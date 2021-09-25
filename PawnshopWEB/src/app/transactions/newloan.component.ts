@@ -80,17 +80,17 @@ export class NewloanComponent implements OnInit, OnDestroy {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pawner = this.router.getCurrentNavigation().extras.state.pawner;
 
-        this.pawnerInfo.id = this.pawner.id;
-        this.pawnerInfo.firstName = this.pawner.firstName;
-        this.pawnerInfo.lastName = this.pawner.lastName;
-        this.pawnerInfo.contactNumber = this.pawner.contactNumber;
-        this.pawnerInfo.city = this.pawner.city;
-        this.pawnerInfo.barangay = this.pawner.barangay;
-        this.pawnerInfo.completeAddress = this.pawner.completeAddress;
-        this.pawnerInfo.dateTransaction = new Date(this.today);
-        this.pawnerInfo.dateGranted = new Date(this.today);
-        this.pawnerInfo.dateMatured = new Date(this.dateMatured);
-        this.pawnerInfo.dateExpired = new Date(this.dateExpired);
+        // this.pawnerInfo.id = this.pawner.id;
+        // this.pawnerInfo.firstName = this.pawner.firstName;
+        // this.pawnerInfo.lastName = this.pawner.lastName;
+        // this.pawnerInfo.contactNumber = this.pawner.contactNumber;
+        // this.pawnerInfo.city = this.pawner.city;
+        // this.pawnerInfo.barangay = this.pawner.barangay;
+        // this.pawnerInfo.completeAddress = this.pawner.com;
+        // this.pawnerInfo.dateTransaction = new Date(this.today);
+        // this.pawnerInfo.dateGranted = new Date(this.today);
+        // this.pawnerInfo.dateMatured = new Date(this.dateMatured);
+        // this.pawnerInfo.dateExpired = new Date(this.dateExpired);
       }
     });
 

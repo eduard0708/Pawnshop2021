@@ -69,7 +69,7 @@ namespace PawnshopAPI.Controllers
             }
 
             return new EmployeeDto
-            {
+            {   Id =employee.Id,
                 Username = employee.UserName,
                 Token = _tokenService.CreateToken(employee)
             };

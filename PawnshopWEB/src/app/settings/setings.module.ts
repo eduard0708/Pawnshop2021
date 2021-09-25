@@ -6,6 +6,7 @@ import { SetingsComponent } from './setings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { InputMaskModule } from '@ngneat/input-mask';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    InputMaskModule
+    InputMaskModule,
+    NgxMaskModule.forRoot(),
   ]
 })
 export class SetingsModule { }

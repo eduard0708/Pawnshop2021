@@ -1,4 +1,6 @@
-﻿namespace PawnshopAPI.DTO
+﻿using System;
+
+namespace PawnshopAPI.DTO
 {
     public class AddressDto
     {
@@ -7,5 +9,10 @@
         public string CityName { get; set; }
         public string BarangayName { get; set; }
         public string CompleteAddress { get; set; }
+        public int EmployeeId { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
+
+        
     }
 }

@@ -10,7 +10,7 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210923132932_initCreate")]
+    [Migration("20210925193022_initCreate")]
     partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,8 +157,20 @@ namespace PawnshopAPI.Migrations
                     b.Property<int>("ContactNumber")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -193,7 +205,7 @@ namespace PawnshopAPI.Migrations
             modelBuilder.Entity("PawnshopAPI.Entities.CategoryDescription", b =>
                 {
                     b.HasOne("PawnshopAPI.Entities.Category", "Categories")
-                        .WithMany("Barangays")
+                        .WithMany("CategoryDescriptions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -203,7 +215,7 @@ namespace PawnshopAPI.Migrations
 
             modelBuilder.Entity("PawnshopAPI.Entities.Category", b =>
                 {
-                    b.Navigation("Barangays");
+                    b.Navigation("CategoryDescriptions");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.City", b =>

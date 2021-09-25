@@ -1,6 +1,10 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select } from '../_model/select';
 import { DialogsService } from '../_service/dialogs.service';
@@ -9,59 +13,79 @@ import { PawnerService } from '../_service/pawner.service';
 @Component({
   selector: 'app-pawner',
   templateUrl: './pawner.component.html',
-  styleUrls: ['_settings.sass/pawner.scss'
-  ]
+  styleUrls: ['_settings.sass/pawner.scss'],
 })
 export class PawnerComponent implements OnInit {
-  @ViewChild('firstNameRef',{static:true}) firstNameRef: any;
+  @ViewChild('firstNameRef', { static: true }) firstNameRef: any;
   pawnerForm: FormGroup;
-  cities:Select[]=[];
-  barangays:Select[]=[];
-  isSave:boolean = true;
+  cities: Select[] = [];
+  barangays: Select[] = [];
+  isSave: boolean = true;
+  d: Date;
 
   constructor(
     private pawnerService: PawnerService,
     private fb: FormBuilder,
     private router: Router,
-    private dialogService:DialogsService
+    private dialogService: DialogsService
   ) {
     this.pawnerForm = fb.group({
-      id:[],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      contactNumber: ['', Validators.required],
+      contactNumber: ['', [Validators.required, Validators.minLength(10)]],
       city: ['', Validators.required],
       barangay: ['', Validators.required],
-      conpleteAddress: ['', Validators.required],
+      completeAddress: ['', Validators.required],
     });
   }
 
+  serializedDate = new FormControl();
+
   ngOnInit(): void {
-    this.pawnerForm.valueChanges.subscribe(()=> {
+    this.pawnerForm.valueChanges.subscribe(() => {
       this.isSave = !this.pawnerForm.valid;
     });
-    this.dialogService.getCity().subscribe(city => this.cities = city);
-    this.dialogService.getBarangay().subscribe(barangay => this.barangays = barangay);
+    this.dialogService.getCity().subscribe((city) => (this.cities = city));
+    this.dialogService
+      .getBarangay()
+      .subscribe((barangay) => (this.barangays = barangay));
   }
 
   home() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard');
   }
 
-  reset(){
+  reset() {
     this.pawnerForm.reset();
-    this.firstNameRef.nativeElement.focus();  
+    this.firstNameRef.nativeElement.focus();
   }
 
   save() {
-    console.log(this.pawnerForm.value);
+    const empId = JSON.parse(localStorage.getItem('user'));
+    const p = this.pawnerForm.value;
     
-    // let navigationExtras  = {
-    //   state: {
-    //     pawner: this.pawnerForm.value
-    //   }
-    // };
-    // this.pawnerService.createPawner(this.pawnerForm.value);
-    // this.router.navigateByUrl('/transactions/newloan/', navigationExtras);
+    const address = {
+      cityName: p.city,
+      barangayName: p.barangay,
+      completeAddress: p.completeAddress,
+      dateCreated: new Date().toISOString(),
+      dateUpdated: null,
+      isActive: true,
+      employeeId: empId.id,
+    };
+
+    const pawner = {
+      firstName: p.firstName,
+      lastName: p.lastName,
+      contactNumber: +p.contactNumber,
+      addresses: [address],
+      dateCreated: new Date().toISOString(),
+      dateUpdated: null,
+      employeeId: empId.id,
+      isActive: true,
+    };
+    this.pawnerService
+      .addPawner(pawner)
+      .subscribe((data) => console.log(data));
   }
 }
