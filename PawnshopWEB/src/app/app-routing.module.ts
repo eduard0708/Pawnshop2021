@@ -9,12 +9,6 @@ import { ServerErrorComponent } from './pages/server-error.component';
 import { NewloanComponent } from './transactions/newloan.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path:'', component: LoginComponent},
-  { path:'error', component: TestErrorsComponent},
-  { path:'not-found', component: NotfoundComponent},
-{ path:'server-error', component: ServerErrorComponent},
   {
     path: 'transactions',
     loadChildren: () =>
@@ -22,10 +16,21 @@ const routes: Routes = [
         (m) => m.TransactionsModule
       ),
   },
+  { path: 'settings', loadChildren: () => import('./settings/setings.module').then(m => m.SetingsModule) },
+  
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '', component: DashboardComponent },
+  { path: 'error', component: TestErrorsComponent },
+  { path: 'not-found', component: NotfoundComponent },
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: '**', component: NotfoundComponent },
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -35,15 +35,18 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = !!user;
   }
 
-  city() {
-    const config = new MatDialogConfig();
-    config.position = { top: '3rem' };
-    config.width = 'auto';
-    config.height = 'auto';
-    config.disableClose = true;
-    this.dialog.open(DialogNewcityComponent, config);
-  }
+  // city() {
+  //   const config = new MatDialogConfig();
+  //   config.position = { top: '3rem' };
+  //   config.width = 'auto';
+  //   config.height = 'auto';
+  //   config.disableClose = true;
+  //   this.dialog.open(DialogNewcityComponent, config);
+  // }
 
+  city(){
+    this.router.navigateByUrl('settings/city')
+  }
   barangay() {
     const config = new MatDialogConfig();
     config.position = { top: '3rem' };
@@ -86,7 +89,9 @@ export class HeaderComponent implements OnInit {
     this.employeeService.logout();
   }
   home(){
-     if(!this.employeeService.currentUser$) 
-        this.router.navigateByUrl('login');      
+    //  if(!this.employeeService.currentUser$) 
+    //     this.router.navigateByUrl('login');      
+
+  this.router.navigateByUrl('')
   }
 }

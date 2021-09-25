@@ -257,11 +257,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   reset() {
-    // if (this.itemService.items.length == 0) {
-    //   this.newLoanForm.controls.category.enable();
-    //   this.categoryRef.focus();
-    // }
-
     this.newLoanForm.reset();
     this.itemService.clear();
     this.newLoanForm.controls.categoryDescriptions.enable();

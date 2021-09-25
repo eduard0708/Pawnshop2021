@@ -1,0 +1,55 @@
+//start dialog-newcity.component scxx
+.city-wrapper{
+    width: 30%;
+    margin: 0 auto;
+    .newcity-header {
+      // width: 23%;
+      // position: absolute;
+      // margin: -7rem 0 0;
+      .city-title {
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 50;
+        font-size: large;
+        font-family: monospace;
+      }
+    }
+    .newcity-wrapper {
+      width: 75%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    
+      .city-input {
+        width: 11rem;
+      }
+    }
+    .city-button-wrapper {
+      transform: scale(.8);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 3rem;
+      .btn-city {
+        width: 30%;
+        margin: 0.5rem;
+      }
+    }
+    .city-table-wrapper {
+  
+    }
+    
+    .barangay-table-wrapper {
+      .city-select {
+        size: 3rem;
+      }
+    }
+    .city-paginator{
+      
+    }
+  }
+  //end dialog-newcity.component scxx
+  
