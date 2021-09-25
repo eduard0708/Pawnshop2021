@@ -27,7 +27,8 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost("add-pawner")]
-        public async Task<ActionResult> AddPawner(PawnerDto pawnerDto) {
+        public async Task<ActionResult> AddPawner(PawnerDto pawnerDto)
+        {
             var pawner = _mapper.Map<Pawner>(pawnerDto);
 
             await _context.AddAsync(pawner);
@@ -42,16 +43,18 @@ namespace PawnshopAPI.Controllers
         {
             var pawner = await _context.Pawners
                 .Include(x => x.Addresses.Where(x => x.IsActive == true)).FirstOrDefaultAsync(x => x.PawnerId == id);
-    
+
             return Ok(_mapper.Map<PawnerDto>(pawner));
 
         }
 
         [HttpGet("contact-number/{contact}")]
-        public ActionResult<Pawner> GetPawnerByContactNumber(int contact)
+        public async Task< ActionResult<IEnumerable<ReturnPawnerFindByContactNumber>>> GetPawnerByContactNumber(int contact)
         {
-            var pawner = _context.Pawners.Where(x => x.ContactNumber == contact);
-            return Ok(pawner);
+            var pawner = await _context.Pawners.Where(x => x.ContactNumber == contact).Include(x => x.Addresses).ToArrayAsync();
+            var returnPawner = _mapper.Map<IEnumerable<ReturnPawnerFindByContactNumber>>(pawner);
+
+            return Ok(returnPawner);
         }
 
     }

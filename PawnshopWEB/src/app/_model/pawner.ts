@@ -1,5 +1,4 @@
-import { Address } from "./address";
-
+import { PawnerAddress } from "./pawner.address";
 
 export interface Pawner {
     id:number;
@@ -8,5 +7,5 @@ export interface Pawner {
     contactNumber:string;
     city:string;
     barangay:string;
-    addresses:Address[];
+    addresses:PawnerAddress[];
 }

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AddPawner } from '../_model/addpawner';
-import { Address } from '../_model/address';
 import { Pawner } from '../_model/pawner';
 import { AddressService } from './address.service';
 
@@ -24,5 +23,9 @@ export class PawnerService {
 
   addPawner(pawner: AddPawner) {
       return this.http.post(this.url + 'add-pawner', pawner);
+  }
+
+  findPawner(contactOrTrasactionNumber:number){
+    return this.http.get(this.url + 'contact-number/contactOrTrasactionNumber')
   }
 }

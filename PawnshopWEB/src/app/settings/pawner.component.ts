@@ -1,5 +1,5 @@
 import { state } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,7 +17,7 @@ import { PawnerService } from '../_service/pawner.service';
   styleUrls: ['_settings.sass/pawner.scss'],
 })
 export class PawnerComponent implements OnInit {
-  @ViewChild('firstNameRef', { static: true }) firstNameRef: any;
+  @ViewChild('firstNameRef', { static: true }) firstNameRef: ElementRef;
   pawnerForm: FormGroup;
   cities: Select[] = [];
   barangays: Select[] = [];
@@ -43,6 +43,9 @@ export class PawnerComponent implements OnInit {
   serializedDate = new FormControl();
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.firstNameRef.nativeElement.focus();
+    }, 100);
     this.pawnerForm.valueChanges.subscribe(() => {
       this.isSave = !this.pawnerForm.valid;
     });
@@ -92,7 +95,7 @@ export class PawnerComponent implements OnInit {
       .addPawner(pawner)
       .subscribe((newPawner) => {
         if(Object.keys(newPawner).length > 0)
-        this.router.navigateByUrl('transactions/newloan/', {state:newPawner})
+        this.router.navigateByUrl('transactions/newloan/', {state:{pawner:newPawner}})
       });
   }
 }

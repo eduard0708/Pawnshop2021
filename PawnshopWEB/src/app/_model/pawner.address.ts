@@ -1,4 +1,4 @@
-export interface Address{
+export interface PawnerAddress{
     isActive:boolean; 
     cityName:string;
     barangayName:string;

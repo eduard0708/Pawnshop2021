@@ -18,6 +18,7 @@ namespace PawnshopAPI.Helper
             //Pawner Mappings
             CreateMap<Pawner, PawnerDto>().ReverseMap();
             CreateMap<Pawner, ReturnPawnerDto>().ReverseMap();
+            CreateMap<Pawner, ReturnPawnerFindByContactNumber>().ReverseMap();
 
             //Address Mappings
             CreateMap<Address, AddressDto>().ReverseMap();
