@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -63,7 +64,7 @@ export class PawnerComponent implements OnInit {
   save() {
     const empId = JSON.parse(localStorage.getItem('user'));
     const p = this.pawnerForm.value;
-    
+    //convert address to addresses
     const address = {
       cityName: p.city,
       barangayName: p.barangay,
@@ -74,6 +75,7 @@ export class PawnerComponent implements OnInit {
       employeeId: empId.id,
     };
 
+    //convert pawnwer to save in database
     const pawner = {
       firstName: p.firstName,
       lastName: p.lastName,
@@ -84,8 +86,13 @@ export class PawnerComponent implements OnInit {
       employeeId: empId.id,
       isActive: true,
     };
+    
+    //call service to add new panwer if add success redirect to newloan
     this.pawnerService
       .addPawner(pawner)
-      .subscribe((data) => console.log(data));
+      .subscribe((newPawner) => {
+        if(Object.keys(newPawner).length > 0)
+        this.router.navigateByUrl('transactions/newloan/', {state:newPawner})
+      });
   }
 }
