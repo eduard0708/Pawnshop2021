@@ -31,6 +31,7 @@
             tabindex="3"
             type="text"
             matInput
+            mask="(000) 000 00 00"
             formControlName="contactNumber"
           />
         </mat-form-field>
@@ -43,7 +44,7 @@
             name="city"
             formControlName="city"
           >
-            <mat-option *ngFor="let city of cities" [value]="city.id">
+            <mat-option *ngFor="let city of cities" [value]="city.name">
               {{ city.name }}
             </mat-option>
           </mat-select>
@@ -59,7 +60,7 @@
           >
             <mat-option
               *ngFor="let barangay of barangays"
-              [value]="barangay.id"
+              [value]="barangay.name"
             >
               {{ barangay.name }}
             </mat-option>
@@ -73,7 +74,7 @@
             tabindex="6"
             type="text"
             matInput
-            formControlName="conpleteAddress"
+            formControlName="completeAddress"
           />
         </mat-form-field>
       </div>
@@ -113,5 +114,5 @@
         Home
       </button>
     </div>
-  </div>
+  </div> 
 </form>

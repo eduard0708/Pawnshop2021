@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { Category } from '../_model/category';
 import { CategoryDescription } from '../_model/CategoryDescription';
 import { Item } from '../_model/item';
+import { PawnerAddress } from '../_model/pawner.address';
 import { Pawner } from '../_model/pawner';
 import { PawnerInfo } from '../_model/pawnerInfo';
 import { Transaction } from '../_model/transaction';
@@ -79,14 +80,19 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pawner = this.router.getCurrentNavigation().extras.state.pawner;
+        const address = {
+          cityName:this.pawner.addresses[0].cityName,
+          barangayName:this.pawner.addresses[0].barangayName,
+          completeAddress:this.pawner.addresses[0].completeAddress,
+        }
 
         this.pawnerInfo.id = this.pawner.id;
         this.pawnerInfo.firstName = this.pawner.firstName;
         this.pawnerInfo.lastName = this.pawner.lastName;
         this.pawnerInfo.contactNumber = this.pawner.contactNumber;
-        this.pawnerInfo.city = this.pawner.city;
-        this.pawnerInfo.barangay = this.pawner.barangay;
-        this.pawnerInfo.completeAddress = this.pawner.completeAddress;
+        this.pawnerInfo.city = address.cityName;
+        this.pawnerInfo.barangay = address.barangayName;
+        this.pawnerInfo.completeAddress = address.completeAddress;
         this.pawnerInfo.dateTransaction = new Date(this.today);
         this.pawnerInfo.dateGranted = new Date(this.today);
         this.pawnerInfo.dateMatured = new Date(this.dateMatured);
