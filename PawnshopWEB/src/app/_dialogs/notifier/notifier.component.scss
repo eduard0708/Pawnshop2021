@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.5fr 4fr  0.5fr;
+  
+  .icon-title {
+    margin-left: -0.5rem;
+    min-height: fit-content;
+    padding: 0 !important;
+    mat-icon {
+    font-weight: 550;
+      margin-top: 0.4rem;
+      font-size: 2rem;
+    }
+  }
+  .title {
+    position: relative;
+    font-weight: 400;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  .message {
+      font-weight: 300;
+      font-size: 1rem;
+      margin-top: .7rem;
+
+  }
+  .close {
+    float: right;
+    margin: .6rem 0 0 .6rem   ;  
+  }
+}

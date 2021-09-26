@@ -4,26 +4,47 @@ import { NotifierComponent } from '../_dialogs/notifier/notifier.component';
 import { NotifierConfig } from '../_model/notifier.config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotifierService {
+  config: NotifierConfig;
+  constructor(private snackBar: MatSnackBar) {}
 
-  constructor(private snackBar: MatSnackBar) {
-
-   }
+  error(message: string, action: string) {
+    this.snackBar.openFromComponent(NotifierComponent, {
+      data: { message: message, title: 'Error!', icon: 'clear' },
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      duration: 2000,
+      panelClass: 'error',
+    });
+  }
   
-  showNotification(message:string, action: string, panelclass:string, config: any){
-
-      this.snackBar.openFromComponent(NotifierComponent, {
-      data:{
-        message:message,
-        errorType:panelclass
-      },
-      verticalPosition:'top',
-      horizontalPosition:'right',
-      duration:2000,
-      panelClass: panelclass,
-    })
+  success(message: string, action: string) {
+    this.snackBar.openFromComponent(NotifierComponent, {
+      data: { message: message, title: 'Success!', icon: 'check' },
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      duration: 2000,
+      panelClass: 'success',
+    });
   }
 
+  showNotification(
+    message: string,
+    action: string,
+    panelclass: string,
+    config1: any
+  ) {
+    this.snackBar.openFromComponent(NotifierComponent, {
+      data: {
+        message: message,
+        errorType: panelclass,
+      },
+      // verticalPosition:'top',
+      // horizontalPosition:'right',
+      // duration:2000,
+      // panelClass: panelclass,
+    });
+  }
 }

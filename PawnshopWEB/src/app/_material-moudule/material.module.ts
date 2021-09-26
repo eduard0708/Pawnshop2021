@@ -35,6 +35,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatRippleModule} from '@angular/material/core';
 
 
+
 @NgModule({
   declarations: [],
   imports: [
@@ -70,7 +71,7 @@ import {MatRippleModule} from '@angular/material/core';
     // MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatRippleModule
+    MatRippleModule,
   ],
   exports: [
     MatCheckboxModule,
@@ -104,7 +105,7 @@ import {MatRippleModule} from '@angular/material/core';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatRippleModule
+    MatRippleModule,
   ],
 })
 export class MaterialModule {}
