@@ -66,7 +66,6 @@ export class DialogTransacitonComponent implements OnInit {
       this.buttonNewloan = true;
       this.placeHolder = 'Contact Number';
     }
-
   }
 
   search() {
@@ -78,19 +77,14 @@ export class DialogTransacitonComponent implements OnInit {
   }
 
   onTransaction(transactionType: string) {
-    console.log(+this.searchNumber);
-
     if (transactionType === 'New Loan')
       this.pawnerService.findPawnerByContactNumber(+this.searchNumber).subscribe(pawner => {
         if (pawner.length === 0) {
           this.router.navigateByUrl('settings/pawner');
           this.dialogRef.close();
         }
-
         if (pawner.length === 1) {
-          this.router.navigateByUrl('/transactions/newloan/', {state: { pawner: pawner }});
-          console.log(pawner);
-          
+          this.router.navigateByUrl('/transactions/newloan/', { state: { pawner: pawner[0] } });
           this.dialogRef.close();
         }
         if (pawner.length > 1) {

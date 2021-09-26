@@ -42,7 +42,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   @ViewChild('principalLoanRef') principalLoanRef: MatInput;
   @ViewChild('category') categoryRef: MatSelect;
-  @ViewChild('categoryDescriptionRef') categoryDescriptionRef:MatSelect;
+  @ViewChild('categoryDescriptionRef') categoryDescriptionRef: MatSelect;
   @ViewChild('newLoan') newloanform;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -81,11 +81,10 @@ export class NewloanComponent implements OnInit, OnDestroy {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pawner = this.router.getCurrentNavigation().extras.state.pawner;
         const address = {
-          cityName:this.pawner.addresses[0].cityName,
-          barangayName:this.pawner.addresses[0].barangayName,
-          completeAddress:this.pawner.addresses[0].completeAddress,
+          cityName: this.pawner.addresses[0].cityName,
+          barangayName: this.pawner.addresses[0].barangayName,
+          completeAddress: this.pawner.addresses[0].completeAddress,
         }
-
         this.pawnerInfo.id = this.pawner.id;
         this.pawnerInfo.firstName = this.pawner.firstName;
         this.pawnerInfo.lastName = this.pawner.lastName;
@@ -187,7 +186,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.categories = data;
     });
   }
-//load category description during selection of category
+  //load category description during selection of category
   onCategorySelect(e) {
     this.categoryDescriptions =
       this.categories[e.value - 1].categoryDescriptions;
