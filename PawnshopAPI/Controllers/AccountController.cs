@@ -47,8 +47,9 @@ namespace PawnshopAPI.Controllers
             await _context.SaveChangesAsync();
 
             return new EmployeeDto
-            { 
-                    Username=employee.UserName,
+            {
+                Id = employee.Id,
+                Username =employee.UserName,
                     Token = _tokenService.CreateToken(employee)
             };
 

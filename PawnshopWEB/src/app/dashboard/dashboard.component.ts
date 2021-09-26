@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DialogTransacitonComponent } from '../_dialogs/dialog-transaciton.component';
+import { DialogTransacitonComponent } from '../_dialogs/dialog.transaction.component';
 import { TransactionCard } from '../_model/transaction-card';
 import { DashboardService } from '../_service/dashboard.service';
 @Component({

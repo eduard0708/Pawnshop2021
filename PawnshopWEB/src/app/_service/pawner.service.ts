@@ -25,7 +25,11 @@ export class PawnerService {
       return this.http.post(this.url + 'add-pawner', pawner);
   }
 
-  findPawner(contactOrTrasactionNumber:number){
-    return this.http.get(this.url + 'contact-number/contactOrTrasactionNumber')
+  findPawnerByContactNumber(contactNumber:number){
+    return this.http.get<Pawner[]>(this.url + `contact-number/${contactNumber}`)
+  }
+
+  findTransactionNumber(){
+
   }
 }

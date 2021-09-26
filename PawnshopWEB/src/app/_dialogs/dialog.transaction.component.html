@@ -4,7 +4,7 @@
   </h3>
 
   <div class="my-2 d-block">
-    <ng-container *ngIf="!isDataSource">
+    <ng-container *ngIf="!isShowTable">
     <mat-form-field appearance="legacy" style="width: 100%">
       <mat-label>{{ placeHolder }}</mat-label>
       <input
@@ -15,13 +15,13 @@
         tabindex="1"
         placeholder="Press Enter to Submit"
         #searchIdRef
-        [(ngModel)]="searchId"
-        (keyup.enter)="getTransaction(transactionType)"
+        [(ngModel)]="searchNumber"
+        (keyup.enter)="onTransaction(transactionType)"
       />
     </mat-form-field>
     <div *ngIf="buttonNewloan">
         <button
-          (click)="createPawer()"
+          (click)="createPawner()"
           tabindex="2"
           mat-raised-button
           class="btn-success"
@@ -64,7 +64,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="isDataSource">
+    <ng-container *ngIf="isShowTable">
       <table
         mat-table
         #table

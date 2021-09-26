@@ -19,7 +19,9 @@ export class AddressService {
   getCities(){
     return this.http.get<City[]>(this.apiUrl + 'cities');
   }
-
+  getCitiesWithBarangays(){
+    return this.http.get<City[]>(this.apiUrl + 'city-barangay');
+  }
   getBarangays(){
    return this.http.get<Barangay[]>(this.apiUrl + 'barangays');
   }

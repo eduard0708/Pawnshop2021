@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -7,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Select } from '../_model/select';
+import { Barangay } from '../_model/barangay';
+import { City } from '../_model/city';
+import { AddressService } from '../_service/address.service';
 import { DialogsService } from '../_service/dialogs.service';
 import { PawnerService } from '../_service/pawner.service';
 
@@ -19,8 +20,8 @@ import { PawnerService } from '../_service/pawner.service';
 export class PawnerComponent implements OnInit {
   @ViewChild('firstNameRef', { static: true }) firstNameRef: ElementRef;
   pawnerForm: FormGroup;
-  cities: Select[] = [];
-  barangays: Select[] = [];
+  cities: City[] = [];
+  barangays: Barangay[] = [];
   isSave: boolean = true;
   d: Date;
 
@@ -28,7 +29,8 @@ export class PawnerComponent implements OnInit {
     private pawnerService: PawnerService,
     private fb: FormBuilder,
     private router: Router,
-    private dialogService: DialogsService
+    private dialogService: DialogsService,
+    private addressService: AddressService
   ) {
     this.pawnerForm = fb.group({
       firstName: ['', Validators.required],
@@ -46,16 +48,24 @@ export class PawnerComponent implements OnInit {
     setTimeout(() => {
       this.firstNameRef.nativeElement.focus();
     }, 100);
+
     this.pawnerForm.valueChanges.subscribe(() => {
       this.isSave = !this.pawnerForm.valid;
     });
-    this.dialogService.getCity().subscribe((city) => (this.cities = city));
-    this.dialogService
-      .getBarangay()
-      .subscribe((barangay) => (this.barangays = barangay));
+
+    this.addressService.getCitiesWithBarangays().subscribe(city => {
+      this.cities = city as any;
+    })
+ }
+
+  onSelectCity(){
+      const cityId = +this.pawnerForm.controls.city.value;
+      let city:City = this.cities.find(o => o.cityId === cityId );
+      if(city)
+        this.barangays = city.barangays
   }
 
-  home() {
+  cancel() {
     this.router.navigateByUrl('/dashboard');
   }
 
@@ -67,9 +77,11 @@ export class PawnerComponent implements OnInit {
   save() {
     const empId = JSON.parse(localStorage.getItem('user'));
     const p = this.pawnerForm.value;
+    const city:City = this.cities.find(c => c.cityId === +p.city)
+  
     //convert address to addresses
     const address = {
-      cityName: p.city,
+      cityName: city.cityName,
       barangayName: p.barangay,
       completeAddress: p.completeAddress,
       dateCreated: new Date().toISOString(),

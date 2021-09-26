@@ -14,7 +14,7 @@ import { NotfoundComponent } from './pages/notfound.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashCardComponent } from './dash-card/dash-card.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DialogTransacitonComponent } from './_dialogs/dialog-transaciton.component';
+import { DialogTransacitonComponent } from './_dialogs/dialog.transaction.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNewpawnerComponent } from './_dialogs/dialog-newpawner.component';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';

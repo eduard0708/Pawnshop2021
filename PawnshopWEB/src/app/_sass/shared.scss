@@ -6,6 +6,14 @@
     width: 100vw;
     background-color:whitesmoke;
   }
+  
+//remove input number arrow up/down
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 //global class of notifier
   .error.mat-snack-bar-container{
