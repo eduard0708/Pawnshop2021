@@ -1,4 +1,4 @@
-export interface Select {
+export interface Select{
     id:number;
     name:string;
 }

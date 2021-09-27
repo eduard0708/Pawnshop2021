@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Barangay } from '../_model/barangay';
-import { City } from '../_model/city';
-import { Pawner } from '../_model/pawner';
+import { Barangay } from '../_model/address/barangay';
+import { City } from '../_model/address/city';
+import { Pawner } from '../_model/pawner/Pawner';
 import { Select } from '../_model/select';
 
 @Injectable({

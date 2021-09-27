@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { City } from '../_model/city';
+import { City } from '../_model/address/city';
 import { AddressService } from '../_service/address.service';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
@@ -31,7 +31,7 @@ export class CityComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private notifier: NotifierService,
+    private notifierService: NotifierService,
     private addressService: AddressService
   ) {
     this.cityForm = fb.group({
@@ -73,8 +73,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     };
     this.addressService.addCity(city).subscribe((city) => {
       this.city = city;
-      this.notifier.showNotification(
-        ` ${this.city.cityName} city added.`, '', 'success', {});
+      this.notifierService.success(`New city: ${this.city.cityName}`)
     });
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();

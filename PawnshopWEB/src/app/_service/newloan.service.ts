@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Transaction } from '../_model/transaction';
+import { Transaction } from '../_model/transaction/transaction';
 import { ItemService } from './item.service';
 
 @Injectable({
@@ -46,7 +46,7 @@ export class NewloanService {
 
   getInterestRate() {
     if (this.itemService.items.length > 0)
-      return this.itemService.items[0].categoryId == 1 ? 3 : 5;
+      return this.itemService.items[0].categoryId === 1 ? 3 : 5;
 
     return 0;
   }

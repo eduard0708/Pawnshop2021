@@ -51,9 +51,9 @@ export class DialogNewvoucherComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.voucherForm.valid);
-    this.voucherService.getCashCheque().subscribe(cash => this.cashCheques = cash as any);
-    this.voucherService.getTransactionCode().subscribe(code => this.transactionCodes = code as any);
-    this.voucherService.getTransactionType().subscribe(type => this.trasactionTypes = type as any);
+    // this.voucherService.getCashCheque().subscribe(cash => this.cashCheques = cash as any);
+    // this.voucherService.getTransactionCode().subscribe(code => this.transactionCodes = code as any);
+    // this.voucherService.getTransactionType().subscribe(type => this.trasactionTypes = type as any);
 
     this.voucherForm.statusChanges.subscribe(() => {
       this.isBtnSave = !this.voucherForm.valid;

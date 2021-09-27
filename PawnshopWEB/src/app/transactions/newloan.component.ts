@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -13,24 +14,24 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Subscription } from 'rxjs';
-import { Category } from '../_model/category';
-import { CategoryDescription } from '../_model/CategoryDescription';
-import { Item } from '../_model/item';
-import { PawnerAddress } from '../_model/pawner.address';
-import { Pawner } from '../_model/pawner';
-import { PawnerInfo } from '../_model/pawnerInfo';
-import { Transaction } from '../_model/transaction';
+import { Category } from '../_model/item/category';
+import { CategoryDescription } from '../_model/item/CategoryDescription';
+import { PawnerAddress } from '../_model/pawner/PawnerAddress';
+import { Pawner } from '../_model/pawner/Pawner';
+import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { Transaction } from '../_model/transaction/transaction';
 import { ItemService } from '../_service/item.service';
 import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
+import { NewloanItem } from '../_model/item/NewloanItem';
 
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
   styleUrls: ['../_sass/newloan.scss'],
 })
-export class NewloanComponent implements OnInit, OnDestroy {
+export class NewloanComponent implements OnInit, OnDestroy  {
   currencyInputMask = createMask({
     alias: 'numeric',
     groupSeparator: ',',
@@ -41,12 +42,15 @@ export class NewloanComponent implements OnInit, OnDestroy {
   });
 
   @ViewChild('principalLoanRef') principalLoanRef: MatInput;
+  @ViewChild('appraisalValueRef') appraisalValueRef: ElementRef;
   @ViewChild('category') categoryRef: MatSelect;
   @ViewChild('categoryDescriptionRef') categoryDescriptionRef: MatSelect;
   @ViewChild('newLoan') newloanform;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   pawner: Pawner = {} as Pawner;
+  item:NewloanItem = {}  as NewloanItem;
   newLoanForm: FormGroup;
   today: Date = new Date();
   dateMatured: Date = new Date(new Date().setMonth(new Date().getMonth() + 1));
@@ -54,7 +58,9 @@ export class NewloanComponent implements OnInit, OnDestroy {
   isDisable = false;
   isAddItem = true;
   isBtnSave = true;
+  maxLoanValue: number = 9999999.99;
   displayColumns: string[] = [
+    '#',
     'category',
     'categoryDescription',
     'description',
@@ -64,7 +70,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   categoryDescriptions: CategoryDescription[] = [];
 
-  public dataSource: MatTableDataSource<Item>;
+  public dataSource: MatTableDataSource<NewloanItem>;
   private serviceSubscribe: Subscription;
 
   constructor(
@@ -73,7 +79,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private itemService: ItemService,
     private newLoanService: NewloanService,
-    private notifier: NotifierService,
+    private notifierService: NotifierService,
     private redeem: RedeemService
   ) {
     // get the pawner information from the params of the link
@@ -99,9 +105,9 @@ export class NewloanComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.dataSource = new MatTableDataSource<Item>();
+    this.dataSource = new MatTableDataSource<NewloanItem>();
 
-    this.newLoanForm = fb.group({
+  this.newLoanForm = this.fb.group({
       pawner: [],
       dateTransaction: [this.today],
       dateGranted: [this.today],
@@ -120,6 +126,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       netProceed: [0.0],
       test: [],
     });
+
   }
 
   ngOnInit(): void {
@@ -164,9 +171,11 @@ export class NewloanComponent implements OnInit, OnDestroy {
       }
     ); //end of computetation
 
+    //subscribe to the item service to notify for new added item or deleted
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
-
+  
+      
       let intRate = this.newLoanService.getInterestRate();
       this.newLoanForm.controls.totalAppraisal.setValue(
         this.newLoanService.getTotalAppraisal()
@@ -174,18 +183,18 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.newLoanForm.controls.interestRate.setValue(
         intRate.toFixed(2) + ' %'
       );
-      if (items.length == 0) {
+      if (items.length === 0) {
         this.newLoanForm.controls.principalLoan.disable();
       } else {
         this.newLoanForm.controls.principalLoan.enable();
       }
     });
-
     //  load category dropdown
     this.itemService.getCategories().subscribe((data) => {
       this.categories = data;
     });
   }
+
   //load category description during selection of category
   onCategorySelect(e) {
     this.categoryDescriptions =
@@ -194,34 +203,46 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.newLoanForm.controls.category.disable();
     }
   }
-
+  //add items
   onAdd() {
-    let id = this.dataSource.data.length + 1;
-    let category: Category = this.categories.find(
-      ({ categoryId }) => categoryId == this.newLoanForm.controls.category.value
-    );
-    let categoryDescription: CategoryDescription = this.categoryDescriptions.find(
-      ({ categoryDescriptionId }) => categoryDescriptionId == this.newLoanForm.controls.categoryDescriptions.value
-    );
+    let itemTotalValue = this.itemService.items.reduce((accumulator, current) =>
+      accumulator + +(current.appraisalValue ?? "").toString().replace(/[^\d.-]/g, ''), 0);
+    let currentItemValue = +(this.newLoanForm.controls.appraisalValue.value ?? "").toString().replace(/[^\d.-]/g, '');
+    //check for maximum total loanable amount of 9,999,999.99 before adding
+    if ((itemTotalValue + currentItemValue) > this.maxLoanValue) {
 
-    let item: Item = {
-      id: id,
-      categoryId: this.newLoanForm.controls.category.value,
-      categoryName: category.categoryName,
-      categoryDescriptionId:
-        this.newLoanForm.controls.categoryDescriptions.value,
-      categoryDescriptionName: categoryDescription.categoryDescriptionName,
-      description: this.newLoanForm.controls.descriptions.value,
-      appraisalValue: this.newLoanForm.controls.appraisalValue.value,
-    };
-    this.itemService.add(item);
-    this.resetAddItems();
+      this.notifierService.info('Maximum Total Appraisal Value is only P 9,999,999.99');
+      let availableAmount = this.maxLoanValue - itemTotalValue;
+      this.newLoanForm.controls.appraisalValue.setValue(availableAmount);
+      this.appraisalValueRef.nativeElement.focus();
+    } else {
+      let id = this.dataSource.data.length + 1;
+      let category: Category = this.categories.find(
+        ({ categoryId }) => categoryId == this.newLoanForm.controls.category.value
+      );
+      let categoryDescription: CategoryDescription = this.categoryDescriptions.find(
+        ({ categoryDescriptionId }) => categoryDescriptionId == this.newLoanForm.controls.categoryDescriptions.value
+      );
+      let item: NewloanItem = {
+        itemId: id,
+        categoryId:category.categoryId,
+        category: category.categoryName,
+        categoryDescription: categoryDescription.categoryDescriptionName,
+        description: this.newLoanForm.controls.descriptions.value,
+        appraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? "").toString().replace(/[^\d.-]/g, '')).toFixed(2),
+      };
+      this.itemService.add(item);
+      this.resetAddItems();
+     
+    }
   }
 
-  delete(item: Item) {
-    this.itemService.delete(item.id);
-    if (this.dataSource.data.length == 0) this.resetAddItems();
-
+  delete(item: NewloanItem) {
+    console.log(item);
+    this.itemService.delete(item.itemId);
+  
+    
+    if (this.dataSource.data.length === 0) this.resetAddItems();
     this.reset();
   }
 
@@ -302,7 +323,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
         this.newLoanForm.controls.advanceServiceCharge.value,
       netProceed: this.newLoanForm.controls.netProceed.value,
     };
-    this.notifier.showNotification('Success new loan', 'ok', 'success', {});
+    // this.notifier.showNotification('Success new loan', 'ok', 'success', {});
     console.log(transaction);
     this.itemService.clear();
     this.newLoanService.addTrasaction(transaction);

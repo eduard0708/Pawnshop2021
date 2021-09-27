@@ -16,9 +16,9 @@ import {
 } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { NotifierConfig } from '../_model/notifier.config';
-import { Pawner } from '../_model/pawner';
-import { Transaction } from '../_model/transaction';
+import { NotifierConfig } from '../_model/NotifierConfig';
+import { Pawner } from '../_model/pawner/Pawner';
+import { Transaction } from '../_model/transaction/transaction';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
 import { PawnerService } from '../_service/pawner.service';
@@ -80,6 +80,7 @@ export class DialogTransacitonComponent implements OnInit {
     if (transactionType === 'New Loan')
       this.pawnerService.findPawnerByContactNumber(+this.searchNumber).subscribe(pawner => {
         if (pawner.length === 0) {
+          this.notifierService.error('No pawner exist, create pawner.')
           this.router.navigateByUrl('settings/pawner');
           this.dialogRef.close();
         }
@@ -88,11 +89,19 @@ export class DialogTransacitonComponent implements OnInit {
           this.dialogRef.close();
         }
         if (pawner.length > 1) {
+          this.notifierService.info(`Multiple pawner found, select one.`)
           this.dataSource.data = pawner;
           this.isShowTable = true;
         }
       });
+      //navigate to other transaction if not new loan
+      if (transactionType !== 'New Loan'){
+        this.router.navigateByUrl(`/transactions/${transactionType.toLocaleLowerCase()}/`)
+        this.dialogRef.close();
+      }
+      
   }
+
   createPawner() {
     this.router.navigateByUrl('settings/pawner');
     this.dialogRef.close();

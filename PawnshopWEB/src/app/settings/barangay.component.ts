@@ -6,8 +6,8 @@ import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Barangay } from '../_model/barangay';
-import { City } from '../_model/city';
+import { Barangay } from '../_model/address/barangay';
+import { City } from '../_model/address/city';
 import { AddressService } from '../_service/address.service';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
@@ -38,7 +38,7 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialogService: DialogsService,
     private addressService: AddressService,
-    private notifier: NotifierService
+    private notifierService: NotifierService
 
   ) {
     this.barangayForm = fb.group({
@@ -80,10 +80,8 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     }
     this.addressService.addBarangay(barangay).subscribe(barangay => {
       this.barangay = barangay as any
-      console.log(barangay);
-
-      // this.notifier.showNotification(`${this.barangay.barangayName}`, '','success',{})
-    })
+      this.notifierService.success(`New Barangay: ${this.barangay.barangayName}`)
+    });
 
     this.barangayForm.reset();
     this.cityRef.focus();

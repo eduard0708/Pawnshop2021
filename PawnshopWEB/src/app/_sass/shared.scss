@@ -20,16 +20,23 @@ input::-webkit-inner-spin-button {
   height: auto !important;
 }
 .error.mat-snack-bar-container {
-  border: 3px solid  #f93154;
-  border-left: 6px solid dodgerblue;
-   background-color: #f93154;
+  border: 3px solid #f93154;
+  border-left: 6px solid fuchsia;
+  background-color: #f93154;
   color: white;
   opacity: 0.9 !important;
 }
 .success.mat-snack-bar-container {
-  border: 3px solid  #00b74a;
-  border-left: 6px solid dodgerblue;
+  border: 3px solid #00b74a;
+  border-left: 6px solid fuchsia;
   background-color: #00b74a;
+  color: white;
+  opacity: 0.9 !important;
+}
+.info.mat-snack-bar-container {
+  border: 3px solid #39c0ed;
+  border-left: 6px solid fuchsia;
+  background-color: #39c0ed;
   color: white;
   opacity: 0.9 !important;
 }

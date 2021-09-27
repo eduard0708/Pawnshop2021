@@ -1,5 +1,5 @@
-import { Pawner } from '../_model/pawner';
-import { Item } from './item';
+import { Pawner } from '../pawner/Pawner';
+import { NewloanItem } from '../item/NewloanItem';
 
 export interface Transaction {
     transactionId:number;
@@ -8,7 +8,7 @@ export interface Transaction {
     dateGranted: Date,
     dateMature:Date,
     dateExpired: Date,
-    pawnedItems:Item[],
+    pawnedItems:NewloanItem[],
     totalAppraisal:number,
     principalLoan:number,
     interestRate: number,

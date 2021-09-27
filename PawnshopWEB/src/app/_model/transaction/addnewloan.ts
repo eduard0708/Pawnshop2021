@@ -1,0 +1,36 @@
+export interface AddNewLoan {
+  transactionId;number;
+  previousId: number;
+  trackingId: number;
+  dateTransaction: Date;
+  dateGranted: Date;
+  dateMature: Date;
+  dateExpire: Date;
+  transcationType: string;
+  status: string;
+  loanStatus: string;
+  totalDays: number;
+  totalMonths: number;
+  totalYears: number;
+  IsThreeDaysLapse: boolean;
+  discount: number;
+  apraisalValue: number;
+  principalLoan: number;
+  interestRate: number;
+  advanceInterest: number;
+  advanceServiceCharge: number;
+  interest: number;
+  serviceCharge: number;
+  penalty: number;
+  dueAmount: number;
+  redeemAmount: number;
+  netProceed: number;
+  netPayment: number;
+  receiveAmount: number;
+  change: number;
+  dateCreated: Date;
+  dateUpdate: Date;
+  employeeId: number;
+  items:Item;
+  pawner:Pawner;
+}

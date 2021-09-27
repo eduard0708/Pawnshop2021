@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TransactionCard } from '../_model/transaction-card';
+import { TransactionCard } from '../_model/TransactionCard';
 
 @Component({
   selector: 'app-dash-card',

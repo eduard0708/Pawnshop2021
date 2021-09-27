@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AddCategoryDescription } from '../_model/add-category-description';
-import { Category } from '../_model/category';
-import { Item } from '../_model/item';
+import { AddCategoryDescription } from '../_model/item/AddCategoryDescription';
+import { Category } from '../_model/item/category';
+import { NewloanItem } from '../_model/item/NewloanItem';
 import { Select } from '../_model/select';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class ItemService {
 
   apiUrl = environment.baseUrl +'item'
 
-  items$: BehaviorSubject<Item[]>;
-  items: Array<Item> =[];
+  items$: BehaviorSubject<NewloanItem[]>;
+  items: Array<NewloanItem> = [];
 
   constructor(private http: HttpClient) {
     this.items$ = new BehaviorSubject([]);
@@ -33,7 +33,7 @@ export class ItemService {
    }
 
 
-   add(item:Item){
+   add(item:NewloanItem){
     this.items.push(item)
     this.items$.next(this.items);
    }
@@ -43,7 +43,7 @@ export class ItemService {
      this.items$.next(this.items);
    }
 
-   edit(item:Item){
+   edit(item:NewloanItem){
     // let findElem = this.items.find(p => p.id == item.id);
     // findElem.appraisalValue = item.appraisalValue;
     // findElem.category = item.category;
@@ -53,12 +53,13 @@ export class ItemService {
    }
 
    delete(id:number){
-    this.items = this.items.filter(p => {
-      return p.id != id
+    this.items = this.items.filter(item => {
+      return item.itemId != id
     });
-    this.items$.next(this.items);
+     this.items$.next(this.items);
    }
 
+   
   getCategory(){
     return this.http.get<Select[]>(this.jsonUrl + 'category');
   }

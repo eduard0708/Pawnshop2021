@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Pawner } from '../_model/pawner';
-import { PawnerInfo } from '../_model/pawnerInfo';
-import { Transaction } from '../_model/transaction';
+import { Pawner } from '../_model/pawner/Pawner';
+import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { Transaction } from '../_model/transaction/transaction';
 
 @Component({
   selector: 'app-transactions-pawner-info',
