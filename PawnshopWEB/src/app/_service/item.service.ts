@@ -60,13 +60,13 @@ export class ItemService {
    }
 
    
-  getCategory(){
-    return this.http.get<Select[]>(this.jsonUrl + 'category');
-  }
+  // getCategory(){
+  //   return this.http.get<Select[]>(this.jsonUrl + 'category');
+  // }
 
-  getCategoryDescription(){
-   return this.http.get<Select[]>(this.jsonUrl + 'categoryDescription');
-  }
+  // getCategoryDescription(){
+  //  return this.http.get<Select[]>(this.jsonUrl + 'categoryDescription');
+  // }
 
 
 

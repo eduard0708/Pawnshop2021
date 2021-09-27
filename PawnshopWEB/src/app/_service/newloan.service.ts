@@ -30,7 +30,6 @@ export class NewloanService {
 
   getTotalAppraisal() {
     let totalAppraisal = 0;
-
     if (this.itemService.items.length > 0) {
       this.itemService.items.forEach((s) => {
         totalAppraisal =
