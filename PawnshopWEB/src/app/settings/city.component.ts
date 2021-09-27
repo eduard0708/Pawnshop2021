@@ -31,7 +31,7 @@ export class CityComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private notifier: NotifierService,
+    private notifierService: NotifierService,
     private addressService: AddressService
   ) {
     this.cityForm = fb.group({
@@ -73,8 +73,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     };
     this.addressService.addCity(city).subscribe((city) => {
       this.city = city;
-      this.notifier.showNotification(
-        ` ${this.city.cityName} city added.`, '', 'success', {});
+      this.notifierService.success(`New city: ${this.city.cityName}`)
     });
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();

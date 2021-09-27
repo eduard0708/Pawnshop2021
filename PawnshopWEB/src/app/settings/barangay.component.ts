@@ -38,7 +38,7 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialogService: DialogsService,
     private addressService: AddressService,
-    private notifier: NotifierService
+    private notifierService: NotifierService
 
   ) {
     this.barangayForm = fb.group({
@@ -80,10 +80,8 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     }
     this.addressService.addBarangay(barangay).subscribe(barangay => {
       this.barangay = barangay as any
-      console.log(barangay);
-
-      // this.notifier.showNotification(`${this.barangay.barangayName}`, '','success',{})
-    })
+      this.notifierService.success(`New Barangay: ${this.barangay.barangayName}`)
+    });
 
     this.barangayForm.reset();
     this.cityRef.focus();

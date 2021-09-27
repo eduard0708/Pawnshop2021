@@ -37,6 +37,7 @@
     <!-- start barangay button -->
     <div class="barangay-button-wrapper">
       <button
+        [disabled]="isAdd"
         (click)="add()"
         tabindex="3"
         mat-raised-button
