@@ -26,7 +26,7 @@ import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
 import { NewloanItem } from '../_model/item/NewloanItem';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { LoanStatus, Status, TrasactionType } from '../_enums/enum';
+import { LoanStatus, Status, TrasactionType } from '../_enum/enums';
 import { min } from 'moment';
 import { User } from '../_model/user';
 
