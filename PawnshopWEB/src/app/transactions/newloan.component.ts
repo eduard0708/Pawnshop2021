@@ -25,6 +25,10 @@ import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
 import { NewloanItem } from '../_model/item/NewloanItem';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { LoanStatus, Status, TrasactionType } from '../_enums/enum';
+import { min } from 'moment';
+import { User } from '../_model/user';
 
 @Component({
   selector: 'app-newloan',
@@ -318,33 +322,58 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    let pawner = this.pawner;
-    let items = this.itemService.items;
-    let intRate: string = this.newLoanForm.controls.interestRate.value;
-    this.newLoanForm.controls.pawnedItems.setValue(items);
-    this.newLoanForm.controls.pawner.setValue(pawner);
-
-    let transaction: Transaction = {
-      transactionId: 1,
-      pawner: pawner,
-      dateTransaction: this.newLoanForm.controls.dateTransaction.value,
-      dateGranted: this.newLoanForm.controls.dateGranted.value,
-      dateMature: this.newLoanForm.controls.dateMature.value,
-      dateExpired: this.newLoanForm.controls.dateExpired.value,
-      pawnedItems: items,
-      totalAppraisal: this.newLoanForm.controls.totalAppraisal.value,
-      principalLoan: this.newLoanForm.controls.principalLoan.value,
-      interestRate: parseFloat(intRate.toString().replace(/[^\d.-]/g, '')),
-      advanceInterest: this.newLoanForm.controls.advanceInterest.value,
-      advanceServiceCharge:
-        this.newLoanForm.controls.advanceServiceCharge.value,
-      netProceed: this.newLoanForm.controls.netProceed.value,
+    let user: User = JSON.parse(localStorage.getItem('user'));
+     const transaction = {
+      transactionId: 0,
+      trackingId: 0,
+      dateTransaction: this.today.toISOString(),
+      dateGranted: this.today.toISOString(),
+      dateMature: this.dateMatured.toISOString(),
+      dateExpire: this.dateExpired.toISOString(),
+      transcationType: TrasactionType.Newloan,
+      status: Status.Active,
+      loanStatus: LoanStatus.New,
+      totalDays: null,
+      totalMonths: null,
+      totalYears: null,
+      isThreeDaysLapse: false,
+      discount: null,
+      apraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      principalLoan: +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      interestRate: +(+(this.newLoanForm.controls.interestRate.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      advanceInterest: +(+(this.newLoanForm.controls.advanceInterest.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      advanceServiceCharge: +(+(
+        this.newLoanForm.controls.advanceServiceCharge.value ?? 0
+      )
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      interest: +(+(this.newLoanForm.controls.interest.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      serviceCharge: +(+(this.newLoanForm.controls.serviceCharge.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      penalty: null,
+      dueAmount: null,
+      redeemAmount: null,
+      netProceed: +(+(this.newLoanForm.controls.netProceed.value ?? 0)
+        .toString()
+        .replace(/[^\d.-]/g, '')),
+      netPayment: null,
+      receiveAmount: null,
+      change: null,
+      employeeId: user.id,
+      // items: this.itemService.items
+      // pawner:this.pawnerInfo;
     };
-    // this.notifier.showNotification('Success new loan', 'ok', 'success', {});
-    console.log(transaction);
-    this.itemService.clear();
-    this.newLoanService.addTrasaction(transaction);
-    this.router.navigateByUrl('/dashboard');
   }
 
   validateItemEntery() {
