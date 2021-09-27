@@ -48,10 +48,6 @@ export class NewloanComponent implements OnInit, OnDestroy  {
   @ViewChild('newLoan') newloanform;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e1b0cf0ac69b7e819569bd57a10e51c99f90213
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   pawner: Pawner = {} as Pawner;
   item:NewloanItem = {}  as NewloanItem;
@@ -109,14 +105,9 @@ export class NewloanComponent implements OnInit, OnDestroy  {
       }
     });
 
-<<<<<<< HEAD
     this.dataSource = new MatTableDataSource<NewloanItem>();
 
   this.newLoanForm = this.fb.group({
-=======
-    this.dataSource = new MatTableDataSource<Item>();
-    this.newLoanForm = this.fb.group({
->>>>>>> 3e1b0cf0ac69b7e819569bd57a10e51c99f90213
       pawner: [],
       dateTransaction: [this.today],
       dateGranted: [this.today],
@@ -232,44 +223,25 @@ export class NewloanComponent implements OnInit, OnDestroy  {
       let categoryDescription: CategoryDescription = this.categoryDescriptions.find(
         ({ categoryDescriptionId }) => categoryDescriptionId == this.newLoanForm.controls.categoryDescriptions.value
       );
-<<<<<<< HEAD
+
       let item: NewloanItem = {
         itemId: id,
-        categoryId:category.categoryId,
+        categoryId: category.categoryId,
         category: category.categoryName,
         categoryDescription: categoryDescription.categoryDescriptionName,
-=======
-      let item: Item = {
-        id: id,
-        categoryId: this.newLoanForm.controls.category.value,
-        categoryName: category.categoryName,
-        categoryDescriptionId:
-          this.newLoanForm.controls.categoryDescriptions.value,
-        categoryDescriptionName: categoryDescription.categoryDescriptionName,
->>>>>>> 3e1b0cf0ac69b7e819569bd57a10e51c99f90213
         description: this.newLoanForm.controls.descriptions.value,
         appraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? "").toString().replace(/[^\d.-]/g, '')).toFixed(2),
       };
+    
       this.itemService.add(item);
       this.resetAddItems();
-     
     }
   }
 
-<<<<<<< HEAD
   delete(item: NewloanItem) {
-    console.log(item);
     this.itemService.delete(item.itemId);
-  
-    
-    if (this.dataSource.data.length === 0) this.resetAddItems();
-=======
-
-
-  delete(item: Item) {
-    this.itemService.delete(item.id);
     if (this.dataSource.data.length == 0) this.resetAddItems();
->>>>>>> 3e1b0cf0ac69b7e819569bd57a10e51c99f90213
+
     this.reset();
   }
 
