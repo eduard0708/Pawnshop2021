@@ -2,7 +2,8 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        readonly
+        tabindex="-1"
         matInput
         placeholder="Contact Number"
         value="{{ pawnerInfo.contactNumber }}"
@@ -12,7 +13,8 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        tabindex="-1"
+        readonly
         matInput
         placeholder="First Name"
         value="{{ pawnerInfo.firstName }}"
@@ -22,7 +24,8 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        readonly
+        tabindex="-1"
         matInput
         placeholder="Last Name"
         value="{{ pawnerInfo.lastName }}"
@@ -68,7 +71,8 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        readonly
+        tabindex="-1"
         matInput
         placeholder="City"
         value="{{ pawnerInfo.city }}"
@@ -79,7 +83,8 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        readonly
+        tabindex="-1"
         matInput
         placeholder="Barangay"
         value="{{ pawnerInfo.barangay }}"
@@ -89,14 +94,15 @@
   <div>
     <mat-form-field>
       <input
-        disabled
+        readonly
+        tabindex="-1"
         matInput
         placeholder="Complete Address"
         value="{{ pawnerInfo.completeAddress }}"
       />
     </mat-form-field>
   </div>
- 
+
   <div>
     <mat-form-field class="form-date">
       <input
@@ -134,6 +140,3 @@
     </mat-form-field>
   </div>
 </div>
-
-
-
