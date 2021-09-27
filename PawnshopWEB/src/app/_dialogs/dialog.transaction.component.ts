@@ -94,7 +94,14 @@ export class DialogTransacitonComponent implements OnInit {
           this.isShowTable = true;
         }
       });
+      //navigate to other transaction if not new loan
+      if (transactionType !== 'New Loan'){
+        this.router.navigateByUrl(`/transactions/${transactionType.toLocaleLowerCase()}/`)
+        this.dialogRef.close();
+      }
+      
   }
+
   createPawner() {
     this.router.navigateByUrl('settings/pawner');
     this.dialogRef.close();

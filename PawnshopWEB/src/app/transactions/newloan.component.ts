@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -41,10 +42,13 @@ export class NewloanComponent implements OnInit, OnDestroy {
   });
 
   @ViewChild('principalLoanRef') principalLoanRef: MatInput;
+  @ViewChild('appraisalValueRef') appraisalValueRef: ElementRef;
   @ViewChild('category') categoryRef: MatSelect;
   @ViewChild('categoryDescriptionRef') categoryDescriptionRef: MatSelect;
   @ViewChild('newLoan') newloanform;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   pawner: Pawner = {} as Pawner;
   newLoanForm: FormGroup;
@@ -54,6 +58,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   isDisable = false;
   isAddItem = true;
   isBtnSave = true;
+  maxLoanValue: number = 9999999.99;
   displayColumns: string[] = [
     'category',
     'categoryDescription',
@@ -73,7 +78,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private itemService: ItemService,
     private newLoanService: NewloanService,
-    private notifier: NotifierService,
+    private notifierService: NotifierService,
     private redeem: RedeemService
   ) {
     // get the pawner information from the params of the link
@@ -100,8 +105,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     });
 
     this.dataSource = new MatTableDataSource<Item>();
-
-    this.newLoanForm = fb.group({
+    this.newLoanForm = this.fb.group({
       pawner: [],
       dateTransaction: [this.today],
       dateGranted: [this.today],
@@ -120,6 +124,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       netProceed: [0.0],
       test: [],
     });
+
   }
 
   ngOnInit(): void {
@@ -164,6 +169,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       }
     ); //end of computetation
 
+    //subscribe to the item service to notify for new added item or deleted
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
 
@@ -180,12 +186,12 @@ export class NewloanComponent implements OnInit, OnDestroy {
         this.newLoanForm.controls.principalLoan.enable();
       }
     });
-
     //  load category dropdown
     this.itemService.getCategories().subscribe((data) => {
       this.categories = data;
     });
   }
+
   //load category description during selection of category
   onCategorySelect(e) {
     this.categoryDescriptions =
@@ -194,34 +200,47 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.newLoanForm.controls.category.disable();
     }
   }
-
+  //add items
   onAdd() {
-    let id = this.dataSource.data.length + 1;
-    let category: Category = this.categories.find(
-      ({ categoryId }) => categoryId == this.newLoanForm.controls.category.value
-    );
-    let categoryDescription: CategoryDescription = this.categoryDescriptions.find(
-      ({ categoryDescriptionId }) => categoryDescriptionId == this.newLoanForm.controls.categoryDescriptions.value
-    );
+    let itemTotalValue = this.itemService.items.reduce((accumulator, current) =>
+      accumulator + +(current.appraisalValue ?? "").toString().replace(/[^\d.-]/g, ''), 0);
+    let currentItemValue = +(this.newLoanForm.controls.appraisalValue.value ?? "").toString().replace(/[^\d.-]/g, '');
+    //check for maximum total loanable amount of 9,999,999.99 before adding
+    if ((itemTotalValue + currentItemValue) > this.maxLoanValue) {
 
-    let item: Item = {
-      id: id,
-      categoryId: this.newLoanForm.controls.category.value,
-      categoryName: category.categoryName,
-      categoryDescriptionId:
-        this.newLoanForm.controls.categoryDescriptions.value,
-      categoryDescriptionName: categoryDescription.categoryDescriptionName,
-      description: this.newLoanForm.controls.descriptions.value,
-      appraisalValue: this.newLoanForm.controls.appraisalValue.value,
-    };
-    this.itemService.add(item);
-    this.resetAddItems();
+      this.notifierService.info('Maximum Total Appraisal Value is only P 9,999,999.99');
+      let availableAmount = this.maxLoanValue - itemTotalValue;
+      this.newLoanForm.controls.appraisalValue.setValue(availableAmount);
+      this.appraisalValueRef.nativeElement.focus();
+    } else {
+      let id = this.dataSource.data.length + 1;
+      let category: Category = this.categories.find(
+        ({ categoryId }) => categoryId == this.newLoanForm.controls.category.value
+      );
+      let categoryDescription: CategoryDescription = this.categoryDescriptions.find(
+        ({ categoryDescriptionId }) => categoryDescriptionId == this.newLoanForm.controls.categoryDescriptions.value
+      );
+      let item: Item = {
+        id: id,
+        categoryId: this.newLoanForm.controls.category.value,
+        categoryName: category.categoryName,
+        categoryDescriptionId:
+          this.newLoanForm.controls.categoryDescriptions.value,
+        categoryDescriptionName: categoryDescription.categoryDescriptionName,
+        description: this.newLoanForm.controls.descriptions.value,
+        appraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? "").toString().replace(/[^\d.-]/g, '')).toFixed(2),
+      };
+      this.itemService.add(item);
+      this.resetAddItems();
+     
+    }
   }
+
+
 
   delete(item: Item) {
     this.itemService.delete(item.id);
     if (this.dataSource.data.length == 0) this.resetAddItems();
-
     this.reset();
   }
 
@@ -264,6 +283,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   reset() {
     this.newLoanForm.reset();
     this.itemService.clear();
+
     this.newLoanForm.controls.categoryDescriptions.enable();
     this.newLoanForm.controls.descriptions.enable();
     this.newLoanForm.controls.appraisalValue.enable();
@@ -302,7 +322,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
         this.newLoanForm.controls.advanceServiceCharge.value,
       netProceed: this.newLoanForm.controls.netProceed.value,
     };
-    this.notifier.showNotification('Success new loan', 'ok', 'success', {});
+    // this.notifier.showNotification('Success new loan', 'ok', 'success', {});
     console.log(transaction);
     this.itemService.clear();
     this.newLoanService.addTrasaction(transaction);

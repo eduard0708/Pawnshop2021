@@ -1,4 +1,5 @@
-<form [formGroup]="newLoanForm" (ngSubmit)="onSave()" autocomplete="off">
+
+<form [formGroup]="newLoanForm" autocomplete="off">
   <div class="shadow-sm text-white newloan-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
@@ -34,6 +35,7 @@
         </mat-form-field>
         <mat-form-field class="category-description">
           <button
+            type="button"
             tabindex="-1"
             matSuffix
             mat-icon-button
@@ -75,9 +77,10 @@
         </mat-form-field>
         <mat-form-field class="appraisal-value">
           <input
+           #appraisalValueRef
             matInput
             [inputMask]="currencyInputMask"
-            maxlength="15"
+            maxlength="14"
             placeholder="Appraisal Value"
             type="text"
             formControlName="appraisalValue"
@@ -90,6 +93,7 @@
         </mat-form-field>
         <div>
           <button
+            type="button"
             tabindex="5"
             [disabled]="isAddItem"
             (click)="onAdd()"
@@ -100,6 +104,7 @@
             <mat-icon>add</mat-icon>
           </button>
           <button
+             type="button"
             tabindex="6"
             type="button"
             (click)="resetAddItems()"

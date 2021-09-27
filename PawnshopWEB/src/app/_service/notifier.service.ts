@@ -36,7 +36,7 @@ export class NotifierService {
        verticalPosition: 'top',
        horizontalPosition: 'right',
        duration: 5000,
-       panelClass: 'success',
+       panelClass: 'info',
      });
    }
 
