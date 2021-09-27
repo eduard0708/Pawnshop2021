@@ -1,12 +1,12 @@
-//configuration of all content ex. for the transaction content configure in 
+//configuration of all content ex. for the transaction content configure in
 //transaction.component.html this content-config applies
-.content-config{
-    height: 89vh;
-    position: absolute;
-    width: 100vw;
-    background-color:whitesmoke;
-  }
-  
+.content-config {
+  height: 89vh;
+  position: absolute;
+  width: 100vw;
+  background-color: whitesmoke;
+}
+
 //remove input number arrow up/down
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -14,15 +14,22 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-
-//global class of notifier
-  .error.mat-snack-bar-container{
-    background-color: #eb4c5c;
-    color: white;
-  }
-  .success.mat-snack-bar-container{
-    background-color: #00cc00;
-    color: white;
-  }
-
-
+//mat snackbar global css
+.mat-snack-bar-container {
+  padding: 0 !important;
+  height: auto !important;
+}
+.error.mat-snack-bar-container {
+  border: 3px solid  #f93154;
+  border-left: 6px solid dodgerblue;
+   background-color: #f93154;
+  color: white;
+  opacity: 0.9 !important;
+}
+.success.mat-snack-bar-container {
+  border: 3px solid  #00b74a;
+  border-left: 6px solid dodgerblue;
+  background-color: #00b74a;
+  color: white;
+  opacity: 0.9 !important;
+}

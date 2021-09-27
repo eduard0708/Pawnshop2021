@@ -1,9 +1,9 @@
+<div class="container">
+  <div class="icon-title">
+    <mat-icon >{{data.icon}}</mat-icon>
+  </div>
+  <p class="message"><span class="title">{{ data.title | titlecase }}</span> {{ data.message }}</p>
+  <mat-icon  (click)="snackBarRef.dismiss()" class="close">highlight_off</mat-icon> 
+</div>
 
-<span style="font-size:large;font-weight: 400; color: #fbf1f2;">{{data.errorType|titlecase}}!  </span>
 
-<span>{{ data.message }}</span>
-
-<!-- 
-<div>
-  <button class="btn btn-primary">Submit</button>
-</div> -->
