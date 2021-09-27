@@ -80,6 +80,7 @@ export class DialogTransacitonComponent implements OnInit {
     if (transactionType === 'New Loan')
       this.pawnerService.findPawnerByContactNumber(+this.searchNumber).subscribe(pawner => {
         if (pawner.length === 0) {
+          this.notifierService.error('No pawner exist, create pawner.')
           this.router.navigateByUrl('settings/pawner');
           this.dialogRef.close();
         }
@@ -88,6 +89,7 @@ export class DialogTransacitonComponent implements OnInit {
           this.dialogRef.close();
         }
         if (pawner.length > 1) {
+          this.notifierService.info(`Multiple pawner found, select one.`)
           this.dataSource.data = pawner;
           this.isShowTable = true;
         }

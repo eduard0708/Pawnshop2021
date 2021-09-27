@@ -22,7 +22,7 @@ export class PawnerService {
   }
 
   addPawner(pawner: AddPawner) {
-      return this.http.post(this.url + 'add-pawner', pawner);
+      return this.http.post<Pawner>(this.url + 'add-pawner', pawner);
   }
 
   findPawnerByContactNumber(contactNumber:number){

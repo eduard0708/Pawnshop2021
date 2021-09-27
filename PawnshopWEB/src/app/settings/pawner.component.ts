@@ -50,8 +50,6 @@ export class PawnerComponent implements OnInit {
   serializedDate = new FormControl();
 
   ngOnInit(): void {
-    this.notifierService.error('ONerdfasdf fasdfdf afasdf', '');
-
     setTimeout(() => {
       this.firstNameRef.nativeElement.focus();
     }, 100);
@@ -110,10 +108,12 @@ export class PawnerComponent implements OnInit {
 
     //call service to add new panwer if add success redirect to newloan
     this.pawnerService.addPawner(pawner).subscribe((newPawner) => {
-      if (Object.keys(newPawner).length > 0)
+      if (Object.keys(newPawner).length > 0){
+        this.notifierService.success(`New pawner added: ${newPawner.firstName} ${ newPawner.lastName}`)
         this.router.navigateByUrl('transactions/newloan/', {
           state: { pawner: newPawner },
         });
+      }
     });
   }
 }
