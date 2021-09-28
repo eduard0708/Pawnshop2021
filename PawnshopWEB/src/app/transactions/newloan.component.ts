@@ -134,6 +134,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.categoryRef.focus();
     }, 100);
+
     this.newLoanForm.controls.principalLoan.disable();
     //subscribe to the item service to notify for new added item or deleted
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
@@ -151,6 +152,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
       } else {
         this.newLoanForm.controls.principalLoan.enable();
       }
+
+      this.validateButtonSave();
     });
 
     this.newLoanForm.valueChanges.subscribe(() => {
@@ -161,7 +164,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     //compute during input of principal loan
     this.newLoanForm.controls.principalLoan.valueChanges.subscribe(
       (principal) => {
-        let principalLoan = +(principal ?? '')
+        let principalLoan = +(principal ?? 0)
           .toString()
           .replace(/[^\d.-]/g, '');
         let totalApp: number = this.newLoanService.getTotalAppraisal();
@@ -182,13 +185,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
         let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
         this.newLoanForm.controls.netProceed.setValue(netProceed);
 
-        // const ploan =+(+(this.newLoanForm.controls.principalLoan.value ?? 0)
-        // .toString()
-        // .replace(/[^\d.-]/g, ''))
 
-        if (principalLoan !== 0 && this.itemService.items.length !== 0) {
-          this.isSave = false;
-        }
+        this.validateButtonSave();
       }
     ); //end of computetation
 
@@ -340,6 +338,16 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.isAddItem = false;
     } else {
       this.isAddItem = true;
+    }
+  }
+
+  validateButtonSave() {
+    const ploan = +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, ''));
+
+    if (ploan !== 0 && this.itemService.items.length !== 0) {
+      this.isSave = false;
     }
   }
 }
