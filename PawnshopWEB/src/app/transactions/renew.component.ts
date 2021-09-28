@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
-import { Transaction } from '../_model/transaction/transaction';
+import { Transaction } from '../_model/transaction/new-transaction';
 import { RedeemService } from '../_service/redeem.service';
 
 @Component({

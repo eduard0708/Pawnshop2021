@@ -8,7 +8,7 @@ import { createMask } from '@ngneat/input-mask';
 import { Item } from '../_model/item/item';
 import { Pawner } from '../_model/pawner/Pawner';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
-import { Transaction } from '../_model/transaction/transaction';
+import { Transaction } from '../_model/transaction/new-transaction';
 import { RedeemService } from '../_service/redeem.service';
 
 @Component({

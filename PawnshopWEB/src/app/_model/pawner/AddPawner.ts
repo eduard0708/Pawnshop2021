@@ -1,4 +1,3 @@
-import { PawnerAddress } from "./PawnerAddress";
 
 
 export interface AddPawner {
