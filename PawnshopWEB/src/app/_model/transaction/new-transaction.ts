@@ -1,7 +1,7 @@
 import { Item } from "../item/item";
 import { Pawner } from "../pawner/Pawner";
 
-export interface Transaction {
+export interface NewTransaction {
   transactionId;number;
   trackingId: number;
   dateTransaction: string;

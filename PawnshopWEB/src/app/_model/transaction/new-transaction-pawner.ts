@@ -1,11 +1,10 @@
-import { PawnerAddress } from "./pawner.address";
-
-export interface Pawner {
+export interface NewTrasactionPawer {
     pawnerId:number;
+    trackingId?:number;
     firstName:string;
     lastName:string;
     contactNumber:string;
     city:string;
     barangay:string;
-    addresses:PawnerAddress[];
+    completeAddress:string;
 }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TransactionPawner } from '../_model/pawner/AddPawner';
 import { Pawner } from '../_model/pawner/Pawner';
 import { User } from '../_model/user';
 import { ItemService } from './item.service';
@@ -54,19 +55,23 @@ export class NewloanService {
   normalizedNewloanInfo(transaction, pawner, items){
     let user: User = JSON.parse(localStorage.getItem('user'));
     console.log(transaction);
-    console.log(pawner);
+    // console.log(pawner);
     console.log(items);
     console.log('normalize');
     
-    const savePawner:Pawner = {
+    const savePawner:TransactionPawner = {
       pawnerId:pawner.pawnerId,
-      firstName:"",
-      lastName:"",
-      contactNumber:'',
-      city:"",
-      barangay:"",
-      addresses:[]
+      trackingId:null,
+      firstName:pawner.firstName,
+      lastName:pawner.lastName,
+      contactNumber:pawner.contactNumber,
+      city:pawner.city,
+      barangay:pawner.barangay,
+      completeAddress:pawner.completeAddress
     }
+
+    console.log(savePawner);
+    
 
   //   const transaction = {
   //    transactionId: 0,
