@@ -10,8 +10,8 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210926194941_initCreate1")]
-    partial class initCreate1
+    [Migration("20210928192431_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,6 +180,73 @@ namespace PawnshopAPI.Migrations
                     b.ToTable("Pawners");
                 });
 
+            modelBuilder.Entity("PawnshopAPI.Entities._item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TN")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("_TransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("_transacitonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("_TransactionId");
+
+                    b.ToTable("_Items");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities._pawner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TN")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("_Pawners");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities._transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TN")
+                        .HasColumnType("int");
+
+                    b.Property<int>("_PawnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("_PawnerId");
+
+                    b.ToTable("_Transactions");
+                });
+
             modelBuilder.Entity("PawnshopAPI.Entities.Address", b =>
                 {
                     b.HasOne("PawnshopAPI.Entities.Pawner", "Pawner")
@@ -213,6 +280,26 @@ namespace PawnshopAPI.Migrations
                     b.Navigation("Categories");
                 });
 
+            modelBuilder.Entity("PawnshopAPI.Entities._item", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities._transaction", "_Transaction")
+                        .WithMany("_Items")
+                        .HasForeignKey("_TransactionId");
+
+                    b.Navigation("_Transaction");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities._transaction", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities._pawner", "_Pawner")
+                        .WithMany()
+                        .HasForeignKey("_PawnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("_Pawner");
+                });
+
             modelBuilder.Entity("PawnshopAPI.Entities.Category", b =>
                 {
                     b.Navigation("CategoryDescriptions");
@@ -226,6 +313,11 @@ namespace PawnshopAPI.Migrations
             modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities._transaction", b =>
+                {
+                    b.Navigation("_Items");
                 });
 #pragma warning restore 612, 618
         }

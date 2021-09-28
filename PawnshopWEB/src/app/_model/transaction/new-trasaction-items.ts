@@ -1,3 +1,5 @@
+import { ItemAuditTrail } from "../item/ItemAuditTrail";
+
 export interface NewTransactionItems{
     trackingId?:number;
     category:string;
