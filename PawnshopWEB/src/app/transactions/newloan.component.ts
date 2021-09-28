@@ -95,7 +95,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
           barangayName: this.pawner.addresses[0].barangayName,
           completeAddress: this.pawner.addresses[0].completeAddress,
         };
-        this.pawnerInfo.id = this.pawner.id;
+        this.pawnerInfo.pawnerId = this.pawner.pawnerId;
         this.pawnerInfo.firstName = this.pawner.firstName;
         this.pawnerInfo.lastName = this.pawner.lastName;
         this.pawnerInfo.contactNumber = this.pawner.contactNumber;
@@ -313,9 +313,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.newLoanForm.controls.categoryDescriptions.disable();
     this.newLoanForm.controls.descriptions.disable();
     this.newLoanForm.controls.appraisalValue.disable();
-
-    console.log(this.newLoanForm.controls.categoryDescriptions.valid);
-  }
+ }
 
   onSave() {
     this.newLoanService.normalizedNewloanInfo(
@@ -348,6 +346,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
     if (ploan !== 0 && this.itemService.items.length !== 0) {
       this.isSave = false;
+    }else{
+      this.isSave = true;
     }
   }
 }

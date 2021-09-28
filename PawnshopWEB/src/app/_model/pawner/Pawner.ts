@@ -1,7 +1,7 @@
 import { PawnerAddress } from "./PawnerAddress";
 
 export interface Pawner {
-    id:number;
+    pawnerId:number;
     firstName:string;
     lastName:string;
     contactNumber:string;

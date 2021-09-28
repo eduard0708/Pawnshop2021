@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Pawner } from '../_model/pawner/Pawner';
 import { Transaction } from '../_model/transaction/transaction';
 import { User } from '../_model/user';
 import { ItemService } from './item.service';
@@ -62,7 +63,16 @@ export class NewloanService {
     console.log(items);
     console.log('normalize');
     
-    
+    const savePawner:Pawner = {
+      pawnerId:pawner.pawnerId,
+      firstName:"",
+      lastName:"",
+      contactNumber:'',
+      city:"",
+      barangay:"",
+      addresses:[]
+    }
+
   //   const transaction = {
   //    transactionId: 0,
   //    trackingId: 0,

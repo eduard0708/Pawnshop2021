@@ -1,5 +1,5 @@
 export interface PawnerInfo{
-    id:number;
+    pawnerId:number;
     firstName:string;
     lastName:string;
     contactNumber:string;
