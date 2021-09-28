@@ -263,7 +263,9 @@
       </div>
       <div class="button-wrapper">
         <button
+          [disabled]="isSave"
           class="btn btn-success"
+          (click)="onSave()"
           type="submit"
           tabindex="9"
           mat-raised-button

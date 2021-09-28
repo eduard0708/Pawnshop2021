@@ -61,7 +61,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   dateExpired: Date = new Date(new Date().setMonth(new Date().getMonth() + 4));
   isDisable = false;
   isAddItem = true;
-  isBtnSave = true;
+  isSave = true;
   maxLoanValue: number = 9999999.99;
   displayColumns: string[] = [
     '#',
@@ -112,7 +112,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource<NewloanItem>();
 
     this.newLoanForm = this.fb.group({
-      pawner: [],
       dateTransaction: [this.today],
       dateGranted: [this.today],
       dateMature: [this.dateMatured],
@@ -121,14 +120,12 @@ export class NewloanComponent implements OnInit, OnDestroy {
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
       appraisalValue: [0.0, [Validators.required]],
-      pawnedItems: [],
       totalAppraisal: [0.0],
       principalLoan: [0.0],
       interestRate: ['0.00 %'],
       advanceInterest: [0.0],
       advanceServiceCharge: [0.0],
       netProceed: [0.0],
-      test: [],
     });
   }
 
@@ -141,7 +138,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     //subscribe to the item service to notify for new added item or deleted
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
-      console.log(this.itemService.items);
 
       let intRate = this.newLoanService.getInterestRate();
       this.newLoanForm.controls.totalAppraisal.setValue(
@@ -186,10 +182,12 @@ export class NewloanComponent implements OnInit, OnDestroy {
         let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
         this.newLoanForm.controls.netProceed.setValue(netProceed);
 
-        if (principalLoan > 0) {
-          this.isBtnSave = false;
-        } else {
-          this.isBtnSave = true;
+        // const ploan =+(+(this.newLoanForm.controls.principalLoan.value ?? 0)
+        // .toString()
+        // .replace(/[^\d.-]/g, ''))
+
+        if (principalLoan !== 0 && this.itemService.items.length !== 0) {
+          this.isSave = false;
         }
       }
     ); //end of computetation
@@ -322,58 +320,11 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    let user: User = JSON.parse(localStorage.getItem('user'));
-     const transaction = {
-      transactionId: 0,
-      trackingId: 0,
-      dateTransaction: this.today.toISOString(),
-      dateGranted: this.today.toISOString(),
-      dateMature: this.dateMatured.toISOString(),
-      dateExpire: this.dateExpired.toISOString(),
-      transcationType: TrasactionType.Newloan,
-      status: Status.Active,
-      loanStatus: LoanStatus.New,
-      totalDays: null,
-      totalMonths: null,
-      totalYears: null,
-      isThreeDaysLapse: false,
-      discount: null,
-      apraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      principalLoan: +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      interestRate: +(+(this.newLoanForm.controls.interestRate.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      advanceInterest: +(+(this.newLoanForm.controls.advanceInterest.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      advanceServiceCharge: +(+(
-        this.newLoanForm.controls.advanceServiceCharge.value ?? 0
-      )
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      interest: +(+(this.newLoanForm.controls.interest.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      serviceCharge: +(+(this.newLoanForm.controls.serviceCharge.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      penalty: null,
-      dueAmount: null,
-      redeemAmount: null,
-      netProceed: +(+(this.newLoanForm.controls.netProceed.value ?? 0)
-        .toString()
-        .replace(/[^\d.-]/g, '')),
-      netPayment: null,
-      receiveAmount: null,
-      change: null,
-      employeeId: user.id,
-      // items: this.itemService.items
-      // pawner:this.pawnerInfo;
-    };
+    this.newLoanService.normalizedNewloanInfo(
+      this.newLoanForm.value,
+      this.pawnerInfo,
+      this.itemService.items
+    );
   }
 
   validateItemEntery() {

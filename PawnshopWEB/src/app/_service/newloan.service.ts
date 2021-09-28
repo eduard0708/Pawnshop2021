@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Transaction } from '../_model/transaction/transaction';
+import { User } from '../_model/user';
 import { ItemService } from './item.service';
 
 @Injectable({
@@ -52,6 +53,68 @@ export class NewloanService {
   
   addTrasaction(transaction:Transaction){
     this.http.post(this.uri+ 'transaction', transaction).subscribe();
+  }
+
+  normalizedNewloanInfo(transaction, pawner, items){
+    let user: User = JSON.parse(localStorage.getItem('user'));
+    console.log(transaction);
+    console.log(pawner);
+    console.log(items);
+    console.log('normalize');
+    
+    
+  //   const transaction = {
+  //    transactionId: 0,
+  //    trackingId: 0,
+  //    dateTransaction: this.today.toISOString(),
+  //    dateGranted: this.today.toISOString(),
+  //    dateMature: this.dateMatured.toISOString(),
+  //    dateExpire: this.dateExpired.toISOString(),
+  //    transcationType: TrasactionType.Newloan,
+  //    status: Status.Active,
+  //    loanStatus: LoanStatus.New,
+  //    totalDays: null,
+  //    totalMonths: null,
+  //    totalYears: null,
+  //    isThreeDaysLapse: false,
+  //    discount: null,
+  //    apraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    principalLoan: +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    interestRate: +(+(this.newLoanForm.controls.interestRate.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    advanceInterest: +(+(this.newLoanForm.controls.advanceInterest.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    advanceServiceCharge: +(+(
+  //      this.newLoanForm.controls.advanceServiceCharge.value ?? 0
+  //    )
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    interest: +(+(this.newLoanForm.controls.interest.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    serviceCharge: +(+(this.newLoanForm.controls.serviceCharge.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    penalty: null,
+  //    dueAmount: null,
+  //    redeemAmount: null,
+  //    netProceed: +(+(this.newLoanForm.controls.netProceed.value ?? 0)
+  //      .toString()
+  //      .replace(/[^\d.-]/g, '')),
+  //    netPayment: null,
+  //    receiveAmount: null,
+  //    change: null,
+  //    employeeId: user.id,
+  //    // items: this.itemService.items
+  //    // pawner:this.pawnerInfo;
+
+  //  };
   }
     
 }
