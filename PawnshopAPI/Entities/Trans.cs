@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace PawnshopAPI.Entities
 {
-    public class _item
+    public class Trans
     {
         public int Id { get; set; }
         public int? TN { get; set; }
         public string Details { get; set; }
-        public int _transacitonId { get; set; }
-        public _transaction _Transaction { get; set; }
+        public Pawn Pawn { get; set; }
+        public ICollection<Iteem> Iteems { get; set; }
     }
 }

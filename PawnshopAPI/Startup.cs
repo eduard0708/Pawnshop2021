@@ -34,7 +34,8 @@ namespace PawnshopAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+        
             services.AddScoped<ITokenService, TokenService>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(opt =>
@@ -54,11 +55,19 @@ namespace PawnshopAPI
                             ValidateAudience = false // the audience is the Angular application
                         };
                     });
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             //if (env.IsDevelopment())
             //{
             //    app.UseDeveloperExceptionPage();

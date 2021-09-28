@@ -21,10 +21,25 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewTrasaction(_transaction t) {
+        public ActionResult NewTrasaction(Trans t) {
 
-            context._Transactions.Add(t);
+            context.Trans.Add(t);
             context.SaveChanges();
+            var Ptn = t.Id;
+            var Itn = t.Id;
+
+            t.Pawn.TN = Ptn;
+            var items = t.Iteems;
+            foreach (var item in items)
+            {
+                item.TN = Itn;
+            }
+            t.Iteems = items;
+
+            context.Update(t);
+            context.SaveChanges();
+
+            var updatedT = t;
 
             return Ok();
         }
