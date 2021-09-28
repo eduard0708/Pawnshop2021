@@ -95,7 +95,9 @@ export class NewloanComponent implements OnInit, OnDestroy {
           barangayName: this.pawner.addresses[0].barangayName,
           completeAddress: this.pawner.addresses[0].completeAddress,
         };
+
         this.pawnerInfo.pawnerId = this.pawner.pawnerId;
+        this.pawnerInfo.pawnerId = this.pawner.pawnerId;        
         this.pawnerInfo.firstName = this.pawner.firstName;
         this.pawnerInfo.lastName = this.pawner.lastName;
         this.pawnerInfo.contactNumber = this.pawner.contactNumber;

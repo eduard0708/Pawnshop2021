@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pawner } from '../_model/pawner/Pawner';
-import { Transaction } from '../_model/transaction/transaction';
 import { User } from '../_model/user';
 import { ItemService } from './item.service';
 
@@ -50,10 +49,6 @@ export class NewloanService {
       return this.itemService.items[0].categoryId === 1 ? 3 : 5;
 
     return 0;
-  }
-  
-  addTrasaction(transaction:Transaction){
-    this.http.post(this.uri+ 'transaction', transaction).subscribe();
   }
 
   normalizedNewloanInfo(transaction, pawner, items){
