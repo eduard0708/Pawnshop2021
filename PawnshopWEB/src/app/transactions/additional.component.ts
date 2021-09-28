@@ -5,10 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-import { Item } from '../_model/item';
-import { Pawner } from '../_model/pawner';
-import { PawnerInfo } from '../_model/pawnerInfo';
-import { Transaction } from '../_model/transaction';
+import { Item } from '../_model/item/item';
+import { Pawner } from '../_model/pawner/Pawner';
+import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { Transaction } from '../_model/transaction/transaction';
 import { RedeemService } from '../_service/redeem.service';
 
 @Component({
@@ -55,7 +55,6 @@ export class AdditionalComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
        this.transaction = this.router.getCurrentNavigation().extras.state.transaction;
-       this.items = this.transaction.pawnedItems;
       }
     });
 

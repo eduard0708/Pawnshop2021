@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotifierComponent } from '../_dialogs/notifier/notifier.component';
-import { NotifierConfig } from '../_model/notifier.config';
+import { NotifierConfig } from '../_model/NotifierConfig';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogTransacitonComponent } from '../_dialogs/dialog.transaction.component';
-import { TransactionCard } from '../_model/transaction-card';
+import { TransactionCard } from '../_model/TransactionCard';
 import { DashboardService } from '../_service/dashboard.service';
 @Component({
   selector: 'app-dashboard',

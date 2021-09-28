@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AddPawner } from '../_model/addpawner';
-import { Pawner } from '../_model/pawner';
+import { AddPawner } from '../_model/pawner/AddPawner';
+import { Pawner } from '../_model/pawner/Pawner';
 import { AddressService } from './address.service';
 
 @Injectable({
