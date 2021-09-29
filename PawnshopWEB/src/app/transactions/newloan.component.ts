@@ -22,10 +22,10 @@ import { ItemService } from '../_service/item.service';
 import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
-import { NewloanItem } from '../_model/item/NewloanItem';
 import { LoanStatus, Status, TrasactionType } from '../_enum/enums';
 import { min } from 'moment';
 import { User } from '../_model/user';
+import { Item } from '../_model/item/item';
 
 @Component({
   selector: 'app-newloan',
@@ -51,7 +51,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   pawner: Pawner = {} as Pawner;
-  item: NewloanItem = {} as NewloanItem;
+  item: Item = {} as Item;
   newLoanForm: FormGroup;
   today: Date = new Date();
   dateMatured: Date = new Date(new Date().setMonth(new Date().getMonth() + 1));
@@ -71,7 +71,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   categoryDescriptions: CategoryDescription[] = [];
 
-  public dataSource: MatTableDataSource<NewloanItem>;
+  public dataSource: MatTableDataSource<Item>;
   private serviceSubscribe: Subscription;
 
   constructor(
@@ -108,7 +108,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.dataSource = new MatTableDataSource<NewloanItem>();
+    this.dataSource = new MatTableDataSource<Item>();
 
     this.newLoanForm = this.fb.group({
       dateTransaction: [this.today],
@@ -237,7 +237,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
             this.newLoanForm.controls.categoryDescriptions.value
         );
 
-      let item: NewloanItem = {
+      let item: Item = {
         itemId: id,
         categoryId: category.categoryId,
         category: category.categoryName,
@@ -255,7 +255,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(item: NewloanItem) {
+  delete(item: Item) {
     this.itemService.delete(item.itemId);
 
     if (this.dataSource.data.length == 0) this.resetAddItems();

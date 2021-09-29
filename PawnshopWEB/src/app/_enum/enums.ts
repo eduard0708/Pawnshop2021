@@ -18,3 +18,14 @@ export enum LoanStatus {
   Expired = 'Expired',
   New = 'New',
 }
+
+export enum ItemStatus
+{
+  Pawned= 'Pawned',
+  Auction = 'Auction',
+  Sold = 'Sold',
+  Damage = 'Damage',
+  Missing = 'Missing',
+  Recycled = 'Recycled',
+}
+

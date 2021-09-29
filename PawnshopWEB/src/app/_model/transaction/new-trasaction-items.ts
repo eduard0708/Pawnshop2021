@@ -1,15 +1,16 @@
-import { ItemAuditTrail } from "../item/ItemAuditTrail";
+import { ItemAuditTrail } from "../item/item-audit-trail";
 
 export interface NewTransactionItems{
+    itemId:number;
     previousTransactionId:number;
-    trackingId?:number;
+    trackingId:number;
     category:string;
     categoryDescription:string;
     itemDescription:string
     appraisalValue:number;
-    sellingPrice?:number;
+    sellingPrice:number;
     isSold:boolean;
-    dateSold:string;
-    monitoringDateTransacton:string;
-    itemAuditTrail:ItemAuditTrail[]
+    dateSold?:string;
+    newDateTransaction:string; //insert new date of new transaction to update the date expire
+    itemAuditTrail:ItemAuditTrail;
 }

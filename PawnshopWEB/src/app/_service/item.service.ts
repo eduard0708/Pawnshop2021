@@ -4,20 +4,20 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddCategoryDescription } from '../_model/item/AddCategoryDescription';
 import { Category } from '../_model/item/category';
-import { NewloanItem } from '../_model/item/NewloanItem';
-import { Select } from '../_model/select';
+import { Item } from '../_model/item/item';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ItemService {
   jsonUrl = 'http://localhost:3000/';
   baseUrl:string ="http://localhost:5000/"
 
   apiUrl = environment.baseUrl +'item'
 
-  items$: BehaviorSubject<NewloanItem[]>;
-  items: Array<NewloanItem> = [];
+  items$: BehaviorSubject<Item[]>;
+  items: Array<Item> = [];
 
   constructor(private http: HttpClient) {
     this.items$ = new BehaviorSubject([]);
@@ -33,7 +33,7 @@ export class ItemService {
    }
 
 
-   add(item:NewloanItem){
+   add(item:Item){
     this.items.push(item)
     this.items$.next(this.items);
    }
@@ -43,7 +43,7 @@ export class ItemService {
      this.items$.next(this.items);
    }
 
-   edit(item:NewloanItem){
+   edit(item:Item){
     // let findElem = this.items.find(p => p.id == item.id);
     // findElem.appraisalValue = item.appraisalValue;
     // findElem.category = item.category;

@@ -52,7 +52,7 @@ namespace PawnshopAPI.Controllers
                 .Include(x => x.Iteems)
                 .FirstOrDefault(x => x.TN == tn);
 
-            var items = context.Iteems.Where(x => x.TN == 12);
+            var items = context.Iteems.Where(x => x.TN == 12).ToList();
             return Ok(t);
         }
     }

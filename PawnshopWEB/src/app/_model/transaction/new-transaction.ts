@@ -1,8 +1,9 @@
-import { Item } from "../item/item";
 import { Pawner } from "../pawner/Pawner";
+import { NewTransactionPawner } from "./new-transaction-pawner";
+import { NewTransactionItems } from "./new-trasaction-items";
 
 export interface NewTransaction {
-  transactionId;number;
+  transactionId:number;
   trackingId: number;
   dateTransaction: string;
   dateGranted?: string;
@@ -16,7 +17,7 @@ export interface NewTransaction {
   totalYears?: number;
   isThreeDaysLapse: boolean;
   discount?: number;
-  apraisalValue: number;
+  totalAppraisal: number;
   principalLoan: number;
   interestRate: number;
   advanceInterest: number;
@@ -31,6 +32,6 @@ export interface NewTransaction {
   receiveAmount?: number;
   change?: number;
   employeeId: number;
-  items:Item[];
-  pawner:Pawner;
+  items:NewTransactionItems[];
+  pawner:NewTransactionPawner;
 }

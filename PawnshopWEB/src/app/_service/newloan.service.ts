@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
+import { ItemStatus, LoanStatus, Status, TrasactionType } from '../_enum/enums';
+import { Item } from '../_model/item/item';
+import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { Pawner } from '../_model/pawner/Pawner';
+import { NewTransaction } from '../_model/transaction/new-transaction';
+import { NewTransactionComputation } from '../_model/transaction/new-transaction-computation';
 import { NewTransactionPawner } from '../_model/transaction/new-transaction-pawner';
+import { NewTransactionItems } from '../_model/transaction/new-trasaction-items';
 import { User } from '../_model/user';
 import { ItemService } from './item.service';
 
@@ -9,10 +16,9 @@ import { ItemService } from './item.service';
   providedIn: 'root',
 })
 export class NewloanService {
+  uri: string = 'http://localhost:3000/';
 
-  uri:string = 'http://localhost:3000/';
-
-  constructor(private itemService: ItemService, private http:HttpClient) {}
+  constructor(private itemService: ItemService, private http: HttpClient) {}
 
   getAdvanceServiceCharge(principalLoan: number) {
     let advanceInterest = 0;
@@ -52,79 +58,107 @@ export class NewloanService {
     return 0;
   }
 
-  normalizedNewloanInfo(transaction, pawner, items){
+  normalizedNewloanInfo(transaction: NewTransactionComputation, pawner, items) {
     let user: User = JSON.parse(localStorage.getItem('user'));
-    console.log(transaction);
-    // console.log(pawner);
-    console.log(items);
-    console.log('normalize');
-    
-    const savePawner:NewTransactionPawner = {
-      pawnerId:pawner.pawnerId,
-      trackingId:null,
-      firstName:pawner.firstName,
-      lastName:pawner.lastName,
-      contactNumber:pawner.contactNumber,
-      city:pawner.city,
-      barangay:pawner.barangay,
-      completeAddress:pawner.completeAddress
+    let saveItems: NewTransactionItems[] = [];
+    //normalize itemAuditTrail value
+    let itemAuditTrail: ItemAuditTrail = {
+      itemAuditTrailId: 0,
+      actionBy: user.id,
+      dateOn: new Date().toISOString(),
+      itemStatus: ItemStatus.Pawned,
+      remarks: null,
+    };
+
+    //loop to normalize items value
+    for (let index = 0; index < items.length; index++) {
+      const item: Item = items[index];
+
+      let initItems: NewTransactionItems = {
+        itemId: 0,
+        previousTransactionId: 0,
+        trackingId: 0,
+        category: item.category,
+        categoryDescription: item.categoryDescription,
+        itemDescription: item.description,
+        appraisalValue: item.appraisalValue,
+        sellingPrice: 0,
+        isSold: false,
+        dateSold: null,
+        newDateTransaction: new Date().toISOString(),
+        itemAuditTrail: itemAuditTrail,
+      };
+      saveItems.push(initItems);
     }
+    //normalize pawner value
+    const savePanwer: NewTransactionPawner = {
+      pawnerTransactionId: 0,
+      pawnerId: pawner.pawnerId,
+      trackingId: null,
+      firstName: pawner.firstName,
+      lastName: pawner.lastName,
+      contactNumber: pawner.contactNumber,
+      city: pawner.city,
+      barangay: pawner.barangay,
+      completeAddress: pawner.completeAddress,
+    };
 
-    console.log(savePawner);
-    
+  //normalize transactions value
+    const saveTransaction: NewTransaction = {
+      transactionId: 0,
+      trackingId: 0,
+      dateTransaction: new Date().toISOString(),
+      dateGranted: new Date().toISOString(),
+      dateMature: new Date(
+        new Date().setMonth(new Date().getMonth() + 1)
+      ).toISOString(),
+      dateExpire: new Date(
+        new Date().setMonth(new Date().getMonth() + 4)
+      ).toISOString(),
+      transcationType: TrasactionType.Newloan,
+      status: Status.Active,
+      loanStatus: LoanStatus.New,
+      totalDays: 0,
+      totalMonths: 0,
+      totalYears: 0,
+      isThreeDaysLapse: false,
+      discount: 0,
+      totalAppraisal: +(+(transaction.totalAppraisal ?? 0) 
+        .toString()
+        .replace(/[^\d.-]/g, '')).toFixed(2),
+      principalLoan:+(+(transaction.principalLoan ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      interestRate: +(+(transaction.interestRate ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      advanceInterest:+(+(transaction.advanceInterest ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      advanceServiceCharge:+(+(transaction.advanceServiceCharge ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      interest: +(+(transaction.interest ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      serviceCharge: +(+(transaction.serviceCharge ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      penalty: 0,
+      dueAmount: 0,
+      redeemAmount: 0,
+      netProceed: +(+(transaction.netProceed ?? 0)
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2),
+      netPayment: 0,
+      receiveAmount: 0,
+      change: 0,
+      employeeId: user.id,
+      items: [...saveItems],
+      pawner: savePanwer,
+    };
 
-  //   const transaction = {
-  //    transactionId: 0,
-  //    trackingId: 0,
-  //    dateTransaction: this.today.toISOString(),
-  //    dateGranted: this.today.toISOString(),
-  //    dateMature: this.dateMatured.toISOString(),
-  //    dateExpire: this.dateExpired.toISOString(),
-  //    transcationType: TrasactionType.Newloan,
-  //    status: Status.Active,
-  //    loanStatus: LoanStatus.New,
-  //    totalDays: null,
-  //    totalMonths: null,
-  //    totalYears: null,
-  //    isThreeDaysLapse: false,
-  //    discount: null,
-  //    apraisalValue: +(+(this.newLoanForm.controls.appraisalValue.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    principalLoan: +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    interestRate: +(+(this.newLoanForm.controls.interestRate.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    advanceInterest: +(+(this.newLoanForm.controls.advanceInterest.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    advanceServiceCharge: +(+(
-  //      this.newLoanForm.controls.advanceServiceCharge.value ?? 0
-  //    )
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    interest: +(+(this.newLoanForm.controls.interest.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    serviceCharge: +(+(this.newLoanForm.controls.serviceCharge.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    penalty: null,
-  //    dueAmount: null,
-  //    redeemAmount: null,
-  //    netProceed: +(+(this.newLoanForm.controls.netProceed.value ?? 0)
-  //      .toString()
-  //      .replace(/[^\d.-]/g, '')),
-  //    netPayment: null,
-  //    receiveAmount: null,
-  //    change: null,
-  //    employeeId: user.id,
-  //    // items: this.itemService.items
-  //    // pawner:this.pawnerInfo;
-
-  //  };
+    console.log(saveTransaction);
   }
-    
+  
 }

@@ -1,4 +1,5 @@
 export interface NewTransactionPawner {
+    pawnerTransactionId:number;
     pawnerId:number;
     trackingId?:number;
     firstName:string;
