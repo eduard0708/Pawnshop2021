@@ -1,6 +1,7 @@
 import { ItemAuditTrail } from "../item/ItemAuditTrail";
 
 export interface NewTransactionItems{
+    previousTransactionId:number;
     trackingId?:number;
     category:string;
     categoryDescription:string;
@@ -9,5 +10,6 @@ export interface NewTransactionItems{
     sellingPrice?:number;
     isSold:boolean;
     dateSold:string;
+    monitoringDateTransacton:string;
     itemAuditTrail:ItemAuditTrail[]
 }
