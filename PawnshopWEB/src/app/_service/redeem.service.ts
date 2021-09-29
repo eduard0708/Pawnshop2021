@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Transaction } from '../_model/transaction/new-transaction';
+import { NewTransaction } from '../_model/transaction/new-transaction';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class RedeemService {
    }
 
   findTrasaction(){
-   return this.http.get<Transaction>(this.uri + 'transaction');
+   return this.http.get<NewTransaction>(this.uri + 'transaction');
   }
 
 

@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
-import { Transaction } from '../_model/transaction/new-transaction';
+import { NewTransaction } from '../_model/transaction/new-transaction';
 import { RedeemService } from '../_service/redeem.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { RedeemService } from '../_service/redeem.service';
 
 export class RedeemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  transaction:Transaction = {} as Transaction;
+  transaction:NewTransaction = {} as NewTransaction;
   items:Item[] = [];
   pawnerInfo:PawnerInfo = {} as PawnerInfo;
   redeemForm:FormGroup;

@@ -1,4 +1,4 @@
-export interface NewTrasactionPawer {
+export interface NewTransactionPawner {
     pawnerId:number;
     trackingId?:number;
     firstName:string;

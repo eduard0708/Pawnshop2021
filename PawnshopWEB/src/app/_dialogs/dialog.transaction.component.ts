@@ -16,9 +16,7 @@ import {
 } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { NotifierConfig } from '../_model/NotifierConfig';
 import { Pawner } from '../_model/pawner/Pawner';
-import { Transaction } from '../_model/transaction/new-transaction';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
 import { PawnerService } from '../_service/pawner.service';
@@ -32,7 +30,6 @@ export class DialogTransacitonComponent implements OnInit {
   @Input() searchIdRef: ElementRef;
 
   searchNumber: string;
-  transaction: Transaction;
   pawners: Pawner;
   isShowTable = false;
   existingPawner: Pawner[] = [];

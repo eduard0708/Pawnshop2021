@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TransactionPawner } from '../_model/pawner/AddPawner';
 import { Pawner } from '../_model/pawner/Pawner';
+import { NewTransactionPawner } from '../_model/transaction/new-transaction-pawner';
 import { User } from '../_model/user';
 import { ItemService } from './item.service';
 
@@ -59,7 +59,7 @@ export class NewloanService {
     console.log(items);
     console.log('normalize');
     
-    const savePawner:TransactionPawner = {
+    const savePawner:NewTransactionPawner = {
       pawnerId:pawner.pawnerId,
       trackingId:null,
       firstName:pawner.firstName,

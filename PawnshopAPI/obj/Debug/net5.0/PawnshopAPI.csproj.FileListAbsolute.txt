@@ -120,3 +120,4 @@ C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\bin\Debug\net5.0\Sw
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\LIGHT\Desktop\2021-GoldWin\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache
