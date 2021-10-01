@@ -32,6 +32,6 @@ export interface NewTransaction {
   receiveAmount?: number;
   change?: number;
   employeeId: number;
-  items:NewTransactionItems[];
-  pawner:NewTransactionPawner;
+  transactionItems:NewTransactionItems[];
+  transactionPawner:NewTransactionPawner;
 }

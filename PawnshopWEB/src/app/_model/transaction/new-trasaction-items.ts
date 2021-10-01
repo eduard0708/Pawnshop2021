@@ -12,5 +12,5 @@ export interface NewTransactionItems{
     isSold:boolean;
     dateSold?:string;
     newDateTransaction:string; //insert new date of new transaction to update the date expire
-    itemAuditTrail:ItemAuditTrail;
+    itemAuditTrails:ItemAuditTrail;
 }

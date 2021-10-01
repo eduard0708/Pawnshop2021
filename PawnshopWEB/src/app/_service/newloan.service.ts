@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
+import { environment } from 'src/environments/environment';
 import { ItemStatus, LoanStatus, Status, TrasactionType } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
@@ -15,7 +16,9 @@ import { ItemService } from './item.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class NewloanService {
+  url = environment.baseUrl
   uri: string = 'http://localhost:3000/';
 
   constructor(private itemService: ItemService, private http: HttpClient) {}
@@ -86,7 +89,7 @@ export class NewloanService {
         isSold: false,
         dateSold: null,
         newDateTransaction: new Date().toISOString(),
-        itemAuditTrail: itemAuditTrail,
+        itemAuditTrails: itemAuditTrail,
       };
       saveItems.push(initItems);
     }
@@ -94,7 +97,7 @@ export class NewloanService {
     const savePanwer: NewTransactionPawner = {
       pawnerTransactionId: 0,
       pawnerId: pawner.pawnerId,
-      trackingId: null,
+      trackingId: 0,
       firstName: pawner.firstName,
       lastName: pawner.lastName,
       contactNumber: pawner.contactNumber,
@@ -154,11 +157,18 @@ export class NewloanService {
       receiveAmount: 0,
       change: 0,
       employeeId: user.id,
-      items: [...saveItems],
-      pawner: savePanwer,
+      transactionItems: [...saveItems],
+      transactionPawner: savePanwer,
     };
 
+    this.addTransaction(saveTransaction)
+  }
+
+  addTransaction(saveTransaction){
+
     console.log(saveTransaction);
+    
+    this.http.post(this.url + 'transaction', saveTransaction ).subscribe(data => {});
   }
   
 }
