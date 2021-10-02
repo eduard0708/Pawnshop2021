@@ -10,13 +10,14 @@
         <input
           class="text-center"
           autocomplete="off"
-          type="number"
-          maxlength="10"
+          type="text"
+          pattern="\d*"
+          mask="000-000-0000"
           matInput
           tabindex="1"
           placeholder="Press Enter to Submit"
           #searchIdRef
-          [(ngModel)]="searchNumber"
+          [formControl]="searchNumber"
           (keyup.enter)="onTransaction(transactionType)"
         />
         <button

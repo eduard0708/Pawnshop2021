@@ -110,7 +110,7 @@ export class PawnerComponent implements OnInit {
     this.pawnerService.addPawner(pawner).subscribe((newPawner) => {
       if (Object.keys(newPawner).length > 0){
         this.notifierService.success(`New pawner added: ${newPawner.firstName} ${ newPawner.lastName}`)
-        this.router.navigateByUrl('transactions/newloan/', {
+        this.router.navigateByUrl('main/transactions/newloan/', {
           state: { pawner: newPawner },
         });
       }

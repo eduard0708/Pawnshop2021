@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Barangay } from '../_model/address/barangay';
 import { City } from '../_model/address/city';
 import { Pawner } from '../_model/pawner/Pawner';
 import { Select } from '../_model/select';
+import { NewTransaction } from '../_model/transaction/new-transaction';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ import { Select } from '../_model/select';
 export class DialogsService {
 
   uri = 'http://localhost:3000/';
+  url = environment.baseUrl;
 
   constructor(private http:HttpClient) { }
 
@@ -37,5 +40,7 @@ export class DialogsService {
     return this.http.get<Barangay[]>(this.uri + 'barangay');
   }
 
-  
+  searchTransactionId(id:number){
+    return this.http.get<NewTransaction>(this.url + `transaction/${id}`);
+  }
 }

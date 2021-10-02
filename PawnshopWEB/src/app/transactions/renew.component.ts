@@ -18,7 +18,7 @@ import { RedeemService } from '../_service/redeem.service';
 export class RenewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  transaction:NewTransaction = {} as NewTransaction;
+  transactionInfo:NewTransaction = {} as NewTransaction;
   items:Item[] = [];
   pawnerInfo:PawnerInfo = {} as PawnerInfo;
   renewForm:FormGroup;
@@ -53,7 +53,7 @@ export class RenewComponent implements OnInit {
     // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-       this.transaction = this.router.getCurrentNavigation().extras.state.transaction;
+       this.transactionInfo = this.router.getCurrentNavigation().extras.state.transaction;
       }
     });
 

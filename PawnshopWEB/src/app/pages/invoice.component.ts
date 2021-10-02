@@ -19,18 +19,18 @@ export class InvoiceComponent implements OnInit {
   
     this.notifier.success('New Loan Saved')
     //working fine but need printer
-    setTimeout(
-      () => {
-        window.print();
-      },
-      100,
-      setTimeout(() => {
-        this.router.navigateByUrl('main/dashboard');
-      }, 500)
-    );
+    // setTimeout(
+    //   () => {
+    //     window.print();
+    //   },
+    //   100,
+    //   setTimeout(() => {
+    //     this.router.navigateByUrl('main/dashboard');
+    //   }, 500)
+    // );
 
-    // setTimeout(() => {
-    //   this.router.navigateByUrl('main/dashboard')
-    // }, 3000);
+    setTimeout(() => {
+      this.router.navigateByUrl('main/dashboard')
+    }, 1000);
   }
 }

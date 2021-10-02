@@ -18,7 +18,7 @@ import { RedeemService } from '../_service/redeem.service';
 
 export class RedeemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  transaction:NewTransaction = {} as NewTransaction;
+  transactionInfo:NewTransaction = {} as NewTransaction;
   items:Item[] = [];
   pawnerInfo:PawnerInfo = {} as PawnerInfo;
   redeemForm:FormGroup;
@@ -28,7 +28,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     'category',
     'categoryDescription',
     'description',
-    'appraisalValue',
+    'appraisalValue'
   ];
   public dataSource: MatTableDataSource<Item>;
 
@@ -53,7 +53,9 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-       this.transaction = this.router.getCurrentNavigation().extras.state.transaction;
+       this.transactionInfo = this.router.getCurrentNavigation().extras.state.transaction;
+       const normalizeInfo = this.redeemService.normalizePawnerInfo(this.transactionInfo);
+       this.items = normalizeInfo.items
       }
     });
 
@@ -71,7 +73,10 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit(): void {
-    this.dataSource.data = this.items;
+    // this.dataSource.data = 
+    console.log(this.items);
+    
+    ;
   }
 
   ngAfterViewInit():void{

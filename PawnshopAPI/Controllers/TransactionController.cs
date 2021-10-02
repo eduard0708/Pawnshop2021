@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
 using PawnshopAPI.DTO.TestDTO;
 using PawnshopAPI.DTO.TransactionDTO;
@@ -48,7 +49,20 @@ namespace PawnshopAPI.Controllers
             var trans = mapper.Map<AddTransactionDto>(transaction);
 
             return Ok(trans);
-        } 
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<AddTransactionDto> GetTransactionById(int id) {
+
+            var t = context.Transactions
+                 .Include(x => x.TransactionPawner)
+                 .Include(x => x.TransactionItems)
+                 .FirstOrDefault(x => x.TransactionsId == id);
+                  
+            var transaction = mapper.Map<AddTransactionDto>(t);
+
+            return Ok(transaction);
+        }
 
     }
 }
