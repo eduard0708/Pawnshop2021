@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { CalcDate } from '../_model/CalcDate';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
@@ -58,25 +59,41 @@ export class RedeemComponent implements OnInit, AfterViewInit {
        this.items = normalizeInfo.items
       }
     });
+    let calcDate = new CalcDate(new Date(this.transactionInfo.dateTransaction));
 
-      this.redeemForm = fb.group({
+     this.redeemForm = fb.group({
+
         redeemAmount:[],
-        dateTransaction:[],
+        dateTransaction:[new Date(),],
         dateGranted:[],
         dateMatured:[],
         dateExpired:[],
         totalAppraisal:[],
-        transaction:[]
+        transaction:[],
+        totalDays:[calcDate.getDays()],
+        totalMonths:[calcDate.getMonhts()],
+        totalYears:[calcDate.getYears()],
+        status:[calcDate.getStatus()]
       });
 
       this.dataSource = new MatTableDataSource<Item>();
     }
 
   ngOnInit(): void {
-    // this.dataSource.data = 
-    console.log(this.items);
-    
-    ;
+
+      console.log(new Date(this.redeemForm.controls.dateTransaction.value));
+
+      this.redeemForm.valueChanges.subscribe(()=>{
+          let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0) )  
+          let dg = new Date(new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) )  
+          let days = ((dg.getTime() - dt.getTime()) / (24*3600*1000 ))
+ 
+        console.log(days);
+        
+        
+        
+      })
+ 
   }
 
   ngAfterViewInit():void{
