@@ -45,36 +45,18 @@ export class HeaderComponent implements OnInit {
   // }
 
   city() {
-    this.router.navigateByUrl('settings/city');
+    this.router.navigateByUrl('main/settings/city');
   }
-  // barangay() {
-  //   const config = new MatDialogConfig();
-  //   config.position = { top: '3rem' };
-  //   config.width = 'auto';
-  //   config.height = 'auto';
-  //   config.disableClose = true;
-
-  //   this.dialog.open(DialogNewbarangayComponent, config);
-  // }
 
   barangay() {
-    this.router.navigateByUrl('settings/barangay');
+    this.router.navigateByUrl('main/settings/barangay');
   }
 
   pawner() {
-    this.router.navigateByUrl('settings/pawner')
+    this.router.navigateByUrl('main/settings/pawner')
   }
-  // pawner() {
-  //   const config = new MatDialogConfig();
-  //   config.position = { top: '6rem' };
-  //   config.width = '70rem';
-  //   config.height = 'auto';
-  //   config.disableClose = true;
-
-  //   this.dialog.open(DialogNewpawnerComponent, config);
-  // }
-  voucher() {
-    const config = new MatDialogConfig();
+ 
+  voucher() {    const config = new MatDialogConfig();
     config.position = { top: '6rem' };
     config.width = 'auto';
     config.height = 'auto';
@@ -101,6 +83,6 @@ export class HeaderComponent implements OnInit {
     //  if(!this.employeeService.currentUser$) 
     //     this.router.navigateByUrl('login');      
 
-    this.router.navigateByUrl('')
+    this.router.navigateByUrl('main/dashboard')
   }
 }

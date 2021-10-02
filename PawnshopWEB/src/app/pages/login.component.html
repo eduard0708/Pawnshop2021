@@ -1,127 +1,120 @@
-<div class="content-config bg-content">
-  <div
-    style="
-      width: 60%;
-      background-color: thistle;
-      height: 65%;
-      position: absolute;
-      margin: 7% 0 0 7%;
-    "
-    id="carouselExampleIndicators"
-    class="carousel slide"
-    data-bs-ride="carousel"
-  >
-    <div class="carousel-indicators">
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="0"
-        class="active"
-        aria-current="true"
-        aria-label="Slide 1"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="1"
-        aria-label="Slide 2"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="2"
-        aria-label="Slide 3"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="3"
-        aria-label="Slide 4"
-      ></button>
-      <button
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="4"
-        aria-label="Slide 5"
-      ></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img
-          style="height: 23rem"
-          src="../../assets/img/img1.jpg"
-          class="d-block w-100"
-          alt="imag-1"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          style="height: 23rem"
-          src="../../assets/img/img2.png"
-          class="d-block w-100"
-          alt="imag-2"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          style="height: 23rem"
-          src="../../assets/img/img3.jpg"
-          class="d-block w-100"
-          alt="imag-3"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          style="height: 23rem"
-          src="../../assets/img/img4.jpg"
-          class="d-block w-100"
-          alt="imag-4"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          style="height: 23rem"
-          src="../../assets/img/img5.png"
-          class="d-block w-100"
-          alt="imag-5"
-        />
-      </div>
-    </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleIndicators"
-      data-bs-slide="prev"
+<div class="login-wrapper">
+    <div
+      id="carouselExampleIndicators"
+      class="carousel slide carousel-style"
+      data-bs-ride="carousel"
     >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleIndicators"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <form [formGroup]="loginForm" autocomplete="off" >
-    <mat-card class="login-card shadow">
-      <div class="login-header">
-        <div class="login-icon">
-          <mat-icon class="mat-icon-img">person</mat-icon>
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="4"
+          aria-label="Slide 5"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            style="height: 100%;"
+            src="../../assets/img/img1.jpg"
+            class="d-block w-100"
+            alt="imag-1"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            style="height: 100%;"
+            src="../../assets/img/img2.png"
+            class="d-block w-100"
+            alt="imag-2"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            style="height: 100%;"
+            src="../../assets/img/img3.jpg"
+            class="d-block w-100"
+            alt="imag-3"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            style="height: 100%;"
+            src="../../assets/img/img4.jpg"
+            class="d-block w-100"
+            alt="imag-4"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            style="height: 100%;"
+            src="../../assets/img/img5.png"
+            class="d-block w-100"
+            alt="imag-5"
+          />
         </div>
       </div>
-      <mat-card-content class="login-content">
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <form [formGroup]="loginForm" autocomplete="off">
+    <div class="login-card">
+      <div class="login-header">
+        <mat-icon>person</mat-icon>
+      </div>
+      <div class="login-content">
         <div>
           <mat-form-field class="login-input">
+            <mat-icon class="me-2" matPrefix >face</mat-icon>
             <input matInput placeholder="Username" formControlName="username" />
           </mat-form-field>
         </div>
         <div>
+        
           <mat-form-field class="login-input">
+            <mat-icon class="me-2" matPrefix >vpn_key</mat-icon>
             <input
               matInput
               placeholder="Password"
@@ -130,12 +123,12 @@
             />
           </mat-form-field>
         </div>
-      </mat-card-content>
-      <mat-card-actions class="login-footer">
-        <button (click)="login()"  mat-button class="btn-primary login-btn">
+      </div>
+      <div class="login-footer">
+        <button (click)="login()" mat-button class="btn-primary login-btn">
           Login
         </button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
+      </div>
+    </div>
+</form>
 </div>

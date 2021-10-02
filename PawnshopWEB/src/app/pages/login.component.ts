@@ -8,7 +8,8 @@ import { UsersService } from '../_service/users.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls:['../_sass/pages-sass/login.scss']  
 })
 export class LoginComponent implements OnInit {
 

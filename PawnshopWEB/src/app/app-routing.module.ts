@@ -17,7 +17,7 @@ const routes: Routes = [
   //       (m) => m.TransactionsModule
   //     ),
   // },
-  { path: 'settings', loadChildren: () => import('./settings/setings.module').then(m => m.SetingsModule) },
+  // { path: 'settings', loadChildren: () => import('./settings/setings.module').then(m => m.SetingsModule) },
   { path: 'invoice', loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule) },
 
   { path: 'login', component: LoginComponent },

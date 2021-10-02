@@ -11,6 +11,7 @@ const routes: Routes = [
       { path: 'transactions', loadChildren: () => import('../transactions/transactions.module')
       .then(  (m) => m.TransactionsModule),
       },
+      { path: 'settings', loadChildren: () => import('../settings/setings.module').then(m => m.SetingsModule) },
       { path: 'dashboard', component: DashboardComponent },
     ],
   },

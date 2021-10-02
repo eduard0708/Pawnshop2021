@@ -1,0 +1,50 @@
+.login-wrapper {
+  padding: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at center, red 0, blue, green 100%);
+
+  .carousel-style {
+    width: 60%;
+    background-color: thistle;
+    height: 65%;
+    position: absolute;
+    margin: 7% 0 0 7%;
+
+    .carousel-inner{
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  .login-card {
+    background-color: whitesmoke;
+    position: absolute;
+    margin: 9% 0 0 70%;
+    width: 25%;
+    padding: 1rem;
+    .login-header {
+      display: flex;
+      justify-content: center;
+      mat-icon {
+        font-size: 5rem;
+        height: 5rem;
+        width: 5rem;
+      }
+    }
+    .login-content {
+      padding: 1rem 2.5rem 0;
+      margin: 0;
+      .login-input {
+        width: 100%;
+      }
+    }
+    .login-footer {
+      margin: 1rem 2.5rem;
+
+      .login-btn {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-notfound',
   templateUrl: './notfound.component.html',
-  styleUrls: ['./notfound.component.scss']
+  styleUrls: ['../_sass/pages-sass/notfound.scss']
 })
 export class NotfoundComponent implements OnInit {
 
