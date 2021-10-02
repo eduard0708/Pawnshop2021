@@ -89,7 +89,7 @@ export class NewloanService {
         isSold: false,
         dateSold: null,
         newDateTransaction: new Date().toISOString(),
-        itemAuditTrails: itemAuditTrail,
+        itemAuditTrails: [itemAuditTrail],
       };
       saveItems.push(initItems);
     }
