@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jd6QHZN1WSnWISZT9vJ+C5BHz/rdqnXSANIEdmf18EQzbuCOHj1jeYa5gM+W5YOOSJknZXUM+76QiHa6g4VJuA==",
+  "dgSpecHash": "Lprkxv8mh/QrJhciS0CjScJd6FkVK6IO6iY2CtThM3H92b7t2yj4zJnBhJElK4Jy5aye+wWN5/B+5vvwPWW/MA==",
   "success": true,
-  "projectFilePath": "E:\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+  "projectFilePath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
