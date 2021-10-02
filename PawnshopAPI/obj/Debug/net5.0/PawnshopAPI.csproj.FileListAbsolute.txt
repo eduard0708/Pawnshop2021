@@ -251,3 +251,4 @@ C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Swashbuckle.Asp
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\PawnshopAPI.StaticWebAssets.xml
