@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v/aOuU2m5dzvKsRs5Ufao9N83RONRKHeQ5mphtl+AaUjPJXKHOqYnfCVuh8Qm45ziKU3x+tW9FrBeVODj6oYNg==",
+  "dgSpecHash": "jd6QHZN1WSnWISZT9vJ+C5BHz/rdqnXSANIEdmf18EQzbuCOHj1jeYa5gM+W5YOOSJknZXUM+76QiHa6g4VJuA==",
   "success": true,
-  "projectFilePath": "E:\\2021-GoldWin\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
+  "projectFilePath": "E:\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
@@ -104,7 +104,8 @@
     "C:\\Users\\LIGHT\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\LIGHT\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\LIGHT\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\LIGHT\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\LIGHT\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.9\\microsoft.netcore.app.host.win-x64.5.0.9.nupkg.sha512"
   ],
   "logs": []
 }
