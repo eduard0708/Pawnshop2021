@@ -246,7 +246,6 @@ E:\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.dll
 E:\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\ref\PawnshopAPI.dll
 E:\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.pdb
 E:\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.genruntimeconfig.cache
-C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\PawnshopAPI.StaticWebAssets.xml
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Microsoft.OpenApi.dll
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll

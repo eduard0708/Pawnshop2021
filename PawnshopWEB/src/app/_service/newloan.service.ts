@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
 import { environment } from 'src/environments/environment';
 import { ItemStatus, LoanStatus, Status, TrasactionType } from '../_enum/enums';
@@ -21,7 +22,7 @@ export class NewloanService {
   url = environment.baseUrl
   uri: string = 'http://localhost:3000/';
 
-  constructor(private itemService: ItemService, private http: HttpClient) {}
+  constructor(private itemService: ItemService, private http: HttpClient, private router:Router) {}
 
   getAdvanceServiceCharge(principalLoan: number) {
     let advanceInterest = 0;
@@ -89,7 +90,7 @@ export class NewloanService {
         isSold: false,
         dateSold: null,
         newDateTransaction: new Date().toISOString(),
-        itemAuditTrails: itemAuditTrail,
+        itemAuditTrails: [itemAuditTrail],
       };
       saveItems.push(initItems);
     }
@@ -165,10 +166,10 @@ export class NewloanService {
   }
 
   addTransaction(saveTransaction){
-
-    console.log(saveTransaction);
-    
-    this.http.post(this.url + 'transaction', saveTransaction ).subscribe(data => {});
+    this.http.post(this.url + 'transaction', saveTransaction ).subscribe(data => {
+    });
+    this.router.navigateByUrl('invoice');
+    this.itemService.clear();
   }
-  
+
 }

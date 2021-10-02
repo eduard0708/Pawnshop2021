@@ -31,7 +31,8 @@ import { BarangayComponent } from './settings/barangay.component';
 import { PawnerComponent } from './settings/pawner.component';
 import { EmployeeComponent } from './settings/employee.component';
 import { VoucherComponent } from './settings/voucher.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { InvoiceComponent } from './pages/invoice.component'
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
     BarangayComponent,
     PawnerComponent,
     EmployeeComponent,
-    VoucherComponent,  
+    VoucherComponent,
+    InvoiceComponent,  
   ],
   imports: [
     BrowserModule,

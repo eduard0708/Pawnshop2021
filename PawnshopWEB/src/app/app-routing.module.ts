@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorComponent } from './pages/error.component';
+import { InvoiceComponent } from './pages/invoice.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { ServerErrorComponent } from './pages/server-error.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'error', component: TestErrorsComponent },
   { path: 'not-found', component: NotfoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
+  { path: 'invoice', component: InvoiceComponent },
   { path: '**', component: NotfoundComponent },
 
 

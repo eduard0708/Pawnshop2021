@@ -336,6 +336,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     } else {
       this.isAddItem = true;
     }
+   
   }
 
   validateButtonSave() {
@@ -350,3 +351,4 @@ export class NewloanComponent implements OnInit, OnDestroy {
     }
   }
 }
+  

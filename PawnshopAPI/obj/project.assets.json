@@ -5641,11 +5641,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+      "projectUniqueName": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
       "projectName": "PawnshopAPI",
-      "projectPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+      "projectPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
       "packagesPath": "C:\\Users\\LIGHT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\obj\\",
+      "outputPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LIGHT\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5715,12 +5715,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.9, 5.0.9]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -5729,7 +5723,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.1.21463.6\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

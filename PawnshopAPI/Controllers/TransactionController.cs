@@ -27,7 +27,7 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Newloan(AddTransactionDto transactions) {
+        public ActionResult<AddTransactionDto> Newloan(AddTransactionDto transactions) {
 
             var transaction = mapper.Map<Transactions>(transactions);
             context.Transactions.Add(transaction);
@@ -45,7 +45,9 @@ namespace PawnshopAPI.Controllers
             context.Update(transaction);
             context.SaveChanges();
 
-            return Ok();
+            var trans = mapper.Map<AddTransactionDto>(transaction);
+
+            return Ok(trans);
         } 
 
     }
