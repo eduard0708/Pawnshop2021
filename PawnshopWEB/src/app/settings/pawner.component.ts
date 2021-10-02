@@ -70,7 +70,7 @@ export class PawnerComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('main/dashboard');
   }
 
   reset() {

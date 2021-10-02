@@ -65,7 +65,7 @@ export class BarangayComponent implements OnInit, AfterViewInit {
   search() { }
 
   cancel() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('main/dashboard')
   }
 
   reset() {

@@ -63,7 +63,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     this.cityRef.nativeElement.focus();
   }
   cancel() {
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('main/dashboard')
   }
 
 
