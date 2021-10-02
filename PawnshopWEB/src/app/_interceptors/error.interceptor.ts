@@ -30,11 +30,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                   throw modalStateErrors.flat();
                 }else{
-                  this.notifier.showNotification(error.status + ' ' + error.statusText, '','error', {})
+                  this.notifier.error(error.status + ' ' + error.statusText)
                 }
                 break;
                 case 401:
-                  this.notifier.showNotification(error.status + ' ' + error.statusText, '','error', {})
+                  this.notifier.error(error.status + ' ' + error.statusText)
                 break;
                 case 404:
                   this.router.navigateByUrl('/not-found');
@@ -44,7 +44,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                   this.router.navigateByUrl('/server-error', navigationExtras);
                 break;
               default:
-                this.notifier.showNotification('something went wrong','','error',{});
+                this.notifier.error('something went wrong')
                 console.log(error); 
                 break;
             }

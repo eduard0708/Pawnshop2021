@@ -27,7 +27,7 @@ export class EmployeeService {
           if(user){
             localStorage.setItem('user', JSON.stringify(user));
             this.currentUserSource.next(user);
-            this.router.navigateByUrl('dashboard');
+            this.router.navigateByUrl('main/dashboard');
           }
        })
      )

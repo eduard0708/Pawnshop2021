@@ -16,16 +16,16 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
 
     //working fine but need printer
-      // setTimeout(() => {
-      //   window.print();
+      setTimeout(() => {
+        window.print();
        
-      // }, 100,setTimeout(() => {
-      //   this.router.navigateByUrl('dashboard')
-      // }, 500));
+      }, 100,setTimeout(() => {
+        this.router.navigateByUrl('main/dashboard')
+      }, 500));
      
-    setTimeout(() => {
-      this.router.navigateByUrl('dashboard')
-    }, 3000);
+    // setTimeout(() => {
+    //   this.router.navigateByUrl('main/dashboard')
+    // }, 3000);
   }
 
 }

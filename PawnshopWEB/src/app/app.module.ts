@@ -37,8 +37,8 @@ import { InvoiceComponent } from './pages/invoice.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
+    // HeaderComponent,
+    // FooterComponent,
     SidenavComponent,
     ErrorComponent,
     LoginComponent,
@@ -74,7 +74,7 @@ import { InvoiceComponent } from './pages/invoice.component';
 
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

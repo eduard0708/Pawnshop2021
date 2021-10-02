@@ -82,7 +82,7 @@ export class DialogTransacitonComponent implements OnInit {
           this.dialogRef.close();
         }
         if (pawner.length === 1) {
-          this.router.navigateByUrl('/transactions/newloan/', { state: { pawner: pawner[0] } });
+          this.router.navigateByUrl('main/transactions/newloan/', { state: { pawner: pawner[0] } });
           this.dialogRef.close();
         }
         if (pawner.length > 1) {

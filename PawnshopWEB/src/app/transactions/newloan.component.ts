@@ -294,7 +294,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   home() {
     this.itemService.clear();
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('main/dashboard');
   }
 
   reset() {
