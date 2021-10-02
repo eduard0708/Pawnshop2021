@@ -84,7 +84,7 @@ export class AdditionalComponent implements OnInit {
   }
 
   home(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('main/dashboard');
   }
 
 }

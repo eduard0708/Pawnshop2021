@@ -83,6 +83,6 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   }
 
   home(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('main/dashboard');
   }
 }

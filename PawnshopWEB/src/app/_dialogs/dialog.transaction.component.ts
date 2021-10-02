@@ -93,7 +93,7 @@ export class DialogTransacitonComponent implements OnInit {
       });
       //navigate to other transaction if not new loan
       if (transactionType !== 'New Loan'){
-        this.router.navigateByUrl(`/transactions/${transactionType.toLocaleLowerCase()}/`)
+        this.router.navigateByUrl(`main/transactions/${transactionType.toLocaleLowerCase()}/`)
         this.dialogRef.close();
       }
       

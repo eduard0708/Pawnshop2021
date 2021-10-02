@@ -83,7 +83,7 @@ export class PartialComponent implements OnInit {
   }
 
   home(){
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('main/dashboard');
   }
 
 }
