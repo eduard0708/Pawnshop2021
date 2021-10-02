@@ -166,10 +166,10 @@ export class NewloanService {
   }
 
   addTransaction(saveTransaction){
-    this.http.post(this.url + 'transaction', saveTransaction ).subscribe(data => {
+    this.http.post(this.url + 'transaction', saveTransaction ).subscribe(transaction => {
+      this.router.navigateByUrl('invoicetest', {state:{print: transaction}});
+      this.itemService.clear();
     });
-    this.router.navigateByUrl('invoice');
-    this.itemService.clear();
   }
 
 }

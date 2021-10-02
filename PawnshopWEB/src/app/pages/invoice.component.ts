@@ -1,30 +1,31 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styles: [
-  ]
+  styleUrls: ['../_sass/invoice.scss']
 })
-export class InvoiceComponent implements OnInit, AfterViewInit {
+export class InvoiceComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  print;
+  constructor(private router:Router, private activatedRoute:ActivatedRoute) {
+    this.print = this.router.getCurrentNavigation().extras.state.print;
+    }
 
   ngOnInit(): void {
-      setTimeout(() => {
-        window.print();
+
+    //working fine but need printer
+      // setTimeout(() => {
+      //   window.print();
        
-      }, 100,setTimeout(() => {
-        this.router.navigateByUrl('dashboard')
-      }, 500));
-      
-    
-  }
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
- 
+      // }, 100,setTimeout(() => {
+      //   this.router.navigateByUrl('dashboard')
+      // }, 500));
+     
+    setTimeout(() => {
+      this.router.navigateByUrl('dashboard')
+    }, 3000);
   }
 
 }

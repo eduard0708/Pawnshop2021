@@ -18,14 +18,16 @@ const routes: Routes = [
       ),
   },
   { path: 'settings', loadChildren: () => import('./settings/setings.module').then(m => m.SetingsModule) },
-  
+  { path: 'invoice', loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule) },
+
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: '', component: LoginComponent },
   { path: 'error', component: TestErrorsComponent },
   { path: 'not-found', component: NotfoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
-  { path: 'invoice', component: InvoiceComponent },
+  { path: 'invoicetest', component: InvoiceComponent },
+ 
   { path: '**', component: NotfoundComponent },
 
 
