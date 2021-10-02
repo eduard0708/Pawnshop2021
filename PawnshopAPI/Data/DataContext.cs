@@ -19,5 +19,10 @@ namespace PawnshopAPI.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryDescription> CategoryDescriptions { get; set; }
+
+        public DbSet<TransactionPawner> TransactionPawners { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
+        public DbSet<TransactionItem> TransactionItems { get; set; }
+   
     }
 }

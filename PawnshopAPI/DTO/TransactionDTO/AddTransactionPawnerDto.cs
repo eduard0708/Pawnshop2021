@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PawnshopAPI.Entities
+namespace PawnshopAPI.DTO.TransactionDTO
 {
-    public class TransactionPawner
+    public class AddTransactionPawnerDto
     {
-        public int TransactionPawnerId { get; set; }
         public int PawnerId { get; set; }
         public int TrackingId { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +16,5 @@ namespace PawnshopAPI.Entities
         public string Barangay { get; set; }
         public string CompleteAddress { get; set; }
 
-        public int TransactionsId { get; set; }
-        public  Transactions Transactions { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PawnshopAPI.Data;
+using PawnshopAPI.DTO.TestDTO;
 using PawnshopAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,23 +17,29 @@ namespace PawnshopAPI.Controllers
     public class Test : ControllerBase
     {
         private readonly DataContext context;
+        private readonly IMapper mapper;
 
-        public Test(DataContext context)
+        public Test(DataContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpPost]
-        public ActionResult NewTrasaction(Trans t) {
+        public ActionResult NewTrasaction(TransDto tdto) {
+
+            var t = mapper.Map<Trans>(tdto);
 
             context.Trans.Add(t);
             context.SaveChanges();
-       
+
+
             var items = t.Iteems;
             foreach (var item in items)
             {
                 item.TN = t.Id;
             }
+
             t.Iteems = items;
             t.TN = t.Id;
             t.Pawn.TN = t.Id;

@@ -3,11 +3,10 @@ using PawnshopAPI.DTO;
 using PawnshopAPI.DTO.AddressDTO;
 using PawnshopAPI.DTO.ItemDTO;
 using PawnshopAPI.DTO.PawnerDTO;
+using PawnshopAPI.DTO.TestDTO;
+using PawnshopAPI.DTO.TransactionDTO;
 using PawnshopAPI.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace PawnshopAPI.Helper
 {
@@ -38,6 +37,13 @@ namespace PawnshopAPI.Helper
             CreateMap<Category, CategoryWithDescriptionDto>();
             CreateMap<Category, CategoryDescriptionDto>();
 
+            //Transactions mapping
+            CreateMap<AddTransactionDto, Transactions>();
+            CreateMap<AddTransactionPawnerDto, TransactionPawner>();
+            CreateMap<AddTransactionItemDto, TransactionItem>();
+            CreateMap<AddItemAuditTrailDto, ItemAuditTrail>();
+
+            CreateMap<TransDto, Trans>();
         }
     }
 }

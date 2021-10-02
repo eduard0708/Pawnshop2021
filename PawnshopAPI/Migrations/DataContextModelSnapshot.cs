@@ -168,6 +168,35 @@ namespace PawnshopAPI.Migrations
                     b.ToTable("Iteems");
                 });
 
+            modelBuilder.Entity("PawnshopAPI.Entities.ItemAuditTrail", b =>
+                {
+                    b.Property<int>("ItemAuditTrailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActionBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ItemStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionItemsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemAuditTrailId");
+
+                    b.HasIndex("TransactionItemsId");
+
+                    b.ToTable("ItemAuditTrail");
+                });
+
             modelBuilder.Entity("PawnshopAPI.Entities.Pawn", b =>
                 {
                     b.Property<int>("Id")
@@ -235,12 +264,200 @@ namespace PawnshopAPI.Migrations
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TN")
+                    b.Property<int?>("TN")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Trans");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>
+                {
+                    b.Property<int>("TransactionItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("AppraisalValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateSold")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ItemDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NewDateTransaction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PreviousTransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SellingPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TrackingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TransactionsId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isSold")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TransactionItemId");
+
+                    b.HasIndex("TransactionsId");
+
+                    b.ToTable("TransactionItems");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.TransactionPawner", b =>
+                {
+                    b.Property<int>("TransactionPawnerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Barangay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompleteAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContactNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PawnerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrackingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionPawnerId");
+
+                    b.HasIndex("TransactionsId")
+                        .IsUnique();
+
+                    b.ToTable("TransactionPawners");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Transactions", b =>
+                {
+                    b.Property<int>("TransactionsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("AdvanceInterest")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AdvanceServiceCharge")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Change")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("DateExpire")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateGranted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateMature")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTransaction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DueAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Interest")
+                        .HasColumnType("float");
+
+                    b.Property<double>("InterestRate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("LoanStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("NetPayment")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PeceiveAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Penalty")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PrincipalLoan")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RedeemAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ServiceCharge")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalAppraisal")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TotalDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalMonths")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalYears")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrackingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TranscationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isThreeDaysLapse")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("netProceed")
+                        .HasColumnType("float");
+
+                    b.HasKey("TransactionsId");
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.Address", b =>
@@ -283,6 +500,17 @@ namespace PawnshopAPI.Migrations
                         .HasForeignKey("TransId");
                 });
 
+            modelBuilder.Entity("PawnshopAPI.Entities.ItemAuditTrail", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities.TransactionItem", "TransactionItems")
+                        .WithMany("ItemAuditTrails")
+                        .HasForeignKey("TransactionItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TransactionItems");
+                });
+
             modelBuilder.Entity("PawnshopAPI.Entities.Pawn", b =>
                 {
                     b.HasOne("PawnshopAPI.Entities.Trans", "MyProperty")
@@ -292,6 +520,26 @@ namespace PawnshopAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("MyProperty");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities.Transactions", "Transactions")
+                        .WithMany("TransactionItems")
+                        .HasForeignKey("TransactionsId");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.TransactionPawner", b =>
+                {
+                    b.HasOne("PawnshopAPI.Entities.Transactions", "Transactions")
+                        .WithOne("TransactionPawner")
+                        .HasForeignKey("PawnshopAPI.Entities.TransactionPawner", "TransactionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.Category", b =>
@@ -314,6 +562,18 @@ namespace PawnshopAPI.Migrations
                     b.Navigation("Iteems");
 
                     b.Navigation("Pawn");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>
+                {
+                    b.Navigation("ItemAuditTrails");
+                });
+
+            modelBuilder.Entity("PawnshopAPI.Entities.Transactions", b =>
+                {
+                    b.Navigation("TransactionItems");
+
+                    b.Navigation("TransactionPawner");
                 });
 #pragma warning restore 612, 618
         }
