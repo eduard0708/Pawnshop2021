@@ -27,6 +27,7 @@
             >
             <input
               tabindex="-1"
+              formControlName="status"
               class="form-control dates-input form-control-sm"
               type="text"
               value="Expired"
@@ -37,6 +38,7 @@
             <span class="btn-primary dates-label col-form-label-sm">Years</span>
             <input
               tabindex="-1"
+              formControlName = "totalYears"
               class="form-control dates-input form-control-sm"
               type="text"
               value="1"
@@ -49,6 +51,7 @@
             >
             <input
               tabindex="-1"
+              formControlName = "totalMonths"
               class="form-control dates-input form-control-sm"
               type="text"
               value="5"
@@ -58,6 +61,7 @@
           <div class="input-group mb-2 shadow-sm font-monospace">
             <span class="btn-primary dates-label col-form-label-sm">Days</span>
             <input
+              formControlName = "totalDays"
               tabindex="-1"
               class="form-control dates-input form-control-sm"
               type="text"
@@ -72,7 +76,6 @@
           <div>
             <mat-form-field class="form-date">
               <input
-                readonly
                 tabindex="-1"
                 matInput
                 [matDatepicker]="dateTransaction"
@@ -82,7 +85,7 @@
               <mat-datepicker-toggle
                 matSuffix
                 [for]="dateTransaction"
-                disabled
+               
               ></mat-datepicker-toggle>
               <mat-datepicker #dateTransaction></mat-datepicker>
             </mat-form-field>
@@ -90,7 +93,6 @@
           <div>
             <mat-form-field class="form-date">
               <input
-                readonly
                 tabindex="-1"
                 matInput
                 [matDatepicker]="dateGranted"
@@ -100,7 +102,7 @@
               <mat-datepicker-toggle
                 matSuffix
                 [for]="dateGranted"
-                disabled
+               
               ></mat-datepicker-toggle>
               <mat-datepicker #dateGranted></mat-datepicker>
             </mat-form-field>

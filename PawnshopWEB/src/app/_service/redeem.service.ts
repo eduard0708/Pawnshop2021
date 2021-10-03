@@ -1,3 +1,4 @@
+import { getLocaleDayNames } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Item } from '../_model/item/item';
@@ -30,8 +31,6 @@ export class RedeemService {
       completeAddress: pawner.completeAddress,
     };
 
-
-    console.log(t.transactionItems[0]);
     
     // for (let index = 0; t.transactionItems.length; index++) {
     //   const item = t.transactionItems[index];
