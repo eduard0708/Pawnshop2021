@@ -29,7 +29,9 @@
   .pawner-items-wrapper {
     margin: 0.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-    .newloan-pawner {
+    .newloan-pawner-dates {
+      display: grid;
+      grid-template-columns: 70% 30%;
       background-color: ghostwhite;
       border-radius: 0.5em;
       box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
@@ -37,6 +39,19 @@
       padding: 0.9rem 1rem 0rem;
       height: 9rem;
       color: black;
+      .pawner-wrapper{
+      
+      }
+      .dates-wrapper{
+        margin-top: .5rem;
+        height: 8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        mat-form-field{
+          width: 87%;
+        
+       } 
+      }
     }
 
     .items-entry {
@@ -175,3 +190,7 @@
   font-weight: bolder !important;
   color: red !important;
 }
+
+  //  ::ng-deep .mat-form-field-wrapper{
+  //      margin-bottom: -1.25em !important;
+  //  }    

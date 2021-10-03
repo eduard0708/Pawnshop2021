@@ -59,8 +59,9 @@ export class RedeemComponent implements OnInit, AfterViewInit {
        this.items = normalizeInfo.items
       }
     });
-    let calcDate = new CalcDate(new Date(this.transactionInfo.dateTransaction));
+    let calcDate = new CalcDate(new Date( new Date(this.transactionInfo.dateTransaction).setHours(0,0,0,0)));
 
+    
      this.redeemForm = fb.group({
 
         redeemAmount:[],
@@ -81,16 +82,16 @@ export class RedeemComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-      console.log(new Date(this.redeemForm.controls.dateTransaction.value));
+      // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
 
       this.redeemForm.valueChanges.subscribe(()=>{
           let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0) )  
           let dg = new Date(new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) )  
           let days = ((dg.getTime() - dt.getTime()) / (24*3600*1000 ))
  
-        console.log(days);
+      let v =  new Date(this.redeemForm.controls.dateTransaction.value).toISOString()    
         
-        
+        console.log(new Date( new Date(v).getTime() - new Date(v).getTimezoneOffset() * 60000).toISOString());
         
       })
  

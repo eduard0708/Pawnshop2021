@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
 import { environment } from 'src/environments/environment';
 import { ItemStatus, LoanStatus, Status, TrasactionType } from '../_enum/enums';
+import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { Pawner } from '../_model/pawner/Pawner';
@@ -108,17 +110,18 @@ export class NewloanService {
     };
 
   //normalize transactions value
+  let dateTransaction = new DateHelper(new Date(transaction.dateTransaction));
+  let dateGranted = new DateHelper(new Date(transaction.dateGranted));
+  let dateMatured = new DateHelper(new Date(transaction.dateMatured));
+  let dateExpired = new DateHelper(new Date(transaction.dateExpired));
+ 
     const saveTransaction: NewTransaction = {
       transactionId: 0,
       trackingId: 0,
-      dateTransaction: new Date().toISOString(),
-      dateGranted: new Date().toISOString(),
-      dateMature: new Date(
-        new Date().setMonth(new Date().getMonth() + 1)
-      ).toISOString(),
-      dateExpire: new Date(
-        new Date().setMonth(new Date().getMonth() + 4)
-      ).toISOString(),
+      dateTransaction: dateTransaction.dateToISOstring(),
+      dateGranted: dateGranted.dateToISOstring(),
+      dateMature: dateMatured.dateToISOstring(), 
+      dateExpire: dateExpired.dateToISOstring(),
       transcationType: TrasactionType.Newloan,
       status: Status.Active,
       loanStatus: LoanStatus.New,
@@ -171,5 +174,7 @@ export class NewloanService {
       this.itemService.clear();
     });
   }
+
+  
 
 }

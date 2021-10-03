@@ -1,4 +1,8 @@
 export interface NewTransactionComputation {
+    dateTransaction:string;
+    dateGranted:string;
+    dateMatured:string;
+    dateExpired:string;
     totalDays:number;
     totalMonths: number;
     totalYears: number;

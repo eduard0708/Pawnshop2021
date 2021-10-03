@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -23,7 +22,6 @@ import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
 import { LoanStatus, Status, TrasactionType } from '../_enum/enums';
-import { min } from 'moment';
 import { User } from '../_model/user';
 import { Item } from '../_model/item/item';
 
@@ -54,8 +52,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
   item: Item = {} as Item;
   newLoanForm: FormGroup;
   today: Date = new Date();
-  dateMatured: Date = new Date(new Date().setMonth(new Date().getMonth() + 1));
-  dateExpired: Date = new Date(new Date().setMonth(new Date().getMonth() + 4));
+  dateMatured: Date = new Date(this.today.setMonth(new Date().getMonth() + 1));
+  dateExpired: Date = new Date(this.today.setMonth(new Date().getMonth() + 4));
   isDisable = false;
   isAddItem = true;
   isSave = true;
@@ -92,7 +90,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
           barangayName: this.pawner.addresses[0].barangayName,
           completeAddress: this.pawner.addresses[0].completeAddress,
         };
-
         this.pawnerInfo.pawnerId = this.pawner.pawnerId;
         this.pawnerInfo.pawnerId = this.pawner.pawnerId;        
         this.pawnerInfo.firstName = this.pawner.firstName;
@@ -101,20 +98,16 @@ export class NewloanComponent implements OnInit, OnDestroy {
         this.pawnerInfo.city = address.cityName;
         this.pawnerInfo.barangay = address.barangayName;
         this.pawnerInfo.completeAddress = address.completeAddress;
-        this.pawnerInfo.dateTransaction = new Date(this.today);
-        this.pawnerInfo.dateGranted = new Date(this.today);
-        this.pawnerInfo.dateMatured = new Date(this.dateMatured);
-        this.pawnerInfo.dateExpired = new Date(this.dateExpired);
       }
     });
 
     this.dataSource = new MatTableDataSource<Item>();
 
     this.newLoanForm = this.fb.group({
-      dateTransaction: [this.today],
-      dateGranted: [this.today],
-      dateMature: [this.dateMatured],
-      dateExpired: [this.dateExpired],
+      dateTransaction: [],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
       category: ['', [Validators.required]],
       categoryDescriptions: ['', [Validators.required]],
       descriptions: ['', [Validators.required]],
@@ -129,6 +122,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.newLoanForm.controls.dateTransaction.setValue(new Date());
+    this.setDate();   
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.categoryRef.focus();
@@ -160,6 +155,11 @@ export class NewloanComponent implements OnInit, OnDestroy {
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
+    this.newLoanForm.controls.dateTransaction.valueChanges.subscribe(() =>{
+        this.setDate();
+        console.log();
+        
+    } );
     //compute during input of principal loan
     this.newLoanForm.controls.principalLoan.valueChanges.subscribe(
       (principal) => {
@@ -194,6 +194,23 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.categories = data;
     });
   }
+
+  setDate(){
+    const dateTran = this.newLoanForm.controls.dateTransaction.value;
+    const dateMature = new Date(dateTran).setMonth(new Date(dateTran).getMonth() + 1 )
+    const dateExpire = new Date(dateTran).setMonth(new Date(dateTran).getMonth() + 4 )
+    this.newLoanForm.controls.dateGranted.setValue(new Date(dateTran));
+    this.newLoanForm.controls.dateMatured.setValue(new Date(dateMature));
+    this.newLoanForm.controls.dateExpired.setValue(new Date(dateExpire));
+
+    let current = new Date(new Date().setHours(0,0,0,0)); 
+    let newdate = new Date(dateTran.setHours(0,0,0,0)); 
+    const totalDays = (new Date(newdate).getTime() - new Date(current).getTime()) / (1000*60*60*24)
+
+  
+    let days = totalDays - Math.floor(totalDays/30) * 30 
+    console.log(days);    
+ }
 
   //load category description during selection of category
   onCategorySelect(e) {
@@ -319,6 +336,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.newLoanForm.value,
       this.pawnerInfo,
       this.itemService.items
+      
     );
   }
 
