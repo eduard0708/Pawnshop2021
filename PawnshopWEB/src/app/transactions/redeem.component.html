@@ -85,28 +85,15 @@
           <mat-datepicker #dateExpired></mat-datepicker>
         </mat-form-field>
 
-        <div class="status input-group mb-2 shadow-sm font-monospace status">
-          <span class="btn-primary dates-label col-form-label-sm">Status</span>
-          <input
-            tabindex="-1"
-            formControlName="status"
-            class="form-control dates-input form-control-sm"
-            type="text"
-            readonly
-          />
-        </div>
+        <mat-form-field class="status"  appearance="outline">
+          <mat-label>Status</mat-label>
+          <input matInput placeholder="Moment" formControlName="moments">
+        </mat-form-field>
+        <mat-form-field class="moments"  appearance="outline">
+          <mat-label>Dates Status</mat-label>
+          <input matInput placeholder="Moment" formControlName="moments">
+        </mat-form-field>
 
-        <div class="moments input-group mb-2 shadow-sm font-monospace status">
-          <span class="btn-primary dates-label col-form-label-sm">Moments</span>
-          <input
-            tabindex="-1"
-            formControlName="status"
-            class="form-control dates-input form-control-sm"
-            type="text"
-            value="Expired"
-            readonly
-          />
-        </div>
       </div>
 
       <!-- end dates status -->

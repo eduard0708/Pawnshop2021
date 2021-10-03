@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-import { CalcDate } from '../_model/CalcDate';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -23,6 +22,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   redeemForm: FormGroup;
+  moments;
 
   displayColumns: string[] = [
     'category',
@@ -60,18 +60,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
         this.items = normalizeInfo.items;
       }
     });
-    let today = new Date();
-    let expired =  new Date(this.transactionInfo.dateExpire) 
-    // if(today > expired){
-    //   console.log(today);
-    //   console.log(expired);
-    //   console.log('expired');
-    // }else{
-    //   console.log(today);
-    //   console.log(expired);
-    //   console.log('note expired');
-      
-    // }
+
     let dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMature),
@@ -91,12 +80,16 @@ export class RedeemComponent implements OnInit, AfterViewInit {
       totalMonths: [dateStatus.months()],
       totalYears: [dateStatus.years()],
       status: [dateStatus.status()],
+      moments:[dateStatus.moments()]
     });
-
+    
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
+  
+
+    
     // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
     this.redeemForm.valueChanges.subscribe(() => {
       let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0));
