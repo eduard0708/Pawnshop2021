@@ -6,7 +6,8 @@ import { RedeemService } from '../_service/redeem.service';
 
 @Component({
   selector: 'app-transactions-pawner-info',
-  templateUrl: './transactions-pawner-info.component.html'
+  templateUrl: './transactions-pawner-info.component.html',
+  styleUrls:['../_sass/components.scss']
 })
 export class TransactionsPawnerInfoComponent implements OnInit {
  @Input() transactionInfo: NewTransaction ;

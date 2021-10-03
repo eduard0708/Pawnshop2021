@@ -1,18 +1,29 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  
+} from '@angular/forms';
 
 @Component({
   selector: 'app-pawner-info',
-  templateUrl: './pawner-info.component.html'
+  templateUrl: './pawner-info.component.html',
+  styleUrls:['../_sass/components.scss']
 })
-
-export class PawnerInfoComponent implements OnInit  {
+export class PawnerInfoComponent implements OnInit {
   @Input() pawnerInfo;
+  @Output() dateTransactionEvent = new EventEmitter<Date>();
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+
+  }
 
   ngOnInit(): void {
 
-}
-  
+  }
 }

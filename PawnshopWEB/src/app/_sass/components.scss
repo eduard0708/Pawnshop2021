@@ -1,22 +1,21 @@
 //start scss of component pawner information 
 .pawner-component{
-    transform: scaleY(.9);
-    padding: .5rem;
+    // transform: scaleY(.9);
+    padding: .5rem 1rem 0rem 1rem;
     display: grid;
-    grid-template-columns: 16% 26% 26% 16% 16%;
+    grid-template-columns: .7fr 1fr 1fr;
+    column-gap: 1rem;
     mat-form-field{
-        width: 90%;
+        width: 100%;
     }   
 }
-//end scss of component pawner information 
-
-//start for newloan only scss of component pawner information 
-// .newloan-pawner-component{
-//     padding: 1rem;
-//     display: grid;
-//     grid-template-columns: 20% 25% 25% 15% 15%;
-//     mat-form-field{
-//         width: 90%;
-//     }   
-// }
-//end for newloan only scss of component pawner information //end scss of component pawner information 
+// css for the shared transaction pawner info redeem/partial/additional/renew
+.transaction-pawner-component{
+    padding: .5rem 1rem 0rem 1rem;
+    display: grid;
+    grid-template-columns: .7fr 1fr 1fr 1fr 1fr;
+    column-gap: 1rem;
+    mat-form-field{
+        width: 100%;
+    }   
+}
