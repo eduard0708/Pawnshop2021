@@ -13,8 +13,6 @@ export class InvoiceComponent implements OnInit {
     private notifier:NotifierService
     ) {
     this.print = this.router.getCurrentNavigation().extras.state.print;
-
-    console.log(this.print);
     
   }
 

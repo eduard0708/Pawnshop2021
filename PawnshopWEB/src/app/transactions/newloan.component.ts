@@ -25,6 +25,14 @@ import { LoanStatus, Status, TrasactionType } from '../_enum/enums';
 import { User } from '../_model/user';
 import { Item } from '../_model/item/item';
 
+import * as moment from 'moment';
+import 'moment-precise-range-plugin';
+import { DateHelper } from '../_model/DateHelper';
+declare module 'moment' {
+  function preciseDiff(start: string | Date | moment.Moment, end: string | Date | moment.Moment, convertToObject?: boolean): any;
+}
+
+
 @Component({
   selector: 'app-newloan',
   templateUrl: './newloan.component.html',
@@ -124,6 +132,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.newLoanForm.controls.dateTransaction.setValue(new Date());
     this.setDate();   
+
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.categoryRef.focus();
@@ -156,10 +165,15 @@ export class NewloanComponent implements OnInit, OnDestroy {
     });
 
     this.newLoanForm.controls.dateTransaction.valueChanges.subscribe(() =>{
-        this.setDate();
-        console.log();
-        
-    } );
+
+        // this.setDate();  
+     let h = new DateHelper(this.newLoanForm.controls.dateTransaction.value)
+     console.log(h.moments());
+     
+      
+
+});
+    
     //compute during input of principal loan
     this.newLoanForm.controls.principalLoan.valueChanges.subscribe(
       (principal) => {
@@ -207,9 +221,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
     let newdate = new Date(dateTran.setHours(0,0,0,0)); 
     const totalDays = (new Date(newdate).getTime() - new Date(current).getTime()) / (1000*60*60*24)
 
-  
     let days = totalDays - Math.floor(totalDays/30) * 30 
-    console.log(days);    
+    
  }
 
   //load category description during selection of category

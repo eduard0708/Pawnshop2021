@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { CalcDate } from '../_model/CalcDate';
+import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
@@ -14,22 +15,20 @@ import { RedeemService } from '../_service/redeem.service';
 @Component({
   selector: 'app-redeem',
   templateUrl: './redeem.component.html',
-  styleUrls: ['../_sass/shared-transaction.scss']
+  styleUrls: ['../_sass/redeem.scss'],
 })
-
 export class RedeemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  transactionInfo:NewTransaction = {} as NewTransaction;
-  items:Item[] = [];
-  pawnerInfo:PawnerInfo = {} as PawnerInfo;
-  redeemForm:FormGroup;
- 
-  displayColumns: string[] = 
-  [
+  transactionInfo: NewTransaction = {} as NewTransaction;
+  items: Item[] = [];
+  pawnerInfo: PawnerInfo = {} as PawnerInfo;
+  redeemForm: FormGroup;
+
+  displayColumns: string[] = [
     'category',
     'categoryDescription',
     'description',
-    'appraisalValue'
+    'appraisalValue',
   ];
   public dataSource: MatTableDataSource<Item>;
 
@@ -40,72 +39,89 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     digitsOptional: false,
     prefix: '₱ ',
     placeholder: '0',
-  })
+  });
 
   constructor(
     private redeemService: RedeemService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router
-    ) 
-    { 
+  ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-       this.transactionInfo = this.router.getCurrentNavigation().extras.state.transaction;
-       const normalizeInfo = this.redeemService.normalizePawnerInfo(this.transactionInfo);
-       this.items = normalizeInfo.items
+        this.transactionInfo =
+          this.router.getCurrentNavigation().extras.state.transaction;
+        const normalizeInfo = this.redeemService.normalizePawnerInfo(
+          this.transactionInfo
+        );
+        this.items = normalizeInfo.items;
       }
     });
-    let calcDate = new CalcDate(new Date( new Date(this.transactionInfo.dateTransaction).setHours(0,0,0,0)));
-
+    let today = new Date();
+    let expired =  new Date(this.transactionInfo.dateExpire) 
+    // if(today > expired){
+    //   console.log(today);
+    //   console.log(expired);
+    //   console.log('expired');
+    // }else{
+    //   console.log(today);
+    //   console.log(expired);
+    //   console.log('note expired');
+      
+    // }
+    let dateStatus = new DateHelper(
+      new Date(this.transactionInfo.dateTransaction),
+      new Date(this.transactionInfo.dateMature),
+      new Date(this.transactionInfo.dateExpire)
+    );
     
-     this.redeemForm = fb.group({
 
-        redeemAmount:[],
-        dateTransaction:[new Date(),],
-        dateGranted:[],
-        dateMatured:[],
-        dateExpired:[],
-        totalAppraisal:[],
-        transaction:[],
-        totalDays:[calcDate.getDays()],
-        totalMonths:[calcDate.getMonhts()],
-        totalYears:[calcDate.getYears()],
-        status:[calcDate.getStatus()]
-      });
+    this.redeemForm = fb.group({
+      redeemAmount: [],
+      dateTransaction: [new Date()],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
+      totalAppraisal: [],
+      transaction: [],
+      totalDays: [dateStatus.days()],
+      totalMonths: [dateStatus.months()],
+      totalYears: [dateStatus.years()],
+      status: [dateStatus.status()],
+    });
 
-      this.dataSource = new MatTableDataSource<Item>();
-    }
+    this.dataSource = new MatTableDataSource<Item>();
+  }
 
   ngOnInit(): void {
+    // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
+    this.redeemForm.valueChanges.subscribe(() => {
+      let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0));
+      let dg = new Date(
+        new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) );
+      let days = (dg.getTime() - dt.getTime()) / (24 * 3600 * 1000);
 
-      // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
+      let v = new Date(
+        this.redeemForm.controls.dateTransaction.value
+      ).toISOString();
 
-      this.redeemForm.valueChanges.subscribe(()=>{
-          let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0) )  
-          let dg = new Date(new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) )  
-          let days = ((dg.getTime() - dt.getTime()) / (24*3600*1000 ))
- 
-      let v =  new Date(this.redeemForm.controls.dateTransaction.value).toISOString()    
-        
-        console.log(new Date( new Date(v).getTime() - new Date(v).getTimezoneOffset() * 60000).toISOString());
-        
-      })
- 
+      console.log(
+        new Date(
+          new Date(v).getTime() - new Date(v).getTimezoneOffset() * 60000
+        ).toISOString()
+      );
+    });
   }
 
-  ngAfterViewInit():void{
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    
   }
-  onSave(){
-   
-  }
+  onSave() {}
 
-  home(){
+  home() {
     this.router.navigateByUrl('main/dashboard');
   }
 }

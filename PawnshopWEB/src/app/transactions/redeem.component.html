@@ -19,132 +19,96 @@
       </div>
       <!--end pawner information -->
       <!-- start dates status  -->
-      <div class="status-dates-warapper">
-        <div class="status-wrapper">
-          <div class="input-group mb-2 shadow-sm font-monospace status">
-            <span class="btn-primary dates-label col-form-label-sm"
-              >Status</span
-            >
-            <input
-              tabindex="-1"
-              formControlName="status"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="Expired"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm">Years</span>
-            <input
-              tabindex="-1"
-              formControlName = "totalYears"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="1"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm"
-              >Months</span
-            >
-            <input
-              tabindex="-1"
-              formControlName = "totalMonths"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="5"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm">Days</span>
-            <input
-              formControlName = "totalDays"
-              tabindex="-1"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="23"
-              readonly
-            />
-          </div>
+
+      <div class="status-dates-wrapper">
+        <mat-form-field>
+          <input
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateTransaction"
+            placeholder="Date Transaction"
+            formControlName="dateTransaction"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateTransaction"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateTransaction></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateGranted"
+            placeholder="Date Granted"
+            formControlName="dateGranted"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateGranted"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateGranted></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            readonly
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateMatured"
+            placeholder="Date Mature"
+            formControlName="dateMatured"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateExpired"
+            disabled
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateMatured></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            readonly
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateExpired"
+            placeholder="Date Expire"
+            formControlName="dateExpired"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateExpired"
+            disabled
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateExpired></mat-datepicker>
+        </mat-form-field>
+
+        <div class="status input-group mb-2 shadow-sm font-monospace status">
+          <span class="btn-primary dates-label col-form-label-sm">Status</span>
+          <input
+            tabindex="-1"
+            formControlName="status"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            readonly
+          />
         </div>
-        <mat-divider class="pb-3" style="width: 95%; margin: 0 auto">
-        </mat-divider>
-        <div class="dates-wrapper">
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateTransaction"
-                placeholder="Date Transaction"
-                formControlName="dateTransaction"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateTransaction"
-               
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateTransaction></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateGranted"
-                placeholder="Date Granted"
-                formControlName="dateGranted"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateGranted"
-               
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateGranted></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateMatured"
-                placeholder="Date Mature"
-                formControlName="dateMatured"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateMatured></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateExpired"
-                placeholder="Date Expire"
-                formControlName="dateExpired"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateExpired></mat-datepicker>
-            </mat-form-field>
-          </div>
+
+        <div class="moments input-group mb-2 shadow-sm font-monospace status">
+          <span class="btn-primary dates-label col-form-label-sm">Moments</span>
+          <input
+            tabindex="-1"
+            formControlName="status"
+            class="form-control dates-input form-control-sm"
+            type="text"
+            value="Expired"
+            readonly
+          />
         </div>
       </div>
+
       <!-- end dates status -->
       <!-- start mat-table here -->
       <div class="items-table">
@@ -307,7 +271,7 @@
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon> 
+          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
         </button>
         <button
           class="btn btn-danger"
