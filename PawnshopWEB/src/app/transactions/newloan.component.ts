@@ -132,7 +132,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.newLoanForm.controls.dateTransaction.setValue(new Date());
     this.setDate();   
-
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.categoryRef.focus();
