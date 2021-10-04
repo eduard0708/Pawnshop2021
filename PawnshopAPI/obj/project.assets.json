@@ -5641,11 +5641,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
+      "projectUniqueName": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
       "projectName": "PawnshopAPI",
-      "projectPath": "c:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
+      "projectPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
       "packagesPath": "C:\\Users\\LIGHT\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\obj\\",
+      "outputPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LIGHT\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5732,13 +5732,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.1.21463.6\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file c:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\PawnshopAPI\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
