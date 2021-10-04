@@ -3,7 +3,7 @@
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
-      Redeem Pawner Information
+      Redeem Information
     </h2>
   </div>
   <!-- end pawner info title and transaction number -->
@@ -19,9 +19,9 @@
       </div>
       <!--end pawner information -->
       <!-- start dates status  -->
-
       <div class="status-dates-wrapper">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date Transaction</mat-label>
           <input
             tabindex="-1"
             matInput
@@ -35,8 +35,9 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #dateTransaction></mat-datepicker>
         </mat-form-field>
-
-        <mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Date Granted</mat-label>
           <input
             tabindex="-1"
             matInput
@@ -51,7 +52,8 @@
           <mat-datepicker #dateGranted></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date Matured</mat-label>
           <input
             readonly
             tabindex="-1"
@@ -68,7 +70,8 @@
           <mat-datepicker #dateMatured></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date Expired</mat-label>
           <input
             readonly
             tabindex="-1"
@@ -131,7 +134,7 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
         <mat-paginator
-          class="shadow"
+          #paginator
           [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
         ></mat-paginator>
@@ -258,7 +261,7 @@
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
+          <mat-icon>save</mat-icon> Save
         </button>
         <button
           class="btn btn-danger"

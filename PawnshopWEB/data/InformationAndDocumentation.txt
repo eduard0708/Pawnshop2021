@@ -1,0 +1,10 @@
+*** this plugin use for date compare ****
+npm i @types/moment-precise-range-plugin
+npm install @types/moment --save-dev
+
+*** this plugin use for currency mask ****
+npm i @ngneat/until-destroy
+
+*** this plugin use for mask ****
+npm i ngx-mask
+

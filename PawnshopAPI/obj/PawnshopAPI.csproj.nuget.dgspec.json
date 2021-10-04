@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {}
+    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {
+    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
         "projectName": "PawnshopAPI",
-        "projectPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
-        "packagesPath": "C:\\Users\\LIGHT\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LIGHT\\Desktop\\Pawnshop2021\\pawnshopapi\\obj\\",
+        "projectPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+        "packagesPath": "C:\\Users\\Light\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LIGHT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Light\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://packagesource": {}
         },
         "frameworks": {
           "net5.0": {
@@ -81,12 +81,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.9, 5.0.9]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

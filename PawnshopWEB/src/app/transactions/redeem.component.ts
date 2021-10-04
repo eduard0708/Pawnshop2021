@@ -66,8 +66,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
-    
-
+  
     this.redeemForm = fb.group({
       redeemAmount: [],
       dateTransaction: [new Date()],
@@ -87,9 +86,6 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-  
-
-    
     // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
     this.redeemForm.valueChanges.subscribe(() => {
       let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0));
