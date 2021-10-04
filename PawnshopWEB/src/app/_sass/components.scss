@@ -10,12 +10,6 @@
 }
 // css for the shared transaction pawner info redeem/partial/additional/renew
 .transaction-pawner-component {
-  padding: 0.5rem 1rem 0rem 1rem;
-  display: grid;
-  grid-template-columns: 0.7fr 2fr 2fr 0.5fr 0.5fr;
-  column-gap: 1rem;
-  row-gap: 0.8rem;
-
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     color: blueviolet !important;
     background-color: white;
@@ -32,10 +26,8 @@
     transform: translateY(-1.1em) scale(0.75);
     width: 133.33333%;
   }
-
   mat-form-field {
-    width: 100%;
-    padding-bottom: 0 !important;
+    padding-bottom: 3rem !important;
     height: 1rem;
   }
 }

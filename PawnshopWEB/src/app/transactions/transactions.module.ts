@@ -13,6 +13,7 @@ import { PawnerInfoComponent } from '../_components/pawner-info.component';
 import { RenewComponent } from './renew.component';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -35,6 +36,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
     ReactiveFormsModule,
     MaterialModule,
     InputMaskModule,
+    FlexLayoutModule,
    
   ]
 })

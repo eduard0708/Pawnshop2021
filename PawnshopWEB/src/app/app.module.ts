@@ -27,6 +27,7 @@ import { EmployeeComponent } from './settings/employee.component';
 import { VoucherComponent } from './settings/voucher.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { InvoiceComponent } from './pages/invoice.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { InvoiceComponent } from './pages/invoice.component';
     FormsModule,
     ReactiveFormsModule,
     InputMaskModule,
+    FlexLayoutModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [

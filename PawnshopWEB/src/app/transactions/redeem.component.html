@@ -21,7 +21,7 @@
       <!-- start dates status  -->
       <div class="status-dates-wrapper">
         <mat-form-field appearance="outline">
-          <mat-label>Date Transaction</mat-label>
+          <mat-label>Transaction</mat-label>
           <input
             tabindex="-1"
             matInput
@@ -35,9 +35,9 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #dateTransaction></mat-datepicker>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline">
-          <mat-label>Date Granted</mat-label>
+          <mat-label>Granted</mat-label>
           <input
             tabindex="-1"
             matInput
@@ -53,7 +53,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Date Matured</mat-label>
+          <mat-label>Matured</mat-label>
           <input
             readonly
             tabindex="-1"
@@ -71,7 +71,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Date Expired</mat-label>
+          <mat-label>Expired</mat-label>
           <input
             readonly
             tabindex="-1"
@@ -88,15 +88,14 @@
           <mat-datepicker #dateExpired></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field class="status"  appearance="outline">
+        <mat-form-field class="status" appearance="outline">
           <mat-label>Status</mat-label>
-          <input matInput placeholder="Moment" formControlName="moments">
+          <input matInput placeholder="Moment" formControlName="moments" />
         </mat-form-field>
-        <mat-form-field class="moments"  appearance="outline">
+        <mat-form-field class="moments" appearance="outline">
           <mat-label>Dates Status</mat-label>
-          <input matInput placeholder="Moment" formControlName="moments">
+          <input matInput placeholder="Moment" formControlName="moments" />
         </mat-form-field>
-
       </div>
 
       <!-- end dates status -->
