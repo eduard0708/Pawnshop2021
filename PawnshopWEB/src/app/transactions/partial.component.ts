@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
@@ -17,13 +18,14 @@ import { RedeemService } from '../_service/redeem.service';
 })
 export class PartialComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  transactionInfo:NewTransaction = {} as NewTransaction;
-  items:Item[] = [];
-  pawnerInfo:PawnerInfo = {} as PawnerInfo;
-  partialForm:FormGroup;
- 
-  displayColumns: string[] = 
-  [
+  transactionInfo: NewTransaction = {} as NewTransaction;
+  items: Item[] = [];
+  pawnerInfo: PawnerInfo = {} as PawnerInfo;
+  partialForm: FormGroup;
+  moments;
+
+  displayColumns: string[] = [
+    'index',
     'category',
     'categoryDescription',
     'description',
@@ -38,52 +40,84 @@ export class PartialComponent implements OnInit {
     digitsOptional: false,
     prefix: '₱ ',
     placeholder: '0',
-  })
+  });
 
   constructor(
     private redeemService: RedeemService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router
-    ) 
-    { 
+  ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-       this.transactionInfo = this.router.getCurrentNavigation().extras.state.transaction;
-       
+        this.transactionInfo =
+          this.router.getCurrentNavigation().extras.state.transaction;
+        const normalizeInfo = this.redeemService.normalizePawnerInfo(
+          this.transactionInfo
+        );
+        this.items = normalizeInfo.items;
       }
     });
 
-      this.partialForm = fb.group({
-        redeemAmount:[],
-        dateTransaction:[],
-        dateGranted:[],
-        dateMatured:[],
-        dateExpired:[],
-        totalAppraisal:[],
-        transaction:[]
-      });
-
-      this.dataSource = new MatTableDataSource<Item>();
-    }
+    let dateStatus = new DateHelper(
+      new Date(this.transactionInfo.dateTransaction),
+      new Date(this.transactionInfo.dateMature),
+      new Date(this.transactionInfo.dateExpire)
+    );
+  
+    this.partialForm = fb.group({
+      redeemAmount: [],
+      dateTransaction: [new Date()],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
+      totalAppraisal: [],
+      transaction: [],
+      totalDays: [dateStatus.days()],
+      totalMonths: [dateStatus.months()],
+      totalYears: [dateStatus.years()],
+      status: [dateStatus.status()],
+      moments:[dateStatus.moments()]
+    });
+    
+    this.dataSource = new MatTableDataSource<Item>();
+  }
 
   ngOnInit(): void {
-    this.dataSource.data = this.items;
+      let items: Item[]=[];
+    for (let index = 0; index < this.transactionInfo.transactionItems.length; index++) {
+      const item = this.transactionInfo.transactionItems[index];
+        let nItem:Item = {
+          itemId: item.itemId,
+          categoryId:0,
+          category:item.category,
+          categoryDescription:item.categoryDescription,
+          description:item.itemDescription,
+          appraisalValue:item.appraisalValue
+        }
+        items.push(nItem);
+    }
+      this.dataSource.data = items;
+
+    // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
+    this.partialForm.valueChanges.subscribe(() => {
+      let dt = new Date(new Date(this.partialForm.controls.dateTransaction.value).setHours(0,0,0,0));
+      let dg = new Date(
+        new Date(this.partialForm.controls.dateGranted.value).setHours(0,0,0,0) );
+      let days = (dg.getTime() - dt.getTime()) / (24 * 3600 * 1000);
+
+    });
   }
 
-  ngAfterViewInit():void{
+  ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    
   }
-  onSave(){
-   
-  }
+  onSave() {}
 
-  home(){
+  home() {
     this.router.navigateByUrl('main/dashboard');
   }
-
 }

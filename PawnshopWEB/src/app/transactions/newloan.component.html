@@ -12,81 +12,78 @@
         <div class="pawner-wrapper">
           <app-pawner-info [pawnerInfo]="pawnerInfo"></app-pawner-info>  
         </div>
-        <div class="dates-wrapper">
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                formControlName="dateTransaction"
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateTransaction"
-                placeholder="Date Transaction"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateTransaction"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateTransaction></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                
-                formControlName="dateGranted"
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateGranted"
-                placeholder="Date Granted"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateGranted"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateGranted></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                formControlName="dateMatured"
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateMatured"
-                placeholder="Date Matured"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateMatured"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateMatured></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                formControlName="dateExpired"
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateExpired"
-                placeholder="Date Expired"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateExpired></mat-datepicker>
-            </mat-form-field>
-          </div>
+        <div class="dates-wrapper" fxLayout="row wrap" fxLayoutGap="2%">
+
+          <mat-form-field  appearance="outline" fxFlex="48">
+            <mat-label>Transaction</mat-label>
+            <input
+              formControlName="dateTransaction"
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateTransaction"
+              placeholder="Date Transaction"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateTransaction"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateTransaction></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field  appearance="outline" fxFlex="48">
+            <mat-label>Granted</mat-label>
+            <input
+              formControlName="dateGranted"
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateGranted"
+              placeholder="Date Granted"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateGranted"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateGranted></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field  appearance="outline" fxFlex="48">
+            <mat-label>Matured</mat-label>
+            <input
+              readonly
+              formControlName="dateMatured"
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateMatured"
+              placeholder="Date Matured"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateMatured"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateMatured></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field  appearance="outline" fxFlex="48">
+            <mat-label>Expired</mat-label>
+            <input
+              readonly
+              formControlName="dateExpired"
+              tabindex="-1"
+              matInput
+              [matDatepicker]="dateExpired"
+              placeholder="Date Expired"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dateExpired"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateExpired></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
       <!-- items start -->
-      <div class="items-entry">
-        <mat-form-field class="category">
+      <div class="items-entry" fxLayout="row" fxLayoutGap="1.3%" >
+        <mat-form-field  appearance="outline" fxFlex="15">
+          <mat-label>Category</mat-label>
           <mat-select
             placeholder="Category"
             formControlName="category"
@@ -105,8 +102,10 @@
             >Category Required</mat-error
           >
         </mat-form-field>
-        <mat-form-field class="categorydescription">
+        <mat-form-field  appearance="outline" fxFlex="25">
+          <mat-label>Category Descriptions</mat-label>
           <button
+            class="add-cat-desc"
             type="button"
             tabindex="-1"
             matSuffix
@@ -134,7 +133,8 @@
             >Category Desccription Required</mat-error
           >
         </mat-form-field>
-        <mat-form-field class="description">
+        <mat-form-field  appearance="outline" fxFlex="35">
+          <mat-label>Items Descriptions</mat-label>
           <input
             matInput
             placeholder="Description"
@@ -147,26 +147,24 @@
             >Item Desccription Required</mat-error
           >
         </mat-form-field>
-        <div>
-          <mat-form-field class="appraisalvalue">
-            <input
-              #appraisalValueRef
-              matInput
-              [inputMask]="currencyInputMask"
-              maxlength="14"
-              placeholder="Appraisal Value"
-              type="text"
-              formControlName="appraisalValue"
-              tabindex="4"
-            />
-            <mat-error
-              *ngIf="newLoanForm.get('appraisalValue').hasError('required')"
-              >Appraisal Value Required</mat-error
-            >
-          </mat-form-field>
-        </div>
-
-        <div class="btn-items">
+        <mat-form-field  appearance="outline" fxFlex="15">
+          <mat-label>Appraisal Value</mat-label>
+          <input
+            #appraisalValueRef
+            matInput
+            [inputMask]="currencyInputMask"
+            maxlength="14"
+            placeholder="Appraisal Value"
+            type="text"
+            formControlName="appraisalValue"
+            tabindex="4"
+          />
+          <mat-error
+            *ngIf="newLoanForm.get('appraisalValue').hasError('required')"
+            >Appraisal Value Required</mat-error
+          >
+        </mat-form-field>
+        <div class="btn-items" fxFlex="10">
           <button
             type="button"
             tabindex="5"

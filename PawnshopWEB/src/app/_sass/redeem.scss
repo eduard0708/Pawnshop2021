@@ -19,11 +19,13 @@
   );
   .transaction-number {
     width: 30%;
+    margin-left: .6rem;
+    border-radius: 1rem;
     padding-left: 0.8rem;
     font-size: 1.1rem;
-    color: white;
+    color: black;
     font-weight: 520;
-    text-decoration: underline;
+    background-color: whitesmoke;
     
   }
   .trasaction-title {
@@ -113,14 +115,17 @@
         width: 100% !important;
         margin: 0.5rem auto 0;
       }
+      .mat-column-index {
+        width: 7% !important;
+      }
       .mat-column-category {
         width: 15% !important;
       }
       .mat-column-categoryDescription {
-        width: 30% !important;
+        width: 28% !important;
       }
       .mat-column-description {
-        width: 40% !important;
+        width: 35% !important;
       }
       .mat-column-appraisalValue {
         width: 15% !important;

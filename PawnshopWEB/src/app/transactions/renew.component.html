@@ -3,7 +3,7 @@
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
-      Renew Pawner Information
+      Redeem Information
     </h2>
   </div>
   <!-- end pawner info title and transaction number -->
@@ -19,130 +19,86 @@
       </div>
       <!--end pawner information -->
       <!-- start dates status  -->
-      <div class="status-dates-warapper">
-        <div class="status-wrapper">
-          <div class="input-group mb-2 shadow-sm font-monospace status">
-            <span class="btn-primary dates-label col-form-label-sm"
-              >Status</span
-            >
-            <input
-              tabindex="-1"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="Expired"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm">Years</span>
-            <input
-              tabindex="-1"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="1"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm"
-              >Months</span
-            >
-            <input
-              tabindex="-1"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="5"
-              readonly
-            />
-          </div>
-          <div class="input-group mb-2 shadow-sm font-monospace">
-            <span class="btn-primary dates-label col-form-label-sm">Days</span>
-            <input
-              tabindex="-1"
-              class="form-control dates-input form-control-sm"
-              type="text"
-              value="23"
-              readonly
-            />
-          </div>
-        </div>
-        <mat-divider class="pb-3" style="width: 95%; margin: 0 auto">
-        </mat-divider>
-        <div class="dates-wrapper">
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateTransaction"
-                placeholder="Date Transaction"
-                formControlName="dateTransaction"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateTransaction"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateTransaction></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateGranted"
-                placeholder="Date Granted"
-                formControlName="dateGranted"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateGranted"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateGranted></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateMatured"
-                placeholder="Date Mature"
-                formControlName="dateMatured"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateMatured></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field class="form-date">
-              <input
-                readonly
-                tabindex="-1"
-                matInput
-                [matDatepicker]="dateExpired"
-                placeholder="Date Expire"
-                formControlName="dateExpired"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="dateExpired"
-                disabled
-              ></mat-datepicker-toggle>
-              <mat-datepicker #dateExpired></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
+      <div class="status-dates-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Transaction</mat-label>
+          <input
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateTransaction"
+            placeholder="Date Transaction"
+            formControlName="dateTransaction"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateTransaction"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateTransaction></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Granted</mat-label>
+          <input
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateGranted"
+            placeholder="Date Granted"
+            formControlName="dateGranted"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateGranted"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateGranted></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Matured</mat-label>
+          <input
+            readonly
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateMatured"
+            placeholder="Date Mature"
+            formControlName="dateMatured"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateExpired"
+            disabled
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateMatured></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Expired</mat-label>
+          <input
+            readonly
+            tabindex="-1"
+            matInput
+            [matDatepicker]="dateExpired"
+            placeholder="Date Expire"
+            formControlName="dateExpired"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateExpired"
+            disabled
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateExpired></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="status" appearance="outline">
+          <mat-label>Status</mat-label>
+          <input matInput placeholder="Status" formControlName="status" />
+        </mat-form-field>
+
+        <mat-form-field class="moments" appearance="outline">
+          <mat-label>Dates Status</mat-label>
+          <input matInput placeholder="Moment" formControlName="moments" />
+        </mat-form-field>
       </div>
+
       <!-- end dates status -->
       <!-- start mat-table here -->
       <div class="items-table">
@@ -153,14 +109,18 @@
           [dataSource]="dataSource"
           class="mat-elevation-z8"
         >
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let i = index">{{ i + 1}}</td>
+          </ng-container>
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let items">{{ items.categoryName }}</td>
+            <td mat-cell *matCellDef="let items">{{ items.category }}</td>
           </ng-container>
           <ng-container matColumnDef="categoryDescription">
             <th mat-header-cell *matHeaderCellDef>Category Description</th>
             <td mat-cell *matCellDef="let items">
-              {{ items.categoryDescriptionName }}
+              {{ items.categoryDescription }}
             </td>
           </ng-container>
           <ng-container matColumnDef="description">
@@ -178,7 +138,7 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
         <mat-paginator
-          class="shadow"
+          #paginator
           [pageSizeOptions]="[3, 5, 10]"
           showFirstLastButtons
         ></mat-paginator>
@@ -298,16 +258,18 @@
         </div>
         <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
       </div>
-      <div class="button-wrapper">
+      <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
+          fxFlex="33"
           class="btn btn-success"
           type="submit"
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon> 
+          <mat-icon>save</mat-icon> Save
         </button>
         <button
+         fxFlex="33"
           class="btn btn-danger"
           type="button"
           tabindex="10"
@@ -317,6 +279,7 @@
           <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
+        fxFlex="33"
           class="btn btn-primary"
           type="button"
           tabindex="11"
