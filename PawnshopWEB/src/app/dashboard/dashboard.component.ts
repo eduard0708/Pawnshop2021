@@ -6,6 +6,7 @@ import { DashboardService } from '../_service/dashboard.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls:['../_sass/dashboard.scss']
 })
 export class DashboardComponent implements OnInit {
 

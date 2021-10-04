@@ -13,6 +13,7 @@
     "
   >
     <app-dash-card
+      class="dash-card"
       [cardData]="data"
       *ngFor="let data of dataForCard"
       (onNewTransaction)="newTransaction($event)"
