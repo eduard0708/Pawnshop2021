@@ -42,7 +42,7 @@ namespace PawnshopAPI.Helper
             CreateMap<AddTransactionPawnerDto, TransactionPawner>().ReverseMap();
             CreateMap<AddTransactionItemDto, TransactionItem>().ReverseMap();
             CreateMap<AddItemAuditTrailDto, ItemAuditTrail>().ReverseMap();
-            CreateMap<ReturnTransactionDto, Transactions>().ReverseMap();
+            CreateMap<ReturnTransactionsDto, Transactions>().ReverseMap();
             CreateMap<ReturnTransactionPawner, TransactionPawner>().ReverseMap();
             CreateMap<ReturnTransactionItems, TransactionItem>().ReverseMap();
 

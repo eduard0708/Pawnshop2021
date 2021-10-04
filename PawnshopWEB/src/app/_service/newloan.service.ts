@@ -116,7 +116,7 @@ export class NewloanService {
   let dateExpired = new DateHelper(new Date(transaction.dateExpired));
  
     const saveTransaction: NewTransaction = {
-      transactionId: 0,
+      transactionsId: 0,
       trackingId: 0,
       dateTransaction: dateTransaction.dateToISOstring(),
       dateGranted: dateGranted.dateToISOstring(),

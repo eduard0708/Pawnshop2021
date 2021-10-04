@@ -14,7 +14,7 @@ import { RedeemService } from '../_service/redeem.service';
 @Component({
   selector: 'app-redeem',
   templateUrl: './redeem.component.html',
-  styleUrls: ['../_sass/redeem.scss'],
+  styleUrls: ['../_sass/shared-transaction.scss'],
 })
 export class RedeemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -22,6 +22,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   redeemForm: FormGroup;
+  previousTransactionId;
   moments;
 
   displayColumns: string[] = [
@@ -58,7 +59,6 @@ export class RedeemComponent implements OnInit, AfterViewInit {
         const normalizeInfo = this.redeemService.normalizePawnerInfo(
           this.transactionInfo
         );
-        this.items = normalizeInfo.items;
       }
     });
 

@@ -19,13 +19,13 @@
   );
   .transaction-number {
     width: 30%;
-    margin-left: .6rem;
     border-radius: 1rem;
     padding-left: 0.8rem;
     font-size: 1.1rem;
     color: black;
     font-weight: 520;
     background-color: whitesmoke;
+    transform: scale(.9);
     
   }
   .trasaction-title {
@@ -150,7 +150,6 @@
       width: 95%;
       padding: 4px;
       color: white;
-
       text-align: center;
       background: rgb(0, 9, 36);
       background: radial-gradient(

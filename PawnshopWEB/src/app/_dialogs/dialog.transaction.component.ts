@@ -1,6 +1,5 @@
 import { DataSource } from '@angular/cdk/collections';
 import {
-  AfterContentInit,
   Component,
   ElementRef,
   Inject,
@@ -25,6 +24,7 @@ import { PawnerService } from '../_service/pawner.service';
 @Component({
   selector: 'app-dialog-transaciton',
   templateUrl: './dialog.transaction.component.html',
+  styleUrls:['../_sass/dialogs.scss']
 })
 export class DialogTransacitonComponent implements OnInit {
   @Input() searchIdRef: ElementRef;

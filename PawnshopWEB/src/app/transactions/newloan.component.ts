@@ -29,9 +29,12 @@ import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { DateHelper } from '../_model/DateHelper';
 declare module 'moment' {
-  function preciseDiff(start: string | Date | moment.Moment, end: string | Date | moment.Moment, convertToObject?: boolean): any;
+  function preciseDiff(
+    start: string | Date | moment.Moment,
+    end: string | Date | moment.Moment,
+    convertToObject?: boolean
+  ): any;
 }
-
 
 @Component({
   selector: 'app-newloan',
@@ -99,7 +102,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
           completeAddress: this.pawner.addresses[0].completeAddress,
         };
         this.pawnerInfo.pawnerId = this.pawner.pawnerId;
-        this.pawnerInfo.pawnerId = this.pawner.pawnerId;        
+        this.pawnerInfo.pawnerId = this.pawner.pawnerId;
         this.pawnerInfo.firstName = this.pawner.firstName;
         this.pawnerInfo.lastName = this.pawner.lastName;
         this.pawnerInfo.contactNumber = this.pawner.contactNumber;
@@ -131,7 +134,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.newLoanForm.controls.dateTransaction.setValue(new Date());
-    this.setDate();   
+    this.setDate();
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.categoryRef.focus();
@@ -163,16 +166,10 @@ export class NewloanComponent implements OnInit, OnDestroy {
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
-    this.newLoanForm.controls.dateTransaction.valueChanges.subscribe(() =>{
+    this.newLoanForm.controls.dateTransaction.valueChanges.subscribe(() => {
+      this.setDate();
+    });
 
-        // this.setDate();  
-     let h = new DateHelper(this.newLoanForm.controls.dateTransaction.value)
-     console.log(h.moments());
-     
-      
-
-});
-    
     //compute during input of principal loan
     this.newLoanForm.controls.principalLoan.valueChanges.subscribe(
       (principal) => {
@@ -197,7 +194,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
         let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
         this.newLoanForm.controls.netProceed.setValue(netProceed);
 
-
         this.validateButtonSave();
       }
     ); //end of computetation
@@ -208,21 +204,26 @@ export class NewloanComponent implements OnInit, OnDestroy {
     });
   }
 
-  setDate(){
+  setDate() {
     const dateTran = this.newLoanForm.controls.dateTransaction.value;
-    const dateMature = new Date(dateTran).setMonth(new Date(dateTran).getMonth() + 1 )
-    const dateExpire = new Date(dateTran).setMonth(new Date(dateTran).getMonth() + 4 )
+    const dateMature = new Date(dateTran).setMonth(
+      new Date(dateTran).getMonth() + 1
+    );
+    const dateExpire = new Date(dateTran).setMonth(
+      new Date(dateTran).getMonth() + 4
+    );
     this.newLoanForm.controls.dateGranted.setValue(new Date(dateTran));
     this.newLoanForm.controls.dateMatured.setValue(new Date(dateMature));
     this.newLoanForm.controls.dateExpired.setValue(new Date(dateExpire));
 
-    let current = new Date(new Date().setHours(0,0,0,0)); 
-    let newdate = new Date(dateTran.setHours(0,0,0,0)); 
-    const totalDays = (new Date(newdate).getTime() - new Date(current).getTime()) / (1000*60*60*24)
+    let current = new Date(new Date().setHours(0, 0, 0, 0));
+    let newdate = new Date(dateTran.setHours(0, 0, 0, 0));
+    const totalDays =
+      (new Date(newdate).getTime() - new Date(current).getTime()) /
+      (1000 * 60 * 60 * 24);
 
-    let days = totalDays - Math.floor(totalDays/30) * 30 
-    
- }
+    let days = totalDays - Math.floor(totalDays / 30) * 30;
+  }
 
   //load category description during selection of category
   onCategorySelect(e) {
@@ -341,14 +342,13 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.newLoanForm.controls.categoryDescriptions.disable();
     this.newLoanForm.controls.descriptions.disable();
     this.newLoanForm.controls.appraisalValue.disable();
- }
+  }
 
-  onSave() {
+  save() {
     this.newLoanService.normalizedNewloanInfo(
       this.newLoanForm.value,
       this.pawnerInfo,
       this.itemService.items
-      
     );
   }
 
@@ -366,7 +366,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     } else {
       this.isAddItem = true;
     }
-   
   }
 
   validateButtonSave() {
@@ -376,9 +375,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
     if (ploan !== 0 && this.itemService.items.length !== 0) {
       this.isSave = false;
-    }else{
+    } else {
       this.isSave = true;
     }
   }
 }
-  

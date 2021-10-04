@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PawnshopAPI.DTO.TransactionDTO
 {
-    public class ReturnTransactionDto
+    public class ReturnTransactionsDto
     {
         public int TransactionsId { get; set; }
         public int TrackingId { get; set; }

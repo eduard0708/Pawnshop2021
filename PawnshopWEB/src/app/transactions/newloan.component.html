@@ -1,6 +1,5 @@
 <form [formGroup]="newLoanForm" autocomplete="off">
   <div class="shadow-sm text-white newloan-title">
-    <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
       New Loan Information
     </h2>
@@ -98,9 +97,6 @@
               {{ category.categoryName }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="newLoanForm.get('category').hasError('required')"
-            >Category Required</mat-error
-          >
         </mat-form-field>
         <mat-form-field  appearance="outline" fxFlex="25">
           <mat-label>Category Descriptions</mat-label>
@@ -128,10 +124,6 @@
               {{ cd.categoryDescriptionName }}
             </mat-option>
           </mat-select>
-          <mat-error
-            *ngIf="newLoanForm.get('categoryDescriptions').hasError('required')"
-            >Category Desccription Required</mat-error
-          >
         </mat-form-field>
         <mat-form-field  appearance="outline" fxFlex="35">
           <mat-label>Items Descriptions</mat-label>
@@ -142,10 +134,6 @@
             formControlName="descriptions"
             tabindex="3"
           />
-          <mat-error
-            *ngIf="newLoanForm.get('descriptions').hasError('required')"
-            >Item Desccription Required</mat-error
-          >
         </mat-form-field>
         <mat-form-field  appearance="outline" fxFlex="15">
           <mat-label>Appraisal Value</mat-label>
@@ -159,10 +147,6 @@
             formControlName="appraisalValue"
             tabindex="4"
           />
-          <mat-error
-            *ngIf="newLoanForm.get('appraisalValue').hasError('required')"
-            >Appraisal Value Required</mat-error
-          >
         </mat-form-field>
         <div class="btn-items" fxFlex="10">
           <button
@@ -332,21 +316,22 @@
           />
         </div>
       </div>
-      <div class="button-wrapper">
+      <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
-          [disabled]="isSave"
+          fxFlex="33"
+          (click)="save()"
           class="btn btn-success"
-          (click)="onSave()"
           type="submit"
           tabindex="9"
           mat-raised-button
         >
-          <mat-icon>save</mat-icon> Save <mat-icon>print</mat-icon>
+          <mat-icon>save</mat-icon> Save
         </button>
         <button
+        (click)="reset()"
+         fxFlex="33"
           class="btn btn-danger"
           type="button"
-          (click)="reset()"
           tabindex="10"
           mat-raised-button
           mat-raised-button
@@ -354,6 +339,7 @@
           <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
+        fxFlex="33"
           class="btn btn-primary"
           type="button"
           tabindex="11"

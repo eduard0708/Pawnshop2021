@@ -3,7 +3,7 @@ import { NewTransactionPawner } from "./new-transaction-pawner";
 import { NewTransactionItems } from "./new-trasaction-items";
 
 export interface NewTransaction {
-  transactionId:number;
+  transactionsId:number;
   trackingId: number;
   dateTransaction: string;
   dateGranted?: string;
