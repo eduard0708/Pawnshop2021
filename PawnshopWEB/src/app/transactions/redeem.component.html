@@ -90,8 +90,9 @@
 
         <mat-form-field class="status" appearance="outline">
           <mat-label>Status</mat-label>
-          <input matInput placeholder="Moment" formControlName="moments" />
+          <input matInput placeholder="Status" formControlName="status" />
         </mat-form-field>
+
         <mat-form-field class="moments" appearance="outline">
           <mat-label>Dates Status</mat-label>
           <input matInput placeholder="Moment" formControlName="moments" />
@@ -108,14 +109,18 @@
           [dataSource]="dataSource"
           class="mat-elevation-z8"
         >
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let i = index">{{ i + 1}}</td>
+          </ng-container>
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let items">{{ items.categoryName }}</td>
+            <td mat-cell *matCellDef="let items">{{ items.category }}</td>
           </ng-container>
           <ng-container matColumnDef="categoryDescription">
             <th mat-header-cell *matHeaderCellDef>Category Description</th>
             <td mat-cell *matCellDef="let items">
-              {{ items.categoryDescriptionName }}
+              {{ items.categoryDescription }}
             </td>
           </ng-container>
           <ng-container matColumnDef="description">
@@ -253,8 +258,9 @@
         </div>
         <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
       </div>
-      <div class="button-wrapper">
+      <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
+          fxFlex="33"
           class="btn btn-success"
           type="submit"
           tabindex="9"
@@ -263,6 +269,7 @@
           <mat-icon>save</mat-icon> Save
         </button>
         <button
+         fxFlex="33"
           class="btn btn-danger"
           type="button"
           tabindex="10"
@@ -272,6 +279,7 @@
           <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
+        fxFlex="33"
           class="btn btn-primary"
           type="button"
           tabindex="11"

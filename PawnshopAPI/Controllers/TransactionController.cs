@@ -52,14 +52,14 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AddTransactionDto> GetTransactionById(int id) {
+        public ActionResult<ReturnTransactionDto> GetTransactionById(int id) {
 
             var t = context.Transactions
                  .Include(x => x.TransactionPawner)
                  .Include(x => x.TransactionItems)
                  .FirstOrDefault(x => x.TransactionsId == id);
                   
-            var transaction = mapper.Map<AddTransactionDto>(t);
+            var transaction = mapper.Map<ReturnTransactionDto>(t);
 
             return Ok(transaction);
         }

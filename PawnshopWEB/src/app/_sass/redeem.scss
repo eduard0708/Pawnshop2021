@@ -10,12 +10,23 @@
   width: 58%;
   height: 2.5rem;
   padding-top: 1rem;
-  background-color: rgb(55, 74, 114);
+  background: rgb(0, 9, 36);
+  background: radial-gradient(
+    circle,
+    rgba(0, 9, 36, 1) 0%,
+    rgba(9, 36, 121, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
   .transaction-number {
     width: 30%;
-    padding-left: 0.5rem;
-    font-size: 1rem;
-    color: turquoise;
+    margin-left: .6rem;
+    border-radius: 1rem;
+    padding-left: 0.8rem;
+    font-size: 1.1rem;
+    color: black;
+    font-weight: 520;
+    background-color: whitesmoke;
+    
   }
   .trasaction-title {
     width: 50%;
@@ -29,7 +40,7 @@
   display: grid;
   grid-template-columns: 70% 30%;
   height: 89vh;
- background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+  background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
 
   // pawner wrapper 70% area
   .pawner-items-wrapper {
@@ -39,7 +50,7 @@
 
     .pawner-information {
       height: 8rem;
-      padding: 2rem .7rem 0 1rem;
+      padding: 2rem 0.7rem 0 1rem;
       margin: 1.3rem 1rem 0.6rem;
       border-radius: 0.5em;
       background-color: rgb(224, 250, 253);
@@ -54,7 +65,7 @@
       align-items: center;
       padding-top: 1.3rem;
       padding-left: 1.5rem;
-      padding-right: .8rem;
+      padding-right: 0.8rem;
       margin: 0 1rem;
       height: 4rem;
 
@@ -62,7 +73,6 @@
         color: blueviolet !important;
         background-color: white;
       }
-
       ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
         padding: 0.4em 0px !important;
       }
@@ -75,16 +85,14 @@
         transform: translateY(-1.1em) scale(0.75);
         width: 133.33333%;
       }
-
       mat-form-field {
         width: 14%;
-        margin-right: .8rem;
+        margin-right: 0.8rem;
       }
-     
       .status {
         text-align: center;
         width: 13%;
-        margin-right: .8rem;
+        margin-right: 0.8rem;
       }
       .moments {
         text-align: center;
@@ -107,14 +115,17 @@
         width: 100% !important;
         margin: 0.5rem auto 0;
       }
+      .mat-column-index {
+        width: 7% !important;
+      }
       .mat-column-category {
         width: 15% !important;
       }
       .mat-column-categoryDescription {
-        width: 30% !important;
+        width: 28% !important;
       }
       .mat-column-description {
-        width: 40% !important;
+        width: 35% !important;
       }
       .mat-column-appraisalValue {
         width: 15% !important;
@@ -135,19 +146,27 @@
     .computation-title {
       border-radius: 5px;
       margin: 0.5rem auto 0;
-      width: 90%;
+      width: 95%;
       padding: 4px;
       color: white;
-      background-color: #0d6efd;
+
       text-align: center;
+      background: rgb(0, 9, 36);
+      background: radial-gradient(
+        circle,
+        rgba(0, 9, 36, 1) 0%,
+        rgba(9, 36, 121, 1) 0%,
+        rgba(0, 212, 255, 1) 100%
+      );
     }
     // computation 30% area
     .computation {
-      width: 80%;
-      border-radius: 10px;
-      margin: 0.5rem auto 0;
-      padding: 0.5rem 1.3rem;
-      background-color: rgb(209, 230, 240);
+      width: 95%;
+      border-radius: 8px;
+      margin: 0.5rem auto 0.5rem;
+      padding: 0.7rem 0.7rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      background-color: rgb(224, 250, 253);
 
       // background-color: violet;
       .input-group {
@@ -175,14 +194,12 @@
       }
     }
     .button-wrapper {
-      padding: 0 1rem;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      column-gap: 0.3rem;
+      padding: 0 0.8rem;
+      height: inherit;
       .btn {
+        transform: scaleY(0.8);
         margin: 0;
         border-radius: 5rem;
-        width: 100%;
       }
     }
   }

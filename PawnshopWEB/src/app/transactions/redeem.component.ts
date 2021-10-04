@@ -25,6 +25,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   moments;
 
   displayColumns: string[] = [
+    'index',
     'category',
     'categoryDescription',
     'description',
@@ -86,6 +87,21 @@ export class RedeemComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+      let items: Item[]=[];
+    for (let index = 0; index < this.transactionInfo.transactionItems.length; index++) {
+      const item = this.transactionInfo.transactionItems[index];
+        let nItem:Item = {
+          itemId: item.itemId,
+          categoryId:0,
+          category:item.category,
+          categoryDescription:item.categoryDescription,
+          description:item.itemDescription,
+          appraisalValue:item.appraisalValue
+        }
+        items.push(nItem);
+    }
+      this.dataSource.data = items;
+
     // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
     this.redeemForm.valueChanges.subscribe(() => {
       let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0));
@@ -93,15 +109,6 @@ export class RedeemComponent implements OnInit, AfterViewInit {
         new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) );
       let days = (dg.getTime() - dt.getTime()) / (24 * 3600 * 1000);
 
-      let v = new Date(
-        this.redeemForm.controls.dateTransaction.value
-      ).toISOString();
-
-      console.log(
-        new Date(
-          new Date(v).getTime() - new Date(v).getTimezoneOffset() * 60000
-        ).toISOString()
-      );
     });
   }
 

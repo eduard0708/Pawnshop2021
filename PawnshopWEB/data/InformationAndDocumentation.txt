@@ -10,3 +10,6 @@ npm i ngx-mask
 
 *** material fxlayout ****
 npm i @angular/flex-layout
+
+*** fake server json ****
+npm i json-server
