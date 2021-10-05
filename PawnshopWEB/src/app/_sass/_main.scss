@@ -1,0 +1,29 @@
+$bg-linear-gradient: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+$bg-gradient-circle: radial-gradient(
+  circle,
+  rgba(0, 9, 36, 1) 0%,
+  rgba(9, 36, 121, 1) 0%,
+  rgba(0, 212, 255, 1) 100%
+);
+
+$box-shadow-black-all-sm: 0 0 6px rgba(0, 0, 0, 0.6);
+$box-shadow-black-all-lg: 0 0 10px rgba(0, 0, 0, 0.6);
+
+.input-outline-custom{
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: blueviolet !important;
+        background-color: white;
+      }
+      ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+        padding: 0.4em 0px !important;
+      }
+      ::ng-deep .mat-form-field-label-wrapper {
+        top: -1.5em;
+      }
+      ::ng-deep
+        .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+        .mat-form-field-label {
+        transform: translateY(-1.1em) scale(0.75);
+        width: 133.33333%;
+      }
+}

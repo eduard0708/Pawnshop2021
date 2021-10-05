@@ -6,13 +6,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { City } from '../_model/address/city';
 import { AddressService } from '../_service/address.service';
-import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
 
 @Component({
   selector: 'app-city',
   templateUrl: './city.component.html',
-  styleUrls: ['_settings.sass/city.scss'
+  styleUrls: ['../_sass/settings_scss/city.scss'
   ]
 })
 export class CityComponent implements OnInit, AfterViewInit {

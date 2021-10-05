@@ -1,12 +1,12 @@
 <div class="city-wrapper">
   <form [formGroup]="cityForm" autocomplete="off">
-    <div class="card p-1">
-      <div class="newcity-header">
+    <div class="city-body" fxLayout="row wrap">
+      <div class="newcity-header" fxFlex="100">
         <h3 class="city-title shadow rounded bg-info">Add-Edit City</h3>
       </div>
-      <div class="newcity-wrapper">
-        <mat-form-field>
-          <mat-label class="font-monospace">City Name</mat-label>
+      <div class="newcity-wrapper" fxFlex="99"  fxLayoutGap="1.5%">
+      <mat-form-field class="input-outline-custom" fxFlexOffset="15%"  appearance="outline" fxFlex="60">
+          <mat-label>City</mat-label>
           <input
             class="city-input font-monospace"
             #cityRef
@@ -17,20 +17,22 @@
           />
         </mat-form-field>
         <button
+          fxFlex="10"
           (click)="add()"
           tabindex="2"
           matSuffix
           mat-icon-button
           mat-raised-button
           color="accent"
-          class="btn btn-success"
+          class="btn-add btn btn-success"
           [disabled]="isAdd"
         >
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div class="city-button-wrapper">
+      <div class="city-button-wrapper" fxFlex="58" fxLayoutGap="2%">
         <button
+          fxFlex="50"
           (click)="reset()"
           tabindex="3"
           mat-raised-button
@@ -40,6 +42,7 @@
           Reset
         </button>
         <button
+          fxFlex="50"
           (click)="cancel()"
           tabindex="4"
           mat-raised-button
@@ -50,7 +53,7 @@
         </button>
       </div>
 
-      <div class="city-table-wrapper">
+      <div class="city-table-wrapper" fxFlex="100">
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>City Id</mat-header-cell>
@@ -76,6 +79,7 @@
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
         <mat-paginator
+          class="city-paginator"
           [length]="tableLength"
           [pageSize]="5"
           [pageSizeOptions]="[5, 10, 15]"
