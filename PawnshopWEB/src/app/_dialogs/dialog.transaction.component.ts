@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, MaxLengthValidator, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import {
   MatDialog,
   MatDialogConfig,
