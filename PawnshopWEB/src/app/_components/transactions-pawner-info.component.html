@@ -33,7 +33,7 @@
       readonly
       matInput
       [matDatepicker]="dateTransaction"
-      placeholder="Date Transaction"
+      placeholder="Transaction"
       [(ngModel)]="pawnerInfo.dateTransaction"
     />
     <mat-datepicker-toggle
@@ -50,7 +50,7 @@
       tabindex="-1"
       matInput
       [matDatepicker]="dateGranted"
-      placeholder="Date Granted"
+      placeholder="Granted"
       [(ngModel)]="pawnerInfo.dateGranted"
     />
     <mat-datepicker-toggle
@@ -87,13 +87,13 @@
      />
   </mat-form-field>
   <mat-form-field appearance="outline" fxFlex="16%">
-    <mat-label>Date Mature</mat-label>
+    <mat-label>Matured</mat-label>
     <input
       readonly
       tabindex="-1"
       matInput
       [matDatepicker]="dateMature"
-      placeholder="Date Mature"
+      placeholder="Matured"
       [(ngModel)]="pawnerInfo.dateMatured"
     />
     <mat-datepicker-toggle
@@ -105,13 +105,13 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline" fxFlex="16%">
-    <mat-label>Date Expired</mat-label>
+    <mat-label>Expired</mat-label>
     <input
       readonly
       tabindex="-1"
       matInput
       [matDatepicker]="dateExpired"
-      placeholder="Date Expire"
+      placeholder="Expired"
       [(ngModel)]="pawnerInfo.dateExpired"
     />
     <mat-datepicker-toggle
