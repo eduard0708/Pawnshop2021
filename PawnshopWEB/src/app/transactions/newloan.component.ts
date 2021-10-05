@@ -160,7 +160,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
       this.validateButtonSave();
     });
-
     this.newLoanForm.valueChanges.subscribe(() => {
       this.validateItemEntery();
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
@@ -205,24 +204,16 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   setDate() {
-    const dateTran = this.newLoanForm.controls.dateTransaction.value;
-    const dateMature = new Date(dateTran).setMonth(
-      new Date(dateTran).getMonth() + 1
-    );
-    const dateExpire = new Date(dateTran).setMonth(
-      new Date(dateTran).getMonth() + 4
-    );
-    this.newLoanForm.controls.dateGranted.setValue(new Date(dateTran));
-    this.newLoanForm.controls.dateMatured.setValue(new Date(dateMature));
-    this.newLoanForm.controls.dateExpired.setValue(new Date(dateExpire));
-
-    let current = new Date(new Date().setHours(0, 0, 0, 0));
-    let newdate = new Date(dateTran.setHours(0, 0, 0, 0));
-    const totalDays =
-      (new Date(newdate).getTime() - new Date(current).getTime()) /
-      (1000 * 60 * 60 * 24);
-
-    let days = totalDays - Math.floor(totalDays / 30) * 30;
+   const dateTran = this.newLoanForm.controls.dateTransaction.value;
+      const dateMature = new Date(dateTran).setMonth(
+        new Date(dateTran).getMonth() + 1
+      );
+      const dateExpire = new Date(dateTran).setMonth(
+        new Date(dateTran).getMonth() + 4
+      );
+      this.newLoanForm.controls.dateGranted.setValue(new Date(dateTran));
+      this.newLoanForm.controls.dateMatured.setValue(new Date(dateMature));
+      this.newLoanForm.controls.dateExpired.setValue(new Date(dateExpire));
   }
 
   //load category description during selection of category
@@ -336,6 +327,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.newLoanForm.controls.appraisalValue.enable();
     this.newLoanForm.controls.category.enable();
     this.categoryRef.focus();
+    this.newLoanForm.controls.dateTransaction.setValue(new Date())
   }
 
   principalLoanFocus() {
