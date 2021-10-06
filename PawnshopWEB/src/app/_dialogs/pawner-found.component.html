@@ -1,5 +1,10 @@
-
-    <ng-container class="table-container">
+<div class="dialog-wrapper">
+  <div class="dialog-body" fxLayout="row wrap">
+    <div class="dialog-header" fxFlex="100">
+      <h3 class="dialog-title shadow rounded bg-info">Select Pawner</h3>
+    </div>
+    <div class="dialog-table-wrapper" fxFlex="100">
+      <ng-container class="table-container">
         <table
           mat-table
           #table
@@ -9,7 +14,9 @@
         >
           <ng-container matColumnDef="contactNumber">
             <th mat-header-cell *matHeaderCellDef>Contact #</th>
-            <td mat-cell *matCellDef="let pawner">{{ pawner.contactNumber }}</td>
+            <td mat-cell *matCellDef="let pawner">
+              {{ pawner.contactNumber }}
+            </td>
           </ng-container>
           <ng-container matColumnDef="firstName">
             <th mat-header-cell *matHeaderCellDef>First Name</th>
@@ -30,36 +37,44 @@
           <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
-        <div class="footer-button" fxLayout="row" fxLayoutGap="2%">
-          <button
-          fxFlex="100"
-          (click)="search()"
-          tabindex="3"
-          mat-raised-button
-          class="btn btn-success"
-        >
-          <mat-icon>person_search</mat-icon>
-          Search
-        </button>
-          <button
-          fxFlex="100"
-          (click)="create()"
-          tabindex="3"
-          mat-raised-button
-          class="btn btn-info"
-        >
-          <mat-icon>person_add</mat-icon>
-          Create
-        </button>
-          <button
-          fxFlex="100"
-          (click)="cancel()"
-          tabindex="3"
-          mat-raised-button
-          class="btn btn-danger"
-        >
-          <mat-icon>highlight_off</mat-icon>
-          Cancel
-        </button>
-        </div>
+          <mat-paginator
+            class="dialog-paginator"
+            [pageSize]="5"
+            [pageSizeOptions]="[5]"
+          ></mat-paginator>
       </ng-container>
+    </div>
+    <div class="footer-button" fxLayout="row" fxLayoutGap="2%">
+      <button
+        fxFlex="100"
+        (click)="search()"
+        tabindex="1"
+        mat-raised-button
+        class="btn btn-success"
+      >
+        <mat-icon>person_search</mat-icon>
+        Search
+      </button>
+      <button
+        fxFlex="100"
+        (click)="create()"
+        tabindex="2"
+        mat-raised-button
+        class="btn btn-info"
+      >
+        <mat-icon>person_add</mat-icon>
+        Create
+      </button>
+      <button
+        fxFlex="100"
+        (click)="cancel()"
+        tabindex="3"
+        mat-raised-button
+        class="btn btn-danger"
+      >
+        <mat-icon>highlight_off</mat-icon>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+@import "../main";
+
+.dialog-wrapper {
+  min-width: 100% !important;
+  min-height: 100% !important;
+  padding: 0.5rem;
+  box-shadow: $box-shadow-black-all-lg;
+  background: $bg-linear-gradient;
+  transform: scale(0.95);
+  .dialog-body {
+    padding: 1rem;
+    background-color: whitesmoke;
+    .dialog-header {
+      position: absolute;
+      width: 90%;
+      margin-top: -2.5rem;
+      .dialog-title {
+        background: $bg-gradient-circle;
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        font-family: monospace;
+      }
+    }
+    .dialog-wrapper {
+      border-radius: 0.3rem;
+      padding: 0 1rem;
+      padding-top: 0.7rem;
+      margin: 0 auto;
+      margin-top: 1rem;
+      height: 3.5rem;
+      transform: scale(1);
+    }
+    .dialog-table-wrapper {
+      mat-table {
+        transform: scaleY(0.9);
+      }
+    }
+    .dialog-paginator {
+      margin-top: -1.25rem;
+      transform: scaleY(0.8);
+    }
+
+    .footer-button {
+      width: 100%;
+      margin: 0.5rem auto 0;
+      .btn {
+        border-radius: 1rem;
+        transform: scaleY(0.8);
+      }
+    }
+  }
+}
+//end dialog-newcity.component scxx

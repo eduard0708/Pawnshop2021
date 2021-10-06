@@ -21,13 +21,11 @@ import { ItemService } from '../_service/item.service';
 import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
 import { RedeemService } from '../_service/redeem.service';
-import { LoanStatus, Status, TrasactionType } from '../_enum/enums';
-import { User } from '../_model/user';
 import { Item } from '../_model/item/item';
 
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
-import { DateHelper } from '../_model/DateHelper';
+
 declare module 'moment' {
   function preciseDiff(
     start: string | Date | moment.Moment,
