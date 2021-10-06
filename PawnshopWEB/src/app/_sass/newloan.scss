@@ -71,80 +71,86 @@
     }
   }
 
-    .items-entry {
-      background-color: rgb(224, 250, 253);
-      margin: 0.5rem 1rem;
-      border-radius: 0.5em;
-      padding: 1rem 1rem 0 1rem;
-      height: 4rem;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  .items-entry {
+    background-color: rgb(224, 250, 253);
+    margin: 0.5rem 1rem;
+    border-radius: 0.5em;
+    padding: 1rem 1rem 0 1rem;
+    height: 4rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 
-      ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-        color: blueviolet !important;
-        background-color: white;
-      }
-      ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
-        padding: 0.4em 0px !important;
-      }
-      ::ng-deep .mat-form-field-label-wrapper {
-        top: -1.5em;
-      }
-      ::ng-deep
-        .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
-        .mat-form-field-label {
-        transform: translateY(-1.1em) scale(0.75);
-        width: 133.33333%;
-      }
-      .add-cat-desc{
-        transform: scale(.5);
-        margin-right: -.7rem;
-      }
-      .btn-items{
-        margin-right: -.8rem;
-      }
-      .btn-add {
-        transform: scale(0.8);
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      color: blueviolet !important;
+      background-color: white;
+    }
+    ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+      padding: 0.4em 0px !important;
+    }
+    ::ng-deep .mat-form-field-label-wrapper {
+      top: -1.5em;
+    }
+    ::ng-deep
+      .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+      .mat-form-field-label {
+      transform: translateY(-1.1em) scale(0.75);
+      width: 133.33333%;
+    }
+    .add-cat-desc {
+      transform: scale(0.5);
+      margin-right: -0.7rem;
+    }
+    .btn-items {
+      display: flex;
+      // background-color: violet;
+      margin-right: -0.6rem;
+
+      .center-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(.9);
       }
     }
-    .items-table {
-      background-color: rgb(224, 250, 253);
-      padding: 0.5rem 1rem;
-      margin: 0 1rem;
-      border-radius: 0.5em;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
-      table {
-        width: 100%;
-        margin: 0.5rem auto 0;
-        mat-icon {
-          font-size: 20px;
-        }
-        .mat-column-category {
-          width: 12% !important;
-        }
-        .mat-column-categoryDescription {
-          width: 25% !important;
-        }
-        .mat-column-description {
-          width: 30% !important;
-        }
-        .mat-column-appraisalValue {
-          width: 15% !important;
-        }
-        .mat-column-action {
-          width: 12% !important;
-        }
-        .mat-header-row {
-          height: 2.5rem !important;
-        }
-        .mat-row {
-          height: 2rem !important;
-        }
+  }
+  .items-table {
+    background-color: rgb(224, 250, 253);
+    padding: 0.5rem 1rem;
+    margin: 0 1rem;
+    border-radius: 0.5em;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    table {
+      width: 100%;
+      margin: 0.5rem auto 0;
+      mat-icon {
+        font-size: 20px;
       }
-      .newloan-paginator {
-        margin-top: -0.3rem;
-        transform: scaleY(0.8);
+      .mat-column-category {
+        width: 12% !important;
+      }
+      .mat-column-categoryDescription {
+        width: 25% !important;
+      }
+      .mat-column-description {
+        width: 30% !important;
+      }
+      .mat-column-appraisalValue {
+        width: 15% !important;
+      }
+      .mat-column-action {
+        width: 12% !important;
+      }
+      .mat-header-row {
+        height: 2.5rem !important;
+      }
+      .mat-row {
+        height: 2rem !important;
       }
     }
+    .newloan-paginator {
+      margin-top: -0.3rem;
+      transform: scaleY(0.8);
+    }
+  }
 
   .computation-wrapper {
     background-color: whitesmoke;
@@ -210,8 +216,6 @@
     }
   }
 }
-
-
 
 .form-control {
   border-top-right-radius: 10px !important;

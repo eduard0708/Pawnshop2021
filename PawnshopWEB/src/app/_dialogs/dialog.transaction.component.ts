@@ -79,7 +79,6 @@ export class DialogTransacitonComponent implements OnInit {
           if (pawner.length === 0) {
             this.notifierService.error('No pawner exist, create pawner.');
             this.router.navigateByUrl('main/settings/pawner');
-            this.dialogRef.close();
           }
           if (pawner.length === 1) {
             this.router.navigateByUrl('main/transactions/newloan/', {

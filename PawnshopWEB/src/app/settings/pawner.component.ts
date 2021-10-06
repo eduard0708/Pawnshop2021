@@ -18,7 +18,7 @@ import { PawnerService } from '../_service/pawner.service';
 @Component({
   selector: 'app-pawner',
   templateUrl: './pawner.component.html',
-  styleUrls: ['_settings.sass/pawner.scss'],
+  styleUrls: ['../_sass/settings_scss/pawner.scss'],
 })
 export class PawnerComponent implements OnInit {
   @ViewChild('firstNameRef', { static: true }) firstNameRef: ElementRef;

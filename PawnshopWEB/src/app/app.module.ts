@@ -16,7 +16,6 @@ import { DialogTransacitonComponent } from './_dialogs/dialog.transaction.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotifierComponent } from './_dialogs/notifier/notifier.component';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { DialogNewvoucherComponent } from './_dialogs/dialog-newvoucher.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './pages/server-error.component';
@@ -40,7 +39,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     DashCardComponent,
     DialogTransacitonComponent,
     NotifierComponent,
-    DialogNewvoucherComponent,
     TestErrorsComponent,
     ServerErrorComponent,
     CityComponent,

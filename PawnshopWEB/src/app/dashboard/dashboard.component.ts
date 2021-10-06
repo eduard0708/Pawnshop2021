@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
     config.position = { top: '5rem' };
     config.disableClose = true;
     config.data = transactionType;
-    config.width = '25vw';
+    config.width = '20vw';
 
     this.dialog.open(DialogTransacitonComponent, config);
   }

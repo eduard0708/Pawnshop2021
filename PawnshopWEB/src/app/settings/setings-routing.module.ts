@@ -6,6 +6,7 @@ import { CityComponent } from './city.component';
 import { PawnerComponent } from './pawner.component';
 import { SetingsComponent } from './setings.component';
 import { VoucherComponent } from './voucher.component';
+import { VouchersettingComponent } from './vouchersetting.component';
 
 const routes: Routes = [{
   path: '', component: SetingsComponent,
@@ -13,7 +14,8 @@ const routes: Routes = [{
     { path: 'city', component: CityComponent },
     { path: 'barangay', component: BarangayComponent },
     { path: 'pawner', component: PawnerComponent },
-    { path: 'voucher', component: VoucherComponent }
+    { path: 'voucher', component: VoucherComponent },
+    { path: 'vouchersetting', component: VouchersettingComponent }
   ]  
 },
 {path:'**',component: NotfoundComponent}

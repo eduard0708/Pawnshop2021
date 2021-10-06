@@ -16,23 +16,21 @@
             formControlName="cityName"
           />
         </mat-form-field>
-        <button
-          fxFlex="10"
-          (click)="add()"
-          tabindex="2"
-          matSuffix
-          mat-icon-button
-          mat-raised-button
-          color="accent"
-          class="btn-add btn btn-success"
-          [disabled]="isAdd"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
       </div>
-      <div class="city-button-wrapper" fxFlex="58" fxLayoutGap="2%">
+      <div class="city-button-wrapper" fxFlex="90" fxLayoutGap="2%">
         <button
-          fxFlex="50"
+        fxFlex="33"
+        (click)="save()"
+        tabindex="3"
+        mat-raised-button
+        [disabled]="isAdd"
+        class="btn btn-success font-monospace"
+      >
+        <mat-icon>library_add</mat-icon>
+        Save
+      </button>
+        <button
+          fxFlex="33"
           (click)="reset()"
           tabindex="3"
           mat-raised-button
@@ -42,18 +40,17 @@
           Reset
         </button>
         <button
-          fxFlex="50"
+          fxFlex="33"
           (click)="cancel()"
           tabindex="4"
           mat-raised-button
           class="btn btn-danger font-monospace"
         >
-          <mat-icon>cancel</mat-icon>
+          <mat-icon>highlight_off</mat-icon>
           Cancel
         </button>
       </div>
-
-      <div class="city-table-wrapper" fxFlex="100">
+   <div class="city-table-wrapper" fxFlex="100">
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>City Id</mat-header-cell>
@@ -82,7 +79,7 @@
           class="city-paginator"
           [length]="tableLength"
           [pageSize]="5"
-          [pageSizeOptions]="[5, 10, 15]"
+          [pageSizeOptions]="[5]"
         ></mat-paginator>
       </div>
     </div>

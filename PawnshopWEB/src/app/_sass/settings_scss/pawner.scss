@@ -1,0 +1,35 @@
+@import "../_main.scss";
+.pawner-container {
+  padding: 0.5rem;
+  box-shadow: $box-shadow-black-all-lg;
+  background: $bg-linear-gradient;
+  width: 33%;
+  width: 45%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  transform: scale(0.95);
+  .pawner-header {
+    position: absolute;
+    width: 92%;
+    margin-top: -2.5rem;
+    .title {
+      background: $bg-gradient-circle;
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1.3rem;
+      font-family: monospace;
+    }
+  }
+  .pawner-body {
+    padding: 1rem;
+    background-color: whitesmoke !important;
+  }
+  .button-wrapper {
+    .btn {
+      transform: scale(0.8);
+      border-radius: 1rem;
+    }
+  }
+}

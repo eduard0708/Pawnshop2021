@@ -1,1 +1,125 @@
-<p>voucher works!</p>
+<form [formGroup]="voucherForm" autocomplete="off">
+  <div class="voucher-container">
+    <div class="voucher-body" fxLayout="row wrap">
+      <div class="voucher-header header-settings" fxFlex="100">
+        <h3 class="text-center p-2 shadow rounded title">Vouchers Entries</h3>
+      </div>
+      <mat-divider
+        class="pb-3"
+        style="width: 90%; margin: 0 auto"
+        fxFlex="100"
+      ></mat-divider>
+      <div class="voucher-content" fxFlex="100" fxLayout="row wrap" fxLayoutGap="3%" fxLayoutAlign="space-around">
+          <mat-form-field fxFlex="45" fxFlexOffset="55%">
+            <input
+              tabindex="-1"
+              matInput
+              formControlName="dateEntry"
+              [matDatepicker]="dateEntry"
+              placeholder="Date Entry"
+            />
+            <mat-datepicker-toggle
+              tabindex="-1"
+              matSuffix
+              [for]="dateEntry"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dateEntry></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field fxFlex="47">
+            <mat-select
+            #codeRef
+            tabindex="4"
+            placeholder="Code"
+            name="city"
+            formControlName="code"
+          >
+            <mat-option *ngFor="let code of codes" [value]="code.codeId">
+              {{ code.codeName }}
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="47">
+            <mat-select
+            tabindex="4"
+            placeholder="Type"
+            name="city"
+            formControlName="type"
+          >
+            <mat-option *ngFor="let type of types" [value]="type.typeId">
+              {{ type.typeName }}
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="47">
+            <mat-select
+              tabindex="4"
+              placeholder="Cash/Cheque"
+              name="city"
+              formControlName="cashCheque"
+            >
+              <mat-option *ngFor="let cc of cashCheque" [value]="cc.id">
+                {{ cc.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="47">
+            <input
+            tabindex="4"
+            maxlength="15"
+            [inputMask]="currencyInputMask"
+            matInput
+            formControlName="amount"
+            placeholder="Amount"
+          />
+          </mat-form-field>
+          <mat-form-field fxFlex="97">
+            <mat-label>Remarks</mat-label>
+            <textarea
+              tabindex="5"
+              matInput
+              formControlName="remarks"
+              placeholder="Remarks"
+            ></textarea>
+          </mat-form-field>
+      </div>
+      <div class="button-wrapper" fxLayout="row" fxFlex="100">
+        <button
+          fxFlex="33"
+          [disabled]="isSave"
+          (click)="save()"
+          class="btn btn-success"
+          type="submit"
+          tabindex="9"
+          mat-raised-button
+        >
+          <mat-icon>library_add</mat-icon>
+          Save
+        </button>
+        <button
+          fxFlex="33"
+          class="btn btn-primary"
+          type="button"
+          (click)="reset()"
+          tabindex="10"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>restart_alt</mat-icon>
+          Reset
+        </button>
+        <button
+          fxFlex="33"
+          class="btn btn-danger"
+          type="button"
+          tabindex="11"
+          (click)="cancel()"
+          mat-raised-button
+          mat-raised-button
+        >
+          <mat-icon>highlight_off</mat-icon>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

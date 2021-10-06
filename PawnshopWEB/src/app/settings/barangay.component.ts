@@ -15,7 +15,7 @@ import { NotifierService } from '../_service/notifier.service';
 @Component({
   selector: 'app-barangay',
   templateUrl: './barangay.component.html',
-  styleUrls: ['_settings.sass/barangay.scss'
+  styleUrls: ['../_sass/settings_scss/barangay.scss'
   ]
 })
 export class BarangayComponent implements OnInit, AfterViewInit {
@@ -29,8 +29,8 @@ export class BarangayComponent implements OnInit, AfterViewInit {
   city: City[] = [];
   tableLength: number;
   displayedColumns: string[] = ['id', 'name', 'action']
-  public cityDataSource: MatTableDataSource<City>;
-  public barangayDataSource: MatTableDataSource<Barangay>;
+  // public cityDataSource: MatTableDataSource<City>;
+  public dataSource: MatTableDataSource<Barangay>;
   private serviceSubscribe: Subscription;
 
   constructor(
@@ -47,7 +47,7 @@ export class BarangayComponent implements OnInit, AfterViewInit {
       barangayName: ['', Validators.required],
     });
 
-    this.barangayDataSource = new MatTableDataSource<Barangay>();
+    this.dataSource = new MatTableDataSource<Barangay>();
   }
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class BarangayComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.barangayDataSource.paginator = this.paginator
+    this.dataSource.paginator = this.paginator
   }
 
   search() { }
@@ -96,8 +96,8 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     this.addressService.getBarangays().subscribe(
       barangay => {
         this.barangays = barangay as any
-        this.barangayDataSource.data = this.barangays as any;
-        this.tableLength = this.barangayDataSource.data.length;
+        this.dataSource.data = this.barangays as any;
+        this.tableLength = this.dataSource.data.length;
       }
     )
   }

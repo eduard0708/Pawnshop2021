@@ -8,10 +8,9 @@ import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxMaskModule } from 'ngx-mask';
 
-
 @NgModule({
   declarations: [
-    SetingsComponent
+    SetingsComponent,
   ],
   imports: [
     CommonModule,

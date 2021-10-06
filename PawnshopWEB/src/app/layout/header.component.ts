@@ -5,7 +5,6 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DialogNewvoucherComponent } from '../_dialogs/dialog-newvoucher.component';
 import { EmployeeService } from '../_service/employee.service';
 
 @Component({
@@ -42,14 +41,11 @@ export class HeaderComponent implements OnInit {
   pawner() {
     this.router.navigateByUrl('main/settings/pawner')
   }
- 
-  voucher() {    const config = new MatDialogConfig();
-    config.position = { top: '6rem' };
-    config.width = 'auto';
-    config.height = 'auto';
-    config.disableClose = true;
-
-    this.dialog.open(DialogNewvoucherComponent, config);
+  voucher() {
+    this.router.navigateByUrl('main/settings/voucher')
+  }
+  voucherSetting() {
+    this.router.navigateByUrl('main/settings/vouchersetting')
   }
 
   employee() {

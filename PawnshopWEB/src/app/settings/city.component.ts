@@ -66,7 +66,7 @@ export class CityComponent implements OnInit, AfterViewInit {
   }
 
 
-  add() {
+  save() {
     const city = {
       cityName: this.cityForm.controls.cityName.value,
     };
