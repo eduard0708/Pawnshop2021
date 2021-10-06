@@ -22,39 +22,44 @@
           (keyup.enter)="onTransaction(transactionType)"
         />
       </mat-form-field>
-      <div *ngIf="buttonNewloan" class="dialog-button">
+      <div *ngIf="buttonNewloan" class="dialog-button" fxLayout="row wrap">
         <button
-          (click)="createPawner()"
-          tabindex="3"
-          mat-raised-button
-          class="btn btn-success"
-        >
-          New Pawner
-        </button>
+        fxFlex="100"
+        (click)="createPawner()"
+        tabindex="3"
+        mat-raised-button
+        class="btn btn-success mb-2"
+      >
+        <mat-icon>add_circle_outline</mat-icon>
+        Pawner
+      </button>
+
         <button
-          (click)="cancel()"
-          tabindex="4"
-          mat-raised-button
-          class="btn btn-danger"
-        >
-          Cancel
-        </button>
+        fxFlex="100"
+        (click)="cancel()"
+        tabindex="4"
+        mat-raised-button
+        class="btn btn-danger"
+      >
+        <mat-icon>highlight_off</mat-icon>
+        Cancel
+      </button>
       </div>
 
-      <div *ngIf="!buttonNewloan" class="dialog-button" fxLayout="row" fxLayoutGap="3%">
+      <div *ngIf="!buttonNewloan" class="dialog-button" fxLayout="row wrap">
         <button
-          fxFlex=""
+          fxFlex="100"
           (click)="cancel()"
           tabindex="3"
           mat-raised-button
           (click)="onTransaction(transactionType)"
-          class="btn btn-success"
+          class="btn btn-success mb-2"
         >
           <mat-icon>search</mat-icon>
           Search
         </button>
         <button
-          fxFlex=""
+          fxFlex="100"
           (click)="cancel()"
           tabindex="3"
           mat-raised-button
@@ -66,7 +71,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="isShowTable">
+    <ng-container class="table-container" *ngIf="isShowTable">
       <table
         mat-table
         #table
@@ -97,26 +102,28 @@
         <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
       </table>
-      <div class="dialog-button">
+      <div class="dialog-button" fxLayout="row wrap">
         <button
           (click)="hideTable()"
           tabindex="2"
           mat-raised-button
           class="btn btn-success"
-          style="width: 49%; margin-right: 2%"
+
         >
           Search Pawner
         </button>
         <button
-          (click)="cancel()"
-          tabindex="3"
-          mat-raised-button
-          class="btn btn-danger"
-          style="width: 49%"
-        >
-          Cancel
-        </button>
+        fxFlex="100"
+        (click)="cancel()"
+        tabindex="3"
+        mat-raised-button
+        class="btn btn-danger"
+      >
+        <mat-icon>highlight_off</mat-icon>
+        Cancel
+      </button>
       </div>
     </ng-container>
   </div>
+  
 </div>

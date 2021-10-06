@@ -20,6 +20,7 @@ import { Pawner } from '../_model/pawner/Pawner';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
 import { PawnerService } from '../_service/pawner.service';
+import { PawnerFoundComponent } from './pawner-found.component';
 
 @Component({
   selector: 'app-dialog-transaciton',
@@ -50,10 +51,12 @@ export class DialogTransacitonComponent implements OnInit {
     private router: Router,
     private notifierService: NotifierService,
     private pawnerService: PawnerService,
-    private dialogService: DialogsService
+    private dialogService: DialogsService,
+    private dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource<Pawner>();
   }
+  
   ngOnInit(): void {
     //check if newlona it will change the transaction title
     // and the palce holder of the dialog
@@ -79,6 +82,7 @@ export class DialogTransacitonComponent implements OnInit {
           if (pawner.length === 0) {
             this.notifierService.error('No pawner exist, create pawner.');
             this.router.navigateByUrl('main/settings/pawner');
+            this.dialogRef.close();
           }
           if (pawner.length === 1) {
             this.router.navigateByUrl('main/transactions/newloan/', {
@@ -88,8 +92,10 @@ export class DialogTransacitonComponent implements OnInit {
           }
           if (pawner.length > 1) {
             this.notifierService.info(`Multiple pawner found, select one.`);
-            this.dataSource.data = pawner;
-            this.isShowTable = true;
+            // this.dataSource.data = pawner;
+            // this.isShowTable = true;
+            this.openPawnerFoundDialog(pawner)
+            this.dialogRef.close();
           }
         });
     //navigate to other transaction if not new loan
@@ -126,5 +132,14 @@ export class DialogTransacitonComponent implements OnInit {
       state: { pawner: pawner },
     });
     this.dialogRef.close();
+  }
+
+  openPawnerFoundDialog(pawner) {
+    const config = new MatDialogConfig();
+    config.position = { top: '5rem' };
+    config.disableClose = true;
+    config.data = pawner;
+    config.width = '35vw';
+    this.dialog.open(PawnerFoundComponent, config);
   }
 }

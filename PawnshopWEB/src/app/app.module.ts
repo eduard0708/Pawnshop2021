@@ -27,6 +27,7 @@ import { VoucherComponent } from './settings/voucher.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { InvoiceComponent } from './pages/invoice.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PawnerFoundComponent } from './_dialogs/pawner-found.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     EmployeeComponent,
     VoucherComponent,
     InvoiceComponent,
+    PawnerFoundComponent,
   ],
   imports: [
     BrowserModule,
