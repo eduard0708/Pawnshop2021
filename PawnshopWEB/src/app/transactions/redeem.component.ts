@@ -61,20 +61,14 @@ export class RedeemComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-
-        // const normalizeInfo = this.redeemService.normalizePawnerInfo(
-        //   this.transactionInfo
-        // );
       }
     });
 
-    //pass date transaction to generate moments, total years, total months total days
-
     this.redeemForm = fb.group({
-      dateTransaction: [new Date()],
-      dateGranted: [0],
-      dateMatured: [0],
-      dateExpired: [0],
+      dateTransaction: [''],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
       totalAppraisal: [0],
       principalLoan: [0],
       dueAmount: [0],
@@ -114,7 +108,9 @@ export class RedeemComponent implements OnInit {
 
   save() {}
   reset() {
+    this.redeemForm.reset();
     this.setComputation();
+    this.receivedAmountRef.nativeElement.focus();
   }
 
   home() {
@@ -127,8 +123,6 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
-
-    dateStatus.getStatusNumber();
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
     this.redeemForm.controls.status.setValue(dateStatus.status());
@@ -143,6 +137,15 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.interestRate.setValue(
       `${this.transactionInfo.interestRate}%`
     );
+    this.redeemForm.controls.change.setValue(0);
+
+    let totalDaysMonthsYears = dateStatus.getMomentsInYearMonthDays(
+      dateStatus.moments()
+    );
+
+    console.log(totalDaysMonthsYears.totalDays);
+    console.log(totalDaysMonthsYears.totalMonths);
+    console.log(totalDaysMonthsYears.totalYears);
 
   }
 }

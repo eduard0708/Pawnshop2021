@@ -255,7 +255,8 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Change</span>
           <input
-            tabindex="2"
+          formControlName="change"
+            readonly
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -269,7 +270,7 @@
           fxFlex="33"
           class="btn btn-success"
           type="submit"
-          tabindex="3"
+          tabindex="2"
           mat-raised-button
         >
           <mat-icon>save</mat-icon> Save
@@ -279,7 +280,7 @@
           fxFlex="33"
           class="btn btn-danger"
           type="button"
-          tabindex="4"
+          tabindex="3"
           mat-raised-button
           mat-raised-button
         >
@@ -289,7 +290,7 @@
           fxFlex="33"
           class="btn btn-primary"
           type="button"
-          tabindex="5"
+          tabindex="4"
           (click)="home()"
           mat-raised-button
           mat-raised-button

@@ -8,7 +8,7 @@ export class TransactionService {
 
   constructor() { }
 
-   //normalize items from transaction to assigned in table
+   /* normalize items from transaction to assigned in table */
    normalizeItemsForTable(items) {
     let normItem: Item[] = [];
     for (let index = 0; index < items.length; index++) {
@@ -25,4 +25,7 @@ export class TransactionService {
     }
     return normItem;
   }
+
+
+
 }

@@ -33,8 +33,8 @@ export class DateHelper {
     );
   }
 
-  //if you will used directly the toISOString the date will be change to UTC and return wrong date
-  //this function will return the right date input
+  /* if you will used directly the toISOString the date will be change to UTC and return
+  wrong date this function will return the right date input */
   dateToISOstring() {
     let isoDate =
       new Date(this.dateTransaction).getTime() -
@@ -42,6 +42,7 @@ export class DateHelper {
     return new Date(isoDate).toISOString();
   }
 
+  /* return the difference of two dates as moment format */
   moments() {
     let pastMoment = moment.preciseDiff(this.todayDate, this.transactionDate);
     return pastMoment;
@@ -91,38 +92,52 @@ export class DateHelper {
     }
   }
 
-  /////////////////////////////////////////////////////////
-  // let m: string = dateStatus.moments();
 
-  getStatusNumber() {
-    let m: string = ' 1 year 12 months 15 days';
-
-    if (m.includes('day') || m.includes('days')) {
+/* start to get the number of days months and years */
+  getMomentsInYearMonthDays(m:string) {
+  if (m.includes('day') || m.includes('days')) {
       this.totalDays= this.getDays(m);
-      console.log(`days- ${this.totalDays}`);
     } else {
       this.totalDays = 0;
     }
-
+    if (m.includes('month') || m.includes('months')) {
+      this.totalMonths= this.getMonths(m);
+    } else {
+      this.totalMonths = 0;
+    }
     if (m.includes('year') || m.includes('years')) {
         this.totalYears = this.getYears(m)
     }else{
       this.totalYears = 0;
     }
-
-    console.log(`years> ${this.totalYears},  days> ${this.totalDays} `);
+    let momentsInYearMonthDays ={
+      totalDays:this.totalDays,
+      totalMonths:this.totalMonths,
+      totalYears:this.totalYears,
+    }
+     return momentsInYearMonthDays;
   }
 
-  getDays(moments: string) {
+  private getDays(moments: string) {
     let days = +moments.substr(moments.length - 7, moments.length).replace(/[^0-9]/g, '');
     return days;
   }
 
-  getMonths() {}
+  private getMonths(moments: string) {
+    if(moments.includes('year')){
+      let takeMonth = moments.split('month')[0]
+      let months = +takeMonth.substr(takeMonth.length - 3, takeMonth.length).replace(/[^0-9]/g, '');
+      return months
+    }else{
+      return +moments.split('month')[0].replace(/[^0-9]/g, '');
+    }
 
-  getYears(moments: string) {
+  }
+
+  private getYears(moments: string) {
     let years = +moments.split('year')[0].replace(/[^0-9]/g, '');
     return years
   }
 
 }
+/* ends here!! to get the number of days months and years */
