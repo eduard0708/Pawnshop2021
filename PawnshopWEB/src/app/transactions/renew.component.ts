@@ -67,7 +67,7 @@ export class RenewComponent implements OnInit {
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
-  
+
     this.renewForm = fb.group({
       redeemAmount: [],
       dateTransaction: [new Date()],
@@ -76,13 +76,13 @@ export class RenewComponent implements OnInit {
       dateExpired: [],
       totalAppraisal: [],
       transaction: [],
-      totalDays: [dateStatus.days()],
-      totalMonths: [dateStatus.months()],
-      totalYears: [dateStatus.years()],
+      // totalDays: [dateStatus.days()],
+      // totalMonths: [dateStatus.months()],
+      // totalYears: [dateStatus.years()],
       status: [dateStatus.status()],
       moments:[dateStatus.moments()]
     });
-    
+
     this.dataSource = new MatTableDataSource<Item>();
   }
 

@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { stringify } from 'querystring';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -20,7 +21,7 @@ import { TransactionService } from '../_service/transaction.service';
 })
 export class RedeemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('receivedAmountRef') receivedAmountRef:ElementRef;
+  @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -127,16 +128,21 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateExpire)
     );
 
+    dateStatus.getStatusNumber();
+
     this.redeemForm.controls.dateTransaction.setValue(new Date());
-    this.redeemForm.controls.totalDays.setValue(dateStatus.days());
-    this.redeemForm.controls.totalMonths.setValue(dateStatus.months());
-    this.redeemForm.controls.totalYears.setValue(dateStatus.years());
     this.redeemForm.controls.status.setValue(dateStatus.status());
     this.redeemForm.controls.moments.setValue(dateStatus.moments());
 
-    this.redeemForm.controls.totalAppraisal.setValue(this.transactionInfo.totalAppraisal);
-    this.redeemForm.controls.principalLoan.setValue(this.transactionInfo.principalLoan);
-    this.redeemForm.controls.interestRate.setValue( `${this.transactionInfo.interestRate}%` );
+    this.redeemForm.controls.totalAppraisal.setValue(
+      this.transactionInfo.totalAppraisal
+    );
+    this.redeemForm.controls.principalLoan.setValue(
+      this.transactionInfo.principalLoan
+    );
+    this.redeemForm.controls.interestRate.setValue(
+      `${this.transactionInfo.interestRate}%`
+    );
 
   }
 }
