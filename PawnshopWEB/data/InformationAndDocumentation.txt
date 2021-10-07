@@ -12,4 +12,9 @@ npm i ngx-mask
 npm i @angular/flex-layout
 
 *** fake server json ****
-npm i json-server
+npm install -g json-server
+
+*** update for angular cli local ***
+ng update @angular/core @angular/cli
+
+ng update @angular/material
