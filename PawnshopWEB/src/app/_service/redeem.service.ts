@@ -31,26 +31,11 @@ export class RedeemService {
       completeAddress: pawner.completeAddress,
     };
 
-    
-    // for (let index = 0; t.transactionItems.length; index++) {
-    //   const item = t.transactionItems[index];
-    //   let pItem: Item = {
-    //     itemId: item.itemId,
-    //     categoryId: 0,
-    //     category: item.category,
-    //     categoryDescription: item.categoryDescription,
-    //     description: item.itemDescription,
-    //     appraisalValue: item.appraisalValue,
-    //   };
-
-    //   items.push(pItem);
-    // }
-
    const normalizeTrasactionInfo = {
       pawnerInfo: pawnerInfo,
       items:items
     }
-    
+
     return normalizeTrasactionInfo;
   }
 }

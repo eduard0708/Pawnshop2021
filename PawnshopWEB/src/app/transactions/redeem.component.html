@@ -1,7 +1,9 @@
-<form [formGroup]="redeemForm" (ngSubmit)="onSave()" autocomplete="off">
+<form [formGroup]="redeemForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
-  <div class="shadow-sm text-white pawner-title" >
-    <h2 class="font-monospace transaction-number">Transaction #: {{transactionInfo.transactionsId}}</h2>
+  <div class="shadow-sm text-white pawner-title">
+    <h2 class="font-monospace transaction-number">
+      Transaction #: {{ transactionInfo.transactionsId }}
+    </h2>
     <h2 class="text-center font-monospace trasaction-title">
       Redeem Information
     </h2>
@@ -111,7 +113,7 @@
         >
           <ng-container matColumnDef="index">
             <th mat-header-cell *matHeaderCellDef>#</th>
-            <td mat-cell *matCellDef="let i = index">{{ i + 1}}</td>
+            <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
           </ng-container>
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
@@ -158,22 +160,25 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
+            formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
-            disabled
+            readonly
           />
         </div>
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Principal Value</span>
           <input
+            formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
+            readonly
           />
         </div>
         <div class="input-group shadow-sm">
@@ -199,10 +204,10 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+          formControlName="interestRate"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
+            class="form-control form-control-sm  text-right"
             type="text"
           />
         </div>
@@ -239,7 +244,8 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Amount Received</span>
           <input
-            tabindex="-1"
+           #receivedAmountRef
+            tabindex="1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -249,7 +255,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Change</span>
           <input
-            tabindex="-1"
+            tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -263,26 +269,27 @@
           fxFlex="33"
           class="btn btn-success"
           type="submit"
-          tabindex="9"
+          tabindex="3"
           mat-raised-button
         >
           <mat-icon>save</mat-icon> Save
         </button>
         <button
-         fxFlex="33"
+        (click)="reset()"
+          fxFlex="33"
           class="btn btn-danger"
           type="button"
-          tabindex="10"
+          tabindex="4"
           mat-raised-button
           mat-raised-button
         >
           <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
-        fxFlex="33"
+          fxFlex="33"
           class="btn btn-primary"
           type="button"
-          tabindex="11"
+          tabindex="5"
           (click)="home()"
           mat-raised-button
           mat-raised-button

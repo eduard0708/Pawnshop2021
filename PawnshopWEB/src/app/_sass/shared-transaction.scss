@@ -26,7 +26,7 @@
     font-weight: 520;
     background-color: whitesmoke;
     transform: scale(.9);
-    
+
   }
   .trasaction-title {
     width: 50%;
@@ -85,7 +85,7 @@
         transform: translateY(-1.1em) scale(0.75);
         width: 133.33333%;
       }
-      
+
       mat-form-field {
         width: 14%;
         margin-right: 0.8rem;
@@ -190,6 +190,9 @@
           border: 1.5px solid blue;
           background-color: white;
           border-right: 3px solid blue;
+        }
+        .text-right{
+          text-align: right;
         }
       }
     }

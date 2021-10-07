@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,15 +9,18 @@ import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
+import { ItemService } from '../_service/item.service';
 import { RedeemService } from '../_service/redeem.service';
+import { TransactionService } from '../_service/transaction.service';
 
 @Component({
   selector: 'app-redeem',
   templateUrl: './redeem.component.html',
   styleUrls: ['../_sass/shared-transaction.scss'],
 })
-export class RedeemComponent implements OnInit, AfterViewInit {
+export class RedeemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('receivedAmountRef') receivedAmountRef:ElementRef;
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -48,7 +51,8 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private transactionService: TransactionService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -56,68 +60,83 @@ export class RedeemComponent implements OnInit, AfterViewInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-        const normalizeInfo = this.redeemService.normalizePawnerInfo(
-          this.transactionInfo
-        );
+
+        // const normalizeInfo = this.redeemService.normalizePawnerInfo(
+        //   this.transactionInfo
+        // );
       }
     });
 
+    //pass date transaction to generate moments, total years, total months total days
+
+    this.redeemForm = fb.group({
+      dateTransaction: [new Date()],
+      dateGranted: [0],
+      dateMatured: [0],
+      dateExpired: [0],
+      totalAppraisal: [0],
+      principalLoan: [0],
+      dueAmount: [0],
+      penalty: [0],
+      interestRate: [0],
+      serviceCharge: [0],
+      discount: [0],
+      redeemAmount: [0],
+      receiveAmount: [0],
+      change: [0],
+      transaction: [0],
+      totalDays: [0],
+      totalMonths: [0],
+      totalYears: [0],
+      status: [0],
+      moments: [0],
+    });
+
+    this.dataSource = new MatTableDataSource<Item>();
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.receivedAmountRef.nativeElement.focus();
+    }, 100);
+
+    this.setComputation();
+
+    //convert datatrasactionItems as Items to load in table dataSource
+    if (this.transactionInfo.transactionItems.length !== 0)
+      this.dataSource.data =
+        this.transactionService.normalizeItemsForTable(
+          this.transactionInfo.transactionItems
+        ) ?? [];
+  }
+
+  save() {}
+  reset() {
+    this.setComputation();
+  }
+
+  home() {
+    this.router.navigateByUrl('main/dashboard');
+  }
+
+  setComputation() {
     let dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
-  
-    this.redeemForm = fb.group({
-      redeemAmount: [],
-      dateTransaction: [new Date()],
-      dateGranted: [],
-      dateMatured: [],
-      dateExpired: [],
-      totalAppraisal: [],
-      transaction: [],
-      totalDays: [dateStatus.days()],
-      totalMonths: [dateStatus.months()],
-      totalYears: [dateStatus.years()],
-      status: [dateStatus.status()],
-      moments:[dateStatus.moments()]
-    });
-    
-    this.dataSource = new MatTableDataSource<Item>();
-  }
 
-  ngOnInit(): void {
-      let items: Item[]=[];
-    for (let index = 0; index < this.transactionInfo.transactionItems.length; index++) {
-      const item = this.transactionInfo.transactionItems[index];
-        let nItem:Item = {
-          itemId: item.itemId,
-          categoryId:0,
-          category:item.category,
-          categoryDescription:item.categoryDescription,
-          description:item.itemDescription,
-          appraisalValue:item.appraisalValue
-        }
-        items.push(nItem);
-    }
-      this.dataSource.data = items;
+    this.redeemForm.controls.dateTransaction.setValue(new Date());
+    this.redeemForm.controls.totalDays.setValue(dateStatus.days());
+    this.redeemForm.controls.totalMonths.setValue(dateStatus.months());
+    this.redeemForm.controls.totalYears.setValue(dateStatus.years());
+    this.redeemForm.controls.status.setValue(dateStatus.status());
+    this.redeemForm.controls.moments.setValue(dateStatus.moments());
 
-    // console.log(new Date(this.redeemForm.controls.dateTransaction.value));
-    this.redeemForm.valueChanges.subscribe(() => {
-      let dt = new Date(new Date(this.redeemForm.controls.dateTransaction.value).setHours(0,0,0,0));
-      let dg = new Date(
-        new Date(this.redeemForm.controls.dateGranted.value).setHours(0,0,0,0) );
-      let days = (dg.getTime() - dt.getTime()) / (24 * 3600 * 1000);
+    this.redeemForm.controls.totalAppraisal.setValue(this.transactionInfo.totalAppraisal);
+    this.redeemForm.controls.principalLoan.setValue(this.transactionInfo.principalLoan);
+    this.redeemForm.controls.interestRate.setValue( `${this.transactionInfo.interestRate}%` );
 
-    });
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-  onSave() {}
-
-  home() {
-    this.router.navigateByUrl('main/dashboard');
   }
 }

@@ -188,7 +188,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
         this.newLoanForm.controls.advanceServiceCharge.setValue(
           advanceServiceCharge
         );
-        let netProceed = principalLoan + advanceServiceCharge + advanceInterest;
+        let netProceed = principalLoan - advanceServiceCharge - advanceInterest;
         this.newLoanForm.controls.netProceed.setValue(netProceed);
 
         this.validateButtonSave();

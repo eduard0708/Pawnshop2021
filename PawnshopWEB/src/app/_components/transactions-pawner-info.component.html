@@ -1,7 +1,13 @@
-<div class="transaction-pawner-component" fxLayout="row wrap" fxLayoutAlign="start" fxLayoutGap="1%" >
-  <mat-form-field  appearance="outline" fxFlex="15%">
+<div
+  class="transaction-pawner-component"
+  fxLayout="row wrap"
+  fxLayoutAlign="start"
+  fxLayoutGap="1%"
+>
+  <mat-form-field appearance="outline" fxFlex="15%">
     <mat-label>Contact Number</mat-label>
     <input
+      tabindex="-1"
       readonly
       matInput
       placeholder="Contact Number"
@@ -11,6 +17,7 @@
   <mat-form-field appearance="outline" fxFlex="24%">
     <mat-label>First Name</mat-label>
     <input
+      tabindex="-1"
       readonly
       matInput
       placeholder="First Name"
@@ -20,13 +27,14 @@
   <mat-form-field appearance="outline" fxFlex="24%">
     <mat-label>Last Name</mat-label>
     <input
+      tabindex="-1"
       readonly
       matInput
       placeholder="Last Name"
       value="{{ pawnerInfo.lastName }}"
     />
   </mat-form-field>
-  <mat-form-field appearance="outline"  fxFlex="16%">
+  <mat-form-field appearance="outline" fxFlex="16%">
     <mat-label>Transaction</mat-label>
     <input
       tabindex="-1"
@@ -37,13 +45,14 @@
       [(ngModel)]="pawnerInfo.dateTransaction"
     />
     <mat-datepicker-toggle
+      tabindex="-1"
       matSuffix
       [for]="dateTransaction"
       disabled
     ></mat-datepicker-toggle>
     <mat-datepicker #dateTransaction></mat-datepicker>
   </mat-form-field>
-  <mat-form-field appearance="outline"  fxFlex="16%">
+  <mat-form-field appearance="outline" fxFlex="16%">
     <mat-label>Granted</mat-label>
     <input
       readonly
@@ -54,6 +63,7 @@
       [(ngModel)]="pawnerInfo.dateGranted"
     />
     <mat-datepicker-toggle
+      tabindex="-1"
       matSuffix
       [for]="dateGranted"
       disabled
@@ -63,6 +73,7 @@
   <mat-form-field appearance="outline" fxFlex="15%">
     <mat-label>City</mat-label>
     <input
+      tabindex="-1"
       readonly
       matInput
       placeholder="City"
@@ -70,9 +81,10 @@
     />
   </mat-form-field>
 
-  <mat-form-field appearance="outline"fxFlex="15%">
+  <mat-form-field appearance="outline" fxFlex="15%">
     <mat-label>Barangay</mat-label>
     <input
+      tabindex="-1"
       readonly
       matInput
       placeholder="Barangay"
@@ -81,10 +93,13 @@
   </mat-form-field>
   <mat-form-field appearance="outline" fxFlex="33%">
     <mat-label>Complete Address</mat-label>
-    <input readonly matInput 
-    placeholder="Complete Address"
-    value="{{ pawnerInfo.completeAddress }}"
-     />
+    <input
+    tabindex="-1"
+      readonly
+      matInput
+      placeholder="Complete Address"
+      value="{{ pawnerInfo.completeAddress }}"
+    />
   </mat-form-field>
   <mat-form-field appearance="outline" fxFlex="16%">
     <mat-label>Matured</mat-label>
@@ -97,6 +112,7 @@
       [(ngModel)]="pawnerInfo.dateMatured"
     />
     <mat-datepicker-toggle
+      tabindex="-1"
       matSuffix
       [for]="dateMature"
       disabled
@@ -115,11 +131,11 @@
       [(ngModel)]="pawnerInfo.dateExpired"
     />
     <mat-datepicker-toggle
+      tabindex="-1"
       matSuffix
       [for]="dateExpired"
       disabled
     ></mat-datepicker-toggle>
     <mat-datepicker #dateExpired></mat-datepicker>
   </mat-form-field>
- 
 </div>
