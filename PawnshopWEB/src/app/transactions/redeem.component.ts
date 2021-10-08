@@ -88,7 +88,7 @@ export class RedeemComponent implements OnInit {
       serviceCharge: [0],
       discount: [0],
       redeemAmount: [0],
-      receiveAmount: [0],
+      receivedAmount: [0],
       change: [0],
       transaction: [0],
       totalDays: [0],
@@ -173,8 +173,10 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.interest.setValue(this.interest);
     this.redeemForm.controls.penalty.setValue(this.penalty);
     this.redeemForm.controls.dueAmount.setValue(this.dueAmount);
-    this.redeemForm.controls.discount.setValue(0);
+    this.redeemForm.controls.discount.setValue('');
     this.redeemForm.controls.serviceCharge.setValue(this.serviceCharge);
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
+    this.redeemForm.controls.receivedAmount.setValue('');
+
   }
 }
