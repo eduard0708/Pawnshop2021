@@ -21,7 +21,7 @@
   .dialog-body {
     margin: 1rem .5rem 0 .5rem;
     padding-top: 2.5rem;
-    
+
     ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
         color: blueviolet !important;
         background-color: white;
@@ -38,12 +38,12 @@
         transform: translateY(-1.1em) scale(0.75);
         width: 133.33333%;
       }
-    
   }
 
   .dialog-button {
     margin-top: -1.2rem;
     transform: scaleY(0.75);
+    width: 100%;
     .btn {
         width: 100%;
       border-radius: 1rem;

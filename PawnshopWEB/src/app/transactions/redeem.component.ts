@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-import { stringify } from 'querystring';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -19,7 +24,7 @@ import { TransactionService } from '../_service/transaction.service';
   templateUrl: './redeem.component.html',
   styleUrls: ['../_sass/shared-transaction.scss'],
 })
-export class RedeemComponent implements OnInit {
+export class RedeemComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
@@ -30,13 +35,13 @@ export class RedeemComponent implements OnInit {
   redeemForm: FormGroup;
   previousTransactionId;
   moments;
-  principalLoan:number;
-  daysCount:number;
-  interest:number;
-  penalty:number;
-  dueAmount:number;
-  serviceCharge:number;
-  redeemAmount:number;
+  principalLoan: number;
+  daysCount: number;
+  interest: number;
+  penalty: number;
+  dueAmount: number;
+  serviceCharge: number;
+  redeemAmount: number;
 
   displayColumns: string[] = [
     'index',
@@ -63,7 +68,7 @@ export class RedeemComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
-    private computationService:ComputationService
+    private computationService: ComputationService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -107,7 +112,30 @@ export class RedeemComponent implements OnInit {
       this.receivedAmountRef.nativeElement.focus();
     }, 100);
 
-    this.setComputation();
+    this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
+      (amountReceived) => {
+      const redeemAmount = +(this.redeemForm.controls.redeemAmount.value).toString().replace(/[^\d.-]/g, '');
+        let recivedAmount = +(amountReceived ?? 0).toString().replace(/[^\d.-]/g, '');
+        let change =
+        redeemAmount > recivedAmount
+            ? 0
+            : recivedAmount - redeemAmount;
+        this.redeemForm.controls.change.setValue(change ?? 0);
+      }
+    );
+
+    this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
+      let afterDiscount = +(discount.toString().replace(/[^\d.-]/g, '') ?? 0.0);
+      const redeemAmount = this.redeemAmount;
+      this.redeemForm.controls.redeemAmount.setValue(
+        redeemAmount - afterDiscount
+      );
+      this.redeemForm.controls.receivedAmount.setValue(0);
+      this.redeemForm.controls.change.setValue(0);
+
+      if(afterDiscount > redeemAmount )
+      this.redeemForm.controls.discount.setValue(redeemAmount);
+    });
 
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
@@ -115,7 +143,15 @@ export class RedeemComponent implements OnInit {
         this.transactionService.normalizeItemsForTable(
           this.transactionInfo.transactionItems
         ) ?? [];
+
+    setTimeout(() => {
+      if (this.redeemForm.controls.discount.untouched) {
+        this.setComputation();
+      }
+    }, 100);
   }
+
+  ngAfterViewInit(): void {}
 
   save() {}
   reset() {
@@ -128,12 +164,11 @@ export class RedeemComponent implements OnInit {
     this.router.navigateByUrl('main/dashboard');
   }
 
-  discountFocus(e){
-    if((e.key).toLowerCase() === 'd')
-      this.discountRef.nativeElement.focus();
+  discountFocus(e) {
+    if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
   }
-  receivedAmountFocus(e){
-    if((e.key).toLowerCase() === 'a')
+  receivedAmountFocus(e) {
+    if (e.key.toLowerCase() === 'a')
       this.receivedAmountRef.nativeElement.focus();
   }
 
@@ -144,18 +179,34 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateExpire)
     );
 
-    let momentsInfo = dateStatus.getDaysMonthsYear(
-      dateStatus.moments()
+    let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
+    let totalDays = this.computationService.getTotalDays(
+      momentsInfo.totalDays,
+      momentsInfo.totalMonths,
+      momentsInfo.totalYears
     );
-      let totalDays = this.computationService.getTotalDays(momentsInfo.totalDays, momentsInfo.totalMonths, momentsInfo.totalYears)
 
     this.principalLoan = this.transactionInfo.principalLoan;
-    this.daysCount = this.computationService.getTotalDays(momentsInfo.totalDays, momentsInfo.totalMonths, momentsInfo.totalYears);
-    this.interest = this.computationService.getInterest(this.principalLoan, this.transactionInfo.interestRate, totalDays )
-    this.penalty = this.computationService.getPenalty(this.principalLoan, totalDays)
+    this.daysCount = this.computationService.getTotalDays(
+      momentsInfo.totalDays,
+      momentsInfo.totalMonths,
+      momentsInfo.totalYears
+    );
+    this.interest = this.computationService.getInterest(
+      this.principalLoan,
+      this.transactionInfo.interestRate,
+      totalDays
+    );
+    this.penalty = this.computationService.getPenalty(
+      this.principalLoan,
+      totalDays
+    );
     this.dueAmount = this.interest + this.penalty;
-    this.serviceCharge = this.computationService.getServiceCharge(this.principalLoan);
-    this.redeemAmount = this.principalLoan + this.dueAmount + this.serviceCharge
+    this.serviceCharge = this.computationService.getServiceCharge(
+      this.principalLoan
+    );
+    this.redeemAmount =
+      this.principalLoan + this.dueAmount + this.serviceCharge;
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
     this.redeemForm.controls.status.setValue(dateStatus.status());
@@ -177,6 +228,5 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.serviceCharge.setValue(this.serviceCharge);
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
     this.redeemForm.controls.receivedAmount.setValue('');
-
   }
 }
