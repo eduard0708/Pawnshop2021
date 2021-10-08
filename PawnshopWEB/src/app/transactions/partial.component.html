@@ -1,4 +1,4 @@
-<form [formGroup]="partialForm" (ngSubmit)="onSave()" autocomplete="off">
+<form [formGroup]="partialForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
@@ -154,51 +154,57 @@
         Partial Computation
       </h2>
       <!-- start computation title -->
-      <div class="computation shadow">
-        <div class="input-group shadow-sm">
+      <div class="computation shadow partial-computation">
+        <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
+            formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
-            disabled
+            readonly
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Principal Loan">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
+            formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
+            readonly
           />
         </div>
-        <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Amount Due</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Penalty</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+            formControlName="interestRate"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm text-right"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm Interest">
+          <span class="col-form-label-sm">Interest</span>
+          <input
+            formControlName="interest"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+            readonly
+          />
+        </div>
+        <div class="input-group shadow-sm Penalty">
+          <span class="col-form-label-sm">Penalty</span>
+          <input
+            formControlName="penalty"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -206,9 +212,21 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Amount Due">
+          <span class="col-form-label-sm">Amount Due</span>
+          <input
+            formControlName="dueAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm amout-due"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -216,9 +234,10 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -226,9 +245,12 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
+          (keyup)="receivedAmountFocus($event)"
+            #discountRef
+            formControlName="discount"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -236,9 +258,11 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Net Payment">
           <span class="col-form-label-sm">Net Payment</span>
           <input
+            #netPaymentRef
+            formControlName="netPayment"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -246,9 +270,11 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Partial Pay</span>
+        <div class="input-group shadow-sm Partial Payment">
+          <span class="col-form-label-sm">Partial Payment</span>
           <input
+            #netPaymentRef
+            formControlName="partialAmount"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -256,9 +282,12 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
+          (keyup)="discountFocus($event)"
+            #receivedAmountRef
+            formControlName="receivedAmount"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -266,9 +295,10 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm">
+        <div class="input-group shadow-sm Change">
           <span class="col-form-label-sm">Change</span>
           <input
+            formControlName="change"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -276,8 +306,8 @@
             type="text"
           />
         </div>
-        <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
       </div>
+
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
           fxFlex="33"

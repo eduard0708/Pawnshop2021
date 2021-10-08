@@ -30,6 +30,10 @@ export class ComputationService {
     return +(totalDays * (principalLoan * (interestRate / 100) / 30)).toFixed(2);
   }
 
+  getAdvanceInterest(principalLoan:number, interestRate:number):number{
+    return  +(principalLoan * (interestRate / 100) / 30).toFixed(2);
+  }
+
   getTotalDays(daysCount:number, monthsCount:number, yearsCounts:number):number {
     return daysCount + (monthsCount * 30) + ((yearsCounts * 12) * 30);
   }

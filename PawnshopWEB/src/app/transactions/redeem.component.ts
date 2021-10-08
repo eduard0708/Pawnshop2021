@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -24,7 +24,7 @@ import { TransactionService } from '../_service/transaction.service';
   templateUrl: './redeem.component.html',
   styleUrls: ['../_sass/shared-transaction.scss'],
 })
-export class RedeemComponent implements OnInit, AfterViewInit {
+export class RedeemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
@@ -68,7 +68,8 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
-    private computationService: ComputationService
+    private computationService: ComputationService,
+
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -88,6 +89,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
       principalLoan: [0],
       interestRate: [0],
       interest: [0],
+      advanceInterest: [0],
       penalty: [0],
       dueAmount: [0],
       serviceCharge: [0],
@@ -104,6 +106,7 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     });
 
     this.dataSource = new MatTableDataSource<Item>();
+
   }
 
   ngOnInit(): void {
@@ -152,8 +155,6 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     }, 100);
   }
 
-  ngAfterViewInit(): void {}
-
   save() {
     const amountReceived = this.computationService.stringToNumber(
       this.redeemForm.controls.receivedAmount.value
@@ -163,11 +164,13 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     );
 
     if (redeemAmount > amountReceived){
+      this.redeemForm.controls.receivedAmount.setValue('');
       this.receivedAmountRef.nativeElement.focus();
       alert("Enter valid amount received")
     }
 
   }
+
   reset() {
     this.redeemForm.reset();
     this.setComputation();
@@ -243,4 +246,5 @@ export class RedeemComponent implements OnInit, AfterViewInit {
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
     this.redeemForm.controls.receivedAmount.setValue('');
   }
+
 }
