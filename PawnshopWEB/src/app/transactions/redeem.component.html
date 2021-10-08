@@ -170,7 +170,7 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Principal Value</span>
+          <span class="col-form-label-sm">Principal Loan</span>
           <input
             formControlName="principalLoan"
             tabindex="-1"
@@ -182,18 +182,30 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Amount Due</span>
+          <span class="col-form-label-sm">Interest Rate</span>
           <input
+            formControlName="interestRate"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm text-right"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm">
+          <span class="col-form-label-sm">Interest</span>
+          <input
+            formControlName="interest"
+            tabindex="-1"
+            maxlength="14"
             [inputMask]="currencyInputMask"
+            class="form-control form-control-sm text-right"
             type="text"
           />
         </div>
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Penalty</span>
           <input
+            formControlName="penalty"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -202,18 +214,21 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Interest Rate</span>
+          <span class="col-form-label-sm">Due Amount</span>
           <input
-          formControlName="interestRate"
+            formControlName="dueAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm  text-right"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
             type="text"
           />
         </div>
+
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Service Charge</span>
           <input
+            formControlName="serviceCharge"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -224,6 +239,9 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Discount</span>
           <input
+            #discountRef
+            (keyup)="receivedAmountFocus($event)"
+            formControlName="discount"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -232,8 +250,9 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Amount Redeem</span>
+          <span class="col-form-label-sm">Redeem Amount</span>
           <input
+            formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -242,9 +261,10 @@
           />
         </div>
         <div class="input-group shadow-sm">
-          <span class="col-form-label-sm">Amount Received</span>
+          <span class="col-form-label-sm">Received Amount</span>
           <input
-           #receivedAmountRef
+            (keyup)="discountFocus($event)"
+            #receivedAmountRef
             tabindex="1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -255,7 +275,7 @@
         <div class="input-group shadow-sm">
           <span class="col-form-label-sm">Change</span>
           <input
-          formControlName="change"
+            formControlName="change"
             readonly
             maxlength="14"
             class="form-control form-control-sm"
@@ -276,7 +296,7 @@
           <mat-icon>save</mat-icon> Save
         </button>
         <button
-        (click)="reset()"
+          (click)="reset()"
           fxFlex="33"
           class="btn btn-danger"
           type="button"

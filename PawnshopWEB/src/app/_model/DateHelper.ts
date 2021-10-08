@@ -94,7 +94,7 @@ export class DateHelper {
 
 
 /* start to get the number of days months and years */
-  getMomentsInYearMonthDays(m:string) {
+  getDaysMonthsYear(m:string) {
   if (m.includes('day') || m.includes('days')) {
       this.totalDays= this.getDays(m);
     } else {

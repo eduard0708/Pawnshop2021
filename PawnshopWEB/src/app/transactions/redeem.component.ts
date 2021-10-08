@@ -10,7 +10,7 @@ import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
-import { ItemService } from '../_service/item.service';
+import { ComputationService } from '../_service/computation.service';
 import { RedeemService } from '../_service/redeem.service';
 import { TransactionService } from '../_service/transaction.service';
 
@@ -22,12 +22,21 @@ import { TransactionService } from '../_service/transaction.service';
 export class RedeemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
+  @ViewChild('discountRef') discountRef: ElementRef;
+  @ViewChild('redeemRef') redeemRef: ElementRef;
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   redeemForm: FormGroup;
   previousTransactionId;
   moments;
+  principalLoan:number;
+  daysCount:number;
+  interest:number;
+  penalty:number;
+  dueAmount:number;
+  serviceCharge:number;
+  redeemAmount:number;
 
   displayColumns: string[] = [
     'index',
@@ -53,7 +62,8 @@ export class RedeemComponent implements OnInit {
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private computationService:ComputationService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -71,9 +81,10 @@ export class RedeemComponent implements OnInit {
       dateExpired: [],
       totalAppraisal: [0],
       principalLoan: [0],
-      dueAmount: [0],
-      penalty: [0],
       interestRate: [0],
+      interest: [0],
+      penalty: [0],
+      dueAmount: [0],
       serviceCharge: [0],
       discount: [0],
       redeemAmount: [0],
@@ -117,6 +128,15 @@ export class RedeemComponent implements OnInit {
     this.router.navigateByUrl('main/dashboard');
   }
 
+  discountFocus(e){
+    if((e.key).toLowerCase() === 'd')
+      this.discountRef.nativeElement.focus();
+  }
+  receivedAmountFocus(e){
+    if((e.key).toLowerCase() === 'a')
+      this.receivedAmountRef.nativeElement.focus();
+  }
+
   setComputation() {
     let dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
@@ -124,10 +144,22 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateExpire)
     );
 
+    let momentsInfo = dateStatus.getDaysMonthsYear(
+      dateStatus.moments()
+    );
+      let totalDays = this.computationService.getTotalDays(momentsInfo.totalDays, momentsInfo.totalMonths, momentsInfo.totalYears)
+
+    this.principalLoan = this.transactionInfo.principalLoan;
+    this.daysCount = this.computationService.getTotalDays(momentsInfo.totalDays, momentsInfo.totalMonths, momentsInfo.totalYears);
+    this.interest = this.computationService.getInterest(this.principalLoan, this.transactionInfo.interestRate, totalDays )
+    this.penalty = this.computationService.getPenalty(this.principalLoan, totalDays)
+    this.dueAmount = this.interest + this.penalty;
+    this.serviceCharge = this.computationService.getServiceCharge(this.principalLoan);
+    this.redeemAmount = this.principalLoan + this.dueAmount + this.serviceCharge
+
     this.redeemForm.controls.dateTransaction.setValue(new Date());
     this.redeemForm.controls.status.setValue(dateStatus.status());
     this.redeemForm.controls.moments.setValue(dateStatus.moments());
-
     this.redeemForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
     );
@@ -138,14 +170,11 @@ export class RedeemComponent implements OnInit {
       `${this.transactionInfo.interestRate}%`
     );
     this.redeemForm.controls.change.setValue(0);
-
-    let totalDaysMonthsYears = dateStatus.getMomentsInYearMonthDays(
-      dateStatus.moments()
-    );
-
-    console.log(totalDaysMonthsYears.totalDays);
-    console.log(totalDaysMonthsYears.totalMonths);
-    console.log(totalDaysMonthsYears.totalYears);
-
+    this.redeemForm.controls.interest.setValue(this.interest);
+    this.redeemForm.controls.penalty.setValue(this.penalty);
+    this.redeemForm.controls.dueAmount.setValue(this.dueAmount);
+    this.redeemForm.controls.discount.setValue(0);
+    this.redeemForm.controls.serviceCharge.setValue(this.serviceCharge);
+    this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
   }
 }
