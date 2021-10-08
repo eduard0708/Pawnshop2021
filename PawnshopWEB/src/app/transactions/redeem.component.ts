@@ -114,18 +114,19 @@ export class RedeemComponent implements OnInit, AfterViewInit {
 
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
-      const redeemAmount = +(this.redeemForm.controls.redeemAmount.value).toString().replace(/[^\d.-]/g, '');
-        let recivedAmount = +(amountReceived ?? 0).toString().replace(/[^\d.-]/g, '');
+        const redeemAmount = this.computationService.stringToNumber(
+          this.redeemForm.controls.redeemAmount.value
+        );
+        let recivedAmount =
+          this.computationService.stringToNumber(amountReceived);
         let change =
-        redeemAmount > recivedAmount
-            ? 0
-            : recivedAmount - redeemAmount;
+          redeemAmount > recivedAmount ? 0 : recivedAmount - redeemAmount;
         this.redeemForm.controls.change.setValue(change ?? 0);
       }
     );
 
     this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
-      let afterDiscount = +(discount.toString().replace(/[^\d.-]/g, '') ?? 0.0);
+      let afterDiscount = this.computationService.stringToNumber(discount);
       const redeemAmount = this.redeemAmount;
       this.redeemForm.controls.redeemAmount.setValue(
         redeemAmount - afterDiscount
@@ -133,8 +134,8 @@ export class RedeemComponent implements OnInit, AfterViewInit {
       this.redeemForm.controls.receivedAmount.setValue(0);
       this.redeemForm.controls.change.setValue(0);
 
-      if(afterDiscount > redeemAmount )
-      this.redeemForm.controls.discount.setValue(redeemAmount);
+      if (afterDiscount > redeemAmount)
+        this.redeemForm.controls.discount.setValue(redeemAmount);
     });
 
     //convert datatrasactionItems as Items to load in table dataSource
@@ -153,7 +154,20 @@ export class RedeemComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  save() {}
+  save() {
+    const amountReceived = this.computationService.stringToNumber(
+      this.redeemForm.controls.receivedAmount.value
+    );
+    const redeemAmount = this.computationService.stringToNumber(
+      this.redeemForm.controls.redeemAmount.value
+    );
+
+    if (redeemAmount > amountReceived){
+      this.receivedAmountRef.nativeElement.focus();
+      alert("Enter valid amount received")
+    }
+
+  }
   reset() {
     this.redeemForm.reset();
     this.setComputation();

@@ -34,4 +34,9 @@ export class ComputationService {
     return daysCount + (monthsCount * 30) + ((yearsCounts * 12) * 30);
   }
 
+  stringToNumber(number: any):number{
+   let value = +(+(number ?? 0).toString().replace(/[^\d.-]/g, '')).toFixed(2);
+  return value
+  }
+
 }

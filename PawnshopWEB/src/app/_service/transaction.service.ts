@@ -25,7 +25,4 @@ export class TransactionService {
     }
     return normItem;
   }
-
-  
-
 }
