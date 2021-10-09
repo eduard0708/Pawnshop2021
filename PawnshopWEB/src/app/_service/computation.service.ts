@@ -44,7 +44,23 @@ export class ComputationService {
   }
 
   getAdvanceInterest(principalLoan: number, interestRate: number): number {
-    return +((principalLoan * (interestRate / 100)) / 30).toFixed(2);
+    return +(principalLoan * (interestRate / 100)).toFixed(2);
+  }
+
+  getAdvanceServiceCharge(principalLoan: number) {
+    let advanceInterest = 0;
+    if (principalLoan >= 500) {
+      advanceInterest = 5;
+    } else if (principalLoan >= 400 && principalLoan <= 499) {
+      advanceInterest = 4;
+    } else if (principalLoan >= 300 && principalLoan <= 399) {
+      advanceInterest = 3;
+    } else if (principalLoan >= 200 && principalLoan <= 299) {
+      advanceInterest = 2;
+    } else if (principalLoan >= 1 && principalLoan <= 199) {
+      advanceInterest = 1;
+    }
+    return advanceInterest;
   }
 
   getTotalDays(

@@ -273,7 +273,7 @@
           (keyup)="discountFocus($event)"
             #receivedAmountRef
             formControlName="receivedAmount"
-            tabindex="-1"
+            tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -299,7 +299,7 @@
           fxFlex="33"
           class="btn btn-success"
           type="submit"
-          tabindex="9"
+          tabindex="3"
           mat-raised-button
         >
           <mat-icon>save</mat-icon> Save
@@ -308,7 +308,7 @@
           fxFlex="33"
           class="btn btn-danger"
           type="button"
-          tabindex="10"
+          tabindex="4"
           (click)="reset()"
           mat-raised-button
           mat-raised-button
@@ -319,7 +319,7 @@
           fxFlex="33"
           class="btn btn-primary"
           type="button"
-          tabindex="11"
+          tabindex="5"
           (click)="home()"
           mat-raised-button
           mat-raised-button

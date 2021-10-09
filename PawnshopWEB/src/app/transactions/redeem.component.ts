@@ -41,6 +41,8 @@ export class RedeemComponent implements OnInit {
   penalty: number;
   dueAmount: number;
   serviceCharge: number;
+  advanceInterest: number;
+  advanceServiceCharge: number;
   redeemAmount: number;
   isDiscount: boolean;
 
@@ -109,6 +111,7 @@ export class RedeemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const redeemAmount = this.computationService.stringToNumber(
@@ -152,6 +155,7 @@ export class RedeemComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
+    //set focus to discount during init if not disabled
     setTimeout(() => {
       if (this.redeemForm.controls.discount.untouched) {
         this.setComputation();
@@ -235,6 +239,7 @@ export class RedeemComponent implements OnInit {
     this.serviceCharge = this.computationService.getServiceCharge(
       this.principalLoan
     );
+
     this.redeemAmount =
       this.principalLoan + this.dueAmount + this.serviceCharge;
 

@@ -248,14 +248,13 @@
         <div class="input-group shadow-sm Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
+          #discountRef
           (keyup)="receivedAmountFocus($event)"
-            #discountRef
-            formControlName="discount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
+          formControlName="discount"
+          tabindex="1"
+          class="form-control form-control-sm"
+          style="text-align: center;"
+          type="number"
           />
         </div>
         <div class="input-group shadow-sm Net Payment">
@@ -323,6 +322,7 @@
           class="btn btn-danger"
           type="button"
           tabindex="10"
+          (click)="reset()"
           mat-raised-button
           mat-raised-button
         >
