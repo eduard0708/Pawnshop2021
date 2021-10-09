@@ -42,7 +42,7 @@ export class RedeemComponent implements OnInit {
   dueAmount: number;
   serviceCharge: number;
   redeemAmount: number;
-  isDiscount:boolean;
+  isDiscount: boolean;
 
   displayColumns: string[] = [
     'index',
@@ -69,8 +69,7 @@ export class RedeemComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
-    private computationService: ComputationService,
-
+    private computationService: ComputationService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -107,15 +106,10 @@ export class RedeemComponent implements OnInit {
     });
 
     this.dataSource = new MatTableDataSource<Item>();
-
   }
 
   ngOnInit(): void {
 
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-      this.receivedAmountRef.nativeElement.focus();
-    }, 100);
 
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
@@ -131,20 +125,18 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
-      if(discount < 0)
-      this.redeemForm.controls.discount.setValue(0)
-      if(discount >= 4)
-      this.redeemForm.controls.discount.setValue(0)
+      if (discount < 0) this.redeemForm.controls.discount.setValue(0);
+      if (discount >= 4) this.redeemForm.controls.discount.setValue(0);
 
-      console.log(discount);
-
-
-      if(discount === 0 || discount < 4){
+      if (discount === 0 || discount < 4) {
         const dueAmount = this.dueAmount;
-        let discounts = this.computationService.getDiscount(this.transactionInfo.principalLoan, this.transactionInfo.interestRate, +discount)
-         this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts )
+        let discounts = this.computationService.getDiscount(
+          this.transactionInfo.principalLoan,
+          this.transactionInfo.interestRate,
+          +discount
+        );
+        this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts);
       }
-
     });
 
     //convert datatrasactionItems as Items to load in table dataSource
@@ -169,12 +161,11 @@ export class RedeemComponent implements OnInit {
       this.redeemForm.controls.redeemAmount.value
     );
 
-    if (redeemAmount > amountReceived){
+    if (redeemAmount > amountReceived) {
       this.redeemForm.controls.receivedAmount.setValue('');
       this.receivedAmountRef.nativeElement.focus();
-      alert("Enter valid amount received")
+      alert('Enter valid amount received');
     }
-
   }
 
   reset() {
@@ -205,7 +196,9 @@ export class RedeemComponent implements OnInit {
 
     let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
 
-    console.log(`d ${momentsInfo.totalDays} m ${momentsInfo.totalMonths} y ${momentsInfo.totalYears}`);
+    console.log(
+      `d ${momentsInfo.totalDays} m ${momentsInfo.totalMonths} y ${momentsInfo.totalYears}`
+    );
 
     let totalDays = this.computationService.getTotalDays(
       momentsInfo.totalDays,
@@ -215,9 +208,13 @@ export class RedeemComponent implements OnInit {
 
     // set discount disabled
     // this.isDiscount = this.computationService.isDiscount(new Date(this.transactionInfo.dateMature))
-    if(this.computationService.isDiscount(new Date(this.transactionInfo.dateMature))){
-      this.redeemForm.controls.discount.setValue(0)
-      this.redeemForm.controls.discount.disable()
+    if (
+      this.computationService.isDiscount(
+        new Date(this.transactionInfo.dateMature)
+      )
+    ) {
+      this.redeemForm.controls.discount.setValue(0);
+      this.redeemForm.controls.discount.disable();
     }
 
     this.principalLoan = this.transactionInfo.principalLoan;
@@ -264,6 +261,18 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.serviceCharge.setValue(this.serviceCharge);
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
     this.redeemForm.controls.receivedAmount.setValue('');
-  }
 
+
+    //set paginator and set cursor focus during init and reset
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+       this.isDiscount = this.computationService.isDiscount(
+        new Date(this.transactionInfo.dateMature)
+      );
+
+      if (!this.isDiscount) this.discountRef.nativeElement.focus();
+
+      if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
+    }, 100);
+  }
 }

@@ -230,7 +230,7 @@
             #discountRef
             (keyup)="receivedAmountFocus($event)"
             formControlName="discount"
-            tabindex="-1"
+            tabindex="1"
             class="form-control form-control-sm"
             style="text-align: center;"
             type="number"
@@ -264,7 +264,7 @@
             formControlName="receivedAmount"
             (keyup)="discountFocus($event)"
             #receivedAmountRef
-            tabindex="1"
+            tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
