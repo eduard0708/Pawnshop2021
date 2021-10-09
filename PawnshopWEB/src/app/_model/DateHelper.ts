@@ -8,6 +8,12 @@ declare module 'moment' {
   ): any;
 }
 
+interface MomentCountYYMMDD {
+  years: number;
+  months: number;
+  days: number;
+}
+
 export class DateHelper {
   totalYears;
   totalMonths;
@@ -16,6 +22,7 @@ export class DateHelper {
   expiredDate: Date;
   maturedDate: Date;
   transactionDate: Date;
+  CountYYMMDD: MomentCountYYMMDD;
 
   constructor(
     private dateTransaction: Date,
@@ -44,43 +51,36 @@ export class DateHelper {
 
   /* return the difference of two dates as moment format */
   moments() {
-    let pastMoment = moment.preciseDiff(this.todayDate, this.dateMatured);
+    let pastMoment = moment.preciseDiff(this.maturedDate, this.todayDate);
     return pastMoment;
   }
 
-  days() {
-    let totalDays = 395;
-    //  (new Date(this.todayDate).getTime() - new Date(this.transactionDate).getTime()) / (1000 * 60 * 60 * 24);
-    if (totalDays >= 365) {
-      let days;
-      let deductYears = totalDays - Math.floor(totalDays / 365) * 365;
-      if (deductYears > 30) {
-        days = deductYears - (deductYears - Math.floor(deductYears / 30) * 30);
-        console.log('days ' + days);
-        return days;
-      } else {
-        return deductYears;
-      }
+  //retuned number of years, months
+  getmoments(dateMatured: Date):MomentCountYYMMDD {
+    let numberOfYYMMYY;
+    //to get the difference of the two dates and returned each diff.. by days, month and year
+    let pastMoment = moment.preciseDiff(
+      new Date(dateMatured),
+      this.todayDate,
+      true
+    );
+
+    let totalDays =
+      (new Date(this.todayDate).getTime() - new Date(dateMatured).getTime()) /
+      (1000 * 60 * 60 * 24);
+    if (totalDays < 0) {
+      numberOfYYMMYY = { years: 0, months: 0, days: 0 };
+    } else {
+      numberOfYYMMYY = {
+        years: pastMoment.years,
+        months: pastMoment.months,
+        days: pastMoment.days,
+      };
     }
+    return numberOfYYMMYY;
   }
 
-  months() {
-    let d1Y = this.todayDate.getFullYear();
-    let d2Y = this.transactionDate.getFullYear();
-    let d1M = this.todayDate.getMonth();
-    let d2M = this.transactionDate.getMonth();
-    let days = d1M + 12 * d1Y - (d2M + 12 * d2Y);
-    let month = Math.ceil(d1M + 12 * d1Y - (d2M + 12 * d2Y));
-    let months = month - Math.floor(month / 12) * 12;
-    return months;
-  }
-  years() {
-    const totalDays =
-      (new Date(this.todayDate).getTime() -
-        new Date(this.transactionDate).getTime()) /
-      (1000 * 60 * 60 * 24);
-    return Math.floor(totalDays / 365);
-  }
+  getStatus() {}
 
   status() {
     if (this.todayDate > this.expiredDate) {
@@ -92,60 +92,59 @@ export class DateHelper {
     }
   }
 
-
-/* start to get the number of days months and years */
-  getDaysMonthsYear(m:string) {
-  if (m.includes('day') || m.includes('days')) {
+  /* start to get the number of days months and years */
+  getDaysMonthsYear(m: string) {
+    if (m.includes('day') || m.includes('days')) {
       this.totalDays = this.getDays(m);
     } else {
       this.totalDays = 0;
     }
     if (m.includes('month') || m.includes('months')) {
-      this.totalMonths= this.getMonths(m);
+      this.totalMonths = this.getMonths(m);
     } else {
       this.totalMonths = 0;
     }
     if (m.includes('year') || m.includes('years')) {
-        this.totalYears = this.getYears(m)
-    }else{
+      this.totalYears = this.getYears(m);
+    } else {
       this.totalYears = 0;
     }
-    let momentsInYearMonthDays ={
-      totalDays:this.totalDays,
-      totalMonths:this.totalMonths,
-      totalYears:this.totalYears,
-    }
-     return momentsInYearMonthDays;
+    let momentsInYearMonthDays = {
+      totalDays: this.totalDays,
+      totalMonths: this.totalMonths,
+      totalYears: this.totalYears,
+    };
+    return momentsInYearMonthDays;
   }
-
-
 
   private getDays(moments: string) {
     let days = 0;
-    if(moments.length < 7){
-      days = +(moments.replace(/[^0-9]/g, ''));
-    }else{
-      days = +moments.substr(moments.length - 7, moments.length).replace(/[^0-9]/g, '');
+    if (moments.length < 7) {
+      days = +moments.replace(/[^0-9]/g, '');
+    } else {
+      days = +moments
+        .substr(moments.length - 7, moments.length)
+        .replace(/[^0-9]/g, '');
     }
 
     return days;
   }
 
   private getMonths(moments: string) {
-    if(moments.includes('year')){
-      let takeMonth = moments.split('month')[0]
-      let months = +takeMonth.substr(takeMonth.length - 3, takeMonth.length).replace(/[^0-9]/g, '');
-      return months
-    }else{
+    if (moments.includes('year')) {
+      let takeMonth = moments.split('month')[0];
+      let months = +takeMonth
+        .substr(takeMonth.length - 3, takeMonth.length)
+        .replace(/[^0-9]/g, '');
+      return months;
+    } else {
       return +moments.split('month')[0].replace(/[^0-9]/g, '');
     }
-
   }
 
   private getYears(moments: string) {
     let years = +moments.split('year')[0].replace(/[^0-9]/g, '');
-    return years
+    return years;
   }
-
 }
 /* ends here!! to get the number of days months and years */

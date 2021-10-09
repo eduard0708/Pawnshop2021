@@ -3,7 +3,7 @@
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
     <h2 class="text-center font-monospace trasaction-title">
-      Redeem Information
+      Renew Information
     </h2>
   </div>
   <!-- end pawner info title and transaction number -->
@@ -246,15 +246,14 @@
         <div class="input-group shadow-sm Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
+          #discountRef
           (keyup)="receivedAmountFocus($event)"
-            #discountRef
-            formControlName="discount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
+          formControlName="discount"
+          tabindex="1"
+          class="form-control form-control-sm"
+          style="text-align: center;"
+          type="number"
+        />
         </div>
         <div class="input-group shadow-sm Net Payment">
           <span class="col-form-label-sm">Net Payment</span>
@@ -293,7 +292,7 @@
           />
         </div>
       </div>
-      
+
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
          (click)="save()"
@@ -310,6 +309,7 @@
           class="btn btn-danger"
           type="button"
           tabindex="10"
+          (click)="reset()"
           mat-raised-button
           mat-raised-button
         >
