@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,6 +42,7 @@ export class RedeemComponent implements OnInit {
   dueAmount: number;
   serviceCharge: number;
   redeemAmount: number;
+  isDiscount:boolean;
 
   displayColumns: string[] = [
     'index',
@@ -93,7 +94,7 @@ export class RedeemComponent implements OnInit {
       penalty: [0],
       dueAmount: [0],
       serviceCharge: [0],
-      discount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]],
       redeemAmount: [0],
       receivedAmount: [0],
       change: [0],
@@ -110,6 +111,7 @@ export class RedeemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.receivedAmountRef.nativeElement.focus();
@@ -129,16 +131,20 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
-      let afterDiscount = this.computationService.stringToNumber(discount);
-      const redeemAmount = this.redeemAmount;
-      this.redeemForm.controls.redeemAmount.setValue(
-        redeemAmount - afterDiscount
-      );
-      this.redeemForm.controls.receivedAmount.setValue(0);
-      this.redeemForm.controls.change.setValue(0);
+      if(discount < 0)
+      this.redeemForm.controls.discount.setValue(0)
+      if(discount >= 4)
+      this.redeemForm.controls.discount.setValue(0)
 
-      if (afterDiscount > redeemAmount)
-        this.redeemForm.controls.discount.setValue(redeemAmount);
+      console.log(discount);
+
+
+      if(discount === 0 || discount < 4){
+        const dueAmount = this.dueAmount;
+        let discounts = this.computationService.getDiscount(this.transactionInfo.principalLoan, this.transactionInfo.interestRate, +discount)
+         this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts )
+      }
+
     });
 
     //convert datatrasactionItems as Items to load in table dataSource
@@ -184,6 +190,7 @@ export class RedeemComponent implements OnInit {
   discountFocus(e) {
     if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
   }
+
   receivedAmountFocus(e) {
     if (e.key.toLowerCase() === 'a')
       this.receivedAmountRef.nativeElement.focus();
@@ -197,18 +204,30 @@ export class RedeemComponent implements OnInit {
     );
 
     let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
+
+    console.log(`d ${momentsInfo.totalDays} m ${momentsInfo.totalMonths} y ${momentsInfo.totalYears}`);
+
     let totalDays = this.computationService.getTotalDays(
       momentsInfo.totalDays,
       momentsInfo.totalMonths,
       momentsInfo.totalYears
     );
 
+    // set discount disabled
+    // this.isDiscount = this.computationService.isDiscount(new Date(this.transactionInfo.dateMature))
+    if(this.computationService.isDiscount(new Date(this.transactionInfo.dateMature))){
+      this.redeemForm.controls.discount.setValue(0)
+      this.redeemForm.controls.discount.disable()
+    }
+
     this.principalLoan = this.transactionInfo.principalLoan;
+
     this.daysCount = this.computationService.getTotalDays(
       momentsInfo.totalDays,
       momentsInfo.totalMonths,
       momentsInfo.totalYears
     );
+
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,

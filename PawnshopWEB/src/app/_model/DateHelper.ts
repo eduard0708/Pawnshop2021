@@ -44,7 +44,7 @@ export class DateHelper {
 
   /* return the difference of two dates as moment format */
   moments() {
-    let pastMoment = moment.preciseDiff(this.todayDate, this.transactionDate);
+    let pastMoment = moment.preciseDiff(this.todayDate, this.dateMatured);
     return pastMoment;
   }
 
@@ -96,7 +96,7 @@ export class DateHelper {
 /* start to get the number of days months and years */
   getDaysMonthsYear(m:string) {
   if (m.includes('day') || m.includes('days')) {
-      this.totalDays= this.getDays(m);
+      this.totalDays = this.getDays(m);
     } else {
       this.totalDays = 0;
     }
@@ -118,8 +118,16 @@ export class DateHelper {
      return momentsInYearMonthDays;
   }
 
+
+
   private getDays(moments: string) {
-    let days = +moments.substr(moments.length - 7, moments.length).replace(/[^0-9]/g, '');
+    let days = 0;
+    if(moments.length < 7){
+      days = +(moments.replace(/[^0-9]/g, ''));
+    }else{
+      days = +moments.substr(moments.length - 7, moments.length).replace(/[^0-9]/g, '');
+    }
+
     return days;
   }
 
