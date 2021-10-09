@@ -109,8 +109,6 @@ export class RedeemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const redeemAmount = this.computationService.stringToNumber(
@@ -136,7 +134,11 @@ export class RedeemComponent implements OnInit {
           +discount
         );
         this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts);
-      }
+       }
+
+       const discountDue = +(+(this.redeemForm.controls.dueAmount.value).toString().replace(/[^\d.-]/g, '')).toFixed(2)
+       if (discountDue < 0) this.redeemForm.controls.dueAmount.setValue(0);
+
     });
 
     //convert datatrasactionItems as Items to load in table dataSource
