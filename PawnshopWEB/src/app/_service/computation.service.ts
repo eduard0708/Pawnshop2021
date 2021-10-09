@@ -73,9 +73,13 @@ export class ComputationService {
       new Date(new Date(dateMatured).setHours(0, 0, 0, 0))
     );
     let daysCount = moment.duration(todayDate.diff(maturedDate)).asDays();
+
+    //value of dayscount is less than 0 or greater than four the discount will be disabled
     let isDiscount: boolean;
-    if (daysCount <= 4) isDiscount = false;
-    if (daysCount > 4) isDiscount = true;
+    if (daysCount <= 4 && daysCount > 0) isDiscount = false;
+    if (daysCount > 4 || daysCount === 0) isDiscount = true;
+    if (daysCount < 0) isDiscount = true;
+
     return isDiscount;
   }
 }

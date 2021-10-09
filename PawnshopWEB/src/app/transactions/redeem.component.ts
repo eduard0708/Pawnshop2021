@@ -36,7 +36,7 @@ export class RedeemComponent implements OnInit {
   previousTransactionId;
   moments;
   principalLoan: number;
-  daysCount: number;
+  totalDays: number;
   interest: number;
   penalty: number;
   dueAmount: number;
@@ -109,8 +109,6 @@ export class RedeemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const redeemAmount = this.computationService.stringToNumber(
@@ -124,7 +122,9 @@ export class RedeemComponent implements OnInit {
       }
     );
 
+  //discount value changes computations
     this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
+      const redeemAmount = this.redeemAmount;
       if (discount < 0) this.redeemForm.controls.discount.setValue(0);
       if (discount >= 4) this.redeemForm.controls.discount.setValue(0);
 
@@ -136,7 +136,13 @@ export class RedeemComponent implements OnInit {
           +discount
         );
         this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts);
+        this.redeemForm.controls.redeemAmount.setValue(redeemAmount - discounts);
       }
+
+      const discountDue = +(+this.redeemForm.controls.dueAmount.value
+        .toString()
+        .replace(/[^\d.-]/g, '')).toFixed(2);
+      if (discountDue < 0) this.redeemForm.controls.dueAmount.setValue(0);
     });
 
     //convert datatrasactionItems as Items to load in table dataSource
@@ -193,22 +199,20 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
-
-    let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
-
-    console.log(
-      `d ${momentsInfo.totalDays} m ${momentsInfo.totalMonths} y ${momentsInfo.totalYears}`
+    //get the total number of years, months and days
+    let countYYMMDD = dateStatus.getmoments(
+      new Date(this.transactionInfo.dateMature)
     );
 
-    let totalDays = this.computationService.getTotalDays(
-      momentsInfo.totalDays,
-      momentsInfo.totalMonths,
-      momentsInfo.totalYears
+    //get the total days in moments
+    this.totalDays = this.computationService.getTotalDays(
+      countYYMMDD.days,
+      countYYMMDD.months,
+      countYYMMDD.years
     );
 
     // set discount disabled
-    // this.isDiscount = this.computationService.isDiscount(new Date(this.transactionInfo.dateMature))
-    if (
+   if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
       )
@@ -218,21 +222,14 @@ export class RedeemComponent implements OnInit {
     }
 
     this.principalLoan = this.transactionInfo.principalLoan;
-
-    this.daysCount = this.computationService.getTotalDays(
-      momentsInfo.totalDays,
-      momentsInfo.totalMonths,
-      momentsInfo.totalYears
-    );
-
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
-      totalDays
+      this.totalDays
     );
     this.penalty = this.computationService.getPenalty(
       this.principalLoan,
-      totalDays
+      this.totalDays
     );
     this.dueAmount = this.interest + this.penalty;
     this.serviceCharge = this.computationService.getServiceCharge(
@@ -243,7 +240,9 @@ export class RedeemComponent implements OnInit {
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
     this.redeemForm.controls.status.setValue(dateStatus.status());
-    this.redeemForm.controls.moments.setValue(dateStatus.moments());
+    this.redeemForm.controls.moments.setValue(
+      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+    );
     this.redeemForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
     );
@@ -262,16 +261,14 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
     this.redeemForm.controls.receivedAmount.setValue('');
 
-
-    //set paginator and set cursor focus during init and reset
+    //set paginator and set cursor focus during init
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
-       this.isDiscount = this.computationService.isDiscount(
+      this.isDiscount = this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
       );
 
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
-
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
   }

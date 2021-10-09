@@ -36,6 +36,8 @@ export class RenewComponent implements OnInit {
   advanceInterest: number;
   advanceServiceCharge: number;
   netPayment: number;
+  isDiscount: boolean;
+  totalDays:number;
 
   displayColumns: string[] = [
     'index',
@@ -148,19 +150,41 @@ export class RenewComponent implements OnInit {
       }
     );
 
-    this.renewForm.controls.discount.valueChanges.subscribe((discount) => {
-      let afterDiscount = this.computationService.stringToNumber(discount);
-      const netPayment = this.netPayment;
-      this.renewForm.controls.netPayment.setValue(
-        netPayment - afterDiscount
+    // this.renewForm.controls.discount.valueChanges.subscribe((discount) => {
+    //   let afterDiscount = this.computationService.stringToNumber(discount);
+    //   const netPayment = this.netPayment;
+    //   this.renewForm.controls.netPayment.setValue(
+    //     netPayment - afterDiscount
+    //   );
+    //   this.renewForm.controls.receivedAmount.setValue(0);
+    //   this.renewForm.controls.change.setValue(0);
+
+    //   if (afterDiscount > netPayment)
+    //     this.renewForm.controls.discount.setValue(netPayment);
+    // });
+
+  //discount value changes computations
+  this.renewForm.controls.discount.valueChanges.subscribe((discount) => {
+    const netPayment = this.netPayment;
+    if (discount < 0) this.renewForm.controls.discount.setValue(0);
+    if (discount >= 4) this.renewForm.controls.discount.setValue(0);
+
+    if (discount === 0 || discount < 4) {
+      const dueAmount = this.dueAmount;
+      let discounts = this.computationService.getDiscount(
+        this.transactionInfo.principalLoan,
+        this.transactionInfo.interestRate,
+        +discount
       );
-      this.renewForm.controls.receivedAmount.setValue(0);
-      this.renewForm.controls.change.setValue(0);
+      this.renewForm.controls.dueAmount.setValue(dueAmount - discounts);
+      this.renewForm.controls.netPayment.setValue(netPayment - discounts);
+    }
 
-      if (afterDiscount > netPayment)
-        this.renewForm.controls.discount.setValue(netPayment);
-    });
-
+    const discountDue = +(+this.renewForm.controls.dueAmount.value
+      .toString()
+      .replace(/[^\d.-]/g, '')).toFixed(2);
+    if (discountDue < 0) this.renewForm.controls.dueAmount.setValue(0);
+  });
 
 
     setTimeout(() => {
@@ -188,11 +212,9 @@ export class RenewComponent implements OnInit {
 
   }
 
-
   reset() {
     this.renewForm.reset();
     this.setComputation();
-    this.receivedAmountRef.nativeElement.focus();
   }
 
   home() {
@@ -214,27 +236,44 @@ export class RenewComponent implements OnInit {
       new Date(this.transactionInfo.dateExpire)
     );
 
-    let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
-    let totalDays = this.computationService.getTotalDays(
-      momentsInfo.totalDays,
-      momentsInfo.totalMonths,
-      momentsInfo.totalYears
-    );
+    // let momentsInfo = dateStatus.getDaysMonthsYear(dateStatus.moments());
+
+    // let totalDays = this.computationService.getTotalDays(
+    //   momentsInfo.totalDays,
+    //   momentsInfo.totalMonths,
+    //   momentsInfo.totalYears
+    // );
+
+        //get the total number of years, months and days
+        let countYYMMDD = dateStatus.getmoments(
+          new Date(this.transactionInfo.dateMature)
+        );
+
+        //get the total days in moments
+        this.totalDays = this.computationService.getTotalDays(
+          countYYMMDD.days,
+          countYYMMDD.months,
+          countYYMMDD.years
+        );
+        console.log(this.totalDays);
+
 
     this.principalLoan = this.transactionInfo.principalLoan;
-    this.daysCount = this.computationService.getTotalDays(
-      momentsInfo.totalDays,
-      momentsInfo.totalMonths,
-      momentsInfo.totalYears
-    );
+
+    // this.daysCount = this.computationService.getTotalDays(
+    //   countYYMMDD.days,
+    //   countYYMMDD.months,
+    //   countYYMMDD.years
+    // );
+
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
-      totalDays
+       this.totalDays
     );
     this.penalty = this.computationService.getPenalty(
       this.principalLoan,
-      totalDays
+      this.totalDays
     );
 
     this.advanceInterest = this.computationService.getAdvanceInterest(
@@ -250,7 +289,9 @@ export class RenewComponent implements OnInit {
 
     this.renewForm.controls.dateTransaction.setValue(new Date());
     this.renewForm.controls.status.setValue(dateStatus.status());
-    this.renewForm.controls.moments.setValue(dateStatus.moments());
+    this.renewForm.controls.moments.setValue(
+      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+    );
     this.renewForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
     );
@@ -269,5 +310,20 @@ export class RenewComponent implements OnInit {
     this.renewForm.controls.advanceServiceCharge.setValue(this.advanceServiceCharge);
     this.renewForm.controls.netPayment.setValue(this.netPayment);
     this.renewForm.controls.receivedAmount.setValue('');
+
+     //set paginator and set cursor focus during init
+     setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.isDiscount = this.computationService.isDiscount(
+        new Date(this.transactionInfo.dateMature)
+      );
+
+      if (!this.isDiscount) this.discountRef.nativeElement.focus();
+      if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
+
+
+      console.log(this.isDiscount);
+
+    }, 100);
   }
 }
