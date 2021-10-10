@@ -38,10 +38,10 @@ export class ComputationService {
 
   penalty(principalLoan: number, countYYMMDD: TotalYYMMDD): number {
     let penalty = 0;
-    if (countYYMMDD.days <= 3) {
-      penalty = +(countYYMMDD.days * ((principalLoan * 0.02) / 30)).toFixed(2);
-    } else {
-      // penalty will be calculated by month, if days count morethan 3 days will be considered 1 month
+    if (countYYMMDD.days > 0) {
+      //   penalty = +(countYYMMDD.days * ((principalLoan * 0.02) / 30)).toFixed(2);
+      // } else {
+      //   // penalty will be calculated by month, if days count morethan 3 days will be considered 1 month
       penalty =
         (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
         (principalLoan * 0.02);
@@ -65,25 +65,12 @@ export class ComputationService {
   }
 
   getAdvanceServiceCharge(principalLoan: number) {
-    // let advanceInterest = 0;
-    // if (principalLoan >= 500) {
-    //   advanceInterest = 5;
-    // } else if (principalLoan >= 400 && principalLoan <= 499) {
-    //   advanceInterest = 4;
-    // } else if (principalLoan >= 300 && principalLoan <= 399) {
-    //   advanceInterest = 3;
-    // } else if (principalLoan >= 200 && principalLoan <= 299) {
-    //   advanceInterest = 2;
-    // } else if (principalLoan >= 1 && principalLoan <= 199) {
-    //   advanceInterest = 1;
-    // }
     let advanceInterest = 0;
     if (principalLoan >= 500) {
       advanceInterest = 5;
     } else {
       advanceInterest = Math.floor(principalLoan * 0.01);
     }
-
     return advanceInterest;
   }
 
@@ -120,17 +107,34 @@ export class ComputationService {
   getDiscountInterest(
     principalloan: number,
     interestRate: number,
-    discountNumber: number,
+    discountNumber: number
   ): number {
     let discount = 0;
     let interestPerDay = (principalloan * (interestRate / 100)) / 30;
 
-    if (discountNumber <= 0 || discountNumber > 3 ) {
+    if (discountNumber <= 0 || discountNumber > 3) {
       discount = 0;
     } else {
       discount = discountNumber * interestPerDay;
     }
-    return discount;
+    return +discount.toFixed(2);
+  }
+
+  getDiscountPenalty(
+    principalLoan: number,
+    countYYMMDD: TotalYYMMDD,
+    discountNumber: number
+  ): number {
+    let penalty = 0;
+
+    if (discountNumber > 0 && discountNumber <= 3) {
+      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)).toFixed(2);
+    } else {
+       penalty =
+        (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
+        (principalLoan * 0.02);
+    }
+    return +penalty.toFixed(2);
   }
 
   isDiscount(dateMatured: Date) {

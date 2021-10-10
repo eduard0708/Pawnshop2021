@@ -142,26 +142,41 @@ export class AdditionalComponent implements OnInit {
     );
 
     // discount value changes computations
-    this.additionalForm.controls.discount.valueChanges.subscribe(
-      (discountNumber: number) => {
-        //start discount to zero if lessthan 0 and 0 if morethan 4
-        if (discountNumber < 0)
-          this.additionalForm.controls.discount.setValue(0);
-        if (discountNumber >= 4)
-          this.additionalForm.controls.discount.setValue(0);
-        //end discount to zero if lessthan 0 and 0 if morethan 4
+    // this.additionalForm.controls.discount.valueChanges.subscribe(
+    //   (discountNumber: number) => {
+    //     //start discount to zero if lessthan 0 and 0 if morethan 4
+    //     if (discountNumber < 0)
+    //       this.additionalForm.controls.discount.setValue(0);
+    //     if (discountNumber >= 4)
+    //       this.additionalForm.controls.discount.setValue(0);
+    //     //end discount to zero if lessthan 0 and 0 if morethan 4
 
-        const discountInterest = this.computationService.getDiscountInterest(
-          this.principalLoan,
-          this.interestRate,
-          this.computationService.stringToNumber(discountNumber)
-        );
-        const _interest = this.interest;
-        this.additionalForm.controls.interest.setValue(
-          _interest - discountInterest
-        );
-      }
-    );
+    //     // start computation for interest here
+    //     const _discountInterest = this.computationService.getDiscountInterest(
+    //       this.principalLoan,
+    //       this.interestRate,
+    //       this.computationService.stringToNumber(discountNumber)
+    //     );
+    //     const _interest = this.interest;
+    //     this.additionalForm.controls.interest.setValue(
+    //       _interest - _discountInterest
+    //     );
+    //     // end computation for interest here
+
+    //     const _discountPenalty = this.computationService.getDiscountPenalty(
+    //       this.principalLoan,
+    //       this.countYYMMDD,
+    //       this.computationService.stringToNumber(discountNumber)
+    //     );
+    //     console.log(this.computationService.stringToNumber(discountNumber));
+
+    //     const _penalty = this.penalty;
+    //     this.additionalForm.controls.penalty.setValue(
+    //       _penalty - _discountPenalty
+    //     );
+    //     console.log('>' + _discountPenalty);
+    //   }
+    // );
 
     this.additionalForm.controls.additionalAmount.valueChanges.subscribe(
       (additionnalAmount) => {
@@ -222,9 +237,46 @@ export class AdditionalComponent implements OnInit {
     if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
   }
 
-  receivedAmountFocus(e) {
-    if (e.key.toLowerCase() === 'a')
-      this.receivedAmountRef.nativeElement.focus();
+  computeDiscount(e) {
+    console.log(e.key);
+    
+    let discountNumber = this.computationService.stringToNumber(
+      this.additionalForm.controls.discount.value
+    );
+    //start discount to zero if lessthan 0 and 0 if morethan 4
+    if (discountNumber < 0) this.additionalForm.controls.discount.setValue(0);
+    if (discountNumber >= 4) this.additionalForm.controls.discount.setValue(0);
+    //end discount to zero if lessthan 0 and 0 if morethan 4
+
+    //setting discount number to 0 to before parsing to computation
+    if (discountNumber < 0 || discountNumber > 3) discountNumber = 0;
+
+    // start computation for interest here
+    const _discountInterest = this.computationService.getDiscountInterest(
+      this.principalLoan,
+      this.interestRate,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    const _interest = this.interest;
+    this.additionalForm.controls.interest.setValue(
+      _interest - _discountInterest
+    );
+    // end computation for interest here
+
+    const _penalty = this.computationService.getDiscountPenalty(
+      this.principalLoan,
+      this.countYYMMDD,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    this.additionalForm.controls.penalty.setValue(_penalty);
+    this.dueAmount =
+      this.computationService.stringToNumber(
+        this.additionalForm.controls.interest.value
+      ) +
+      this.computationService.stringToNumber(
+        this.additionalForm.controls.penalty.value
+      );
+    this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
   }
 
   setComputation() {
@@ -256,7 +308,6 @@ export class AdditionalComponent implements OnInit {
       this.principalLoan,
       this.countYYMMDD
     );
-
     this.advanceInterest = this.computationService.getAdvanceInterest(
       this.principalLoan,
       this.transactionInfo.interestRate
