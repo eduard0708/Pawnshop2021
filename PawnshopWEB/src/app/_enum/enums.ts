@@ -19,9 +19,8 @@ export enum LoanStatus {
   New = 'New',
 }
 
-export enum ItemStatus
-{
-  Pawned= 'Pawned',
+export enum ItemStatus {
+  Pawned = 'Pawned',
   Auction = 'Auction',
   Sold = 'Sold',
   Damage = 'Damage',
@@ -29,3 +28,9 @@ export enum ItemStatus
   Recycled = 'Recycled',
 }
 
+export enum VoucherType {
+  Expense = 'Expense',
+  CashBeginning = 'Cash Beginning',
+  CashTransferIn = 'Cash Transfer In',
+  CashTransferOut = 'Cash Transfer Out',
+}

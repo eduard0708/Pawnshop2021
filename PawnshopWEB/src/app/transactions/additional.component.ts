@@ -8,6 +8,7 @@ import { createMask } from '@ngneat/input-mask';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
 import { RedeemService } from '../_service/redeem.service';
@@ -16,13 +17,13 @@ import { TransactionService } from '../_service/transaction.service';
 @Component({
   selector: 'app-additional',
   templateUrl: './additional.component.html',
-  styleUrls: ['../_sass/shared-transaction.scss']
+  styleUrls: ['../_sass/shared-transaction.scss'],
 })
 export class AdditionalComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
-  @ViewChild('additionalAmountRef') additionalAmountRef: ElementRef
+  @ViewChild('additionalAmountRef') additionalAmountRef: ElementRef;
 
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
@@ -38,8 +39,11 @@ export class AdditionalComponent implements OnInit {
   advanceInterest: number;
   advanceServiceCharge: number;
   isDiscount: boolean;
-  netPayment:number;
-  availlableAmount:number;
+  netPayment: number;
+  availlableAmount: number;
+  interestRate: number;
+  countYYMMDD: TotalYYMMDD;
+  dateStatus;
 
   displayColumns: string[] = [
     'index',
@@ -65,8 +69,8 @@ export class AdditionalComponent implements OnInit {
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private computationService:ComputationService,
-    private transactionService:TransactionService
+    private computationService: ComputationService,
+    private transactionService: TransactionService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -81,8 +85,9 @@ export class AdditionalComponent implements OnInit {
       }
     });
 
-    let dateStatus = new DateHelper(
-    new Date(this.transactionInfo.dateTransaction),
+    //call function for date helper to know the difference of the date of maturity and expired
+    this.dateStatus = new DateHelper(
+      new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
     );
@@ -109,15 +114,14 @@ export class AdditionalComponent implements OnInit {
       availlableAmount: [0],
       additionalAmount: [0],
       change: [0],
-      status: [dateStatus.status()],
-      moments: [dateStatus.moments()],
+      status: [this.dateStatus.status()],
+      moments: [this.dateStatus.moments()],
     });
 
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
-
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
       this.dataSource.data =
@@ -125,53 +129,69 @@ export class AdditionalComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
-      //discount value changes computations
-        // this.additionalForm.controls.discount.valueChanges.subscribe((discount) => {
-        //   const redeemAmount = this.redeemAmount;
-        //   if (discount < 0) this.additionalForm.controls.discount.setValue(0);
-        //   if (discount >= 4) this.additionalForm.controls.discount.setValue(0);
+    //get the total number of years, months and days
+    this.countYYMMDD = this.dateStatus.getmoments(
+      new Date(this.transactionInfo.dateMature)
+    );
 
-        //   if (discount === 0 || discount < 4) {
-        //     const dueAmount = this.dueAmount;
-        //     let discounts = this.computationService.getDiscount(
-        //       this.transactionInfo.principalLoan,
-        //       this.transactionInfo.interestRate,
-        //       +discount
-        //     );
-        //     this.additionalForm.controls.dueAmount.setValue(dueAmount - discounts);
-        //     this.additionalForm.controls.redeemAmount.setValue(redeemAmount - discounts);
-        //   }
+    //get the total days in moments
+    this.totalDays = this.computationService.getTotalDays(
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
+    );
 
-        //   const discountDue = +(+this.additionalForm.controls.dueAmount.value
-        //     .toString()
-        //     .replace(/[^\d.-]/g, '')).toFixed(2);
-        //   if (discountDue < 0) this.additionalForm.controls.dueAmount.setValue(0);
-        // });
+    // discount value changes computations
+    this.additionalForm.controls.discount.valueChanges.subscribe(
+      (discountNumber: number) => {
+        //start discount to zero if lessthan 0 and 0 if morethan 4
+        if (discountNumber < 0)
+          this.additionalForm.controls.discount.setValue(0);
+        if (discountNumber >= 4)
+          this.additionalForm.controls.discount.setValue(0);
+        //end discount to zero if lessthan 0 and 0 if morethan 4
 
-        this.additionalForm.controls.additionalAmount.valueChanges.subscribe(
-          (additionnalAmount) => {
-            const availlableAmount = this.computationService.stringToNumber(
-              this.additionalForm.controls.availlableAmount.value
-            );
-              console.log(availlableAmount);
+        const discountInterest = this.computationService.getDiscountInterest(
+          this.principalLoan,
+          this.interestRate,
+          this.computationService.stringToNumber(discountNumber)
+        );
+        const _interest = this.interest;
+        this.additionalForm.controls.interest.setValue(
+          _interest - discountInterest
+        );
+      }
+    );
 
-            if(this.computationService.stringToNumber(additionnalAmount) > availlableAmount)
-            this.additionalForm.controls.availlableAmount.setValue(availlableAmount)
-          }
+    this.additionalForm.controls.additionalAmount.valueChanges.subscribe(
+      (additionnalAmount) => {
+        const availlableAmount = this.computationService.stringToNumber(
+          this.additionalForm.controls.availlableAmount.value
+        );
+        const advanceServiceCharge = this.computationService.getServiceCharge(
+          this.computationService.stringToNumber(additionnalAmount)
         );
 
-
+        if (
+          this.computationService.stringToNumber(additionnalAmount) >
+          availlableAmount
+        ) {
+          this.additionalForm.controls.additionalAmount.setValue(
+            availlableAmount
+          );
+        }
+        this.additionalForm.controls.advanceServiceCharge.setValue(
+          advanceServiceCharge
+        );
+      }
+    );
 
     //set focus to discount during init if not disabled
     setTimeout(() => {
       if (this.additionalForm.controls.discount.untouched) {
         this.setComputation();
-
       }
     }, 100);
-
-
-
   }
 
   save() {
@@ -181,7 +201,6 @@ export class AdditionalComponent implements OnInit {
     // const addintonalAmount = this.computationService.stringToNumber(
     //   this.additionalForm.controls.addintonalAmount.value
     // );
-
     // if (addintonalAmount > amountReceived) {
     //   this.additionalForm.controls.receivedAmount.setValue('');
     //   // this.receivedAmountRef.nativeElement.focus();
@@ -209,34 +228,22 @@ export class AdditionalComponent implements OnInit {
   }
 
   setComputation() {
-    let dateStatus = new DateHelper(
-      new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+    this.interestRate = this.computationService.stringToNumber(
+      this.transactionInfo.interestRate
+    );
+    this.principalLoan = this.computationService.stringToNumber(
+      this.transactionInfo.principalLoan
     );
 
-    //get the total number of years, months and days
-    let countYYMMDD = dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
-    );
-
-    //get the total days in moments
-    this.totalDays = this.computationService.getTotalDays(
-      countYYMMDD.days,
-      countYYMMDD.months,
-      countYYMMDD.years
-    );
-
-       // set discount disabled
-   if (
-    this.computationService.isDiscount(
-      new Date(this.transactionInfo.dateMature)
-    )
-  ) {
-    this.additionalForm.controls.discount.setValue(0);
-    this.additionalForm.controls.discount.disable();
-  }
-
+    // set discount disabled
+    if (
+      this.computationService.isDiscount(
+        new Date(this.transactionInfo.dateMature)
+      )
+    ) {
+      this.additionalForm.controls.discount.setValue(0);
+      this.additionalForm.controls.discount.disable();
+    }
 
     this.principalLoan = this.transactionInfo.principalLoan;
 
@@ -245,9 +252,9 @@ export class AdditionalComponent implements OnInit {
       this.transactionInfo.interestRate,
       this.totalDays
     );
-    this.penalty = this.computationService.getPenalty(
+    this.penalty = this.computationService.penalty(
       this.principalLoan,
-      this.totalDays
+      this.countYYMMDD
     );
 
     this.advanceInterest = this.computationService.getAdvanceInterest(
@@ -255,18 +262,16 @@ export class AdditionalComponent implements OnInit {
       this.transactionInfo.interestRate
     );
     this.dueAmount = this.interest + this.penalty;
-    this.advanceServiceCharge = this.computationService.getServiceCharge(
-      this.principalLoan
-    );
-    this.availlableAmount =this.transactionInfo.totalAppraisal - this.transactionInfo.principalLoan
+    this.availlableAmount =
+      this.transactionInfo.totalAppraisal - this.transactionInfo.principalLoan;
 
     this.netPayment =
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
 
     this.additionalForm.controls.dateTransaction.setValue(new Date());
-    this.additionalForm.controls.status.setValue(dateStatus.status());
+    this.additionalForm.controls.status.setValue(this.dateStatus.status());
     this.additionalForm.controls.moments.setValue(
-      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+      `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
     this.additionalForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
@@ -286,7 +291,10 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.advanceServiceCharge.setValue(
       this.advanceServiceCharge
     );
-    this.additionalForm.controls.availlableAmount.setValue(this.availlableAmount);
+    this.additionalForm.controls.availlableAmount.setValue(
+      this.availlableAmount
+    );
+    this.additionalForm.controls.additionalAmount.setValue('');
 
     //set paginator and set cursor focus during init
     setTimeout(() => {

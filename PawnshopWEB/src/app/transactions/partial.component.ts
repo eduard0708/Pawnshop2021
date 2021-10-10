@@ -249,7 +249,9 @@ export class PartialComponent implements OnInit {
 
     this.partialForm.controls.dateTransaction.setValue(new Date());
     this.partialForm.controls.status.setValue(dateStatus.status());
-    this.partialForm.controls.moments.setValue(dateStatus.moments());
+    this.partialForm.controls.moments.setValue(
+      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+    );
     this.partialForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
     );

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
+import { TotalYYMMDD } from '../_model/totalYYMMDD';
 declare module 'moment' {
   function preciseDiff(
     start: string | Date | moment.Moment,
@@ -35,12 +36,28 @@ export class ComputationService {
     return +(totalDays * ((principalLoan * 0.02) / 30)).toFixed(2);
   }
 
+  penalty(principalLoan: number, countYYMMDD: TotalYYMMDD): number {
+    let penalty = 0;
+    if (countYYMMDD.days <= 3) {
+      penalty = +(countYYMMDD.days * ((principalLoan * 0.02) / 30)).toFixed(2);
+    } else {
+      // penalty will be calculated by month, if days count morethan 3 days will be considered 1 month
+      penalty =
+        (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
+        (principalLoan * 0.02);
+    }
+
+    return penalty;
+  }
+
   getInterest(
     principalLoan: number,
     interestRate: number,
     totalDays: number
   ): number {
-    return +(totalDays * ((principalLoan * (interestRate / 100)) / 30)).toFixed(2);
+    return +(totalDays * ((principalLoan * (interestRate / 100)) / 30)).toFixed(
+      2
+    );
   }
 
   getAdvanceInterest(principalLoan: number, interestRate: number): number {
@@ -48,18 +65,25 @@ export class ComputationService {
   }
 
   getAdvanceServiceCharge(principalLoan: number) {
+    // let advanceInterest = 0;
+    // if (principalLoan >= 500) {
+    //   advanceInterest = 5;
+    // } else if (principalLoan >= 400 && principalLoan <= 499) {
+    //   advanceInterest = 4;
+    // } else if (principalLoan >= 300 && principalLoan <= 399) {
+    //   advanceInterest = 3;
+    // } else if (principalLoan >= 200 && principalLoan <= 299) {
+    //   advanceInterest = 2;
+    // } else if (principalLoan >= 1 && principalLoan <= 199) {
+    //   advanceInterest = 1;
+    // }
     let advanceInterest = 0;
     if (principalLoan >= 500) {
       advanceInterest = 5;
-    } else if (principalLoan >= 400 && principalLoan <= 499) {
-      advanceInterest = 4;
-    } else if (principalLoan >= 300 && principalLoan <= 399) {
-      advanceInterest = 3;
-    } else if (principalLoan >= 200 && principalLoan <= 299) {
-      advanceInterest = 2;
-    } else if (principalLoan >= 1 && principalLoan <= 199) {
-      advanceInterest = 1;
+    } else {
+      advanceInterest = Math.floor(principalLoan * 0.01);
     }
+
     return advanceInterest;
   }
 
@@ -76,11 +100,37 @@ export class ComputationService {
     return value;
   }
 
-  getDiscount(principalloan: number, interestRate:number , daysCountDiscount:number):number {
-      let penalty = +(daysCountDiscount * ((principalloan * 0.02) / 30)).toFixed(2);
-      let interest = +(daysCountDiscount * ((principalloan * (interestRate / 100)) / 30)).toFixed(2);
-      let discount = penalty + interest ;
-      return discount
+  getDiscount(
+    principalloan: number,
+    interestRate: number,
+    discountNumber: number
+  ): number {
+    let discountMultiplier = principalloan * 0.02;
+    let penaltyPerDay = discountMultiplier / 30;
+
+    let penalty = +(discountNumber * ((principalloan * 0.02) / 30)).toFixed(2);
+    let interest = +(
+      discountNumber *
+      ((principalloan * (interestRate / 100)) / 30)
+    ).toFixed(2);
+    let discount = penalty + interest;
+    return discount;
+  }
+
+  getDiscountInterest(
+    principalloan: number,
+    interestRate: number,
+    discountNumber: number,
+  ): number {
+    let discount = 0;
+    let interestPerDay = (principalloan * (interestRate / 100)) / 30;
+
+    if (discountNumber <= 0 || discountNumber > 3 ) {
+      discount = 0;
+    } else {
+      discount = discountNumber * interestPerDay;
+    }
+    return discount;
   }
 
   isDiscount(dateMatured: Date) {
