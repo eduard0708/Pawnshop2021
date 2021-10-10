@@ -1,4 +1,4 @@
-<form [formGroup]="additionalForm" (ngSubmit)="onSave()" autocomplete="off">
+<form [formGroup]="additionalForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">  Transaction #: {{ transactionInfo.transactionsId }}</h2>
@@ -155,80 +155,55 @@
       </h2>
       <!-- start computation title -->
       <div class="computation">
-        <div class="input-group">
+        <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
+            formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
-            disabled
+            readonly
           />
         </div>
-        <div class="input-group">
+        <div class="input-group shadow-sm Principal Loan">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
+            formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
+            readonly
           />
         </div>
-        <div class="input-group">
-          <span class="col-form-label-sm">Amount Due</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group">
-          <span class="col-form-label-sm">Penalty</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group">
-          <span class="col-form-label-sm">Available Amount</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group">
-          <span class="col-form-label-sm">New Balance</span>
-          <input
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group">
+        <div class="input-group Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+            formControlName="interestRate"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm text-right"
+            type="text"
+          />
+        </div>
+        <div class="input-group Interest">
+          <span class="col-form-label-sm">Interest</span>
+          <input
+            formControlName="interest"
+            tabindex="-1"
+            maxlength="14"
+            [inputMask]="currencyInputMask"
+            class="form-control form-control-sm text-right"
+            type="text"
+          />
+        </div>
+        <div class="input-group  Penalty">
+          <span class="col-form-label-sm">Penalty</span>
+          <input
+            formControlName="penalty"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -236,9 +211,56 @@
             type="text"
           />
         </div>
-        <div class="input-group">
+        <div class="input-group  Due Amount">
+          <span class="col-form-label-sm">Due Amount</span>
+          <input
+            formControlName="dueAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group  Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            #discountRef
+            (keyup)="receivedAmountFocus($event)"
+            formControlName="discount"
+            tabindex="1"
+            class="form-control form-control-sm"
+            style="text-align: center;"
+            type="number"
+          />
+        </div>
+        <div class="input-group Available Amount">
+          <span class="col-form-label-sm">Available Amount</span>
+          <input
+            formControlName="availlableAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group Additional Amount">
+          <span class="col-form-label-sm">Additional Amount</span>
+          <input
+          #additionalAmountRef
+          formControlName="additionalAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -246,9 +268,10 @@
             type="text"
           />
         </div>
-        <div class="input-group">
+        <div class="input-group shadow-sm Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -256,7 +279,7 @@
             type="text"
           />
         </div>
-        <div class="input-group">
+        <div class="input-group Net Proceed">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
             tabindex="-1"

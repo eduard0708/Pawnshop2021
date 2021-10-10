@@ -112,6 +112,13 @@ export class RedeemComponent implements OnInit {
 
   ngOnInit(): void {
 
+      //convert datatrasactionItems as Items to load in table dataSource
+      if (this.transactionInfo.transactionItems.length !== 0)
+      this.dataSource.data =
+        this.transactionService.normalizeItemsForTable(
+          this.transactionInfo.transactionItems
+        ) ?? [];
+
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const redeemAmount = this.computationService.stringToNumber(
@@ -148,12 +155,7 @@ export class RedeemComponent implements OnInit {
       if (discountDue < 0) this.redeemForm.controls.dueAmount.setValue(0);
     });
 
-    //convert datatrasactionItems as Items to load in table dataSource
-    if (this.transactionInfo.transactionItems.length !== 0)
-      this.dataSource.data =
-        this.transactionService.normalizeItemsForTable(
-          this.transactionInfo.transactionItems
-        ) ?? [];
+
 
     //set focus to discount during init if not disabled
     setTimeout(() => {
