@@ -1,7 +1,7 @@
 <form [formGroup]="renewForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
-    <h2 class="font-monospace transaction-number">Transaction #: 10050</h2>
+    <h2 class="font-monospace transaction-number">  Transaction #: {{ transactionInfo.transactionsId }}</h2>
     <h2 class="text-center font-monospace trasaction-title">
       Renew Information
     </h2>
