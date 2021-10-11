@@ -247,7 +247,7 @@
           <span class="col-form-label-sm">Discount</span>
           <input
           #discountRef
-          (keyup)="receivedAmountFocus($event)"
+          (keyup)="computeDiscount()"
           formControlName="discount"
           tabindex="1"
           class="form-control form-control-sm"
@@ -270,8 +270,8 @@
         <div class="input-group shadow-sm Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
-          (keyup)="discountFocus($event)"
             #receivedAmountRef
+            (focus)="amountReceivedFocus()"
             formControlName="receivedAmount"
             tabindex="2"
             maxlength="14"
@@ -292,7 +292,6 @@
           />
         </div>
       </div>
-
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
          (click)="save()"

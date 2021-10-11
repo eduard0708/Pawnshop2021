@@ -8,6 +8,7 @@ import { createMask } from '@ngneat/input-mask';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
 import { RedeemService } from '../_service/redeem.service';
@@ -39,7 +40,11 @@ export class RenewComponent implements OnInit {
   netPayment: number;
   isDiscount: boolean;
   totalDays: number;
+  interestRate: number;
+  countYYMMDD: TotalYYMMDD;
+  dateStatus;
 
+  //declare the columns of the table
   displayColumns: string[] = [
     'index',
     'category',
@@ -47,8 +52,9 @@ export class RenewComponent implements OnInit {
     'description',
     'appraisalValue',
   ];
+  // initialize datasource as material data source and Item type
   public dataSource: MatTableDataSource<Item>;
-
+  //initialize currency type to be used in input currency mask
   currencyInputMask = createMask({
     alias: 'numeric',
     groupSeparator: ',',
@@ -65,11 +71,10 @@ export class RenewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private computationService: ComputationService,
-    private transactionService:TransactionService
-
+    private transactionService: TransactionService
   ) {
-    // get the pawner information from the params of the link, from dialog-transaction component
-    // pawner info will go to transaction-pawner-info component
+    /* get the pawner information from the params of the link, from dialog-transaction component
+    pawner info will go to transaction-pawner-info component */
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
@@ -81,7 +86,8 @@ export class RenewComponent implements OnInit {
       }
     });
 
-    let dateStatus = new DateHelper(
+    //call function for date helper to know the difference of the date of maturity and expired
+    this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
@@ -109,33 +115,33 @@ export class RenewComponent implements OnInit {
       netPayment: [0],
       receivedAmount: [0],
       change: [0],
-      status: [dateStatus.status()],
-      moments: [dateStatus.moments()],
+      status: [this.dateStatus.status()],
+      moments: [this.dateStatus.moments()],
     });
-
+    //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-      this.receivedAmountRef.nativeElement.focus();
-    }, 100);
+    //convert datatrasactionItems as Items to load in table dataSource
+    if (this.transactionInfo.transactionItems.length !== 0)
+      this.dataSource.data =
+        this.transactionService.normalizeItemsForTable(
+          this.transactionInfo.transactionItems
+        ) ?? [];
 
-   //convert datatrasactionItems as Items to load in table dataSource
-   if (this.transactionInfo.transactionItems.length !== 0)
-   this.dataSource.data =
-     this.transactionService.normalizeItemsForTable(
-       this.transactionInfo.transactionItems
-     ) ?? [];
+    //get the total number of years, months and days
+    this.countYYMMDD = this.dateStatus.getmoments(
+      new Date(this.transactionInfo.dateMature)
+    );
+    //get the total days in moments
+    this.totalDays = this.computationService.getTotalDays(
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
+    );
 
-    //set focus to discount during init if not disabled
-    setTimeout(() => {
-      if (this.renewForm.controls.discount.untouched) {
-        this.setComputation();
-      }
-    }, 100);
-
+    //set change during the value change in received amount
     this.renewForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const netPayment = this.computationService.stringToNumber(
@@ -149,34 +155,7 @@ export class RenewComponent implements OnInit {
       }
     );
 
-    //discount value changes computations
-    this.renewForm.controls.discount.valueChanges.subscribe((discount) => {
-      const netPayment = this.netPayment;
-      if (discount < 0) this.renewForm.controls.discount.setValue(0);
-      if (discount >= 4) this.renewForm.controls.discount.setValue(0);
-
-      if (discount === 0 || discount < 4) {
-        const dueAmount = this.dueAmount;
-        let discounts = this.computationService.getDiscount(
-          this.transactionInfo.principalLoan,
-          this.transactionInfo.interestRate,
-          +discount
-        );
-        this.renewForm.controls.dueAmount.setValue(dueAmount - discounts);
-        this.renewForm.controls.netPayment.setValue(netPayment - discounts);
-      }
-
-      const discountDue = +(+this.renewForm.controls.dueAmount.value
-        .toString()
-        .replace(/[^\d.-]/g, '')).toFixed(2);
-      if (discountDue < 0) this.renewForm.controls.dueAmount.setValue(0);
-    });
-
-    setTimeout(() => {
-      if (this.renewForm.controls.discount.untouched) {
-        this.setComputation();
-      }
-    }, 100);
+    this.setComputation();
   }
 
   save() {
@@ -197,78 +176,133 @@ export class RenewComponent implements OnInit {
   reset() {
     this.renewForm.reset();
     this.setComputation();
+    // start condition to enable the discount field and focus if the discount is availlable
+    this.setComputation();
+    if (
+      this.countYYMMDD.days === 0 ||
+      (this.countYYMMDD.days <= 4 &&
+        this.renewForm.controls.status.value == 'Matured' &&
+        this.countYYMMDD.months === 0 &&
+        this.countYYMMDD.years === 0)
+    ) {
+      this.renewForm.controls.discount.enable();
+    }
+    // end condition to enable the discount field and focus if the discount is availlable
   }
 
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
 
-  discountFocus(e) {
-    if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
+  //set value of interest, penalty and due amount during the value changes of discount
+  computeDiscount() {
+    /* take value of discount to be used in computation of th discount */
+    let discountNumber = this.computationService.stringToNumber(
+      this.renewForm.controls.discount.value
+    );
+    /* start discount to zero if lessthan 0 and 0 if morethan 4 */
+    if (discountNumber < 0) this.renewForm.controls.discount.setValue(0);
+    if (discountNumber >= 4) this.renewForm.controls.discount.setValue(0);
+    /* end discount to zero if lessthan 0 and 0 if morethan 4 */
+
+    /* setting discount number to 0 to before parsing to computation */
+    if (discountNumber < 0 || discountNumber > 3) discountNumber = 0;
+
+    /* start computation for interest here */
+    const _discountInterest = this.computationService.getDiscountInterest(
+      this.principalLoan,
+      this.interestRate,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    console.log(this.principalLoan);
+    console.log(this.interestRate);
+    console.log(discountNumber);
+    const _interest = this.interest;
+    //set value of interest
+
+    this.renewForm.controls.interest.setValue(_interest - _discountInterest);
+    /* end computation for interest here */
+    const _penalty = this.computationService.getDiscountPenalty(
+      this.principalLoan,
+      this.countYYMMDD,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    //set value for penalty
+    this.renewForm.controls.penalty.setValue(_penalty);
+
+    this.dueAmount =
+      this.computationService.stringToNumber(
+        this.renewForm.controls.interest.value
+      ) +
+      this.computationService.stringToNumber(
+        this.renewForm.controls.penalty.value
+      );
+    //set value for dueAmount during discount value changes
+    this.renewForm.controls.dueAmount.setValue(this.dueAmount);
+    //set value for netPayment during discount value changes
+    this.renewForm.controls.netPayment.setValue(
+      this.computationService.stringToNumber(
+        this.renewForm.controls.dueAmount.value
+      ) +
+        this.computationService.stringToNumber(
+          this.renewForm.controls.advanceInterest.value
+        ) +
+        this.computationService.stringToNumber(
+          this.renewForm.controls.advanceServiceCharge.value
+        )
+    );
   }
-  receivedAmountFocus(e) {
-    if (e.key.toLowerCase() === 'a')
-      this.receivedAmountRef.nativeElement.focus();
-  }
 
-  setComputation() {
-    let dateStatus = new DateHelper(
-      new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
-    );
-
-    //get the total number of years, months and days
-    let countYYMMDD = dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
-    );
-
-    //get the total days in moments
-    this.totalDays = this.computationService.getTotalDays(
-      countYYMMDD.days,
-      countYYMMDD.months,
-      countYYMMDD.years
-    );
-
-       // set discount disabled
-   if (
-    this.computationService.isDiscount(
-      new Date(this.transactionInfo.dateMature)
-    )
-  ) {
-    this.renewForm.controls.discount.setValue(0);
+  /*  set to disable the discount if focus already in additional amount */
+  amountReceivedFocus() {
     this.renewForm.controls.discount.disable();
   }
 
-
+  setComputation() {
+    /* set interest value use for global */
+    this.interestRate = this.computationService.stringToNumber(
+      this.transactionInfo.interestRate
+    );
+    /* set discount disabled if not eligible for the discount  */
+    if (
+      this.computationService.isDiscount(
+        new Date(this.transactionInfo.dateMature)
+      )
+    ) {
+      this.renewForm.controls.discount.setValue(0);
+      this.renewForm.controls.discount.disable();
+    }
+    /* set principal loan value use for global */
     this.principalLoan = this.transactionInfo.principalLoan;
-
+    /* set interest  value use for global */
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
       this.totalDays
     );
-    this.penalty = this.computationService.getPenalty(
+    /* set penalty value use for global */
+    this.penalty = this.computationService.penalty(
       this.principalLoan,
-      this.totalDays
+      this.countYYMMDD
     );
-
+    /* set advance interest value use for global */
     this.advanceInterest = this.computationService.getAdvanceInterest(
       this.principalLoan,
       this.transactionInfo.interestRate
     );
+    /* set due amount value use for global */
     this.dueAmount = this.interest + this.penalty;
     this.advanceServiceCharge = this.computationService.getServiceCharge(
       this.principalLoan
     );
-
+    /* set netPayment value use for global */
     this.netPayment =
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
 
     this.renewForm.controls.dateTransaction.setValue(new Date());
-    this.renewForm.controls.status.setValue(dateStatus.status());
+    this.renewForm.controls.status.setValue(this.dateStatus.status());
     this.renewForm.controls.moments.setValue(
-      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+      `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
     this.renewForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
@@ -297,11 +331,8 @@ export class RenewComponent implements OnInit {
       this.isDiscount = this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
       );
-
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
-
-      console.log(this.isDiscount);
     }, 100);
   }
 }

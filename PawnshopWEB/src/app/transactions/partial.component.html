@@ -1,7 +1,9 @@
 <form [formGroup]="partialForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
-    <h2 class="font-monospace transaction-number">  Transaction #: {{ transactionInfo.transactionsId }}</h2>
+    <h2 class="font-monospace transaction-number">
+      Transaction #: {{ transactionInfo.transactionsId }}
+    </h2>
     <h2 class="text-center font-monospace trasaction-title">
       Partial Information
     </h2>
@@ -111,7 +113,7 @@
         >
           <ng-container matColumnDef="index">
             <th mat-header-cell *matHeaderCellDef>#</th>
-            <td mat-cell *matCellDef="let i = index">{{ i + 1}}</td>
+            <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
           </ng-container>
           <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef>Category</th>
@@ -148,7 +150,7 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper" style="zoom:.95">
+    <div class="computation-wrapper" style="zoom: 0.95">
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">
         Partial Computation
@@ -182,6 +184,7 @@
         <div class="input-group shadow-sm Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+            readonly
             formControlName="interestRate"
             tabindex="-1"
             maxlength="14"
@@ -204,6 +207,7 @@
         <div class="input-group shadow-sm Penalty">
           <span class="col-form-label-sm">Penalty</span>
           <input
+            readonly
             formControlName="penalty"
             tabindex="-1"
             maxlength="14"
@@ -215,6 +219,7 @@
         <div class="input-group shadow-sm Amount Due">
           <span class="col-form-label-sm">Amount Due</span>
           <input
+            readonly
             formControlName="dueAmount"
             tabindex="-1"
             maxlength="14"
@@ -226,6 +231,7 @@
         <div class="input-group shadow-sm Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            readonly
             formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
@@ -237,6 +243,7 @@
         <div class="input-group shadow-sm Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            readonly
             formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
@@ -248,20 +255,20 @@
         <div class="input-group shadow-sm Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
-          #discountRef
-          (keyup)="receivedAmountFocus($event)"
-          formControlName="discount"
-          tabindex="1"
-          class="form-control form-control-sm"
-          style="text-align: center;"
-          type="number"
+            #discountRef
+            (keyup)="computeDiscount()"
+            formControlName="discount"
+            tabindex="1"
+            class="form-control form-control-sm"
+            style="text-align: center"
+            type="number"
           />
         </div>
-        <div class="input-group shadow-sm Net Payment">
-          <span class="col-form-label-sm">Net Payment</span>
+        <div class="input-group shadow-sm Net Payable">
+          <span class="col-form-label-sm">Net Payable</span>
           <input
             #netPaymentRef
-            formControlName="netPayment"
+            formControlName="netPayable"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -269,12 +276,14 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Partial Payment">
-          <span class="col-form-label-sm">Partial Payment</span>
+        <div class="input-group shadow-sm Partial Amount">
+          <span class="col-form-label-sm">Partial Amount</span>
           <input
-            #netPaymentRef
+            #partialAmountRef
+            (focus)="focusPartialAmountDisabledDiscount()"
+            (keyup)="validatePartialAmount()"
             formControlName="partialAmount"
-            tabindex="-1"
+            tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -284,10 +293,9 @@
         <div class="input-group shadow-sm Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
-          (keyup)="discountFocus($event)"
             #receivedAmountRef
             formControlName="receivedAmount"
-            tabindex="-1"
+            tabindex="3"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -297,6 +305,7 @@
         <div class="input-group shadow-sm Change">
           <span class="col-form-label-sm">Change</span>
           <input
+            readonly
             formControlName="change"
             tabindex="-1"
             maxlength="14"
@@ -306,22 +315,21 @@
           />
         </div>
       </div>
-
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
           fxFlex="33"
           class="btn btn-success"
           type="submit"
-          tabindex="9"
+          tabindex="4"
           mat-raised-button
         >
           <mat-icon>save</mat-icon> Save
         </button>
         <button
-         fxFlex="33"
+          fxFlex="33"
           class="btn btn-danger"
           type="button"
-          tabindex="10"
+          tabindex="5"
           (click)="reset()"
           mat-raised-button
           mat-raised-button
@@ -329,10 +337,10 @@
           <mat-icon>restart_alt</mat-icon> Reset
         </button>
         <button
-        fxFlex="33"
+          fxFlex="33"
           class="btn btn-primary"
           type="button"
-          tabindex="11"
+          tabindex="6"
           (click)="home()"
           mat-raised-button
           mat-raised-button

@@ -8,6 +8,7 @@ import { createMask } from '@ngneat/input-mask';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
 import { RedeemService } from '../_service/redeem.service';
@@ -22,7 +23,7 @@ export class PartialComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
-  @ViewChild('partialRef') redeemRef: ElementRef;
+  @ViewChild('partialAmountRef') partialAmountRef: ElementRef;
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -33,14 +34,17 @@ export class PartialComponent implements OnInit {
   daysCount: number;
   interest: number;
   penalty: number;
+  interestRate: number;
   dueAmount: number;
   serviceCharge: number;
   advanceInterest: number;
   advanceServiceCharge: number;
   netPayment: number;
-  partialAmount: number;
+  netPayable: number;
   totalDays: number;
   isDiscount: boolean;
+  countYYMMDD: TotalYYMMDD;
+  dateStatus;
 
   displayColumns: string[] = [
     'index',
@@ -69,8 +73,8 @@ export class PartialComponent implements OnInit {
     private transactionService: TransactionService,
     private computationService: ComputationService
   ) {
-    // get the pawner information from the params of the link, from dialog-transaction component
-    // pawner info will go to transaction-pawner-info component
+    /* get the pawner information from the params of the link, from dialog-transaction component
+    pawner info will go to transaction-pawner-info component */
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
@@ -80,10 +84,10 @@ export class PartialComponent implements OnInit {
         );
         this.items = normalizeInfo.items;
       }
-      console.log(this.transactionInfo);
     });
 
-    let dateStatus = new DateHelper(
+    //call function for date helper to know the difference of the date of maturity and expired
+    this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMature),
       new Date(this.transactionInfo.dateExpire)
@@ -100,7 +104,7 @@ export class PartialComponent implements OnInit {
       interest: [0],
       advanceInterest: [0],
       advanceServiceCharge: [0],
-      netPayment: [0],
+      netPayable: [0],
       penalty: [0],
       dueAmount: [0],
       serviceCharge: [0],
@@ -127,40 +131,36 @@ export class PartialComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
-  //set focus to discount during init if not disabled
-    setTimeout(() => {
-      if (this.partialForm.controls.discount.untouched) {
-        this.setComputation();
-      }
-    }, 100);
+    this.dateStatus = new DateHelper(
+      new Date(this.transactionInfo.dateTransaction),
+      new Date(this.transactionInfo.dateMature),
+      new Date(this.transactionInfo.dateExpire)
+    );
 
-    this.partialForm.controls.discount.valueChanges.subscribe((discount) => {
-      let afterDiscount = this.computationService.stringToNumber(discount);
-      const partialAmount = this.partialAmount;
+    //get the total number of years, months and days
+    this.countYYMMDD = this.dateStatus.getmoments(
+      new Date(this.transactionInfo.dateMature)
+    );
 
-      this.partialForm.controls.netPayment.setValue(
-        partialAmount - afterDiscount
-      );
-      this.partialForm.controls.receivedAmount.setValue(0);
-      this.partialForm.controls.change.setValue(0);
-
-      if (afterDiscount > partialAmount)
-        this.partialForm.controls.discount.setValue(partialAmount);
-    });
-
+    //set chane during amount received change value
     this.partialForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
-        const redeemAmount = this.computationService.stringToNumber(
+        const _partialAmount = this.computationService.stringToNumber(
           this.partialForm.controls.partialAmount.value
         );
-        let recivedAmount =
+        let _recivedAmount =
           this.computationService.stringToNumber(amountReceived);
-        let change =
-          redeemAmount > recivedAmount ? 0 : recivedAmount - redeemAmount;
-        this.partialForm.controls.change.setValue(change ?? 0);
+
+        this.partialForm.controls.change.setValue(
+          _recivedAmount - _partialAmount
+        );
       }
     );
+
+    //intialize all computation fields during initialization
+    this.setComputation();
   }
+
   save() {
     const amountReceived = this.computationService.stringToNumber(
       this.partialForm.controls.receivedAmount.value
@@ -176,51 +176,124 @@ export class PartialComponent implements OnInit {
     }
   }
 
+  // reset the transaction
   reset() {
     this.partialForm.reset();
     this.setComputation();
-    this.receivedAmountRef.nativeElement.focus();
+    // start condition to enable the discount field and focus if the discount is availlable
+    this.setComputation();
+    if (
+      this.countYYMMDD.days === 0 ||
+      (this.countYYMMDD.days <= 4 &&
+        this.partialForm.controls.status.value == 'Matured' &&
+        this.countYYMMDD.months === 0 &&
+        this.countYYMMDD.years === 0)
+    ) {
+      this.partialForm.controls.discount.enable();
+    }
+    // end condition to enable the discount field and focus if the discount is availlable
   }
 
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
 
-  discountFocus(e) {
-    if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
+  //set value of interest, penalty and due amount during the value changes of discount
+  computeDiscount() {
+    /* take value of discount to be used in computation of th discount */
+    let discountNumber = this.computationService.stringToNumber(
+      this.partialForm.controls.discount.value
+    );
+    /* start discount to zero if lessthan 0 and 0 if morethan 4 */
+    if (discountNumber < 0) this.partialForm.controls.discount.setValue(0);
+    if (discountNumber >= 4) this.partialForm.controls.discount.setValue(0);
+    /* end discount to zero if lessthan 0 and 0 if morethan 4 */
+
+    /* setting discount number to 0 to before parsing to computation */
+    if (discountNumber < 0 || discountNumber > 3) discountNumber = 0;
+
+    /* start computation for interest here */
+    const _discountInterest = this.computationService.getDiscountInterest(
+      this.principalLoan,
+      this.interestRate,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    const _interest = this.interest;
+    //set value of interest
+    this.partialForm.controls.interest.setValue(_interest - _discountInterest);
+    /* end computation for interest here */
+    const _penalty = this.computationService.getDiscountPenalty(
+      this.principalLoan,
+      this.countYYMMDD,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    //set value for penalty
+    this.partialForm.controls.penalty.setValue(_penalty);
+    this.dueAmount =
+      this.computationService.stringToNumber(
+        this.partialForm.controls.interest.value
+      ) +
+      this.computationService.stringToNumber(
+        this.partialForm.controls.penalty.value
+      );
+    //set value of net dueAmount during discount value changes
+    this.partialForm.controls.dueAmount.setValue(this.dueAmount);
+
+    //set value of netPayable during discount value changes
+    this.partialForm.controls.netPayable.setValue(
+      this.principalLoan +
+        this.computationService.stringToNumber(
+          this.partialForm.controls.dueAmount.value
+        ) +
+        this.computationService.stringToNumber(
+          this.partialForm.controls.advanceInterest.value
+        ) +
+        this.computationService.stringToNumber(
+          this.partialForm.controls.advanceServiceCharge.value
+        )
+    );
   }
-  receivedAmountFocus(e) {
-    if (e.key.toLowerCase() === 'a')
-      this.receivedAmountRef.nativeElement.focus();
+  //validate partial amount will not exceed in net payable amount
+  validatePartialAmount() {
+    const _netPayableAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.netPayable.value
+    );
+
+    const _partialAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.partialAmount.value
+    );
+
+    if (_partialAmount > _netPayableAmount)
+      this.partialForm.controls.partialAmount.setValue(_netPayableAmount);
+  }
+
+  /*  set to disable the discount if focus already in additional amount */
+  focusPartialAmountDisabledDiscount() {
+    this.partialForm.controls.discount.disable();
   }
 
   setComputation() {
-    let dateStatus = new DateHelper(
-      new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+    /* set interest value use for global */
+    this.interestRate = this.computationService.stringToNumber(
+      this.transactionInfo.interestRate
     );
 
-    //get the total number of years, months and days
-    let countYYMMDD = dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
-    );
     //get the total days in moments
     this.totalDays = this.computationService.getTotalDays(
-      countYYMMDD.days,
-      countYYMMDD.months,
-      countYYMMDD.years
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
     );
 
     this.principalLoan = this.transactionInfo.principalLoan;
     this.daysCount = this.computationService.getTotalDays(
-      countYYMMDD.days,
-      countYYMMDD.months,
-      countYYMMDD.years
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
     );
 
     // set discount disabled
-   if (
+    if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
       )
@@ -234,23 +307,32 @@ export class PartialComponent implements OnInit {
       this.transactionInfo.interestRate,
       this.totalDays
     );
-    this.penalty = this.computationService.getPenalty(
+    /* set penalty value use for global */
+    this.penalty = this.computationService.penalty(
       this.principalLoan,
-      this.totalDays
+      this.countYYMMDD
     );
     this.dueAmount = this.interest + this.penalty;
     this.serviceCharge = this.computationService.getServiceCharge(
       this.principalLoan
     );
-    this.advanceInterest = this.computationService.getAdvanceInterest(this.transactionInfo.principalLoan, this.transactionInfo.interestRate)
-    this.advanceServiceCharge = this.computationService.getAdvanceServiceCharge(this.transactionInfo.principalLoan)
-    this.partialAmount =
-      this.principalLoan + this.dueAmount + this.serviceCharge;
+    this.advanceInterest = this.computationService.getAdvanceInterest(
+      this.transactionInfo.principalLoan,
+      this.transactionInfo.interestRate
+    );
+    this.advanceServiceCharge = this.computationService.getAdvanceServiceCharge(
+      this.transactionInfo.principalLoan
+    );
+    this.netPayable =
+      this.principalLoan +
+      this.dueAmount +
+      this.advanceInterest +
+      this.advanceServiceCharge;
 
     this.partialForm.controls.dateTransaction.setValue(new Date());
-    this.partialForm.controls.status.setValue(dateStatus.status());
+    this.partialForm.controls.status.setValue(this.dateStatus.status());
     this.partialForm.controls.moments.setValue(
-      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+      `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
     this.partialForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
@@ -268,8 +350,11 @@ export class PartialComponent implements OnInit {
     this.partialForm.controls.dueAmount.setValue(this.dueAmount);
     this.partialForm.controls.discount.setValue('');
     this.partialForm.controls.advanceInterest.setValue(this.advanceInterest);
-    this.partialForm.controls.advanceServiceCharge.setValue(this.advanceServiceCharge);
-    this.partialForm.controls.netPayment.setValue(this.partialAmount);
+    this.partialForm.controls.advanceServiceCharge.setValue(
+      this.advanceServiceCharge
+    );
+    this.partialForm.controls.netPayable.setValue(this.netPayable);
+    this.partialForm.controls.partialAmount.setValue('');
     this.partialForm.controls.receivedAmount.setValue('');
 
     //set paginator and set cursor focus during init
@@ -280,7 +365,7 @@ export class PartialComponent implements OnInit {
       );
 
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
-      if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
+      if (this.isDiscount) this.partialAmountRef.nativeElement.focus();
     }, 100);
   }
 }

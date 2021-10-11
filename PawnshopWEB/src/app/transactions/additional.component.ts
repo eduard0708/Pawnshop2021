@@ -45,6 +45,7 @@ export class AdditionalComponent implements OnInit {
   countYYMMDD: TotalYYMMDD;
   dateStatus;
 
+  //declare the columns of the table
   displayColumns: string[] = [
     'index',
     'category',
@@ -52,8 +53,9 @@ export class AdditionalComponent implements OnInit {
     'description',
     'appraisalValue',
   ];
+  // initialize datasource as material data source and Item type
   public dataSource: MatTableDataSource<Item>;
-
+  //initialize currency type to be used in input currency mask
   currencyInputMask = createMask({
     alias: 'numeric',
     groupSeparator: ',',
@@ -72,8 +74,8 @@ export class AdditionalComponent implements OnInit {
     private computationService: ComputationService,
     private transactionService: TransactionService
   ) {
-    // get the pawner information from the params of the link, from dialog-transaction component
-    // pawner info will go to transaction-pawner-info component
+    /* get the pawner information from the params of the link, from dialog-transaction component
+    pawner info will go to transaction-pawner-info component */
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
@@ -117,7 +119,7 @@ export class AdditionalComponent implements OnInit {
       status: [this.dateStatus.status()],
       moments: [this.dateStatus.moments()],
     });
-
+    //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
 
@@ -141,12 +143,8 @@ export class AdditionalComponent implements OnInit {
       this.countYYMMDD.years
     );
 
-    //set focus to discount during init if not disabled
-    setTimeout(() => {
-      if (this.additionalForm.controls.discount.untouched) {
-        this.setComputation();
-      }
-    }, 100);
+    //intialize all computation fields during initialization
+    this.setComputation();
   }
 
   save() {
@@ -163,8 +161,11 @@ export class AdditionalComponent implements OnInit {
     // }
   }
 
+  // reset the transaction
   reset() {
     this.additionalForm.reset();
+    this.setComputation();
+    // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
       this.countYYMMDD.days === 0 ||
@@ -172,48 +173,48 @@ export class AdditionalComponent implements OnInit {
         this.additionalForm.controls.status.value == 'Matured' &&
         this.countYYMMDD.months === 0 &&
         this.countYYMMDD.years === 0)
-    ){
+    ) {
       this.additionalForm.controls.discount.enable();
     }
+    // end condition to enable the discount field and focus if the discount is availlable
   }
 
+  //go to dashboard if cancel the transaction
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
-
-  discountFocus(e) {
-    if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
-  }
-
+  //set value of interest, penalty and due amount during the value changes of discount
   computeDiscount(e) {
+    /* take value of discount to be used in computation of th discount */
     let discountNumber = this.computationService.stringToNumber(
       this.additionalForm.controls.discount.value
     );
-    //start discount to zero if lessthan 0 and 0 if morethan 4
+    /* start discount to zero if lessthan 0 and 0 if morethan 4 */
     if (discountNumber < 0) this.additionalForm.controls.discount.setValue(0);
     if (discountNumber >= 4) this.additionalForm.controls.discount.setValue(0);
-    //end discount to zero if lessthan 0 and 0 if morethan 4
+    /* end discount to zero if lessthan 0 and 0 if morethan 4 */
 
-    //setting discount number to 0 to before parsing to computation
+    /* setting discount number to 0 to before parsing to computation */
     if (discountNumber < 0 || discountNumber > 3) discountNumber = 0;
 
-    // start computation for interest here
+    /* start computation for interest here */
     const _discountInterest = this.computationService.getDiscountInterest(
       this.principalLoan,
       this.interestRate,
       this.computationService.stringToNumber(discountNumber)
     );
     const _interest = this.interest;
+    //set value of interest
     this.additionalForm.controls.interest.setValue(
       _interest - _discountInterest
     );
-    // end computation for interest here
-
+    /* end computation for interest here */
     const _penalty = this.computationService.getDiscountPenalty(
       this.principalLoan,
       this.countYYMMDD,
       this.computationService.stringToNumber(discountNumber)
     );
+    //set value for penalty
     this.additionalForm.controls.penalty.setValue(_penalty);
     this.dueAmount =
       this.computationService.stringToNumber(
@@ -222,20 +223,24 @@ export class AdditionalComponent implements OnInit {
       this.computationService.stringToNumber(
         this.additionalForm.controls.penalty.value
       );
+    //set value for due amoutn
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
   }
-
+  /* set value computation during input of the additonal amount */
   additionalAmountCompute() {
+    /* take additionalAmount amount during additional amount value changes */
     const _additionalAmount = this.computationService.stringToNumber(
       this.additionalForm.controls.additionalAmount.value
     );
+    /* take availlableAmount amount during additional amount value changes */
     const _availlableAmount = this.computationService.stringToNumber(
       this.additionalForm.controls.availlableAmount.value
     );
-
+    /* take advanceServiceCharge amount during additional amount value changes */
     const _advanceServiceCharge = this.computationService.getServiceCharge(
       this.computationService.stringToNumber(_additionalAmount)
     );
+    /* take advanceInterest amount during additional amount value changes */
     const _advanceInterest = this.computationService.getAdvanceInterest(
       this.computationService.stringToNumber(
         this.additionalForm.controls.additionalAmount.value
@@ -243,6 +248,7 @@ export class AdditionalComponent implements OnInit {
       this.interestRate
     );
 
+    /* set additional amount not morethan availlable amount during additional amount value changes */
     if (
       this.computationService.stringToNumber(_additionalAmount) >
       _availlableAmount
@@ -250,15 +256,15 @@ export class AdditionalComponent implements OnInit {
       this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
     }
 
-    //set advanceServiceCharge proceed during value changes in additional amount
+    /* set advanceServiceCharge proceed during value changes in additional amount */
     this.additionalForm.controls.advanceServiceCharge.setValue(
       _advanceServiceCharge
     );
 
-    //set advanceInterest  proceed during value changes in additional amount
+    /* set advanceInterest  proceed during value changes in additional amount */
     this.additionalForm.controls.advanceInterest.setValue(_advanceInterest);
 
-    //set net proceed during value changes in additional amount
+    /* set net proceed during value changes in additional amount */
     this.additionalForm.controls.netProceed.setValue(
       this.computationService.stringToNumber(
         this.additionalForm.controls.additionalAmount.value
@@ -273,26 +279,31 @@ export class AdditionalComponent implements OnInit {
           this.additionalForm.controls.dueAmount.value
         )
     );
+    /*  //  this block of code will going to set the net payment to zero to avoid negative value
+    //  of net payment
+     const _netProceed = this.computationService.stringToNumber(
+       this.additionalForm.controls.netProceed.value)
 
-    // const _netProceed = this.computationService.stringToNumber(
-    //   this.additionalForm.controls.netProceed.value)
-
-    // if (_netProceed < 0)
-    //   this.additionalForm.controls.netProceed.setValue(0);
+     if (_netProceed < 0)
+       this.additionalForm.controls.netProceed.setValue(0); */
   }
-  // set to disable the discount if focus already in additional amount
+
+  /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
     this.additionalForm.controls.discount.disable();
   }
+
+  /* load all computation field during initialization and use for reset also */
   setComputation() {
+    /* set interest value use for global */
     this.interestRate = this.computationService.stringToNumber(
       this.transactionInfo.interestRate
     );
+    /* set principal loan value use for global */
     this.principalLoan = this.computationService.stringToNumber(
       this.transactionInfo.principalLoan
     );
-
-    // set discount disabled
+    /* set discount disabled if not eligible for the discount  */
     if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
@@ -301,26 +312,28 @@ export class AdditionalComponent implements OnInit {
       this.additionalForm.controls.discount.setValue(0);
       this.additionalForm.controls.discount.disable();
     }
-
-    this.principalLoan = this.transactionInfo.principalLoan;
-
+    /* set interest  value use for global */
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
       this.totalDays
     );
+    /* set penalty value use for global */
     this.penalty = this.computationService.penalty(
       this.principalLoan,
       this.countYYMMDD
     );
+    /* set advance interest value use for global */
     this.advanceInterest = this.computationService.getAdvanceInterest(
       this.principalLoan,
       this.transactionInfo.interestRate
     );
+    /* set due amount value use for global */
     this.dueAmount = this.interest + this.penalty;
+    /* set availlable amount  value use for global */
     this.availlableAmount =
       this.transactionInfo.totalAppraisal - this.transactionInfo.principalLoan;
-
+    /* set net payment value use for global */
     this.netPayment =
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
 
@@ -351,7 +364,7 @@ export class AdditionalComponent implements OnInit {
     );
     this.additionalForm.controls.additionalAmount.setValue('');
 
-    //set paginator and set cursor focus during init
+    /* set paginator and set cursor focus during init */
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(

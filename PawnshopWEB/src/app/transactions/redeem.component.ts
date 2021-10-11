@@ -1,11 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +8,7 @@ import { createMask } from '@ngneat/input-mask';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
 import { RedeemService } from '../_service/redeem.service';
@@ -28,7 +23,6 @@ export class RedeemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
-  @ViewChild('redeemRef') redeemRef: ElementRef;
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
@@ -37,6 +31,7 @@ export class RedeemComponent implements OnInit {
   moments;
   principalLoan: number;
   totalDays: number;
+  interestRate: number;
   interest: number;
   penalty: number;
   dueAmount: number;
@@ -45,6 +40,8 @@ export class RedeemComponent implements OnInit {
   advanceServiceCharge: number;
   redeemAmount: number;
   isDiscount: boolean;
+  countYYMMDD: TotalYYMMDD;
+  dateStatus;
 
   displayColumns: string[] = [
     'index',
@@ -82,6 +79,13 @@ export class RedeemComponent implements OnInit {
       }
     });
 
+    //call function for date helper to know the difference of the date of maturity and expired
+    this.dateStatus = new DateHelper(
+      new Date(this.transactionInfo.dateTransaction),
+      new Date(this.transactionInfo.dateMature),
+      new Date(this.transactionInfo.dateExpire)
+    );
+
     this.redeemForm = fb.group({
       dateTransaction: [''],
       dateGranted: [],
@@ -103,21 +107,32 @@ export class RedeemComponent implements OnInit {
       totalDays: [0],
       totalMonths: [0],
       totalYears: [0],
-      status: [0],
-      moments: [0],
+      status: [this.dateStatus.status()],
+      moments: [this.dateStatus.moments()],
     });
 
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
-
-      //convert datatrasactionItems as Items to load in table dataSource
-      if (this.transactionInfo.transactionItems.length !== 0)
+    //convert datatrasactionItems as Items to load in table dataSource
+    if (this.transactionInfo.transactionItems.length !== 0)
       this.dataSource.data =
         this.transactionService.normalizeItemsForTable(
           this.transactionInfo.transactionItems
         ) ?? [];
+
+    //get the total number of years, months and days
+    this.countYYMMDD = this.dateStatus.getmoments(
+      new Date(this.transactionInfo.dateMature)
+    );
+
+    //get the total days in moments
+    this.totalDays = this.computationService.getTotalDays(
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
+    );
 
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
@@ -132,38 +147,9 @@ export class RedeemComponent implements OnInit {
       }
     );
 
-  //discount value changes computations
-    this.redeemForm.controls.discount.valueChanges.subscribe((discount) => {
-      const redeemAmount = this.redeemAmount;
-      if (discount < 0) this.redeemForm.controls.discount.setValue(0);
-      if (discount >= 4) this.redeemForm.controls.discount.setValue(0);
-
-      if (discount === 0 || discount < 4) {
-        const dueAmount = this.dueAmount;
-        let discounts = this.computationService.getDiscount(
-          this.transactionInfo.principalLoan,
-          this.transactionInfo.interestRate,
-          +discount
-        );
-        this.redeemForm.controls.dueAmount.setValue(dueAmount - discounts);
-        this.redeemForm.controls.redeemAmount.setValue(redeemAmount - discounts);
-      }
-
-      const discountDue = +(+this.redeemForm.controls.dueAmount.value
-        .toString()
-        .replace(/[^\d.-]/g, '')).toFixed(2);
-      if (discountDue < 0) this.redeemForm.controls.dueAmount.setValue(0);
-    });
-
-
-
-    //set focus to discount during init if not disabled
-    setTimeout(() => {
-      if (this.redeemForm.controls.discount.untouched) {
-        this.setComputation();
-      }
-    }, 100);
+    this.setComputation();
   }
+
 
   save() {
     const amountReceived = this.computationService.stringToNumber(
@@ -180,14 +166,79 @@ export class RedeemComponent implements OnInit {
     }
   }
 
+  // reset the transaction
   reset() {
     this.redeemForm.reset();
     this.setComputation();
-    this.receivedAmountRef.nativeElement.focus();
+    // start condition to enable the discount field and focus if the discount is availlable
+    this.setComputation();
+    if (
+      this.countYYMMDD.days === 0 ||
+      (this.countYYMMDD.days <= 4 &&
+        this.redeemForm.controls.status.value == 'Matured' &&
+        this.countYYMMDD.months === 0 &&
+        this.countYYMMDD.years === 0)
+    ) {
+      this.redeemForm.controls.discount.enable();
+    }
+    // end condition to enable the discount field and focus if the discount is availlable
   }
 
   home() {
     this.router.navigateByUrl('main/dashboard');
+  }
+
+  //set value of interest, penalty and due amount during the value changes of discount
+  computeDiscount() {
+    /* take value of discount to be used in computation of th discount */
+    let discountNumber = this.computationService.stringToNumber(
+      this.redeemForm.controls.discount.value
+    );
+    /* start discount to zero if lessthan 0 and 0 if morethan 4 */
+    if (discountNumber < 0) this.redeemForm.controls.discount.setValue(0);
+    if (discountNumber >= 4) this.redeemForm.controls.discount.setValue(0);
+    /* end discount to zero if lessthan 0 and 0 if morethan 4 */
+
+    /* setting discount number to 0 to before parsing to computation */
+    if (discountNumber < 0 || discountNumber > 3) discountNumber = 0;
+
+    /* start computation for interest here */
+    const _discountInterest = this.computationService.getDiscountInterest(
+      this.principalLoan,
+      this.interestRate,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    const _interest = this.interest;
+    //set value of interest
+    this.redeemForm.controls.interest.setValue(_interest - _discountInterest);
+    /* end computation for interest here */
+    const _penalty = this.computationService.getDiscountPenalty(
+      this.principalLoan,
+      this.countYYMMDD,
+      this.computationService.stringToNumber(discountNumber)
+    );
+    //set value for penalty
+    this.redeemForm.controls.penalty.setValue(_penalty);
+    this.dueAmount =
+      this.computationService.stringToNumber(
+        this.redeemForm.controls.interest.value
+      ) +
+      this.computationService.stringToNumber(
+        this.redeemForm.controls.penalty.value
+      );
+    //set value for due amoutn
+    this.redeemForm.controls.dueAmount.setValue(this.dueAmount);
+
+    const _dueAmount = this.computationService.stringToNumber(
+      this.redeemForm.controls.dueAmount.value
+    );
+    const _serviceCharge = this.computationService.stringToNumber(
+      this.redeemForm.controls.serviceCharge.value
+    );
+
+    this.redeemForm.controls.redeemAmount.setValue(
+      _dueAmount + _serviceCharge + this.principalLoan
+    );
   }
 
   discountFocus(e) {
@@ -199,26 +250,26 @@ export class RedeemComponent implements OnInit {
       this.receivedAmountRef.nativeElement.focus();
   }
 
+  /*  set to disable the discount if focus already in additional amount */
+  focusRedeemAmountDisabledDiscount() {
+    this.redeemForm.controls.discount.disable();
+  }
+
   setComputation() {
-    let dateStatus = new DateHelper(
-      new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
-    );
-    //get the total number of years, months and days
-    let countYYMMDD = dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
+    /* set interest value use for global */
+    this.interestRate = this.computationService.stringToNumber(
+      this.transactionInfo.interestRate
     );
 
     //get the total days in moments
     this.totalDays = this.computationService.getTotalDays(
-      countYYMMDD.days,
-      countYYMMDD.months,
-      countYYMMDD.years
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
     );
 
     // set discount disabled
-   if (
+    if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMature)
       )
@@ -246,10 +297,11 @@ export class RedeemComponent implements OnInit {
       this.principalLoan + this.dueAmount + this.serviceCharge;
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
-    this.redeemForm.controls.status.setValue(dateStatus.status());
+    this.redeemForm.controls.status.setValue(this.dateStatus.status());
     this.redeemForm.controls.moments.setValue(
-      `Years: ${countYYMMDD.years} Months: ${countYYMMDD.months} Days: ${countYYMMDD.days}`
+      `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
+
     this.redeemForm.controls.totalAppraisal.setValue(
       this.transactionInfo.totalAppraisal
     );
@@ -275,8 +327,13 @@ export class RedeemComponent implements OnInit {
         new Date(this.transactionInfo.dateMature)
       );
 
+      console.log(this.isDiscount);
+
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
+
+
+
   }
 }
