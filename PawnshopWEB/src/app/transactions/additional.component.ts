@@ -292,7 +292,6 @@ export class AdditionalComponent implements OnInit {
   focusAdditional() {
     this.additionalForm.controls.discount.disable();
   }
-
   /* load all computation field during initialization and use for reset also */
   setComputation() {
     /* set interest value use for global */

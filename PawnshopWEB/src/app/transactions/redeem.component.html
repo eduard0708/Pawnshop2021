@@ -156,7 +156,7 @@
         Redeem Computation
       </h2>
       <!-- start computation title -->
-      <div class="computation shadow ">
+      <div class="computation shadow">
         <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
@@ -229,11 +229,10 @@
           <input
             #discountRef
             (keyup)="computeDiscount()"
-            (focus)="focusRedeemAmountDisabledDiscount()"
             formControlName="discount"
             tabindex="1"
             class="form-control form-control-sm"
-            style="text-align: center;"
+            style="text-align: center"
             type="number"
           />
         </div>
@@ -251,6 +250,7 @@
         <div class="input-group shadow-sm Redeem Amount">
           <span class="col-form-label-sm">Redeem Amount</span>
           <input
+            readonly
             formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
@@ -263,8 +263,8 @@
           <span class="col-form-label-sm">Received Amount</span>
           <input
             formControlName="receivedAmount"
-            (keyup)="discountFocus($event)"
             #receivedAmountRef
+            (focus)="focusRedeemAmountDisabledDiscount()"
             tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
@@ -284,7 +284,7 @@
           />
         </div>
       </div>
-    <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
+      <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
           fxFlex="33"
           class="btn btn-success"

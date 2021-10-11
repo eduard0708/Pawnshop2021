@@ -135,7 +135,7 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm.controls.receivedAmount.valueChanges.subscribe(
-      (amountReceived) => {
+      (amountReceived): void => {
         const redeemAmount = this.computationService.stringToNumber(
           this.redeemForm.controls.redeemAmount.value
         );
@@ -149,7 +149,6 @@ export class RedeemComponent implements OnInit {
 
     this.setComputation();
   }
-
 
   save() {
     const amountReceived = this.computationService.stringToNumber(
@@ -241,15 +240,6 @@ export class RedeemComponent implements OnInit {
     );
   }
 
-  discountFocus(e) {
-    if (e.key.toLowerCase() === 'd') this.discountRef.nativeElement.focus();
-  }
-
-  receivedAmountFocus(e) {
-    if (e.key.toLowerCase() === 'a')
-      this.receivedAmountRef.nativeElement.focus();
-  }
-
   /*  set to disable the discount if focus already in additional amount */
   focusRedeemAmountDisabledDiscount() {
     this.redeemForm.controls.discount.disable();
@@ -261,33 +251,29 @@ export class RedeemComponent implements OnInit {
       this.transactionInfo.interestRate
     );
 
-    //get the total days in moments
-    this.totalDays = this.computationService.getTotalDays(
-      this.countYYMMDD.days,
-      this.countYYMMDD.months,
-      this.countYYMMDD.years
-    );
-
-    // set discount disabled
-    if (
-      this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
-      )
-    ) {
-      this.redeemForm.controls.discount.setValue(0);
-      this.redeemForm.controls.discount.disable();
-    }
-
     this.principalLoan = this.transactionInfo.principalLoan;
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
       this.totalDays
     );
-    this.penalty = this.computationService.getPenalty(
+
+    // set discount disabled
+    // if (
+    //   this.computationService.isDiscount(
+    //     new Date(this.transactionInfo.dateMature)
+    //   )
+    // ) {
+    //   this.redeemForm.controls.discount.setValue(0);
+    //   this.redeemForm.controls.discount.disable();
+    // }
+    
+    /* set penalty value use for global */
+    this.penalty = this.computationService.penalty(
       this.principalLoan,
-      this.totalDays
+      this.countYYMMDD
     );
+
     this.dueAmount = this.interest + this.penalty;
     this.serviceCharge = this.computationService.getServiceCharge(
       this.principalLoan
@@ -332,8 +318,5 @@ export class RedeemComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
-
-
-
   }
 }
