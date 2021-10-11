@@ -25,6 +25,7 @@ import { Item } from '../_model/item/item';
 
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
+import { ComputationService } from '../_service/computation.service';
 
 declare module 'moment' {
   function preciseDiff(
@@ -88,7 +89,8 @@ export class NewloanComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private newLoanService: NewloanService,
     private notifierService: NotifierService,
-    private redeem: RedeemService
+    private redeem: RedeemService,
+    private computationService: ComputationService
   ) {
     // get the pawner information from the params of the link
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -131,7 +133,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-   
     this.newLoanForm.controls.dateTransaction.setValue(new Date());
     this.setDate();
     setTimeout(() => {
@@ -140,6 +141,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     }, 100);
 
     this.newLoanForm.controls.principalLoan.disable();
+
     //subscribe to the item service to notify for new added item or deleted
     this.serviceSubscribe = this.itemService.items$.subscribe((items) => {
       this.dataSource.data = items;
@@ -203,16 +205,16 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   setDate() {
-   const dateTran = this.newLoanForm.controls.dateTransaction.value;
-      const dateMature = new Date(dateTran).setMonth(
-        new Date(dateTran).getMonth() + 1
-      );
-      const dateExpire = new Date(dateTran).setMonth(
-        new Date(dateTran).getMonth() + 4
-      );
-      this.newLoanForm.controls.dateGranted.setValue(new Date(dateTran));
-      this.newLoanForm.controls.dateMatured.setValue(new Date(dateMature));
-      this.newLoanForm.controls.dateExpired.setValue(new Date(dateExpire));
+    const _transactionDate = this.newLoanForm.controls.dateTransaction.value;
+    const _maturedDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 1
+    );
+    const _expiredDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 4
+    );
+    this.newLoanForm.controls.dateGranted.setValue(new Date(_transactionDate));
+    this.newLoanForm.controls.dateMatured.setValue(new Date(_maturedDate));
+    this.newLoanForm.controls.dateExpired.setValue(new Date(_expiredDate));
   }
 
   //load category description during selection of category
@@ -277,13 +279,11 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
   delete(item: Item) {
     this.itemService.delete(item.itemId);
-
     if (this.dataSource.data.length == 0) this.resetAddItems();
   }
 
   setTransacitonDate() {
     this.newLoanForm.controls.dateTransaction.setValue(this.today);
-    console.log(this.today);
   }
 
   resetAddItems() {
@@ -326,7 +326,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     this.newLoanForm.controls.appraisalValue.enable();
     this.newLoanForm.controls.category.enable();
     this.categoryRef.focus();
-    this.newLoanForm.controls.dateTransaction.setValue(new Date())
+    this.newLoanForm.controls.dateTransaction.setValue(new Date());
   }
 
   principalLoanFocus() {
@@ -360,11 +360,11 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   validateButtonSave() {
-    const ploan = +(+(this.newLoanForm.controls.principalLoan.value ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, ''));
+    const _principalLoan = this.computationService.stringToNumber(
+      this.newLoanForm.controls.principalLoan.value
+    );
 
-    if (ploan !== 0 && this.itemService.items.length !== 0) {
+    if (_principalLoan !== 0 && this.itemService.items.length !== 0) {
       this.isSave = false;
     } else {
       this.isSave = true;
