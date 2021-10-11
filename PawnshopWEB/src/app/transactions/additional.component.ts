@@ -113,7 +113,7 @@ export class AdditionalComponent implements OnInit {
       netPayment: [0],
       availlableAmount: [0],
       additionalAmount: [0],
-      change: [0],
+      netProceed: [0],
       status: [this.dateStatus.status()],
       moments: [this.dateStatus.moments()],
     });
@@ -141,66 +141,6 @@ export class AdditionalComponent implements OnInit {
       this.countYYMMDD.years
     );
 
-    // discount value changes computations
-    // this.additionalForm.controls.discount.valueChanges.subscribe(
-    //   (discountNumber: number) => {
-    //     //start discount to zero if lessthan 0 and 0 if morethan 4
-    //     if (discountNumber < 0)
-    //       this.additionalForm.controls.discount.setValue(0);
-    //     if (discountNumber >= 4)
-    //       this.additionalForm.controls.discount.setValue(0);
-    //     //end discount to zero if lessthan 0 and 0 if morethan 4
-
-    //     // start computation for interest here
-    //     const _discountInterest = this.computationService.getDiscountInterest(
-    //       this.principalLoan,
-    //       this.interestRate,
-    //       this.computationService.stringToNumber(discountNumber)
-    //     );
-    //     const _interest = this.interest;
-    //     this.additionalForm.controls.interest.setValue(
-    //       _interest - _discountInterest
-    //     );
-    //     // end computation for interest here
-
-    //     const _discountPenalty = this.computationService.getDiscountPenalty(
-    //       this.principalLoan,
-    //       this.countYYMMDD,
-    //       this.computationService.stringToNumber(discountNumber)
-    //     );
-    //     console.log(this.computationService.stringToNumber(discountNumber));
-
-    //     const _penalty = this.penalty;
-    //     this.additionalForm.controls.penalty.setValue(
-    //       _penalty - _discountPenalty
-    //     );
-    //     console.log('>' + _discountPenalty);
-    //   }
-    // );
-
-    this.additionalForm.controls.additionalAmount.valueChanges.subscribe(
-      (additionnalAmount) => {
-        const availlableAmount = this.computationService.stringToNumber(
-          this.additionalForm.controls.availlableAmount.value
-        );
-        const advanceServiceCharge = this.computationService.getServiceCharge(
-          this.computationService.stringToNumber(additionnalAmount)
-        );
-
-        if (
-          this.computationService.stringToNumber(additionnalAmount) >
-          availlableAmount
-        ) {
-          this.additionalForm.controls.additionalAmount.setValue(
-            availlableAmount
-          );
-        }
-        this.additionalForm.controls.advanceServiceCharge.setValue(
-          advanceServiceCharge
-        );
-      }
-    );
-
     //set focus to discount during init if not disabled
     setTimeout(() => {
       if (this.additionalForm.controls.discount.untouched) {
@@ -226,7 +166,15 @@ export class AdditionalComponent implements OnInit {
   reset() {
     this.additionalForm.reset();
     this.setComputation();
-    // this.receivedAmountRef.nativeElement.focus();
+    if (
+      this.countYYMMDD.days === 0 ||
+      (this.countYYMMDD.days <= 4 &&
+        this.additionalForm.controls.status.value == 'Matured' &&
+        this.countYYMMDD.months === 0 &&
+        this.countYYMMDD.years === 0)
+    ){
+      this.additionalForm.controls.discount.enable();
+    }
   }
 
   home() {
@@ -238,8 +186,6 @@ export class AdditionalComponent implements OnInit {
   }
 
   computeDiscount(e) {
-    console.log(e.key);
-    
     let discountNumber = this.computationService.stringToNumber(
       this.additionalForm.controls.discount.value
     );
@@ -279,6 +225,65 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
   }
 
+  additionalAmountCompute() {
+    const _additionalAmount = this.computationService.stringToNumber(
+      this.additionalForm.controls.additionalAmount.value
+    );
+    const _availlableAmount = this.computationService.stringToNumber(
+      this.additionalForm.controls.availlableAmount.value
+    );
+
+    const _advanceServiceCharge = this.computationService.getServiceCharge(
+      this.computationService.stringToNumber(_additionalAmount)
+    );
+    const _advanceInterest = this.computationService.getAdvanceInterest(
+      this.computationService.stringToNumber(
+        this.additionalForm.controls.additionalAmount.value
+      ),
+      this.interestRate
+    );
+
+    if (
+      this.computationService.stringToNumber(_additionalAmount) >
+      _availlableAmount
+    ) {
+      this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
+    }
+
+    //set advanceServiceCharge proceed during value changes in additional amount
+    this.additionalForm.controls.advanceServiceCharge.setValue(
+      _advanceServiceCharge
+    );
+
+    //set advanceInterest  proceed during value changes in additional amount
+    this.additionalForm.controls.advanceInterest.setValue(_advanceInterest);
+
+    //set net proceed during value changes in additional amount
+    this.additionalForm.controls.netProceed.setValue(
+      this.computationService.stringToNumber(
+        this.additionalForm.controls.additionalAmount.value
+      ) -
+        this.computationService.stringToNumber(
+          this.additionalForm.controls.advanceInterest.value
+        ) -
+        this.computationService.stringToNumber(
+          this.additionalForm.controls.advanceServiceCharge.value
+        ) -
+        this.computationService.stringToNumber(
+          this.additionalForm.controls.dueAmount.value
+        )
+    );
+
+    // const _netProceed = this.computationService.stringToNumber(
+    //   this.additionalForm.controls.netProceed.value)
+
+    // if (_netProceed < 0)
+    //   this.additionalForm.controls.netProceed.setValue(0);
+  }
+  // set to disable the discount if focus already in additional amount
+  focusAdditional() {
+    this.additionalForm.controls.discount.disable();
+  }
   setComputation() {
     this.interestRate = this.computationService.stringToNumber(
       this.transactionInfo.interestRate
@@ -333,7 +338,6 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.interestRate.setValue(
       `${this.transactionInfo.interestRate}%`
     );
-    this.additionalForm.controls.change.setValue(0);
     this.additionalForm.controls.interest.setValue(this.interest);
     this.additionalForm.controls.penalty.setValue(this.penalty);
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);

@@ -184,6 +184,7 @@
         <div class="input-group Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
+            readonly
             formControlName="interestRate"
             tabindex="-1"
             maxlength="14"
@@ -194,6 +195,7 @@
         <div class="input-group Interest">
           <span class="col-form-label-sm">Interest</span>
           <input
+            readonly
             formControlName="interest"
             tabindex="-1"
             maxlength="14"
@@ -205,6 +207,7 @@
         <div class="input-group Penalty">
           <span class="col-form-label-sm">Penalty</span>
           <input
+            readonly
             formControlName="penalty"
             tabindex="-1"
             maxlength="14"
@@ -216,6 +219,7 @@
         <div class="input-group Due Amount">
           <span class="col-form-label-sm">Due Amount</span>
           <input
+            readonly
             formControlName="dueAmount"
             tabindex="-1"
             maxlength="14"
@@ -239,6 +243,7 @@
         <div class="input-group Available Amount">
           <span class="col-form-label-sm">Available Amount</span>
           <input
+            readonly
             formControlName="availlableAmount"
             tabindex="-1"
             maxlength="14"
@@ -251,6 +256,8 @@
           <span class="col-form-label-sm">Additional Amount</span>
           <input
             #additionalAmountRef
+            (focus)="focusAdditional()"
+            (keyup)="additionalAmountCompute()"
             formControlName="additionalAmount"
             tabindex="2"
             maxlength="14"
@@ -262,6 +269,7 @@
         <div class="input-group shadow-sm Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            readonly
             formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
@@ -273,6 +281,7 @@
         <div class="input-group shadow-sm Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            readonly
             formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
@@ -284,6 +293,8 @@
         <div class="input-group Net Proceed">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
+            readonly
+            formControlName="netProceed"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -299,6 +310,7 @@
           class="btn btn-success"
           type="submit"
           tabindex="3"
+          (click)="save()"
           mat-raised-button
         >
           <mat-icon>save</mat-icon> Save
@@ -306,6 +318,7 @@
         <button
           fxFlex="33"
           class="btn btn-danger"
+          (click)="reset()"
           type="button"
           tabindex="4"
           mat-raised-button
