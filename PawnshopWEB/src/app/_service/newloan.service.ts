@@ -14,6 +14,7 @@ import { NewTransactionComputation } from '../_model/transaction/new-transaction
 import { NewTransactionPawner } from '../_model/transaction/new-transaction-pawner';
 import { NewTransactionItems } from '../_model/transaction/new-trasaction-items';
 import { User } from '../_model/user';
+import { ComputationService } from './computation.service';
 import { ItemService } from './item.service';
 
 @Injectable({
@@ -24,7 +25,7 @@ export class NewloanService {
   url = environment.baseUrl
   uri: string = 'http://localhost:3000/';
 
-  constructor(private itemService: ItemService, private http: HttpClient, private router:Router) {}
+  constructor(private itemService: ItemService, private http: HttpClient, private router:Router, private computationService:ComputationService) {}
 
   getAdvanceServiceCharge(principalLoan: number) {
     let advanceInterest = 0;
@@ -59,7 +60,7 @@ export class NewloanService {
 
   getInterestRate() {
     if (this.itemService.items.length > 0)
-      return this.itemService.items[0].categoryId === 1 ? 3 : 5;
+      return this.itemService.items[0].categoryId === 1 ? 3 : 6;
 
     return 0;
   }
@@ -114,13 +115,13 @@ export class NewloanService {
   let dateGranted = new DateHelper(new Date(transaction.dateGranted));
   let dateMatured = new DateHelper(new Date(transaction.dateMatured));
   let dateExpired = new DateHelper(new Date(transaction.dateExpired));
- 
+
     const saveTransaction: NewTransaction = {
       transactionsId: 0,
       trackingId: 0,
       dateTransaction: dateTransaction.dateToISOstring(),
       dateGranted: dateGranted.dateToISOstring(),
-      dateMature: dateMatured.dateToISOstring(), 
+      dateMature: dateMatured.dateToISOstring(),
       dateExpire: dateExpired.dateToISOstring(),
       transcationType: TrasactionType.Newloan,
       status: Status.Active,
@@ -130,33 +131,17 @@ export class NewloanService {
       totalYears: 0,
       isThreeDaysLapse: false,
       discount: 0,
-      totalAppraisal: +(+(transaction.totalAppraisal ?? 0) 
-        .toString()
-        .replace(/[^\d.-]/g, '')).toFixed(2),
-      principalLoan:+(+(transaction.principalLoan ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
-      interestRate: +(+(transaction.interestRate ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
-      advanceInterest:+(+(transaction.advanceInterest ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
-      advanceServiceCharge:+(+(transaction.advanceServiceCharge ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
-      interest: +(+(transaction.interest ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
-      serviceCharge: +(+(transaction.serviceCharge ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
+      totalAppraisal: this.computationService.stringToNumber(transaction.totalAppraisal),
+      principalLoan:this.computationService.stringToNumber(transaction.principalLoan),
+      interestRate:this.computationService.stringToNumber(transaction.interestRate),
+      advanceInterest:this.computationService.stringToNumber(transaction.advanceInterest),
+      advanceServiceCharge:this.computationService.stringToNumber(transaction.advanceServiceCharge),
+      interest:this.computationService.stringToNumber(transaction.interest),
+      serviceCharge:this.computationService.stringToNumber(transaction.serviceCharge),
       penalty: 0,
       dueAmount: 0,
       redeemAmount: 0,
-      netProceed: +(+(transaction.netProceed ?? 0)
-      .toString()
-      .replace(/[^\d.-]/g, '')).toFixed(2),
+      netProceed:this.computationService.stringToNumber(transaction.netProceed),
       netPayment: 0,
       receiveAmount: 0,
       change: 0,
@@ -175,6 +160,6 @@ export class NewloanService {
     });
   }
 
-  
+
 
 }

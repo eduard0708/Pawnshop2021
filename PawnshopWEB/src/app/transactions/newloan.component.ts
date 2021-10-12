@@ -230,14 +230,12 @@ export class NewloanComponent implements OnInit, OnDestroy {
     let itemTotalValue = this.itemService.items.reduce(
       (accumulator, current) =>
         accumulator +
-        +(current.appraisalValue ?? '').toString().replace(/[^\d.-]/g, ''),
+        this.computationService.stringToNumber(current.appraisalValue),
       0
     );
-    let currentItemValue = +(
-      this.newLoanForm.controls.appraisalValue.value ?? ''
-    )
-      .toString()
-      .replace(/[^\d.-]/g, '');
+    let currentItemValue = +this.computationService.stringToNumber(
+      this.newLoanForm.controls.appraisalValue.value
+    );
     //check for maximum total loanable amount of 9,999,999.99 before adding
     if (itemTotalValue + currentItemValue > this.maxLoanValue) {
       this.notifierService.info(
@@ -265,13 +263,10 @@ export class NewloanComponent implements OnInit, OnDestroy {
         category: category.categoryName,
         categoryDescription: categoryDescription.categoryDescriptionName,
         description: this.newLoanForm.controls.descriptions.value,
-        appraisalValue: +(+(
-          this.newLoanForm.controls.appraisalValue.value ?? ''
-        )
-          .toString()
-          .replace(/[^\d.-]/g, '')).toFixed(2),
+        appraisalValue: this.computationService.stringToNumber(
+          this.newLoanForm.controls.appraisalValue.value
+        ),
       };
-
       this.itemService.add(item);
       this.resetAddItems();
     }
