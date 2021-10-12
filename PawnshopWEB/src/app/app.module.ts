@@ -28,6 +28,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { InvoiceComponent } from './pages/invoice.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PawnerFoundComponent } from './_dialogs/pawner-found.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,10 +62,12 @@ import { PawnerFoundComponent } from './_dialogs/pawner-found.component';
     ReactiveFormsModule,
     InputMaskModule,
     FlexLayoutModule,
+    NgxSpinnerModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

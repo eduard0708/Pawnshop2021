@@ -19,5 +19,8 @@ ng update @angular/core @angular/cli
 
 ng update @angular/material
 
+*** add command or install prefer is add command ***
+npm install ngx-spinner --save
+ng add ngx-spinner
 
 
