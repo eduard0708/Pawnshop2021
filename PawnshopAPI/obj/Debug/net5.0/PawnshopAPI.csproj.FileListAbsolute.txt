@@ -244,7 +244,6 @@ C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.csp
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\staticwebassets\PawnshopAPI.StaticWebAssets.Manifest.cache
-C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\staticwebassets\PawnshopAPI.StaticWebAssets.xml
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\scopedcss\bundle\PawnshopAPI.styles.css
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.RazorTargetAssemblyInfo.cache
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.dll
@@ -252,4 +251,4 @@ C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\ref\PawnshopAPI
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.pdb
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.genruntimeconfig.cache
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache
-C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\PawnshopAPI.csproj.CopyComplete
+C:\Users\LIGHT\Desktop\Pawnshop2021\pawnshopapi\bin\Debug\net5.0\PawnshopAPI.StaticWebAssets.xml
