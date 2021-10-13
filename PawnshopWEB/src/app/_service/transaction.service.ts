@@ -86,44 +86,44 @@ export class TransactionService {
   let dateMatured = new DateHelper(new Date(transactionInfo.dateMatured));
   let dateExpired = new DateHelper(new Date(transactionInfo.dateExpired));
 
-    const saveTransaction: TransactionInformation = {
-      transactionsId: 0,
-      trackingId: 0,
-      dateTransaction: dateTransaction.dateToISOstring(),
-      dateGranted: dateGranted.dateToISOstring(),
-      dateMatured: dateMatured.dateToISOstring(),
-      dateExpired: dateExpired.dateToISOstring(),
-      transcationType: TrasactionType.Newloan,
-      status: Status.Active,
-      loanStatus: LoanStatus.New,
-      discount: 0,
-      totalAppraisal: this.computationService.stringToNumber(transactionInfo.totalAppraisal),
-      principalLoan:this.computationService.stringToNumber(transactionInfo.principalLoan),
-      interestRate:this.computationService.stringToNumber(transactionInfo.interestRate),
-      advanceInterest:this.computationService.stringToNumber(transactionInfo.advanceInterest),
-      advanceServiceCharge:this.computationService.stringToNumber(transactionInfo.advanceServiceCharge),
-      interest:this.computationService.stringToNumber(transactionInfo.interest),
-      serviceCharge:this.computationService.stringToNumber(transactionInfo.serviceCharge),
-      penalty: 0,
-      dueAmount: 0,
-      redeemAmount: 0,
-      netProceed:this.computationService.stringToNumber(transactionInfo.netProceed),
-      netPayment: 0,
-      receiveAmount: 0,
-      change: 0,
-      employeeId: user.id,
-      transactionItems: [...saveItems],
-      transactionPawner: savePanwer,
-    };
+    // const saveTransaction: TransactionInformation = {
+    //   transactionsId: 0,
+    //   trackingId: 0,
+    //   dateTransaction: dateTransaction.dateToISOstring(),
+    //   dateGranted: dateGranted.dateToISOstring(),
+    //   dateMatured: dateMatured.dateToISOstring(),
+    //   dateExpired: dateExpired.dateToISOstring(),
+    //   transcationType: TrasactionType.Newloan,
+    //   status: Status.Active,
+    //   loanStatus: LoanStatus.New,
+    //   discount: 0,
+    //   totalAppraisal: this.computationService.stringToNumber(transactionInfo.totalAppraisal),
+    //   principalLoan:this.computationService.stringToNumber(transactionInfo.principalLoan),
+    //   interestRate:this.computationService.stringToNumber(transactionInfo.interestRate),
+    //   advanceInterest:this.computationService.stringToNumber(transactionInfo.advanceInterest),
+    //   advanceServiceCharge:this.computationService.stringToNumber(transactionInfo.advanceServiceCharge),
+    //   interest:this.computationService.stringToNumber(transactionInfo.interest),
+    //   serviceCharge:this.computationService.stringToNumber(transactionInfo.serviceCharge),
+    //   penalty: 0,
+    //   dueAmount: 0,
+    //   redeemAmount: 0,
+    //   netProceed:this.computationService.stringToNumber(transactionInfo.netProceed),
+    //   netPayment: 0,
+    //   receiveAmount: 0,
+    //   change: 0,
+    //   employeeId: user.id,
+    //   transactionItems: [...saveItems],
+    //   transactionPawner: savePanwer,
+    // };
 
-    this.saveTransaction(saveTransaction)
+    // this.saveTransaction(saveTransaction)
   }
 
   saveTransaction(st){
 
   }
 
-  normalizePawnerInfo(t: TransactionInformation) {
+  normalizePawnerInfo(t: any) {
     let items: Item[];
 
     let pawner = t.transactionPawner;

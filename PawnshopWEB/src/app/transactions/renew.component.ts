@@ -73,16 +73,15 @@ export class RenewComponent implements OnInit {
   ) {
     /* get the pawner information from the params of the link, from dialog-transaction component
     pawner info will go to transaction-pawner-info component */
+    // get the pawner information from the params of the link, from dialog-transaction component
+    // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-        const normalizeInfo = this.transactionService.normalizePawnerInfo(
-          this.transactionInfo
-        );
-        this.items = normalizeInfo.items;
       }
     });
+;
 
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(

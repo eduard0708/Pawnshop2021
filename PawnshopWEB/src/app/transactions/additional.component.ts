@@ -72,16 +72,12 @@ export class AdditionalComponent implements OnInit {
     private computationService: ComputationService,
     private transactionService: TransactionService
   ) {
-    /* get the pawner information from the params of the link, from dialog-transaction component
-    pawner info will go to transaction-pawner-info component */
+     // get the pawner information from the params of the link, from dialog-transaction component
+    // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-        const normalizeInfo = this.transactionService.normalizePawnerInfo(
-          this.transactionInfo
-        );
-        this.items = normalizeInfo.items;
       }
     });
 

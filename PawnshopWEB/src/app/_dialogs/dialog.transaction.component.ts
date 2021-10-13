@@ -56,7 +56,7 @@ export class DialogTransacitonComponent implements OnInit {
   ) {
     this.dataSource = new MatTableDataSource<Pawner>();
   }
-  
+
   ngOnInit(): void {
     //check if newlona it will change the transaction title
     // and the palce holder of the dialog
@@ -92,8 +92,6 @@ export class DialogTransacitonComponent implements OnInit {
           }
           if (pawner.length > 1) {
             this.notifierService.info(`Multiple pawner found, select one.`);
-            // this.dataSource.data = pawner;
-            // this.isShowTable = true;
             this.openPawnerFoundDialog(pawner)
             this.dialogRef.close();
           }

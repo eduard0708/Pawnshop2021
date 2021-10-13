@@ -87,6 +87,7 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm = fb.group({
+      previousTransactionId:[],
       dateTransaction: [''],
       dateGranted: [],
       dateMatured: [],
@@ -103,13 +104,14 @@ export class RedeemComponent implements OnInit {
       redeemAmount: [0],
       receivedAmount: [0],
       change: [0],
-      transaction: [0],
-      totalDays: [0],
-      totalMonths: [0],
-      totalYears: [0],
+      transcationType: ["Redeem"],
       status: [this.dateStatus.status()],
+      loanStatus: ["Close"],
       moments: [this.dateStatus.moments()],
     });
+
+
+
 
     this.dataSource = new MatTableDataSource<Item>();
   }
@@ -168,8 +170,8 @@ export class RedeemComponent implements OnInit {
   /* end validatation before saving */
 
    /* normalization date before sending to transactionService to save */
-    console.log(
-      this.redeemForm.value);
+    console.log(this.redeemForm.value);
+
 
 
   }

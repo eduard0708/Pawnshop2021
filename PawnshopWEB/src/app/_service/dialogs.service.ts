@@ -6,6 +6,7 @@ import { City } from '../_model/address/city';
 import { Pawner } from '../_model/pawner/Pawner';
 import { Select } from '../_model/select';
 import { NewTransaction } from '../_model/transaction/new-transaction';
+import { TransactionInformation } from '../_model/transaction/transaction-information';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class DialogsService {
   constructor(private http:HttpClient) { }
 
   addPawner(pawner:Pawner){
-    
+
   }
 
   getTransaction(){
@@ -41,6 +42,6 @@ export class DialogsService {
   }
 
   searchTransactionId(id:number){
-    return this.http.get<NewTransaction>(this.url + `transaction/${id}`);
+    return this.http.get<TransactionInformation>(this.url + `transaction/${id}`);
   }
 }

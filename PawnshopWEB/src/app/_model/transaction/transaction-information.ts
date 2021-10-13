@@ -11,21 +11,23 @@ export interface TransactionInformation {
   transcationType: string;
   status: string;
   loanStatus: string;
-  discount?: number;
   totalAppraisal: number;
   principalLoan: number;
   interestRate: number;
+  interest: number;
+  penalty: number;
+  dueAmount: number;
+  discount: number;
   advanceInterest: number;
   advanceServiceCharge: number;
-  interest: number;
   serviceCharge: number;
-  penalty?: number;
-  dueAmount?: number;
-  redeemAmount?: number;
-  netProceed?: number;
-  netPayment?: number;
-  receiveAmount?: number;
-  change?: number;
+  netProceed: number; //for newloan, for additional
+  netPayment: number; // for partial
+  redeemAmount: number; //for redeem only
+  partialAmount:number; //for partial
+  addtionalAmount:number; //for additional only
+  receiveAmount: number;
+  change: number;
   employeeId: number;
   transactionItems:TransactionItems[];
   transactionPawner:TransactionPawner;
