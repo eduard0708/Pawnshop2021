@@ -11,7 +11,6 @@ import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
-import { RedeemService } from '../_service/redeem.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -65,13 +64,12 @@ export class PartialComponent implements OnInit {
   });
 
   constructor(
-    private redeemService: RedeemService,
     private fb: FormBuilder,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
-    private computationService: ComputationService
+    private computationService: ComputationService,
   ) {
     /* get the pawner information from the params of the link, from dialog-transaction component
     pawner info will go to transaction-pawner-info component */
@@ -79,7 +77,7 @@ export class PartialComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-        const normalizeInfo = this.redeemService.normalizePawnerInfo(
+        const normalizeInfo = this.transactionService.normalizePawnerInfo(
           this.transactionInfo
         );
         this.items = normalizeInfo.items;
@@ -89,8 +87,8 @@ export class PartialComponent implements OnInit {
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+      new Date(this.transactionInfo.dateMatured),
+      new Date(this.transactionInfo.dateExpired)
     );
 
     this.partialForm = fb.group({
@@ -133,13 +131,13 @@ export class PartialComponent implements OnInit {
 
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+      new Date(this.transactionInfo.dateMatured),
+      new Date(this.transactionInfo.dateExpired)
     );
 
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
+      new Date(this.transactionInfo.dateMatured)
     );
 
     //set chane during amount received change value
@@ -295,7 +293,7 @@ export class PartialComponent implements OnInit {
     // set discount disabled
     if (
       this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
+        new Date(this.transactionInfo.dateMatured)
       )
     ) {
       this.partialForm.controls.discount.setValue(0);
@@ -361,7 +359,7 @@ export class PartialComponent implements OnInit {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
+        new Date(this.transactionInfo.dateMatured)
       );
 
       if (!this.isDiscount) this.discountRef.nativeElement.focus();

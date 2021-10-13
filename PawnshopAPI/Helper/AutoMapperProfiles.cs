@@ -3,7 +3,6 @@ using PawnshopAPI.DTO;
 using PawnshopAPI.DTO.AddressDTO;
 using PawnshopAPI.DTO.ItemDTO;
 using PawnshopAPI.DTO.PawnerDTO;
-using PawnshopAPI.DTO.TestDTO;
 using PawnshopAPI.DTO.TransactionDTO;
 using PawnshopAPI.Entities;
 
@@ -47,7 +46,7 @@ namespace PawnshopAPI.Helper
             CreateMap<ReturnTransactionPawner, TransactionPawner>().ReverseMap();
             CreateMap<ReturnTransactionItems, TransactionItem>().ReverseMap();
 
-            CreateMap<TransDto, Trans>();
+            
         }
     }
 }

@@ -11,7 +11,6 @@ import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
-import { RedeemService } from '../_service/redeem.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -65,7 +64,6 @@ export class RenewComponent implements OnInit {
   });
 
   constructor(
-    private redeemService: RedeemService,
     private fb: FormBuilder,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -79,7 +77,7 @@ export class RenewComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
-        const normalizeInfo = this.redeemService.normalizePawnerInfo(
+        const normalizeInfo = this.transactionService.normalizePawnerInfo(
           this.transactionInfo
         );
         this.items = normalizeInfo.items;
@@ -89,8 +87,8 @@ export class RenewComponent implements OnInit {
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+      new Date(this.transactionInfo.dateMatured),
+      new Date(this.transactionInfo.dateExpired)
     );
 
     this.renewForm = fb.group({
@@ -101,9 +99,6 @@ export class RenewComponent implements OnInit {
       dateExpired: [],
       totalAppraisal: [],
       transaction: [],
-      // totalDays: [dateStatus.days()],
-      // totalMonths: [dateStatus.months()],
-      // totalYears: [dateStatus.years()],
       principalLoan: [0],
       interestRate: [0],
       interest: [0],
@@ -132,7 +127,7 @@ export class RenewComponent implements OnInit {
 
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
+      new Date(this.transactionInfo.dateMatured)
     );
     //get the total days in moments
     this.totalDays = this.computationService.getTotalDays(
@@ -266,7 +261,7 @@ export class RenewComponent implements OnInit {
     /* set discount disabled if not eligible for the discount  */
     if (
       this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
+        new Date(this.transactionInfo.dateMatured)
       )
     ) {
       this.renewForm.controls.discount.setValue(0);
@@ -329,7 +324,7 @@ export class RenewComponent implements OnInit {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
+        new Date(this.transactionInfo.dateMatured)
       );
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();

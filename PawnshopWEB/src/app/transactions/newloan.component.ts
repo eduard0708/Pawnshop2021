@@ -20,7 +20,6 @@ import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { ItemService } from '../_service/item.service';
 import { NewloanService } from '../_service/newloan.service';
 import { NotifierService } from '../_service/notifier.service';
-import { RedeemService } from '../_service/redeem.service';
 import { Item } from '../_model/item/item';
 
 import * as moment from 'moment';
@@ -89,7 +88,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     private itemService: ItemService,
     private newLoanService: NewloanService,
     private notifierService: NotifierService,
-    private redeem: RedeemService,
     private computationService: ComputationService
   ) {
     // get the pawner information from the params of the link

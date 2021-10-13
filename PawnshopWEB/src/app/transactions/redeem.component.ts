@@ -11,7 +11,6 @@ import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
-import { RedeemService } from '../_service/redeem.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -62,13 +61,14 @@ export class RedeemComponent implements OnInit {
   });
 
   constructor(
-    private redeemService: RedeemService,
-    private fb: FormBuilder,
+   private fb: FormBuilder,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
-    private computationService: ComputationService
+    private computationService: ComputationService,
+    private trasactionService:TransactionService
+
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -82,8 +82,8 @@ export class RedeemComponent implements OnInit {
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMature),
-      new Date(this.transactionInfo.dateExpire)
+      new Date(this.transactionInfo.dateMatured),
+      new Date(this.transactionInfo.dateExpired)
     );
 
     this.redeemForm = fb.group({
@@ -124,7 +124,7 @@ export class RedeemComponent implements OnInit {
 
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
-      new Date(this.transactionInfo.dateMature)
+      new Date(this.transactionInfo.dateMatured)
     );
 
     //get the total days in moments
@@ -151,18 +151,27 @@ export class RedeemComponent implements OnInit {
   }
 
   save() {
-    const amountReceived = this.computationService.stringToNumber(
-      this.redeemForm.controls.receivedAmount.value
-    );
-    const redeemAmount = this.computationService.stringToNumber(
-      this.redeemForm.controls.redeemAmount.value
-    );
 
-    if (redeemAmount > amountReceived) {
-      this.redeemForm.controls.receivedAmount.setValue('');
-      this.receivedAmountRef.nativeElement.focus();
-      alert('Enter valid amount received');
-    }
+    /* start validatation before saving */
+    // const amountReceived = this.computationService.stringToNumber(
+    //   this.redeemForm.controls.receivedAmount.value
+    // );
+    // const redeemAmount = this.computationService.stringToNumber(
+    //   this.redeemForm.controls.redeemAmount.value
+    // );
+
+    // if (redeemAmount > amountReceived) {
+    //   this.redeemForm.controls.receivedAmount.setValue('');
+    //   this.receivedAmountRef.nativeElement.focus();
+    //   alert('Enter valid amount received');
+    // }
+  /* end validatation before saving */
+
+   /* normalization date before sending to transactionService to save */
+    console.log(
+      this.redeemForm.value);
+
+
   }
 
   // reset the transaction
@@ -267,7 +276,7 @@ export class RedeemComponent implements OnInit {
     //   this.redeemForm.controls.discount.setValue(0);
     //   this.redeemForm.controls.discount.disable();
     // }
-    
+
     /* set penalty value use for global */
     this.penalty = this.computationService.penalty(
       this.principalLoan,
@@ -310,11 +319,8 @@ export class RedeemComponent implements OnInit {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMature)
+        new Date(this.transactionInfo.dateMatured)
       );
-
-      console.log(this.isDiscount);
-
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);

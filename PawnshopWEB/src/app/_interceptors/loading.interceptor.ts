@@ -21,7 +21,6 @@ export class LoadingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       // delay(300),
       finalize(() => {
-        console.log(this.spinnerLoader.busyRequestCount);
         this.spinnerLoader.idle();
       })
     );

@@ -10,8 +10,8 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211004215520_initCreate")]
-    partial class initCreate
+    [Migration("20211013191819_initCreate1")]
+    partial class initCreate1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,29 +147,6 @@ namespace PawnshopAPI.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("PawnshopAPI.Entities.Iteem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TN")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TransId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransId");
-
-                    b.ToTable("Iteems");
-                });
-
             modelBuilder.Entity("PawnshopAPI.Entities.ItemAuditTrail", b =>
                 {
                     b.Property<int>("ItemAuditTrailId")
@@ -197,30 +174,6 @@ namespace PawnshopAPI.Migrations
                     b.HasIndex("TransactionItemsId");
 
                     b.ToTable("ItemAuditTrail");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.Pawn", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TN")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TransId")
-                        .IsUnique();
-
-                    b.ToTable("Pawns");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
@@ -254,24 +207,6 @@ namespace PawnshopAPI.Migrations
                     b.HasKey("PawnerId");
 
                     b.ToTable("Pawners");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.Trans", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TN")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trans");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>
@@ -382,13 +317,13 @@ namespace PawnshopAPI.Migrations
                     b.Property<double>("Change")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("DateExpire")
+                    b.Property<DateTime?>("DateExpired")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateGranted")
+                    b.Property<DateTime?>("DateGranted")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateMature")
+                    b.Property<DateTime?>("DateMatured")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateTransaction")
@@ -436,23 +371,11 @@ namespace PawnshopAPI.Migrations
                     b.Property<double>("TotalAppraisal")
                         .HasColumnType("float");
 
-                    b.Property<int>("TotalDays")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalMonths")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalYears")
-                        .HasColumnType("int");
-
                     b.Property<int>("TrackingId")
                         .HasColumnType("int");
 
                     b.Property<string>("TranscationType")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isThreeDaysLapse")
-                        .HasColumnType("bit");
 
                     b.Property<double>("netProceed")
                         .HasColumnType("float");
@@ -495,13 +418,6 @@ namespace PawnshopAPI.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("PawnshopAPI.Entities.Iteem", b =>
-                {
-                    b.HasOne("PawnshopAPI.Entities.Trans", null)
-                        .WithMany("Iteems")
-                        .HasForeignKey("TransId");
-                });
-
             modelBuilder.Entity("PawnshopAPI.Entities.ItemAuditTrail", b =>
                 {
                     b.HasOne("PawnshopAPI.Entities.TransactionItem", "TransactionItems")
@@ -511,17 +427,6 @@ namespace PawnshopAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("TransactionItems");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.Pawn", b =>
-                {
-                    b.HasOne("PawnshopAPI.Entities.Trans", "MyProperty")
-                        .WithOne("Pawn")
-                        .HasForeignKey("PawnshopAPI.Entities.Pawn", "TransId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MyProperty");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>
@@ -557,13 +462,6 @@ namespace PawnshopAPI.Migrations
             modelBuilder.Entity("PawnshopAPI.Entities.Pawner", b =>
                 {
                     b.Navigation("Addresses");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.Trans", b =>
-                {
-                    b.Navigation("Iteems");
-
-                    b.Navigation("Pawn");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.TransactionItem", b =>

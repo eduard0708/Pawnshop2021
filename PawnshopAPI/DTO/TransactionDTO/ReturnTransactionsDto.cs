@@ -12,16 +12,15 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public double AdvanceInterest { get; set; }
         public double AdvanceServiceCharge { get; set; }
         public double Change { get; set; }
-        public DateTime? DateExpire { get; set; }
-        public DateTime DateGranted { get; set; }
-        public DateTime? DateMature { get; set; }
+        public DateTime? DateExpired { get; set; }
+        public DateTime? DateGranted { get; set; }
+        public DateTime? DateMatured { get; set; }
         public DateTime DateTransaction { get; set; }
         public double Discount { get; set; }
         public double DueAmount { get; set; }
         public int EmployeeId { get; set; }
         public double Interest { get; set; }
         public double InterestRate { get; set; }
-        public bool isThreeDaysLapse { get; set; }
         public string LoanStatus { get; set; }
         public double NetPayment { get; set; }
         public double netProceed { get; set; }
@@ -32,9 +31,6 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public double ServiceCharge { get; set; }
         public string Status { get; set; }
         public double TotalAppraisal { get; set; }
-        public int TotalDays { get; set; }
-        public int TotalMonths { get; set; }
-        public int TotalYears { get; set; }
         public string TranscationType { get; set; }
         public ReturnTransactionPawner TransactionPawner { get; set; }
         public ICollection<ReturnTransactionItems> TransactionItems { get; set; }

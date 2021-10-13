@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PawnshopAPI.Migrations
 {
-    public partial class initCreate : Migration
+    public partial class initCreate1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,20 +70,6 @@ namespace PawnshopAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trans",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TN = table.Column<int>(type: "int", nullable: true),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trans", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -93,16 +79,15 @@ namespace PawnshopAPI.Migrations
                     AdvanceInterest = table.Column<double>(type: "float", nullable: false),
                     AdvanceServiceCharge = table.Column<double>(type: "float", nullable: false),
                     Change = table.Column<double>(type: "float", nullable: false),
-                    DateExpire = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateGranted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateMature = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateExpired = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateGranted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateMatured = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateTransaction = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discount = table.Column<double>(type: "float", nullable: false),
                     DueAmount = table.Column<double>(type: "float", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     Interest = table.Column<double>(type: "float", nullable: false),
                     InterestRate = table.Column<double>(type: "float", nullable: false),
-                    isThreeDaysLapse = table.Column<bool>(type: "bit", nullable: false),
                     LoanStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NetPayment = table.Column<double>(type: "float", nullable: false),
                     netProceed = table.Column<double>(type: "float", nullable: false),
@@ -113,9 +98,6 @@ namespace PawnshopAPI.Migrations
                     ServiceCharge = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalAppraisal = table.Column<double>(type: "float", nullable: false),
-                    TotalDays = table.Column<int>(type: "int", nullable: false),
-                    TotalMonths = table.Column<int>(type: "int", nullable: false),
-                    TotalYears = table.Column<int>(type: "int", nullable: false),
                     TranscationType = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -183,48 +165,6 @@ namespace PawnshopAPI.Migrations
                         column: x => x.PawnerId,
                         principalTable: "Pawners",
                         principalColumn: "PawnerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Iteems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TN = table.Column<int>(type: "int", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Iteems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Iteems_Trans_TransId",
-                        column: x => x.TransId,
-                        principalTable: "Trans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pawns",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TN = table.Column<int>(type: "int", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pawns", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pawns_Trans_TransId",
-                        column: x => x.TransId,
-                        principalTable: "Trans",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -324,20 +264,9 @@ namespace PawnshopAPI.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Iteems_TransId",
-                table: "Iteems",
-                column: "TransId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ItemAuditTrail_TransactionItemsId",
                 table: "ItemAuditTrail",
                 column: "TransactionItemsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pawns_TransId",
-                table: "Pawns",
-                column: "TransId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionItems_TransactionsId",
@@ -366,13 +295,7 @@ namespace PawnshopAPI.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Iteems");
-
-            migrationBuilder.DropTable(
                 name: "ItemAuditTrail");
-
-            migrationBuilder.DropTable(
-                name: "Pawns");
 
             migrationBuilder.DropTable(
                 name: "TransactionPawners");
@@ -388,9 +311,6 @@ namespace PawnshopAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "TransactionItems");
-
-            migrationBuilder.DropTable(
-                name: "Trans");
 
             migrationBuilder.DropTable(
                 name: "Transactions");

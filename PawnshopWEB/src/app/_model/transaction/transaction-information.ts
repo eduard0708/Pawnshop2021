@@ -1,8 +1,7 @@
-import { Pawner } from "../pawner/Pawner";
-import { NewTransactionPawner } from "./new-transaction-pawner";
-import { NewTransactionItems } from "./new-trasaction-items";
+import { TransactionItems } from "./transaction-items";
+import { TransactionPawner } from "./transaction-pawner";
 
-export interface NewTransaction {
+export interface TransactionInformation {
   transactionsId:number;
   trackingId: number;
   dateTransaction: string;
@@ -28,6 +27,6 @@ export interface NewTransaction {
   receiveAmount?: number;
   change?: number;
   employeeId: number;
-  transactionItems:NewTransactionItems[];
-  transactionPawner:NewTransactionPawner;
+  transactionItems:TransactionItems[];
+  transactionPawner:TransactionPawner;
 }
