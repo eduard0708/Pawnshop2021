@@ -11,6 +11,7 @@ export interface TransactionInformation {
   transcationType: string;
   status: string;
   loanStatus: string;
+  moments:string;
   totalAppraisal: number;
   principalLoan: number;
   interestRate: number;

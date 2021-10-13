@@ -19,6 +19,7 @@ namespace PawnshopAPI.Entities
         public double Discount { get; set; }
         public double DueAmount { get; set; }
         public int EmployeeId { get; set; }
+        public string Moments { get; set; }
         public double Interest { get; set; }
         public double InterestRate { get; set; }
         public string LoanStatus { get; set; }

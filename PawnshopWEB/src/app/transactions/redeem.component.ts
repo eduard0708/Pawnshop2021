@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { TransactionStatus, TrasactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -61,14 +62,13 @@ export class RedeemComponent implements OnInit {
   });
 
   constructor(
-   private fb: FormBuilder,
+    private fb: FormBuilder,
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
     private computationService: ComputationService,
-    private trasactionService:TransactionService
-
+    private trasactionService: TransactionService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -87,31 +87,36 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm = fb.group({
-      previousTransactionId:[],
-      dateTransaction: [''],
-      dateGranted: [],
-      dateMatured: [],
-      dateExpired: [],
+      previousTransactionId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.transactionsId],
+      dateTransaction: [new Date()],
+      dateGranted: [null],
+      dateMatured: [null],
+      dateExpired: [null],
+      transcationType: [TrasactionType.Redeem],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
       totalAppraisal: [0],
       principalLoan: [0],
       interestRate: [0],
       interest: [0],
-      advanceInterest: [0],
       penalty: [0],
       dueAmount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]], //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
+      discounts: [0],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
       serviceCharge: [0],
-      discount: [0, [Validators.min(0), Validators.max(3)]],
-      redeemAmount: [0],
+      netProceed: [0],
+      netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      addtionalAmount: [0], //for additional only
       receivedAmount: [0],
       change: [0],
-      transcationType: ["Redeem"],
-      status: [this.dateStatus.status()],
-      loanStatus: ["Close"],
-      moments: [this.dateStatus.moments()],
     });
-
-
-
 
     this.dataSource = new MatTableDataSource<Item>();
   }
@@ -153,7 +158,6 @@ export class RedeemComponent implements OnInit {
   }
 
   save() {
-
     /* start validatation before saving */
     // const amountReceived = this.computationService.stringToNumber(
     //   this.redeemForm.controls.receivedAmount.value
@@ -167,13 +171,21 @@ export class RedeemComponent implements OnInit {
     //   this.receivedAmountRef.nativeElement.focus();
     //   alert('Enter valid amount received');
     // }
-  /* end validatation before saving */
+    /* end validatation before saving */
 
-   /* normalization date before sending to transactionService to save */
+    /* normalization date before sending to transactionService to save */
+    this.redeemForm.controls.discount.setValue(
+      this.computationService.stringToNumber(
+        this.redeemForm.controls.discount.value
+      )
+    );
     console.log(this.redeemForm.value);
 
-
-
+    this.transactionService.normalizedTransationInfo(
+      this.redeemForm.value,
+      this.transactionInfo.transactionPawner,
+      this.dataSource.data
+    );
   }
 
   // reset the transaction
@@ -269,16 +281,6 @@ export class RedeemComponent implements OnInit {
       this.totalDays
     );
 
-    // set discount disabled
-    // if (
-    //   this.computationService.isDiscount(
-    //     new Date(this.transactionInfo.dateMature)
-    //   )
-    // ) {
-    //   this.redeemForm.controls.discount.setValue(0);
-    //   this.redeemForm.controls.discount.disable();
-    // }
-
     /* set penalty value use for global */
     this.penalty = this.computationService.penalty(
       this.principalLoan,
@@ -317,7 +319,7 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.controls.redeemAmount.setValue(this.redeemAmount);
     this.redeemForm.controls.receivedAmount.setValue('');
 
-    //set paginator and set cursor focus during init
+    //set paginator and set cursor focus during init, disable discount field if not eligible for disount
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(

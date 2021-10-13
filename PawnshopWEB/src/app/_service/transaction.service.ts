@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ItemStatus, LoanStatus, Status, TrasactionType } from '../_enum/enums';
-import { DateHelper } from '../_model/DateHelper';
+import { ItemStatus, LoanStatus, TrasactionType } from '../_enum/enums';
+
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -79,12 +79,10 @@ export class TransactionService {
       barangay: pawnerInfo.barangay,
       completeAddress: pawnerInfo.completeAddress,
     };
+console.log(pawnerInfo);
+console.log(itemsInfo);
 
-  //normalize transactions value
-  let dateTransaction = new DateHelper(new Date(transactionInfo.dateTransaction));
-  let dateGranted = new DateHelper(new Date(transactionInfo.dateGranted));
-  let dateMatured = new DateHelper(new Date(transactionInfo.dateMatured));
-  let dateExpired = new DateHelper(new Date(transactionInfo.dateExpired));
+
 
     // const saveTransaction: TransactionInformation = {
     //   transactionsId: 0,

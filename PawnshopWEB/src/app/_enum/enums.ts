@@ -6,7 +6,7 @@ export enum TrasactionType {
   Renew = 'Renew',
 }
 
-export enum Status {
+export enum TransactionStatus {
   Active = 'Active',
   Closed = 'Closed',
   Cancelled = 'Cancelled',
