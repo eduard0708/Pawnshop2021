@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ItemStatus, LoanStatus, TrasactionType } from '../_enum/enums';
+import { ItemStatus, LoanStatus, TransactionType } from '../_enum/enums';
 
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
@@ -47,6 +47,9 @@ export class TransactionService {
       remarks: null,
     };
 
+    if(transactionInfo.transcationType === TransactionType.Redeem)
+      this.normalizeRedeemInfo(transactionInfo)
+
     //loop to normalize items value
     for (let index = 0; index < itemsInfo.length; index++) {
       const item: Item = itemsInfo[index];
@@ -79,10 +82,6 @@ export class TransactionService {
       barangay: pawnerInfo.barangay,
       completeAddress: pawnerInfo.completeAddress,
     };
-console.log(pawnerInfo);
-console.log(itemsInfo);
-
-
 
     // const saveTransaction: TransactionInformation = {
     //   transactionsId: 0,
@@ -146,4 +145,16 @@ console.log(itemsInfo);
 
     return normalizeTrasactionInfo;
   }
+
+  normalizeRedeemInfo(transactionInfo:TransactionInformation){
+    let redeemInfo: TransactionInformation = transactionInfo
+    redeemInfo.discount = this.computationService.stringToNumber(transactionInfo.discount)
+    redeemInfo.receiveAmount = this.computationService.stringToNumber(transactionInfo.receiveAmount)
+    redeemInfo.interestRate = this.computationService.stringToNumber(transactionInfo.interestRate)
+    redeemInfo.dateTransaction = new Date(transactionInfo.dateTransaction).toISOString()
+
+    // console.log(redeemInfo);
+
+  }
+
 }

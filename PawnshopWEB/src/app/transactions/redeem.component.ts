@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-import { TransactionStatus, TrasactionType } from '../_enum/enums';
+import { TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -93,7 +93,7 @@ export class RedeemComponent implements OnInit {
       dateGranted: [null],
       dateMatured: [null],
       dateExpired: [null],
-      transcationType: [TrasactionType.Redeem],
+      transcationType: [TransactionType.Redeem],
       loanStatus: [this.dateStatus.status()],
       status: [TransactionStatus.Closed],
       moments: [this.dateStatus.moments()],
@@ -104,8 +104,8 @@ export class RedeemComponent implements OnInit {
       interest: [0],
       penalty: [0],
       dueAmount: [0],
-      discount: [0, [Validators.min(0), Validators.max(3)]], //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
-      discounts: [0],
+      discount: [0, [Validators.min(0), Validators.max(3), Validators.required]], //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
+      // discounts: [0],
       advanceInterest: [0],
       advanceServiceCharge: [0],
       serviceCharge: [0],
@@ -174,12 +174,15 @@ export class RedeemComponent implements OnInit {
     /* end validatation before saving */
 
     /* normalization date before sending to transactionService to save */
-    this.redeemForm.controls.discount.setValue(
-      this.computationService.stringToNumber(
-        this.redeemForm.controls.discount.value
-      )
-    );
-    console.log(this.redeemForm.value);
+    // this.redeemForm.controls.discount.setValue(
+    //   this.computationService.stringToNumber(
+    //     this.redeemForm.controls.discount.value
+    //   )
+    // );
+
+    // this.redeemForm.controls.receivedAmount.setValue(this.computationService.stringToNumber(this.redeemForm.controls.receivedAmount.value))
+    // this.redeemForm.controls.interestRate.setValue(this.computationService.stringToNumber(this.interestRate))
+    // this.redeemForm.controls.dateTransaction.setValue(new Date(this.redeemForm.controls.dateTransaction.value).toISOString())
 
     this.transactionService.normalizedTransationInfo(
       this.redeemForm.value,

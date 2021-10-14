@@ -1,4 +1,4 @@
-export enum TrasactionType {
+export enum TransactionType {
   Newloan = 'Newloan',
   Redeem = 'Redeem',
   Partial = 'Partial',

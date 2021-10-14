@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { ObserveOnMessage } from 'rxjs/internal/operators/observeOn';
 import { environment } from 'src/environments/environment';
-import { ItemStatus, LoanStatus, TransactionStatus, TrasactionType } from '../_enum/enums';
+import { ItemStatus, LoanStatus, TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
@@ -123,7 +123,7 @@ export class NewloanService {
       dateGranted:dateGranted.dateToISOstring(),
       dateMatured: dateMatured.dateToISOstring(),
       dateExpired: dateExpired.dateToISOstring(),
-      transcationType: TrasactionType.Newloan,
+      transcationType: TransactionType.Newloan,
       status: TransactionStatus.Active,
       loanStatus: LoanStatus.New,
       discount: 0,
