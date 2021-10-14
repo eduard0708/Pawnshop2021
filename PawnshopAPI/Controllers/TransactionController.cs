@@ -60,13 +60,13 @@ namespace PawnshopAPI.Controllers
             context.SaveChanges();
 
             var transactionId = transaction.TransactionsId;
-            transaction.TransactionPawner.TrackingId = transactionId;
-            transaction.TrackingId = transactionId;
+            //transaction.TransactionPawner.TrackingId = transactionId;
+            //transaction.TrackingId = transactionId;
 
-            foreach (var item in transaction.TransactionItems)
-            {
-                item.TrackingId = transactionId;
-            }
+            //foreach (var item in transaction.TransactionItems)
+            //{
+            //    item.TrackingId = transactionId;
+            //}
 
             context.Update(transaction);
             context.SaveChanges();
@@ -80,10 +80,14 @@ namespace PawnshopAPI.Controllers
         public ActionResult<ReturnTransactionsDto> GetTransactionById(int id) {
 
             var t = context.Transactions
-                 .Include(x => x.TransactionPawner)
-                 .Include(x => x.TransactionItems)
+                 //.Include(x => x.TransactionPawner)
+                 //.Include(x => x.TransactionItems)
+
                  .FirstOrDefault(x => x.TransactionsId == id);
-                  
+            var p = context.TransactionPawners.FirstOrDefault(p => p.TrackingId == t.TrackingId);
+            t.TransactionPawner = p;
+
+
             var transaction = mapper.Map<ReturnTransactionsDto>(t);
 
             return Ok(transaction);

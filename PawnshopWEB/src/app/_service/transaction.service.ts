@@ -68,6 +68,8 @@ export class TransactionService {
          a.transactionItems = []
          a.transactionPawner = {} as TransactionPawner
 
+         console.log(a);
+
         this.saveTransaction(a);
     }
 

@@ -194,6 +194,7 @@ export class RedeemComponent implements OnInit {
         this.redeemForm.controls.discount.value
       )
     );
+
     /* send the form value to the the transactoinService to normalized the value and save to database */
     this.transactionService.normalizedTransationInfo(
       this.redeemForm.value,
@@ -310,7 +311,7 @@ export class RedeemComponent implements OnInit {
       this.principalLoan + this.dueAmount + this.serviceCharge;
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
-    this.redeemForm.controls.status.setValue(this.dateStatus.status());
+    this.redeemForm.controls.loanStatus.setValue(this.dateStatus.status());
     this.redeemForm.controls.moments.setValue(
       `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
