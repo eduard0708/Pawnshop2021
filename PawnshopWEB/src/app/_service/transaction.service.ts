@@ -64,13 +64,11 @@ export class TransactionService {
       this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
       this.saveRedeemInfo.transactionItems = [];
       let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo)
-         a.transactionPawner = pawnerInfo
-         a.transactionItems = itemsInfo
-         console.log(pawnerInfo);
+        //  a.transactionPawner = pawnerInfo
+         a.transactionItems = []
+         a.transactionPawner = {} as TransactionPawner
 
-        console.log(a);
-
-        // this.saveTransaction(this.saveTransaction);
+        this.saveTransaction(a);
     }
 
     //loop to normalize items value
@@ -141,7 +139,7 @@ export class TransactionService {
 
   saveTransaction(saveTransaction) {
     this.http
-      .post(this.url + 'transaction', saveTransaction)
+      .post(this.url + 'transaction/addtransaction', saveTransaction)
       .subscribe((transaction) => {
         this.router.navigateByUrl('invoicetest', {
           state: { print: transaction },

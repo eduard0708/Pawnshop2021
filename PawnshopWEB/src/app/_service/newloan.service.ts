@@ -142,10 +142,9 @@ export class NewloanService {
       receiveAmount: 0,
       change: 0,
       employeeId: user.id,
-      // transactionItems: [...saveItems],
-      // transactionPawner: savePanwer,
-      transactionItems: [],
-      transactionPawner: {} as NewTransactionPawner,
+      transactionItems: [...saveItems],
+      transactionPawner: savePanwer,
+
     };
 
     this.addTransaction(saveTransaction)

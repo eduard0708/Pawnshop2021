@@ -51,7 +51,7 @@ namespace PawnshopAPI.Controllers
         }
 
 
-        [HttpPost("addtrasaction")]
+        [HttpPost("addtransaction")]
         public ActionResult<AddTransactionDto> AddTransaction(AddTransactionDto transactions)
         {
 

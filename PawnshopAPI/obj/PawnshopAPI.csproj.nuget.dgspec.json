@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {}
+    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj": {
+    "C:\\Users\\Light\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
         "projectName": "PawnshopAPI",
-        "projectPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\PawnshopAPI.csproj",
+        "projectPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\PawnshopAPI\\PawnshopAPI.csproj",
         "packagesPath": "C:\\Users\\Light\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\pawnshopapi\\obj\\",
+        "outputPath": "C:\\Users\\Light\\Desktop\\Pawnshop2021\\PawnshopAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Light\\AppData\\Roaming\\NuGet\\NuGet.Config",
