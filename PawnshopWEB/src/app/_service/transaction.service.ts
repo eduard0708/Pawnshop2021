@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { ItemStatus, LoanStatus, TransactionType } from '../_enum/enums';
 
 import { Item } from '../_model/item/item';
@@ -11,14 +14,19 @@ import { User } from '../_model/user';
 import { ComputationService } from './computation.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionService {
+  saveRedeemInfo: TransactionInformation;
+  url = environment.baseUrl;
+  constructor(
+    private computationService: ComputationService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-  constructor(private computationService:ComputationService ) { }
-
-   /* normalize items from transaction to assigned in table */
-   normalizeItemsForTable(items) {
+  /* normalize items from transaction to assigned in table */
+  normalizeItemsForTable(items) {
     let normItem: Item[] = [];
     for (let index = 0; index < items.length; index++) {
       const i = items[index];
@@ -35,7 +43,11 @@ export class TransactionService {
     return normItem;
   }
 
-  normalizedTransationInfo(transactionInfo:TransactionInformation, pawnerInfo, itemsInfo) {
+  normalizedTransationInfo(
+    transactionInfo: TransactionInformation,
+    pawnerInfo,
+    itemsInfo
+  ) {
     let user: User = JSON.parse(localStorage.getItem('user'));
     let saveItems: TransactionItems[] = [];
     //normalize itemAuditTrail value
@@ -47,8 +59,13 @@ export class TransactionService {
       remarks: null,
     };
 
-    if(transactionInfo.transcationType === TransactionType.Redeem)
-      this.normalizeRedeemInfo(transactionInfo)
+    if (transactionInfo.transcationType === TransactionType.Redeem) {
+      this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
+      this.saveRedeemInfo.transactionItems = [];
+      this.saveRedeemInfo.transactionPawner = {} as TransactionPawner;
+      console.log(this.saveRedeemInfo);
+      this.saveTransaction(this.saveTransaction);
+    }
 
     //loop to normalize items value
     for (let index = 0; index < itemsInfo.length; index++) {
@@ -116,8 +133,14 @@ export class TransactionService {
     // this.saveTransaction(saveTransaction)
   }
 
-  saveTransaction(st){
-
+  saveTransaction(saveTransaction) {
+    this.http
+      .post(this.url + 'transaction', saveTransaction)
+      .subscribe((transaction) => {
+        this.router.navigateByUrl('invoicetest', {
+          state: { print: transaction },
+        });
+      });
   }
 
   normalizePawnerInfo(t: any) {
@@ -138,23 +161,31 @@ export class TransactionService {
       completeAddress: pawner.completeAddress,
     };
 
-   const normalizeTrasactionInfo = {
+    const normalizeTrasactionInfo = {
       pawnerInfo: pawnerInfo,
-      items:items
-    }
+      items: items,
+    };
 
     return normalizeTrasactionInfo;
   }
 
-  normalizeRedeemInfo(transactionInfo:TransactionInformation){
-    let redeemInfo: TransactionInformation = transactionInfo
-    redeemInfo.discount = this.computationService.stringToNumber(transactionInfo.discount)
-    redeemInfo.receiveAmount = this.computationService.stringToNumber(transactionInfo.receiveAmount)
-    redeemInfo.interestRate = this.computationService.stringToNumber(transactionInfo.interestRate)
-    redeemInfo.dateTransaction = new Date(transactionInfo.dateTransaction).toISOString()
+  normalizeRedeemInfo(transactionInfo: any) {
+    let redeemInfo: TransactionInformation = transactionInfo;
+    /* this discounts property is temporary used only because the discount property value is
+    not appearing during save,  */
+    redeemInfo.discount = this.computationService.stringToNumber(
+      transactionInfo.discounts
+    );
+    redeemInfo.receivedAmount = this.computationService.stringToNumber(
+      transactionInfo.receivedAmount
+    );
+    redeemInfo.interestRate = this.computationService.stringToNumber(
+      transactionInfo.interestRate
+    );
+    redeemInfo.dateTransaction = new Date(
+      transactionInfo.dateTransaction
+    ).toISOString();
 
-    // console.log(redeemInfo);
-
+    return redeemInfo;
   }
-
 }

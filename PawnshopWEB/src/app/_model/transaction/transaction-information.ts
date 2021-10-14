@@ -27,7 +27,7 @@ export interface TransactionInformation {
   redeemAmount: number; //for redeem only
   partialAmount:number; //for partial
   addtionalAmount:number; //for additional only
-  receiveAmount: number;
+  receivedAmount: number;
   change: number;
   employeeId: number;
   transactionItems:TransactionItems[];
