@@ -29,7 +29,6 @@ namespace PawnshopAPI.Controllers
         [HttpPost]
         public ActionResult<AddTransactionDto> Newloan(AddTransactionDto transactions) {
 
-            //transactions.DateExpire = null;
             var transaction = mapper.Map<Transactions>(transactions);
             context.Transactions.Add(transaction);
             context.SaveChanges();
