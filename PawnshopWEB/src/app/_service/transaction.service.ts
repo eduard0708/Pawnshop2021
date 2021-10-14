@@ -7,6 +7,7 @@ import { ItemStatus, LoanStatus, TransactionType } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { NewTransactionPawner } from '../_model/transaction/new-transaction-pawner';
 import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { TransactionItems } from '../_model/transaction/transaction-items';
 import { TransactionPawner } from '../_model/transaction/transaction-pawner';
@@ -62,9 +63,14 @@ export class TransactionService {
     if (transactionInfo.transcationType === TransactionType.Redeem) {
       this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
       this.saveRedeemInfo.transactionItems = [];
-      this.saveRedeemInfo.transactionPawner = {} as TransactionPawner;
-      console.log(this.saveRedeemInfo);
-      this.saveTransaction(this.saveTransaction);
+      let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo)
+         a.transactionPawner = pawnerInfo
+         a.transactionItems = itemsInfo
+         console.log(pawnerInfo);
+
+        console.log(a);
+
+        // this.saveTransaction(this.saveTransaction);
     }
 
     //loop to normalize items value

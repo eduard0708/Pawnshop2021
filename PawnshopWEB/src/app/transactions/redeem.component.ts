@@ -198,7 +198,7 @@ export class RedeemComponent implements OnInit {
     this.transactionService.normalizedTransationInfo(
       this.redeemForm.value,
       this.transactionInfo.transactionPawner,
-      this.dataSource.data
+      this.transactionInfo.transactionItems
     );
   }
 

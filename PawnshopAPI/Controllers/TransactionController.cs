@@ -50,6 +50,32 @@ namespace PawnshopAPI.Controllers
             return Ok(trans);
         }
 
+
+        [HttpPost("addtrasaction")]
+        public ActionResult<AddTransactionDto> AddTransaction(AddTransactionDto transactions)
+        {
+
+            var transaction = mapper.Map<Transactions>(transactions);
+            context.Transactions.Add(transaction);
+            context.SaveChanges();
+
+            var transactionId = transaction.TransactionsId;
+            transaction.TransactionPawner.TrackingId = transactionId;
+            transaction.TrackingId = transactionId;
+
+            foreach (var item in transaction.TransactionItems)
+            {
+                item.TrackingId = transactionId;
+            }
+
+            context.Update(transaction);
+            context.SaveChanges();
+
+            var trans = mapper.Map<AddTransactionDto>(transaction);
+
+            return Ok(trans);
+        }
+
         [HttpGet("{id}")]
         public ActionResult<ReturnTransactionsDto> GetTransactionById(int id) {
 
