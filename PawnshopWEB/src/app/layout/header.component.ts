@@ -61,9 +61,13 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('login')
   }
   home() {
-    //  if(!this.employeeService.currentUser$) 
-    //     this.router.navigateByUrl('login');      
+    //  if(!this.employeeService.currentUser$)
+    //     this.router.navigateByUrl('login');
 
     this.router.navigateByUrl('main/dashboard')
+  }
+
+  invoiceTest(){
+    this.router.navigateByUrl('invoicetest', {state:{}})
   }
 }
