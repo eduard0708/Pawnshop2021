@@ -2,12 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { ItemStatus, LoanStatus, TransactionType } from '../_enum/enums';
-
+import { ItemStatus, TransactionType } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
-import { NewTransactionPawner } from '../_model/transaction/new-transaction-pawner';
 import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { TransactionItems } from '../_model/transaction/transaction-items';
 import { TransactionPawner } from '../_model/transaction/transaction-pawner';
@@ -63,83 +61,17 @@ export class TransactionService {
     if (transactionInfo.transcationType === TransactionType.Redeem) {
       this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
       this.saveRedeemInfo.transactionItems = [];
-      let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo)
-        //  a.transactionPawner = pawnerInfo
-         a.transactionItems = []
-         a.transactionPawner = {} as TransactionPawner
+      let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo);
+      //  a.transactionPawner = pawnerInfo
+      a.transactionItems = [];
+      a.transactionPawner = {} as TransactionPawner;
 
-         console.log(a);
-
-        this.saveTransaction(a);
+      this.saveTransaction(a);
     }
-
-    //loop to normalize items value
-    for (let index = 0; index < itemsInfo.length; index++) {
-      const item: Item = itemsInfo[index];
-
-      let initItems: TransactionItems = {
-        itemId: 0,
-        previousTransactionId: 0,
-        trackingId: 0,
-        category: item.category,
-        categoryDescription: item.categoryDescription,
-        itemDescription: item.description,
-        appraisalValue: item.appraisalValue,
-        sellingPrice: 0,
-        isSold: false,
-        dateSold: null,
-        newDateTransaction: new Date().toISOString(),
-        itemAuditTrails: [itemAuditTrail],
-      };
-      saveItems.push(initItems);
-    }
-    //normalize pawner value
-    const savePanwer: TransactionPawner = {
-      pawnerTransactionId: 0,
-      pawnerId: pawnerInfo.pawnerId,
-      trackingId: 0,
-      firstName: pawnerInfo.firstName,
-      lastName: pawnerInfo.lastName,
-      contactNumber: pawnerInfo.contactNumber,
-      city: pawnerInfo.city,
-      barangay: pawnerInfo.barangay,
-      completeAddress: pawnerInfo.completeAddress,
-    };
-
-    // const saveTransaction: TransactionInformation = {
-    //   transactionsId: 0,
-    //   trackingId: 0,
-    //   dateTransaction: dateTransaction.dateToISOstring(),
-    //   dateGranted: dateGranted.dateToISOstring(),
-    //   dateMatured: dateMatured.dateToISOstring(),
-    //   dateExpired: dateExpired.dateToISOstring(),
-    //   transcationType: TrasactionType.Newloan,
-    //   status: Status.Active,
-    //   loanStatus: LoanStatus.New,
-    //   discount: 0,
-    //   totalAppraisal: this.computationService.stringToNumber(transactionInfo.totalAppraisal),
-    //   principalLoan:this.computationService.stringToNumber(transactionInfo.principalLoan),
-    //   interestRate:this.computationService.stringToNumber(transactionInfo.interestRate),
-    //   advanceInterest:this.computationService.stringToNumber(transactionInfo.advanceInterest),
-    //   advanceServiceCharge:this.computationService.stringToNumber(transactionInfo.advanceServiceCharge),
-    //   interest:this.computationService.stringToNumber(transactionInfo.interest),
-    //   serviceCharge:this.computationService.stringToNumber(transactionInfo.serviceCharge),
-    //   penalty: 0,
-    //   dueAmount: 0,
-    //   redeemAmount: 0,
-    //   netProceed:this.computationService.stringToNumber(transactionInfo.netProceed),
-    //   netPayment: 0,
-    //   receiveAmount: 0,
-    //   change: 0,
-    //   employeeId: user.id,
-    //   transactionItems: [...saveItems],
-    //   transactionPawner: savePanwer,
-    // };
-
-    // this.saveTransaction(saveTransaction)
   }
 
   saveTransaction(saveTransaction) {
+    console.log(saveTransaction);
     this.http
       .post(this.url + 'transaction/addtransaction', saveTransaction)
       .subscribe((transaction) => {

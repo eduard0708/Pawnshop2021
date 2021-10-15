@@ -9,6 +9,7 @@ namespace PawnshopAPI.DTO.TransactionDTO
     public class AddTransactionDto
     {
         public int TransactionsId { get; set; }
+        public int PreviousTransactionId { get; set; } /*will be used to search the previous transaction to marked closed*/
         public int TrackingId { get; set; }
         public double AdvanceInterest { get; set; }
         public double AdvanceServiceCharge { get; set; }
@@ -25,10 +26,10 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public double InterestRate { get; set; }
         public string LoanStatus { get; set; }
         public double NetPayment { get; set; }
-        public double netProceed { get; set; }
+        public double NetProceed { get; set; }
         public double Penalty { get; set; }
         public double PrincipalLoan { get; set; }
-        public double PeceiveAmount { get; set; }
+        public double ReceivedAmount { get; set; }
         public double RedeemAmount { get; set; }
         public double ServiceCharge { get; set; }
         public string Status { get; set; }

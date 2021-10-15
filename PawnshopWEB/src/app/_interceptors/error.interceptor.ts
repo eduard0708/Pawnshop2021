@@ -37,6 +37,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                   this.notifier.error(error.status + ' ' + error.statusText)
                 break;
                 case 404:
+                  if(error.error.errorId == 404 && error.error.errorCode == "NotFound")
+                      this.notifier.info(error.error.message)
                   this.router.navigateByUrl('/not-found');
                 break;
                 case 500:
@@ -45,7 +47,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 break;
               default:
                 this.notifier.error('something went wrong')
-                console.log(error); 
+                console.log(error);
                 break;
             }
           }

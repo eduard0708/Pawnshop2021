@@ -15,17 +15,17 @@ export class NotifierService {
       data: { message: message, title: 'Error!', icon: 'clear' },
       verticalPosition: 'top',
       horizontalPosition: 'right',
-      duration: 5000,
+      duration: 2000,
       panelClass: 'error',
     });
   }
-  
+
   success(message: string) {
    let s = this.snackBar.openFromComponent(NotifierComponent, {
       data: { message: message, title: 'Success!', icon: 'check' },
       verticalPosition: 'top',
       horizontalPosition: 'right',
-      duration: 5000,
+      duration: 2000,
       panelClass: 'success',
     });
   }

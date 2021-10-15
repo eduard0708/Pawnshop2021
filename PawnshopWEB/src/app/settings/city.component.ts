@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -16,7 +16,7 @@ import { NotifierService } from '../_service/notifier.service';
 })
 export class CityComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('cityRef', { static: true }) cityRef: any;
+  @ViewChild('cityRef', { static: true }) cityRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   cityForm: FormGroup;
@@ -42,14 +42,14 @@ export class CityComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.cityRef.nativeElement.focus();
+    }, 100);
     this.getCity();
-
     this.cityForm.valueChanges.subscribe(() => {
       this.isAdd = !this.cityForm.valid;
-
     }, (error) => { console.log(error) }
     );
-
   }
 
   ngAfterViewInit(): void {
@@ -64,8 +64,6 @@ export class CityComponent implements OnInit, AfterViewInit {
   cancel() {
     this.router.navigateByUrl('main/dashboard')
   }
-
-
   save() {
     const city = {
       cityName: this.cityForm.controls.cityName.value,

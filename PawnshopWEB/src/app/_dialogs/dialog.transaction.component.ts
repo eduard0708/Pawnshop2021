@@ -16,6 +16,7 @@ import {
 } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TransactionStatus } from '../_enum/enums';
 import { Pawner } from '../_model/pawner/Pawner';
 import { DialogsService } from '../_service/dialogs.service';
 import { NotifierService } from '../_service/notifier.service';
@@ -101,6 +102,10 @@ export class DialogTransacitonComponent implements OnInit {
       this.dialogService
         .searchTransactionId(+this.searchNumber.value)
         .subscribe((transaction) => {
+          if(transaction.status == TransactionStatus.Closed){
+            this.notifierService.info(`Transaction number: ${transaction.transactionsId} is already closed.`)
+            return
+          }
           if (transaction) {
             this.router.navigateByUrl(
               `main/transactions/${transactionType.toLocaleLowerCase()}/`,
@@ -114,7 +119,6 @@ export class DialogTransacitonComponent implements OnInit {
         });
     }
   }
-
   createPawner() {
     this.router.navigateByUrl('main/settings/pawner');
     this.dialogRef.close();

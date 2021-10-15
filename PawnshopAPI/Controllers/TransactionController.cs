@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
+using PawnshopAPI.Helper;
+using static PawnshopAPI.Helper.TransactionEnums;
 
 namespace PawnshopAPI.Controllers
 {
@@ -27,16 +29,16 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AddTransactionDto> Newloan(AddTransactionDto transactions) {
-
-            var transaction = mapper.Map<Transactions>(transactions);
+        public ActionResult<AddTransactionDto> Newloan(AddTransactionDto newTransaction)
+        {
+            var transaction = mapper.Map<Transactions>(newTransaction);
             context.Transactions.Add(transaction);
             context.SaveChanges();
 
             var transactionId = transaction.TransactionsId;
             transaction.TransactionPawner.TrackingId = transactionId;
             transaction.TrackingId = transactionId;
-
+          
             foreach (var item in transaction.TransactionItems)
             {
                 item.TrackingId = transactionId;
@@ -52,24 +54,20 @@ namespace PawnshopAPI.Controllers
 
 
         [HttpPost("addtransaction")]
-        public ActionResult<AddTransactionDto> AddTransaction(AddTransactionDto transactions)
+        public async Task<ActionResult<AddTransactionDto>> AddTransaction(AddTransactionDto addTransaction)
         {
+            
+            var PreviousTransaction = await context.Transactions
+                .FirstOrDefaultAsync(t => t.TransactionsId == addTransaction.PreviousTransactionId);
+            if (PreviousTransaction == null)
+                return NotFound();
 
-            var transaction = mapper.Map<Transactions>(transactions);
+            
+            var transaction = mapper.Map<Transactions>(addTransaction);
+            PreviousTransaction.Status = "Closed";
+            context.Update(PreviousTransaction);
             context.Transactions.Add(transaction);
-            context.SaveChanges();
-
-            var transactionId = transaction.TransactionsId;
-            //transaction.TransactionPawner.TrackingId = transactionId;
-            //transaction.TrackingId = transactionId;
-
-            //foreach (var item in transaction.TransactionItems)
-            //{
-            //    item.TrackingId = transactionId;
-            //}
-
-            context.Update(transaction);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             var trans = mapper.Map<AddTransactionDto>(transaction);
 
@@ -77,20 +75,30 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ReturnTransactionsDto> GetTransactionById(int id) {
+        public async Task<ActionResult<ReturnTransactionsDto>> GetTransactionById(int id)
+        {
+            var transaction = await context.Transactions
+                 .FirstOrDefaultAsync(x => x.TransactionsId == id);
+            if (transaction == null)
+            {
+                var CustomErrorStatus = new
+                {
+                    ErrorId = 404,
+                    ErrorCode = "NotFound",
+                    Message = $"Transaction number: {id} not exist!"
+                };
+                return NotFound(CustomErrorStatus);
+            }
+            else
+            {
 
-            var t = context.Transactions
-                 //.Include(x => x.TransactionPawner)
-                 //.Include(x => x.TransactionItems)
+                var pawner = context.TransactionPawners.FirstOrDefault(p => p.TrackingId == transaction.TrackingId);
+                transaction.TransactionPawner = pawner;
+                var returnedTransaction = mapper.Map<ReturnTransactionsDto>(transaction);
 
-                 .FirstOrDefault(x => x.TransactionsId == id);
-            var p = context.TransactionPawners.FirstOrDefault(p => p.TrackingId == t.TrackingId);
-            t.TransactionPawner = p;
+                return Ok(returnedTransaction);
 
-
-            var transaction = mapper.Map<ReturnTransactionsDto>(t);
-
-            return Ok(transaction);
+            }
         }
 
     }
