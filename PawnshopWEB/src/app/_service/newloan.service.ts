@@ -123,7 +123,7 @@ export class NewloanService {
       dateGranted:dateGranted.dateToISOstring(),
       dateMatured: dateMatured.dateToISOstring(),
       dateExpired: dateExpired.dateToISOstring(),
-      transcationType: TransactionType.Newloan,
+      transactionType: TransactionType.Newloan,
       status: TransactionStatus.Active,
       loanStatus: LoanStatus.New,
       discount: 0,

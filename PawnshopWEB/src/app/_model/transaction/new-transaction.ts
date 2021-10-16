@@ -9,7 +9,7 @@ export interface NewTransaction {
   dateGranted?: string;
   dateMatured?: string;
   dateExpired?: string;
-  transcationType: string;
+  transactionType: string;
   status: string;
   loanStatus: string;
   discount?: number;
