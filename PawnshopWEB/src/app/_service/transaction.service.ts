@@ -126,4 +126,8 @@ export class TransactionService {
 
     return redeemInfo;
   }
+
+  searchTransactionById(id:number){
+    return this.http.get<TransactionInformation>(this.url + `transaction/${id}`);
+  }
 }

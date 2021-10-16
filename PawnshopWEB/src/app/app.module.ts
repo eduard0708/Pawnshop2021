@@ -30,6 +30,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PawnerFoundComponent } from './_dialogs/pawner-found.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { ViewTransactionComponent } from './pages/view-transaction.component';
+import { TransactionsPawnerInfoComponent } from './_components/transactions-pawner-info.component';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     VoucherComponent,
     InvoiceComponent,
     PawnerFoundComponent,
+    ViewTransactionComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     ReactiveFormsModule,
     InputMaskModule,
     FlexLayoutModule,
+    TransactionsModule,
     NgxSpinnerModule,
     NgxMaskModule.forRoot(),
   ],

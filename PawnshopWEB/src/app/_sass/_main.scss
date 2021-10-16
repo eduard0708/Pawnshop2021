@@ -27,5 +27,12 @@ $box-shadow-black-all-lg: 0 0 10px rgba(0, 0, 0, 0.6);
     transform: translateY(-1.1em) scale(0.75);
     width: 133.33333%;
   }
-}
 
+  .remove-number-spinner {
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

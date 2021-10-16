@@ -7,6 +7,7 @@ import { InvoiceComponent } from './pages/invoice.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { ServerErrorComponent } from './pages/server-error.component';
+import { ViewTransactionComponent } from './pages/view-transaction.component';
 import { NewloanComponent } from './transactions/newloan.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'not-found', component: NotfoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: 'invoicetest', component: InvoiceComponent },
+  { path: 'view-transaction', component: ViewTransactionComponent },
   {
     path: 'main',
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),

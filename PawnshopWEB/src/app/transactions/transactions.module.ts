@@ -37,7 +37,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     InputMaskModule,
     FlexLayoutModule,
-   
-  ]
+
+  ],
+  exports:[TransactionsPawnerInfoComponent]
 })
 export class TransactionsModule { }

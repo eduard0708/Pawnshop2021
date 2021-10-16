@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Pawner } from '../_model/pawner/Pawner';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { NewTransaction } from '../_model/transaction/new-transaction';
+import { PawnerService } from '../_service/pawner.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -11,16 +13,17 @@ import { TransactionService } from '../_service/transaction.service';
 })
 export class TransactionsPawnerInfoComponent implements OnInit {
  @Input() transactionInfo: NewTransaction ;
-  pawner: Pawner = {} as Pawner;
-  pawnerInfo:PawnerInfo = {} as PawnerInfo;
-  constructor( private transactionService:TransactionService) {
+  pawnerInfo:PawnerInfo;
+
+  constructor( private transactionService:TransactionService,
+    private pawnerService:PawnerService
+    ) {
    }
 
   ngOnInit(): void {
-
-   const transactionInfo = this.transactionService.normalizePawnerInfo(this.transactionInfo)
-    this.pawnerInfo = transactionInfo.pawnerInfo
-
+    this.pawnerService.pawnerSource$.subscribe(pawner => {
+      this.pawnerInfo = pawner;
+    })
   }
 
 }

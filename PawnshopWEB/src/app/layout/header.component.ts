@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../_service/employee.service';
+import { TransactionService } from '../_service/transaction.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +14,12 @@ import { EmployeeService } from '../_service/employee.service';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  searchNumber:number;
   constructor(
     private dialog: MatDialog,
     public employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private transactionService:TransactionService
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
   ) { }
 
@@ -68,6 +71,10 @@ export class HeaderComponent implements OnInit {
   }
 
   invoiceTest(){
-    this.router.navigateByUrl('invoicetest', {state:{}})
+   this.transactionService.searchTransactionById(this.searchNumber).subscribe(data => {
+     if(data)
+      this.router.navigateByUrl('view-transaction', {state:{transaction: data}})
+   })
+
   }
 }

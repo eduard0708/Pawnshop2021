@@ -92,8 +92,10 @@ namespace PawnshopAPI.Controllers
             else
             {
 
-                var pawner = context.TransactionPawners.FirstOrDefault(p => p.TrackingId == transaction.TrackingId);
+                var pawner = await context.TransactionPawners.FirstOrDefaultAsync(p => p.TrackingId == transaction.TrackingId);
+                var items = await context.TransactionItems.Where(p => p.TrackingId == transaction.TrackingId).ToListAsync();
                 transaction.TransactionPawner = pawner;
+                transaction.TransactionItems = items;
                 var returnedTransaction = mapper.Map<ReturnTransactionsDto>(transaction);
 
                 return Ok(returnedTransaction);

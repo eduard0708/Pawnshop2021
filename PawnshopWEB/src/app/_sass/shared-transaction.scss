@@ -1,5 +1,7 @@
 // this scss is share to same with additional partial and reedem
 //start pawner information title and transaction number
+@import "./main.scss";
+
 .pawner-title {
   position: absolute;
   display: flex;
@@ -25,8 +27,7 @@
     color: black;
     font-weight: 520;
     background-color: whitesmoke;
-    transform: scale(.9);
-
+    transform: scale(0.9);
   }
   .trasaction-title {
     width: 50%;
@@ -101,6 +102,31 @@
       }
     }
 
+    .view-status-wrapper {
+      border-radius: 0.5rem;
+      background-color: rgb(224, 250, 253);
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-top: 1.3rem;
+      padding-left: 1.5rem;
+      padding-right: 0.8rem;
+      margin: 0 1rem;
+      height: 4rem;
+      input {
+        text-align: center;
+      }
+    }
+    .view-buttons {
+      margin-top: -1.2rem;
+      .center-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(.9);
+      }
+    }
     .items-table {
       margin: 0.5rem 1rem 0.6rem;
       border-radius: 0.5rem;
@@ -139,9 +165,8 @@
       }
     }
   }
-  
-  .computation-wrapper {
 
+  .computation-wrapper {
     margin: 0.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     position: relative;
@@ -193,12 +218,11 @@
           background-color: white;
           border-right: 3px solid blue;
         }
-        .text-right{
+        .text-right {
           text-align: right;
         }
-        .amout-due{
-          background-color: #ff99cc
-          ;
+        .amout-due {
+          background-color: #ff99cc;
         }
       }
     }
@@ -213,8 +237,6 @@
       }
     }
   }
-
-
 }
 
 //remove input number arrow up/down

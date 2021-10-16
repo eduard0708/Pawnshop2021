@@ -15,28 +15,37 @@
   <span>GoldWin</span>
 
   <div class="header-menu">
-        <ul>
-            <!-- <li tabindex="-1" routerLink="/transactions/newloan/{}"><a>NewLoan</a></li>
+    <ul>
+      <!-- <li tabindex="-1" routerLink="/transactions/newloan/{}"><a>NewLoan</a></li>
             <li tabindex="-1" routerLink="/transactions/redeem"><a>Redeem</a></li>
             <li tabindex="-1" routerLink="/transactions/partial"><a>Partial</a></li>
             <li tabindex="-1" routerLink="/transactions/additional"><a>Additional</a></li> -->
-            <li tabindex="-1" (click)="invoiceTest()"><a>Invoice</a></li>
-        </ul>
-    </div>
+      <li tabindex="-1" (click)="invoiceTest()"><a>Invoice</a></li>
+    </ul>
+  </div>
 
-    <div class="mx-5" style="margin-bottom: -1rem;">
-    <mat-form-field appearance="legacy" style="transform: scale(.6);">
-        <mat-label>Search Transaction</mat-label>
-        <input tabindex="-1" matInput type="number">
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
+  <div class="mx-5" style="margin-bottom: -1rem">
+    <mat-form-field appearance="legacy" style="transform: scale(0.6)">
+      <mat-label>Search Transaction</mat-label>
+      <input
+        [(ngModel)]="searchNumber"
+        (keyup.enter)="invoiceTest()"
+       tabindex="-1"
+        matInput
+        type="number"
+        autocomplete="off"
 
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
 
   <span class="header-spacer"></span>
-  <ng-container *ngIf="(employeeService.currentUser$ | async) as user">
+  <ng-container *ngIf="employeeService.currentUser$ | async as user">
     <ng-container>
-      <div>Welcome <span>{{user.username| titlecase}}</span></div>
+      <div>
+        Welcome <span>{{ user.username | titlecase }}</span>
+      </div>
     </ng-container>
     <button
       tabindex="-1"

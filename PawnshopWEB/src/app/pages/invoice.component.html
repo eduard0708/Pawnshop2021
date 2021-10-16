@@ -1,7 +1,52 @@
-
-<div class="container">
+<div class="container shadow" style="margin: 5rem; padding: 1rem;">
   <h1>INVOICE</h1>
-  ADFASFD
-    <!-- <h1>{{print.transactionsId}}</h1>
+
+  <div class="header">
+    <div class="header-right">
+      <p>Date: {{print.dateTransaction}}</p>
+      <p>Transaction #: {{print.dateTransaction}}</p>
+      <p>Transaction #: {{print.transactionsId}}</p>
+      <p>Transaction name:</p>
+    </div>
+    <div class="header-left"></div>
+  </div>
+
+  <mat-divider style="margin: 2rem auto;width: 90%;"></mat-divider>
+
+  <table class="table" style="width: 90%; margin: 0 auto;">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+
+  </div>
+
+  <!-- <h1>{{print.transactionsId}}</h1>
     <h1>{{print.transactionPawner.firstName}} {{print.transactionPawner.lastName}}</h1> -->
 </div>
