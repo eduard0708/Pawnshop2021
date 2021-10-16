@@ -56,7 +56,7 @@ namespace PawnshopAPI.Controllers
         [HttpPost("addtransaction")]
         public async Task<ActionResult<AddTransactionDto>> AddTransaction(AddTransactionDto addTransaction)
         {
-            
+            //search previous transaction to mark it close
             var PreviousTransaction = await context.Transactions
                 .FirstOrDefaultAsync(t => t.TransactionsId == addTransaction.PreviousTransactionId);
             if (PreviousTransaction == null)
@@ -64,9 +64,11 @@ namespace PawnshopAPI.Controllers
 
             
             var transaction = mapper.Map<Transactions>(addTransaction);
+            //mark closed the previous transaction and update
             PreviousTransaction.Status = "Closed";
             context.Update(PreviousTransaction);
-            context.Transactions.Add(transaction);
+
+            await  context.Transactions.AddAsync(transaction);
             await context.SaveChangesAsync();
 
             var trans = mapper.Map<AddTransactionDto>(transaction);

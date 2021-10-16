@@ -354,6 +354,9 @@ namespace PawnshopAPI.Migrations
                     b.Property<double>("NetProceed")
                         .HasColumnType("float");
 
+                    b.Property<double>("PartialAmount")
+                        .HasColumnType("float");
+
                     b.Property<double>("Penalty")
                         .HasColumnType("float");
 

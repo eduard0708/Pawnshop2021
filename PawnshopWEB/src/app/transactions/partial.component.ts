@@ -94,12 +94,12 @@ export class PartialComponent implements OnInit {
 
     this.partialForm = fb.group({
       previousTransactionId: [this.transactionInfo.transactionsId],
-      trackingId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.trackingId],
       dateTransaction: [],
       dateGranted: [],
       dateMatured: [],
       dateExpired: [],
-      transactionType: [TransactionType.Redeem],
+      transactionType: [TransactionType.Partial],
       loanStatus: [this.dateStatus.status()],
       status: [TransactionStatus.Closed],
       moments: [this.dateStatus.moments()],
@@ -118,6 +118,7 @@ export class PartialComponent implements OnInit {
       netPayment: [0],
       redeemAmount: [0, Validators.required], //for redeem only
       partialAmount: [0], // for partial
+      newPrincipalLoan: [0], // for partial
       addtionalAmount: [0], //for additional only
       receivedAmount: [0],
       change: [0],
@@ -127,6 +128,8 @@ export class PartialComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.transactionInfo);
+
     this.setDate();
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
@@ -205,11 +208,17 @@ export class PartialComponent implements OnInit {
       );
     }
 
+    const _netPayable = this.computationService.stringToNumber(this.partialForm.controls.netPayment.value);
+
+    this.partialForm.controls.principalLoan.setValue(_netPayable - _partialAmount)
+
     this.transactionService.normalizedTransactionInformation(
       this.partialForm.value,
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
     );
+
+
   }
 
   // reset the transaction
@@ -300,8 +309,15 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.partialAmount.value
     );
 
+    const _netPayable = this.computationService.stringToNumber(this.partialForm.controls.netPayment.value);
+    const _newPartialAmount = _netPayable - _partialAmount
+
+    this.partialForm.controls.newPrincipalLoan.setValue(_newPartialAmount);
+
     if (_partialAmount > _netPayment)
       this.partialForm.controls.partialAmount.setValue(_netPayment);
+
+
   }
 
   /*  set to disable the discount if focus already in additional amount */

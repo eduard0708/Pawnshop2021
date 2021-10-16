@@ -1,19 +1,19 @@
-<div class="container shadow" style="margin: 5rem; padding: 1rem;">
+<div class="container shadow" style="margin: 5rem; padding: 1rem">
   <h1>INVOICE</h1>
 
   <div class="header">
     <div class="header-right">
-      <p>Date: {{print.dateTransaction}}</p>
-      <p>Transaction #: {{print.dateTransaction}}</p>
-      <p>Transaction #: {{print.transactionsId}}</p>
+      <h1>Transaction #: {{ print.transactionsId }}</h1>
+      <p>Date: {{ print.dateTransaction }}</p>
+      <p>Transaction #: {{ print.dateTransaction }}</p>
       <p>Transaction name:</p>
     </div>
     <div class="header-left"></div>
   </div>
 
-  <mat-divider style="margin: 2rem auto;width: 90%;"></mat-divider>
+  <mat-divider style="margin: 2rem auto; width: 90%"></mat-divider>
 
-  <table class="table" style="width: 90%; margin: 0 auto;">
+  <table class="table" style="width: 90%; margin: 0 auto">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -43,9 +43,7 @@
     </tbody>
   </table>
 
-  <div class="footer">
-
-  </div>
+  <div class="footer"></div>
 
   <!-- <h1>{{print.transactionsId}}</h1>
     <h1>{{print.transactionPawner.firstName}} {{print.transactionPawner.lastName}}</h1> -->

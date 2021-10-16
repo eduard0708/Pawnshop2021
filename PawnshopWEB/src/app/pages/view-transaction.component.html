@@ -313,6 +313,17 @@
             type="text"
           />
         </div>
+        <div *ngIf="isPartial" class="input-group shadow-sm New Principal">
+          <span class="col-form-label-sm">New Principal Loan</span>
+          <input
+            formControlName="newPrincipal"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
         <div *ngIf="isRedeemAmount" class="input-group shadow-sm Redeem Amount">
           <span class="col-form-label-sm">Redeem Amount</span>
           <input

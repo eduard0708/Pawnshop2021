@@ -51,6 +51,6 @@ export class PawnerService {
     pawner.dateMatured =  dateMatured as any;
     pawner.dateExpired = dateExpired as any;
     return pawner
-    
+
   }
 }

@@ -134,7 +134,7 @@ export class RedeemComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
-    /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+    /* send data to pawnerService to normalalized as pawnerInfo Type and send
       to transaction-pawner-info.component to display */
     const pawner = this.pawnerService.normalizedPawnerInfo(
       this.transactionInfo.transactionPawner,

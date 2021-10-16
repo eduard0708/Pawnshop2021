@@ -10,8 +10,8 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211015123020_updateworngfieldname")]
-    partial class updateworngfieldname
+    [Migration("20211016195544_initCreate")]
+    partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -356,13 +356,16 @@ namespace PawnshopAPI.Migrations
                     b.Property<double>("NetProceed")
                         .HasColumnType("float");
 
+                    b.Property<double>("PartialAmount")
+                        .HasColumnType("float");
+
                     b.Property<double>("Penalty")
                         .HasColumnType("float");
 
                     b.Property<double>("PrincipalLoan")
                         .HasColumnType("float");
 
-                    b.Property<double>("ReceiveAmount")
+                    b.Property<double>("ReceivedAmount")
                         .HasColumnType("float");
 
                     b.Property<double>("RedeemAmount")
@@ -380,7 +383,7 @@ namespace PawnshopAPI.Migrations
                     b.Property<int>("TrackingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TranscationType")
+                    b.Property<string>("TransactionType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionsId");

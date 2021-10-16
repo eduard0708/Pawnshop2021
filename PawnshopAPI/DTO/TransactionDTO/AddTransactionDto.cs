@@ -27,6 +27,7 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public string LoanStatus { get; set; }
         public double NetPayment { get; set; }
         public double NetProceed { get; set; }
+        public double PartialAmount { get; set; }
         public double Penalty { get; set; }
         public double PrincipalLoan { get; set; }
         public double ReceivedAmount { get; set; }

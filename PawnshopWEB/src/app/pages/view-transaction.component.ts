@@ -127,6 +127,10 @@ export class ViewTransactionComponent implements OnInit {
       this.initDisplay();
       this.redeemDisplay();
     }
+    if (this.transactionInfo.transactionType === TransactionType.Partial) {
+      this.initDisplay();
+      this.partialDisplay();
+    }
   }
 
   search() {
@@ -190,6 +194,7 @@ export class ViewTransactionComponent implements OnInit {
       serviceCharge: [this.transactionInfo.serviceCharge],
       discount: [this.transactionInfo.discount],
       partialAmount: [this.transactionInfo.partialAmount],
+      newPrincipal:[this.principalLoan],
       redeemAmount: [this.transactionInfo.redeemAmount],
       receivedAmount: [this.transactionInfo.receivedAmount],
       change: [this.transactionInfo.change],
@@ -214,6 +219,7 @@ export class ViewTransactionComponent implements OnInit {
     this.isChange = true;
   }
   partialDisplay() {
+    this.viewForm.controls.newPrincipal.setValue(0);
     this.isInterest = true;
     this.isPenalty = true;
     this.isDueAmount = true;

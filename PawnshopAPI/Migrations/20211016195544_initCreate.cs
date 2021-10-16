@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PawnshopAPI.Migrations
 {
-    public partial class initcreate2 : Migration
+    public partial class initCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,15 +91,16 @@ namespace PawnshopAPI.Migrations
                     InterestRate = table.Column<double>(type: "float", nullable: false),
                     LoanStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NetPayment = table.Column<double>(type: "float", nullable: false),
-                    netProceed = table.Column<double>(type: "float", nullable: false),
+                    NetProceed = table.Column<double>(type: "float", nullable: false),
+                    PartialAmount = table.Column<double>(type: "float", nullable: false),
                     Penalty = table.Column<double>(type: "float", nullable: false),
                     PrincipalLoan = table.Column<double>(type: "float", nullable: false),
-                    PeceiveAmount = table.Column<double>(type: "float", nullable: false),
+                    ReceivedAmount = table.Column<double>(type: "float", nullable: false),
                     RedeemAmount = table.Column<double>(type: "float", nullable: false),
                     ServiceCharge = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalAppraisal = table.Column<double>(type: "float", nullable: false),
-                    TranscationType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

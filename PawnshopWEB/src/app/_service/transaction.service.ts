@@ -62,43 +62,16 @@ export class TransactionService {
       itemStatus: ItemStatus.Pawned,
       remarks: null,
     };
-
-    if (transactionInfo.transactionType === TransactionType.Redeem) {
-      this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
-      this.saveRedeemInfo.transactionItems = [];
-      let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo);
-      a.transactionItems = [];
-      a.transactionPawner = {} as TransactionPawner;
-      this.onSaveTransaction(a);
-    }
-
-    if (transactionInfo.transactionType === TransactionType.Partial) {
-      // this.transactionInfo = this.normalizeRedeemInfo(transactionInfo);
-      // this.transactionInfo.transactionItems = [];
-      // let s: TransactionInformation = this.normalizeRedeemInfo(transactionInfo);
-      // s.transactionItems = [];
-      // s.transactionPawner = {} as TransactionPawner;
-      this.onSaveTransaction(transactionInfo);
-    }
   }
 
   onSaveTransaction(transactionInfo) {
-    const user: User = JSON.parse(localStorage.getItem('user'));
-    const saveInfo: TransactionInformation =
-      this.normalizeRedeemInfo(transactionInfo);
-    saveInfo.employeeId = user.id;
-    saveInfo.transactionItems = [];
-    saveInfo.transactionPawner = {} as TransactionPawner;
-
-    console.log(saveInfo);
-
-    // this.http
-    //   .post(this.url + 'transaction/addtransaction', saveInfo)
-    //   .subscribe((transaction) => {
-    //     this.router.navigateByUrl('invoicetest', {
-    //       state: { print: transaction },
-    //     });
-    //   });
+    this.http
+      .post(this.url + 'transaction/addtransaction', transactionInfo)
+      .subscribe((transaction) => {
+        this.router.navigateByUrl('invoicetest', {
+          state: { print: transaction },
+        });
+      });
   }
 
   normalizePawnerInfo(t: any) {
@@ -133,26 +106,6 @@ export class TransactionService {
     );
   }
 
-  normalizeRedeemInfo(transactionInfo: any) {
-    let redeemInfo: TransactionInformation = transactionInfo;
-    /* this discounts property is temporary used only because the discount property value is
-    not appearing during save,  */
-    redeemInfo.discount = this.computationService.stringToNumber(
-      transactionInfo.discounts
-    );
-    redeemInfo.receivedAmount = this.computationService.stringToNumber(
-      transactionInfo.receivedAmount
-    );
-    redeemInfo.interestRate = this.computationService.stringToNumber(
-      transactionInfo.interestRate
-    );
-    redeemInfo.dateTransaction = new Date(
-      transactionInfo.dateTransaction
-    ).toISOString();
-
-    return redeemInfo;
-  }
-
   normalizedTransactionInformation(
     transactionInfo: TransactionInformation,
     transactionPawner,
@@ -177,7 +130,9 @@ export class TransactionService {
     transactionInfo.totalAppraisal =
       typeof transactionInfo.totalAppraisal === 'number'
         ? transactionInfo.totalAppraisal
-        : this.computationService.stringToNumber(transactionInfo.totalAppraisal);
+        : this.computationService.stringToNumber(
+            transactionInfo.totalAppraisal
+          );
 
     transactionInfo.principalLoan =
       typeof transactionInfo.principalLoan === 'number'
@@ -217,12 +172,16 @@ export class TransactionService {
     transactionInfo.advanceInterest =
       typeof transactionInfo.advanceInterest === 'number'
         ? transactionInfo.advanceInterest
-        : this.computationService.stringToNumber(transactionInfo.advanceInterest);
+        : this.computationService.stringToNumber(
+            transactionInfo.advanceInterest
+          );
 
     transactionInfo.advanceServiceCharge =
       typeof transactionInfo.advanceServiceCharge === 'number'
         ? transactionInfo.advanceServiceCharge
-        : this.computationService.stringToNumber(transactionInfo.advanceServiceCharge);
+        : this.computationService.stringToNumber(
+            transactionInfo.advanceServiceCharge
+          );
 
     transactionInfo.serviceCharge =
       typeof transactionInfo.serviceCharge === 'number'
@@ -252,23 +211,20 @@ export class TransactionService {
     transactionInfo.receivedAmount =
       typeof transactionInfo.receivedAmount === 'number'
         ? transactionInfo.receivedAmount
-        : this.computationService.stringToNumber(transactionInfo.receivedAmount);
+        : this.computationService.stringToNumber(
+            transactionInfo.receivedAmount
+          );
 
     transactionInfo.change =
       typeof transactionInfo.change === 'number'
         ? transactionInfo.change
         : this.computationService.stringToNumber(transactionInfo.change);
 
+    const user: User = JSON.parse(localStorage.getItem('user'));
 
-        const user: User = JSON.parse(localStorage.getItem('user'));
-
-        transactionInfo.transactionPawner = transactionPawner;
-        transactionInfo.transactionItems = TransactionItems;
-        transactionInfo.employeeId = user.id;
-
-    console.log(transactionInfo);
-
-
-
+    // transactionInfo.transactionPawner = {} as any;
+    transactionInfo.transactionItems = [] as any;
+    transactionInfo.employeeId = user.id;
+    this.onSaveTransaction(transactionInfo);
   }
 }

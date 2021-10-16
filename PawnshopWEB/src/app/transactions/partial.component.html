@@ -291,6 +291,20 @@
             type="text"
           />
         </div>
+        <div class="input-group shadow-sm New Principal">
+          <span class="col-form-label-sm">New Principal</span>
+          <input
+            #partialAmountRef
+            (focus)="focusPartialAmountReadOnlyDiscount()"
+            (keyup)="validatePartialAmount()"
+            formControlName="newPrincipalLoan"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
         <div class="input-group shadow-sm Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
