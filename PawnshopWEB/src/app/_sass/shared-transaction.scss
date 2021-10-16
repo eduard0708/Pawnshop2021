@@ -90,6 +90,7 @@
       mat-form-field {
         width: 14%;
         margin-right: 0.8rem;
+
       }
       .status {
         text-align: center;
@@ -227,6 +228,10 @@
         }
         .amout-due {
           background-color: #ff99cc;
+        }
+        .bold-red{
+          color: red;
+          font-weight: 800;
         }
       }
     }

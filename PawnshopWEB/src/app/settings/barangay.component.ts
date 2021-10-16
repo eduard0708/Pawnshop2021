@@ -18,7 +18,7 @@ import { NotifierService } from '../_service/notifier.service';
   styleUrls: ['../_sass/settings_scss/barangay.scss'
   ]
 })
-export class BarangayComponent implements OnInit, AfterViewInit {
+export class BarangayComponent implements OnInit {
   @ViewChild('cityRef') cityRef: MatSelect;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   barangayForm: FormGroup;
@@ -56,10 +56,11 @@ export class BarangayComponent implements OnInit, AfterViewInit {
     });
     this.getCities();
     this.getBarangays();
-  }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator
+    setTimeout(() => {
+      this.cityRef.focus();
+      this.dataSource.paginator = this.paginator
+    }, 100);
   }
 
   search() { }

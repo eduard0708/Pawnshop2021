@@ -24,11 +24,7 @@
         fxLayout="row"
         fxLayoutGap="1%"
       >
-        <mat-form-field
-          class=""
-          appearance="outline"
-          fxFlex="18"
-        >
+        <mat-form-field class="" appearance="outline" fxFlex="18">
           <mat-label>Transaction Number</mat-label>
           <input
             class="view-transaction-number"
@@ -225,6 +221,18 @@
             type="text"
           />
         </div>
+        <div *ngIf="isDiscounts" class="input-group shadow-sm Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            readonly
+            #discountRef
+            formControlName="discount"
+            tabindex="-1"
+            class="form-control form-control-sm"
+            style="text-align: center"
+            type="number"
+          />
+        </div>
         <div *ngIf="isDueAmount" class="input-group shadow-sm Amount Due">
           <span class="col-form-label-sm">Amount Due</span>
           <input
@@ -233,6 +241,29 @@
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm amout-due"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div *ngIf="isNetPayable" class="input-group shadow-sm Net Payable">
+          <span class="col-form-label-sm">Net Payable</span>
+          <input
+            readonly
+            formControlName="netPayable"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div *ngIf="isPartial" class="input-group shadow-sm Partial Amount">
+          <span class="col-form-label-sm">Partial Amount</span>
+          <input
+            formControlName="partialAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -267,17 +298,6 @@
             type="text"
           />
         </div>
-        <div *ngIf="isDiscounts" class="input-group shadow-sm Discount">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-            #discountRef
-            formControlName="discount"
-            tabindex="-1"
-            class="form-control form-control-sm"
-            style="text-align: center"
-            type="number"
-          />
-        </div>
         <div *ngIf="isNetProceed" class="input-group shadow-sm Net Proceed">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
@@ -290,30 +310,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isNetPayable" class="input-group shadow-sm Net Payable">
-          <span class="col-form-label-sm">Net Payable</span>
-          <input
-            readonly
-            formControlName="netPayable"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div *ngIf="isPartial" class="input-group shadow-sm Partial Amount">
-          <span class="col-form-label-sm">Partial Amount</span>
-          <input
-            formControlName="partialAmount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div *ngIf="isPartial" class="input-group shadow-sm New Principal">
+        <div *ngIf="isNewPrincipal" class="input-group shadow-sm New Principal">
           <span class="col-form-label-sm">New Principal Loan</span>
           <input
             formControlName="newPrincipal"

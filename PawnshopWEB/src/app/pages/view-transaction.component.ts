@@ -43,6 +43,7 @@ export class ViewTransactionComponent implements OnInit {
   isAmountReceived = false;
   isChange = false;
   isPartial = false;
+  isNewPrincipal = false;
   isRedeemAmount = false;
 
   principalLoan: number;
@@ -151,6 +152,11 @@ export class ViewTransactionComponent implements OnInit {
           this.initDisplay();
           this.redeemDisplay();
         }
+        if (this.transactionInfo.transactionType === TransactionType.Partial) {
+          this.initDisplay();
+          this.partialDisplay();
+        }
+
         /* send data to pawnerService to normalalized asa pawnerInfo Type and send
         to transaction-pawner-info.component to display*/
         const pawner = this.pawnerService.normalizedPawnerInfo(
@@ -194,7 +200,7 @@ export class ViewTransactionComponent implements OnInit {
       serviceCharge: [this.transactionInfo.serviceCharge],
       discount: [this.transactionInfo.discount],
       partialAmount: [this.transactionInfo.partialAmount],
-      newPrincipal:[this.principalLoan],
+      newPrincipal: [this.principalLoan],
       redeemAmount: [this.transactionInfo.redeemAmount],
       receivedAmount: [this.transactionInfo.receivedAmount],
       change: [this.transactionInfo.change],
@@ -208,6 +214,7 @@ export class ViewTransactionComponent implements OnInit {
     this.isAdvnterest = true;
     this.isNetProceed = true;
   }
+
   redeemDisplay() {
     this.isInterest = true;
     this.isPenalty = true;
@@ -218,21 +225,33 @@ export class ViewTransactionComponent implements OnInit {
     this.isRedeemAmount = true;
     this.isChange = true;
   }
+
   partialDisplay() {
-    this.viewForm.controls.newPrincipal.setValue(0);
+    const _principalLoan = this.computationService.stringToNumber(this.viewForm.controls.principalLoan.value);
+    const _partialAmount = this.computationService.stringToNumber(this.viewForm.controls.partialAmount.value);
+    this.viewForm.controls.principalLoan.setValue(_principalLoan + _partialAmount);
+
+    const _oldPrincipal = this.computationService.stringToNumber(this.viewForm.controls.principalLoan.value)
+    this.viewForm.controls.newPrincipal.setValue(_oldPrincipal - _partialAmount);
+
+
     this.isInterest = true;
     this.isPenalty = true;
-    this.isDueAmount = true;
     this.isDiscounts = true;
-    this.isServiceCharge = true;
-    this.isAdvServiceCharge = false;
-    this.isAdvnterest = false;
-    this.isNetProceed = true;
-    this.isNetPayable = false;
-    this.isPartial = false;
+    this.isDueAmount = true;
+    this.isNetPayable = true;
+    this.isPartial = true;
+    this.isAdvnterest = true;
+    this.isAdvServiceCharge = true;
+    this.isNewPrincipal = true;
     this.isAmountReceived = true;
-    this.isRedeemAmount = true;
     this.isChange = true;
+
+    // this.isServiceCharge = true;
+    // this.isNetProceed = true;
+
+    // this.isRedeemAmount = true;
+
   }
 
   initDisplay() {

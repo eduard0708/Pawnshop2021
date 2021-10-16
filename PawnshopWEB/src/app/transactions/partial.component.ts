@@ -91,45 +91,11 @@ export class PartialComponent implements OnInit {
       new Date(this.transactionInfo.dateMatured),
       new Date(this.transactionInfo.dateExpired)
     );
-
-    this.partialForm = fb.group({
-      previousTransactionId: [this.transactionInfo.transactionsId],
-      trackingId: [this.transactionInfo.trackingId],
-      dateTransaction: [],
-      dateGranted: [],
-      dateMatured: [],
-      dateExpired: [],
-      transactionType: [TransactionType.Partial],
-      loanStatus: [this.dateStatus.status()],
-      status: [TransactionStatus.Closed],
-      moments: [this.dateStatus.moments()],
-      employeeId: [0],
-      totalAppraisal: [0],
-      principalLoan: [0],
-      interestRate: [0],
-      interest: [0],
-      penalty: [0],
-      dueAmount: [0],
-      discount: [0, [Validators.min(0), Validators.max(3)]],
-      advanceInterest: [0],
-      advanceServiceCharge: [0],
-      serviceCharge: [0],
-      netProceed: [0],
-      netPayment: [0],
-      redeemAmount: [0, Validators.required], //for redeem only
-      partialAmount: [0], // for partial
-      newPrincipalLoan: [0], // for partial
-      addtionalAmount: [0], //for additional only
-      receivedAmount: [0],
-      change: [0],
-    });
-
+    this.initPartialForm();
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
-    console.log(this.transactionInfo);
-
     this.setDate();
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
@@ -223,8 +189,8 @@ export class PartialComponent implements OnInit {
 
   // reset the transaction
   reset() {
-    this.partialForm.reset();
-    this.setComputation();
+    this.initPartialForm();
+    this.setDate();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -422,4 +388,39 @@ export class PartialComponent implements OnInit {
 
   }
 
+  initPartialForm(){
+
+    this.partialForm = this.fb.group({
+      previousTransactionId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.trackingId],
+      dateTransaction: [],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
+      transactionType: [TransactionType.Partial],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
+      totalAppraisal: [0],
+      principalLoan: [0],
+      interestRate: [0],
+      interest: [0],
+      penalty: [0],
+      dueAmount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
+      serviceCharge: [0],
+      netProceed: [0],
+      netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      newPrincipalLoan: [0], // for partial
+      addtionalAmount: [0], //for additional only
+      receivedAmount: [0],
+      change: [0],
+    });
+
+  }
 }

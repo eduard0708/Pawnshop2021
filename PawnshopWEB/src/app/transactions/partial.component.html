@@ -216,6 +216,19 @@
             type="text"
           />
         </div>
+        <div class="input-group shadow-sm Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            #discountRef
+            [readonly]="isReadOnlyDiscount"
+            (keyup)="computeDiscount()"
+            formControlName="discount"
+            tabindex="1"
+            class="form-control form-control-sm bold-red"
+            style="text-align: center"
+            type="number"
+          />
+        </div>
         <div class="input-group shadow-sm Amount Due">
           <span class="col-form-label-sm">Amount Due</span>
           <input
@@ -223,7 +236,33 @@
             formControlName="dueAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm amout-due"
+            class="form-control form-control-sm amout-due bold-red"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group  shadow-sm Net Payable">
+          <span class="col-form-label-sm">Net Payable</span>
+          <input
+            #netPaymentRef
+            formControlName="netPayment"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm fw-bold"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm Partial Amount">
+          <span class="col-form-label-sm">Partial Amount</span>
+          <input
+            #partialAmountRef
+            (focus)="focusPartialAmountReadOnlyDiscount()"
+            (keyup)="validatePartialAmount()"
+            formControlName="partialAmount"
+            tabindex="2"
+            maxlength="14"
+            class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -246,45 +285,6 @@
             readonly
             formControlName="advanceServiceCharge"
             tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm Discount">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-            #discountRef
-            [readonly]="isReadOnlyDiscount"
-            (keyup)="computeDiscount()"
-            formControlName="discount"
-            tabindex="1"
-            class="form-control form-control-sm"
-            style="text-align: center"
-            type="number"
-          />
-        </div>
-        <div class="input-group shadow-sm Net Payable">
-          <span class="col-form-label-sm">Net Payable</span>
-          <input
-            #netPaymentRef
-            formControlName="netPayment"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm Partial Amount">
-          <span class="col-form-label-sm">Partial Amount</span>
-          <input
-            #partialAmountRef
-            (focus)="focusPartialAmountReadOnlyDiscount()"
-            (keyup)="validatePartialAmount()"
-            formControlName="partialAmount"
-            tabindex="2"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
