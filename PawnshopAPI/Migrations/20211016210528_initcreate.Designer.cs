@@ -10,8 +10,8 @@ using PawnshopAPI.Data;
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211016195544_initCreate")]
-    partial class initCreate
+    [Migration("20211016210528_initcreate")]
+    partial class initcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

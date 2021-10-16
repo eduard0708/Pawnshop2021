@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PawnshopAPI.Migrations
 {
-    public partial class initCreate : Migration
+    public partial class initcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
