@@ -128,14 +128,14 @@ export class PartialComponent implements OnInit {
     //set chane during amount received change value
     this.partialForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
-        const _partialAmount = this.computationService.stringToNumber(
-          this.partialForm.controls.partialAmount.value
+        const _newPrincipalLoan = this.computationService.stringToNumber(
+          this.partialForm.controls.newPrincipalLoan.value
         );
         let _recivedAmount =
           this.computationService.stringToNumber(amountReceived);
 
         this.partialForm.controls.change.setValue(
-          _recivedAmount - _partialAmount
+          _recivedAmount - _newPrincipalLoan
         );
       }
     );
@@ -193,8 +193,9 @@ export class PartialComponent implements OnInit {
 
   // reset the transaction
   reset() {
-    this.initPartialForm();
+  this.partialForm.reset();
     this.setDate();
+
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
