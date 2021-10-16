@@ -189,36 +189,7 @@ export class RedeemComponent implements OnInit {
       this.redeemForm.controls.receivedAmount.setValue('');
       return;
     }
-    /* end validatation before saving */
-
-    /* normalization date before sending to transactionService to save */
-    // this.redeemForm.controls.discount.setValue(
-    //   this.computationService.stringToNumber(
-    //     this.redeemForm.controls.discount.value
-    //   )
-    // );
-
-    // this.redeemForm.controls.receivedAmount.setValue(
-    //   this.computationService.stringToNumber(
-    //     this.redeemForm.controls.receivedAmount.value
-    //   )
-    // );
-    // this.redeemForm.controls.interestRate.setValue(
-    //   this.computationService.stringToNumber(this.interestRate)
-    // );
-    // this.redeemForm.controls.dateTransaction.setValue(
-    //   new Date(this.redeemForm.controls.dateTransaction.value).toISOString()
-    // );
-
-    /* setting discounts field because the property discount is not apprearing after
-    click save or the value is not updated still 0 */
-    // this.redeemForm.controls.discounts.setValue(
-    //   this.computationService.stringToNumber(
-    //     this.redeemForm.controls.discount.value
-    //   )
-    // );
-
-    /* send the form value to the the transactoinService to normalized the value and save to database */
+        /* send the form value to the the transactoinService to normalized the value and save to database */
     // this.transactionService.normalizedTransationInfo(
     //   { transactionInfo: this.redeemForm.value, pawnerInfo: this.transactionInfo.transactionPawner, itemsInfo: this.transactionInfo.transactionItems }    );
 

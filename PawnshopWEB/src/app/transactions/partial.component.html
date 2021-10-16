@@ -295,6 +295,7 @@
           <span class="col-form-label-sm">New Principal</span>
           <input
             #partialAmountRef
+            [disabled] = true
             (focus)="focusPartialAmountReadOnlyDiscount()"
             (keyup)="validatePartialAmount()"
             formControlName="newPrincipalLoan"
