@@ -30,7 +30,7 @@ export class PartialComponent implements OnInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   partialForm: FormGroup;
-  isReadOnlyDiscount= false;
+  isReadOnlyDiscount = false;
 
   moments;
   principalLoan: number;
@@ -74,7 +74,7 @@ export class PartialComponent implements OnInit {
     private transactionService: TransactionService,
     private computationService: ComputationService,
     private notifierService: NotifierService,
-    private pawnerService:PawnerService
+    private pawnerService: PawnerService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -152,7 +152,9 @@ export class PartialComponent implements OnInit {
     const _expiredDate = new Date(_transactionDate).setMonth(
       new Date(_transactionDate).getMonth() + 4
     );
-    this.partialForm.controls.dateTransaction.setValue(new Date(_transactionDate));
+    this.partialForm.controls.dateTransaction.setValue(
+      new Date(_transactionDate)
+    );
     this.partialForm.controls.dateGranted.setValue(new Date(_transactionDate));
     this.partialForm.controls.dateMatured.setValue(new Date(_maturedDate));
     this.partialForm.controls.dateExpired.setValue(new Date(_expiredDate));
@@ -174,17 +176,19 @@ export class PartialComponent implements OnInit {
       );
     }
 
-    const _netPayable = this.computationService.stringToNumber(this.partialForm.controls.netPayment.value);
+    const _netPayable = this.computationService.stringToNumber(
+      this.partialForm.controls.netPayment.value
+    );
 
-    this.partialForm.controls.principalLoan.setValue(_netPayable - _partialAmount)
+    this.partialForm.controls.principalLoan.setValue(
+      _netPayable - _partialAmount
+    );
 
     this.transactionService.normalizedTransactionInformation(
       this.partialForm.value,
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
     );
-
-
   }
 
   // reset the transaction
@@ -203,7 +207,6 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.discount.enable();
     }
     // end condition to enable the discount field and focus if the discount is availlable
-
   }
 
   home() {
@@ -275,15 +278,28 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.partialAmount.value
     );
 
-    const _netPayable = this.computationService.stringToNumber(this.partialForm.controls.netPayment.value);
-    const _newPartialAmount = _netPayable - _partialAmount
-
-    this.partialForm.controls.newPrincipalLoan.setValue(_newPartialAmount);
+    // const _newPartialAmount = _netPayment - _partialAmount;
+    // this.partialForm.controls.newPrincipalLoan.setValue(_newPartialAmount);
 
     if (_partialAmount > _netPayment)
       this.partialForm.controls.partialAmount.setValue(_netPayment);
 
+    const _newNetPayment = _netPayment - _partialAmount;
 
+    const _advanceInterest = this.computationService.getAdvanceInterest(
+      _newNetPayment,
+      this.interestRate
+    );
+    const _advanceServiceCharge =
+      this.computationService.getAdvanceServiceCharge(_newNetPayment);
+
+    this.partialForm.controls.advanceInterest.setValue(_advanceInterest);
+    this.partialForm.controls.advanceServiceCharge.setValue(
+      _advanceServiceCharge
+    );
+    this.partialForm.controls.newPrincipalLoan.setValue(
+      _newNetPayment + _advanceInterest + _advanceServiceCharge
+    );
   }
 
   /*  set to disable the discount if focus already in additional amount */
@@ -335,18 +351,17 @@ export class PartialComponent implements OnInit {
     this.serviceCharge = this.computationService.getServiceCharge(
       this.principalLoan
     );
+
+    this.netPayment = this.principalLoan + this.dueAmount;
+    // this.advanceInterest +
+    // this.advanceServiceCharge;
     this.advanceInterest = this.computationService.getAdvanceInterest(
-      this.transactionInfo.principalLoan,
+      this.netPayment,
       this.transactionInfo.interestRate
     );
     this.advanceServiceCharge = this.computationService.getAdvanceServiceCharge(
       this.transactionInfo.principalLoan
     );
-    this.netPayment =
-      this.principalLoan +
-      this.dueAmount +
-      this.advanceInterest +
-      this.advanceServiceCharge;
 
     this.partialForm.controls.dateTransaction.setValue(new Date());
     this.partialForm.controls.status.setValue(this.dateStatus.status());
@@ -368,10 +383,8 @@ export class PartialComponent implements OnInit {
     this.partialForm.controls.penalty.setValue(this.penalty);
     this.partialForm.controls.dueAmount.setValue(this.dueAmount);
     this.partialForm.controls.discount.setValue('');
-    this.partialForm.controls.advanceInterest.setValue(this.advanceInterest);
-    this.partialForm.controls.advanceServiceCharge.setValue(
-      this.advanceServiceCharge
-    );
+    this.partialForm.controls.advanceInterest.setValue(0);
+    this.partialForm.controls.advanceServiceCharge.setValue(0);
     this.partialForm.controls.netPayment.setValue(this.netPayment);
     this.partialForm.controls.partialAmount.setValue('');
     this.partialForm.controls.receivedAmount.setValue('');
@@ -385,11 +398,9 @@ export class PartialComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.partialAmountRef.nativeElement.focus();
     }, 100);
-
   }
 
-  initPartialForm(){
-
+  initPartialForm() {
     this.partialForm = this.fb.group({
       previousTransactionId: [this.transactionInfo.transactionsId],
       trackingId: [this.transactionInfo.trackingId],
@@ -421,6 +432,5 @@ export class PartialComponent implements OnInit {
       receivedAmount: [0],
       change: [0],
     });
-
   }
 }
