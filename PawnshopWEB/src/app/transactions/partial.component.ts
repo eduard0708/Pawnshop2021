@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
@@ -29,8 +30,8 @@ export class PartialComponent implements OnInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   partialForm: FormGroup;
-  moments;
 
+  moments;
   principalLoan: number;
   daysCount: number;
   interest: number;
@@ -41,7 +42,6 @@ export class PartialComponent implements OnInit {
   advanceInterest: number;
   advanceServiceCharge: number;
   netPayment: number;
-  netPayable: number;
   totalDays: number;
   isDiscount: boolean;
   countYYMMDD: TotalYYMMDD;
@@ -92,36 +92,43 @@ export class PartialComponent implements OnInit {
     );
 
     this.partialForm = fb.group({
-      dateTransaction: [''],
+      previousTransactionId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.transactionsId],
+      dateTransaction: [],
       dateGranted: [],
       dateMatured: [],
       dateExpired: [],
+      transcationType: [TransactionType.Redeem],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
       totalAppraisal: [0],
       principalLoan: [0],
       interestRate: [0],
       interest: [0],
-      advanceInterest: [0],
-      advanceServiceCharge: [0],
-      netPayable: [0],
       penalty: [0],
       dueAmount: [0],
-      serviceCharge: [0],
+      //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
       discount: [0, [Validators.min(0), Validators.max(3)]],
-      partialAmount: [0],
+      // discounts: [0],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
+      serviceCharge: [0],
+      netProceed: [0],
+      netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      addtionalAmount: [0], //for additional only
       receivedAmount: [0],
       change: [0],
-      transaction: [0],
-      totalDays: [0],
-      totalMonths: [0],
-      totalYears: [0],
-      status: [0],
-      moments: [0],
     });
 
     this.dataSource = new MatTableDataSource<Item>();
   }
 
   ngOnInit(): void {
+    this.setDate();
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
       this.dataSource.data =
@@ -169,6 +176,20 @@ export class PartialComponent implements OnInit {
     this.setComputation();
   }
 
+  setDate() {
+    const _transactionDate = new Date();
+    const _maturedDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 1
+    );
+    const _expiredDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 4
+    );
+    this.partialForm.controls.dateTransaction.setValue(new Date(_transactionDate));
+    this.partialForm.controls.dateGranted.setValue(new Date(_transactionDate));
+    this.partialForm.controls.dateMatured.setValue(new Date(_maturedDate));
+    this.partialForm.controls.dateExpired.setValue(new Date(_expiredDate));
+  }
+
   save() {
     const _amountReceived = this.computationService.stringToNumber(
       this.partialForm.controls.receivedAmount.value
@@ -184,6 +205,14 @@ export class PartialComponent implements OnInit {
         'Received amount must be equal or greatherthan Reddem amount.'
       );
     }
+
+    console.log(this.partialForm.value);
+
+    // this.transactionService.normalizedTransationInfo(
+    //   this.partialForm.value,
+    //   this.transactionInfo.transactionPawner,
+    //   this.transactionInfo.transactionItems
+    // )
   }
 
   // reset the transaction
@@ -249,8 +278,8 @@ export class PartialComponent implements OnInit {
     //set value of net dueAmount during discount value changes
     this.partialForm.controls.dueAmount.setValue(this.dueAmount);
 
-    //set value of netPayable during discount value changes
-    this.partialForm.controls.netPayable.setValue(
+    //set value of netPayment during discount value changes
+    this.partialForm.controls.netPayment.setValue(
       this.principalLoan +
         this.computationService.stringToNumber(
           this.partialForm.controls.dueAmount.value
@@ -265,16 +294,16 @@ export class PartialComponent implements OnInit {
   }
   //validate partial amount will not exceed in net payable amount
   validatePartialAmount() {
-    const _netPayableAmount = this.computationService.stringToNumber(
-      this.partialForm.controls.netPayable.value
+    const _netPayment = this.computationService.stringToNumber(
+      this.partialForm.controls.netPayment.value
     );
 
     const _partialAmount = this.computationService.stringToNumber(
       this.partialForm.controls.partialAmount.value
     );
 
-    if (_partialAmount > _netPayableAmount)
-      this.partialForm.controls.partialAmount.setValue(_netPayableAmount);
+    if (_partialAmount > _netPayment)
+      this.partialForm.controls.partialAmount.setValue(_netPayment);
   }
 
   /*  set to disable the discount if focus already in additional amount */
@@ -333,7 +362,7 @@ export class PartialComponent implements OnInit {
     this.advanceServiceCharge = this.computationService.getAdvanceServiceCharge(
       this.transactionInfo.principalLoan
     );
-    this.netPayable =
+    this.netPayment =
       this.principalLoan +
       this.dueAmount +
       this.advanceInterest +
@@ -363,7 +392,7 @@ export class PartialComponent implements OnInit {
     this.partialForm.controls.advanceServiceCharge.setValue(
       this.advanceServiceCharge
     );
-    this.partialForm.controls.netPayable.setValue(this.netPayable);
+    this.partialForm.controls.netPayment.setValue(this.netPayment);
     this.partialForm.controls.partialAmount.setValue('');
     this.partialForm.controls.receivedAmount.setValue('');
 

@@ -60,9 +60,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
   pawner: Pawner = {} as Pawner;
   item: Item = {} as Item;
   newLoanForm: FormGroup;
-  today: Date = new Date();
-  dateMatured: Date = new Date(this.today.setMonth(new Date().getMonth() + 1));
-  dateExpired: Date = new Date(this.today.setMonth(new Date().getMonth() + 4));
   isDisable = false;
   isAddItem = true;
   isSave = true;
@@ -160,7 +157,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
       this.validateButtonSave();
     });
     this.newLoanForm.valueChanges.subscribe(() => {
-      this.validateItemEntery();
+      this.validateItemEntry();
       if (this.dataSource.data.length > 0) this.categoryRef.disabled;
     });
 
@@ -275,10 +272,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     if (this.dataSource.data.length == 0) this.resetAddItems();
   }
 
-  setTransacitonDate() {
-    this.newLoanForm.controls.dateTransaction.setValue(this.today);
-  }
-
   resetAddItems() {
     if (this.dataSource.data.length > 0) {
       this.newLoanForm.controls.categoryDescriptions.setValue('');
@@ -336,7 +329,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
     );
   }
 
-  validateItemEntery() {
+  validateItemEntry() {
     let appVal: string = this.newLoanForm.controls.appraisalValue.value;
     if (
       this.newLoanForm.controls.descriptions.valid &&

@@ -72,7 +72,7 @@ export class RedeemComponent implements OnInit {
     private computationService: ComputationService,
     private trasactionService: TransactionService,
     private notifierService: NotifierService,
-    private pawnerService:PawnerService
+    private pawnerService: PawnerService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -108,10 +108,8 @@ export class RedeemComponent implements OnInit {
       interest: [0],
       penalty: [0],
       dueAmount: [0],
-      discount: [
-        0,
-        [Validators.min(0), Validators.max(3), Validators.required],
-      ], //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
+      //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
+      discount: [0, [Validators.min(0), Validators.max(3)]],
       discounts: [0],
       advanceInterest: [0],
       advanceServiceCharge: [0],
