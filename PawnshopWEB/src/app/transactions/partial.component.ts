@@ -11,6 +11,8 @@ import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
+import { NotifierService } from '../_service/notifier.service';
+import { PawnerService } from '../_service/pawner.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -70,6 +72,8 @@ export class PartialComponent implements OnInit {
     private router: Router,
     private transactionService: TransactionService,
     private computationService: ComputationService,
+    private notifierService: NotifierService,
+    private pawnerService:PawnerService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -79,7 +83,6 @@ export class PartialComponent implements OnInit {
           this.router.getCurrentNavigation().extras.state.transaction;
       }
     });
-
 
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
@@ -125,6 +128,16 @@ export class PartialComponent implements OnInit {
         this.transactionService.normalizeItemsForTable(
           this.transactionInfo.transactionItems
         ) ?? [];
+    /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+      to transaction-pawner-info.component to display */
+    const pawner = this.pawnerService.normalizedPawnerInfo(
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.dateTransaction,
+      this.transactionInfo.dateGranted,
+      this.transactionInfo.dateMatured,
+      this.transactionInfo.dateExpired
+    );
+    this.pawnerService.takePawnerInfo(pawner);
 
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
@@ -157,17 +170,19 @@ export class PartialComponent implements OnInit {
   }
 
   save() {
-    const amountReceived = this.computationService.stringToNumber(
+    const _amountReceived = this.computationService.stringToNumber(
       this.partialForm.controls.receivedAmount.value
     );
-    const redeemAmount = this.computationService.stringToNumber(
-      this.partialForm.controls.redeemAmount.value
+    const _partialAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.partialAmount.value
     );
 
-    if (redeemAmount > amountReceived) {
+    if (_partialAmount > _amountReceived) {
       this.partialForm.controls.receivedAmount.setValue('');
       this.receivedAmountRef.nativeElement.focus();
-      alert('Enter valid amount received');
+      this.notifierService.info(
+        'Received amount must be equal or greatherthan Reddem amount.'
+      );
     }
   }
 

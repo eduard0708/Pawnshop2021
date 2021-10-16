@@ -13,6 +13,7 @@ import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
 import { NotifierService } from '../_service/notifier.service';
+import { PawnerService } from '../_service/pawner.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -70,7 +71,8 @@ export class RedeemComponent implements OnInit {
     private transactionService: TransactionService,
     private computationService: ComputationService,
     private trasactionService: TransactionService,
-    private notifierService:NotifierService
+    private notifierService: NotifierService,
+    private pawnerService:PawnerService
   ) {
     // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
@@ -134,6 +136,17 @@ export class RedeemComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
+    /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+      to transaction-pawner-info.component to display */
+    const pawner = this.pawnerService.normalizedPawnerInfo(
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.dateTransaction,
+      this.transactionInfo.dateGranted,
+      this.transactionInfo.dateMatured,
+      this.transactionInfo.dateExpired
+    );
+    this.pawnerService.takePawnerInfo(pawner);
+
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
       new Date(this.transactionInfo.dateMatured)
@@ -171,13 +184,15 @@ export class RedeemComponent implements OnInit {
       this.redeemForm.controls.redeemAmount.value
     );
     if (redeemAmount > amountReceived) {
-      this.notifierService.info("Amount recieved must equal or greater than Redeem amount.")
+      this.notifierService.info(
+        'Amount recieved must equal or greater than Redeem amount.'
+      );
       this.receivedAmountRef.nativeElement.focus();
       this.redeemForm.controls.receivedAmount.setValue('');
-      return
+      return;
     }
     /* end validatation before saving */
-    
+
     /* normalization date before sending to transactionService to save */
     this.redeemForm.controls.discount.setValue(
       this.computationService.stringToNumber(
@@ -185,9 +200,17 @@ export class RedeemComponent implements OnInit {
       )
     );
 
-    this.redeemForm.controls.receivedAmount.setValue(this.computationService.stringToNumber(this.redeemForm.controls.receivedAmount.value))
-    this.redeemForm.controls.interestRate.setValue(this.computationService.stringToNumber(this.interestRate))
-    this.redeemForm.controls.dateTransaction.setValue(new Date(this.redeemForm.controls.dateTransaction.value).toISOString())
+    this.redeemForm.controls.receivedAmount.setValue(
+      this.computationService.stringToNumber(
+        this.redeemForm.controls.receivedAmount.value
+      )
+    );
+    this.redeemForm.controls.interestRate.setValue(
+      this.computationService.stringToNumber(this.interestRate)
+    );
+    this.redeemForm.controls.dateTransaction.setValue(
+      new Date(this.redeemForm.controls.dateTransaction.value).toISOString()
+    );
 
     /* setting discounts field because the property discount is not apprearing after
     click save or the value is not updated still 0 */

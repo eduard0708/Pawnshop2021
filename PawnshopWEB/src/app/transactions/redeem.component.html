@@ -15,9 +15,7 @@
     <div class="pawner-items-wrapper">
       <!--start pawner information -->
       <div class="pawner-information">
-        <app-transactions-pawner-info
-          [transactionInfo]="transactionInfo"
-        ></app-transactions-pawner-info>
+        <app-transactions-pawner-info></app-transactions-pawner-info>
       </div>
       <!--end pawner information -->
       <!-- start dates status  -->
@@ -92,7 +90,11 @@
 
         <mat-form-field class="status" appearance="outline">
           <mat-label>Loan Status</mat-label>
-          <input matInput placeholder="Loan Status" formControlName="loanStatus" />
+          <input
+            matInput
+            placeholder="Loan Status"
+            formControlName="loanStatus"
+          />
         </mat-form-field>
 
         <mat-form-field class="moments" appearance="outline">
@@ -150,7 +152,7 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper"style="zoom: .9;">
+    <div class="computation-wrapper" style="zoom: 0.9">
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">
         Redeem Computation

@@ -138,10 +138,6 @@ export class ViewTransactionComponent implements OnInit {
       .subscribe((transaction) => {
         this.transactionInfo = transaction;
         this.initViewForm();
-        /* send data to pawnerService to normalalized asa pawnerInfo Type and send
-        to transaction-pawner-info.component to display*/
-        console.log(this.transactionInfo.transcationType);
-
         if (this.transactionInfo.transcationType === TransactionType.Newloan) {
           this.initDisplay();
           this.newloanDisplay();
@@ -150,7 +146,8 @@ export class ViewTransactionComponent implements OnInit {
           this.initDisplay();
           this.redeemDisplay();
         }
-
+        /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+        to transaction-pawner-info.component to display*/
         const pawner = this.pawnerService.normalizedPawnerInfo(
           this.transactionInfo.transactionPawner,
           this.transactionInfo.dateTransaction,
