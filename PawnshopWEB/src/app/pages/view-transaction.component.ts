@@ -118,16 +118,17 @@ export class ViewTransactionComponent implements OnInit {
     this.pawnerService.takePawnerInfo(pawner);
     this.dataSource.data = this.transactionInfo.transactionItems as any;
 
-    if (this.transactionInfo.transcationType === TransactionType.Newloan) {
+    if (this.transactionInfo.transactionType === TransactionType.Newloan) {
       this.initDisplay();
       this.newloanDisplay();
     }
 
-    if (this.transactionInfo.transcationType === TransactionType.Redeem) {
+    if (this.transactionInfo.transactionType === TransactionType.Redeem) {
       this.initDisplay();
       this.redeemDisplay();
     }
   }
+
   search() {
     this.transactionService
       .searchTransactionById(
@@ -138,11 +139,11 @@ export class ViewTransactionComponent implements OnInit {
       .subscribe((transaction) => {
         this.transactionInfo = transaction;
         this.initViewForm();
-        if (this.transactionInfo.transcationType === TransactionType.Newloan) {
+        if (this.transactionInfo.transactionType === TransactionType.Newloan) {
           this.initDisplay();
           this.newloanDisplay();
         }
-        if (this.transactionInfo.transcationType === TransactionType.Redeem) {
+        if (this.transactionInfo.transactionType === TransactionType.Redeem) {
           this.initDisplay();
           this.redeemDisplay();
         }
@@ -165,12 +166,10 @@ export class ViewTransactionComponent implements OnInit {
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
-
   reset() {
     this.viewForm.controls.searchNumber.setValue('');
     this.searchRef.nativeElement.focus();
   }
-
   initViewForm() {
     this.viewForm = this.fb.group({
       transactionId: [this.transactionInfo.transactionsId],
@@ -199,7 +198,6 @@ export class ViewTransactionComponent implements OnInit {
       searchNumber: [''],
     });
   }
-
   newloanDisplay() {
     this.isAdvServiceCharge = true;
     this.isAdvnterest = true;

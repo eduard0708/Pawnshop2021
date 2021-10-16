@@ -30,6 +30,7 @@ export class PartialComponent implements OnInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   partialForm: FormGroup;
+  isReadOnlyDiscount= false;
 
   moments;
   principalLoan: number;
@@ -98,7 +99,7 @@ export class PartialComponent implements OnInit {
       dateGranted: [],
       dateMatured: [],
       dateExpired: [],
-      transcationType: [TransactionType.Redeem],
+      transactionType: [TransactionType.Redeem],
       loanStatus: [this.dateStatus.status()],
       status: [TransactionStatus.Closed],
       moments: [this.dateStatus.moments()],
@@ -109,9 +110,7 @@ export class PartialComponent implements OnInit {
       interest: [0],
       penalty: [0],
       dueAmount: [0],
-      //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
       discount: [0, [Validators.min(0), Validators.max(3)]],
-      // discounts: [0],
       advanceInterest: [0],
       advanceServiceCharge: [0],
       serviceCharge: [0],
@@ -206,13 +205,11 @@ export class PartialComponent implements OnInit {
       );
     }
 
-    console.log(this.partialForm.value);
-
-    // this.transactionService.normalizedTransationInfo(
-    //   this.partialForm.value,
-    //   this.transactionInfo.transactionPawner,
-    //   this.transactionInfo.transactionItems
-    // )
+    this.transactionService.normalizedTransactionInformation(
+      this.partialForm.value,
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.transactionItems
+    );
   }
 
   // reset the transaction
@@ -231,6 +228,7 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.discount.enable();
     }
     // end condition to enable the discount field and focus if the discount is availlable
+
   }
 
   home() {
@@ -307,8 +305,8 @@ export class PartialComponent implements OnInit {
   }
 
   /*  set to disable the discount if focus already in additional amount */
-  focusPartialAmountDisabledDiscount() {
-    this.partialForm.controls.discount.disable();
+  focusPartialAmountReadOnlyDiscount() {
+    this.isReadOnlyDiscount = true;
   }
 
   setComputation() {
@@ -338,7 +336,7 @@ export class PartialComponent implements OnInit {
       )
     ) {
       this.partialForm.controls.discount.setValue(0);
-      this.partialForm.controls.discount.disable();
+      this.isReadOnlyDiscount = true;
     }
 
     this.interest = this.computationService.getInterest(
@@ -398,13 +396,14 @@ export class PartialComponent implements OnInit {
 
     //set paginator and set cursor focus during init
     setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
       this.isDiscount = this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMatured)
       );
-
+      this.dataSource.paginator = this.paginator;
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.partialAmountRef.nativeElement.focus();
     }, 100);
+
   }
+
 }

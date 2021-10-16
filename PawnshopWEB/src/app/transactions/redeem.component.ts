@@ -29,6 +29,8 @@ export class RedeemComponent implements OnInit {
   items: Item[] = [];
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   redeemForm: FormGroup;
+  isReadOnlyDiscount = false;
+
   previousTransactionId;
   moments;
   principalLoan: number;
@@ -108,9 +110,7 @@ export class RedeemComponent implements OnInit {
       interest: [0],
       penalty: [0],
       dueAmount: [0],
-      //this discount fieled is missing after in output.. solution is to add field and assigned as discounts
       discount: [0, [Validators.min(0), Validators.max(3)]],
-      discounts: [0],
       advanceInterest: [0],
       advanceServiceCharge: [0],
       serviceCharge: [0],
@@ -192,34 +192,37 @@ export class RedeemComponent implements OnInit {
     /* end validatation before saving */
 
     /* normalization date before sending to transactionService to save */
-    this.redeemForm.controls.discount.setValue(
-      this.computationService.stringToNumber(
-        this.redeemForm.controls.discount.value
-      )
-    );
+    // this.redeemForm.controls.discount.setValue(
+    //   this.computationService.stringToNumber(
+    //     this.redeemForm.controls.discount.value
+    //   )
+    // );
 
-    this.redeemForm.controls.receivedAmount.setValue(
-      this.computationService.stringToNumber(
-        this.redeemForm.controls.receivedAmount.value
-      )
-    );
-    this.redeemForm.controls.interestRate.setValue(
-      this.computationService.stringToNumber(this.interestRate)
-    );
-    this.redeemForm.controls.dateTransaction.setValue(
-      new Date(this.redeemForm.controls.dateTransaction.value).toISOString()
-    );
+    // this.redeemForm.controls.receivedAmount.setValue(
+    //   this.computationService.stringToNumber(
+    //     this.redeemForm.controls.receivedAmount.value
+    //   )
+    // );
+    // this.redeemForm.controls.interestRate.setValue(
+    //   this.computationService.stringToNumber(this.interestRate)
+    // );
+    // this.redeemForm.controls.dateTransaction.setValue(
+    //   new Date(this.redeemForm.controls.dateTransaction.value).toISOString()
+    // );
 
     /* setting discounts field because the property discount is not apprearing after
     click save or the value is not updated still 0 */
-    this.redeemForm.controls.discounts.setValue(
-      this.computationService.stringToNumber(
-        this.redeemForm.controls.discount.value
-      )
-    );
+    // this.redeemForm.controls.discounts.setValue(
+    //   this.computationService.stringToNumber(
+    //     this.redeemForm.controls.discount.value
+    //   )
+    // );
 
     /* send the form value to the the transactoinService to normalized the value and save to database */
-    this.transactionService.normalizedTransationInfo(
+    // this.transactionService.normalizedTransationInfo(
+    //   { transactionInfo: this.redeemForm.value, pawnerInfo: this.transactionInfo.transactionPawner, itemsInfo: this.transactionInfo.transactionItems }    );
+
+    this.transactionService.normalizedTransactionInformation(
       this.redeemForm.value,
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
@@ -229,7 +232,6 @@ export class RedeemComponent implements OnInit {
   // reset the transaction
   reset() {
     this.redeemForm.reset();
-    this.setComputation();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -303,7 +305,7 @@ export class RedeemComponent implements OnInit {
 
   /*  set to disable the discount if focus already in additional amount */
   focusRedeemAmountDisabledDiscount() {
-    this.redeemForm.controls.discount.disable();
+    this.isReadOnlyDiscount = true;
   }
 
   setComputation() {

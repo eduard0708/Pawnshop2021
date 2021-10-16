@@ -256,6 +256,7 @@
           <span class="col-form-label-sm">Discount</span>
           <input
             #discountRef
+            [readonly]="isReadOnlyDiscount"
             (keyup)="computeDiscount()"
             formControlName="discount"
             tabindex="1"
@@ -280,7 +281,7 @@
           <span class="col-form-label-sm">Partial Amount</span>
           <input
             #partialAmountRef
-            (focus)="focusPartialAmountDisabledDiscount()"
+            (focus)="focusPartialAmountReadOnlyDiscount()"
             (keyup)="validatePartialAmount()"
             formControlName="partialAmount"
             tabindex="2"

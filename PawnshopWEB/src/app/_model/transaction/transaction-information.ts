@@ -8,7 +8,7 @@ export interface TransactionInformation {
   dateGranted?: string;
   dateMatured?: string;
   dateExpired?: string;
-  transcationType: string;
+  transactionType: string;
   status: string;
   loanStatus: string;
   moments:string;

@@ -32,7 +32,7 @@ namespace PawnshopAPI.Entities
         public double ServiceCharge { get; set; }
         public string Status { get; set; }
         public double TotalAppraisal { get; set; }
-        public string TranscationType { get; set; }
+        public string TransactionType { get; set; }
         public  TransactionPawner TransactionPawner { get; set; }
         public ICollection<TransactionItem> TransactionItems { get; set; }
     }

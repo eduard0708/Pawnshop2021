@@ -17,6 +17,7 @@ import { ComputationService } from './computation.service';
 })
 export class TransactionService {
   saveRedeemInfo: TransactionInformation;
+  transactionInfo: TransactionInformation;
   url = environment.baseUrl;
   constructor(
     private computationService: ComputationService,
@@ -42,11 +43,15 @@ export class TransactionService {
     return normItem;
   }
 
-  normalizedTransationInfo(
-    transactionInfo: TransactionInformation,
+  normalizedTransationInfo({
+    transactionInfo,
     pawnerInfo,
-    itemsInfo
-  ) {
+    itemsInfo,
+  }: {
+    transactionInfo: TransactionInformation;
+    pawnerInfo;
+    itemsInfo;
+  }) {
     let user: User = JSON.parse(localStorage.getItem('user'));
     let saveItems: TransactionItems[] = [];
     //normalize itemAuditTrail value
@@ -58,27 +63,42 @@ export class TransactionService {
       remarks: null,
     };
 
-    if (transactionInfo.transcationType === TransactionType.Redeem) {
+    if (transactionInfo.transactionType === TransactionType.Redeem) {
       this.saveRedeemInfo = this.normalizeRedeemInfo(transactionInfo);
       this.saveRedeemInfo.transactionItems = [];
       let a: TransactionInformation = this.normalizeRedeemInfo(transactionInfo);
-      //  a.transactionPawner = pawnerInfo
       a.transactionItems = [];
       a.transactionPawner = {} as TransactionPawner;
+      this.onSaveTransaction(a);
+    }
 
-      this.saveTransaction(a);
+    if (transactionInfo.transactionType === TransactionType.Partial) {
+      // this.transactionInfo = this.normalizeRedeemInfo(transactionInfo);
+      // this.transactionInfo.transactionItems = [];
+      // let s: TransactionInformation = this.normalizeRedeemInfo(transactionInfo);
+      // s.transactionItems = [];
+      // s.transactionPawner = {} as TransactionPawner;
+      this.onSaveTransaction(transactionInfo);
     }
   }
 
-  saveTransaction(saveTransaction) {
-    console.log(saveTransaction);
-    this.http
-      .post(this.url + 'transaction/addtransaction', saveTransaction)
-      .subscribe((transaction) => {
-        this.router.navigateByUrl('invoicetest', {
-          state: { print: transaction },
-        });
-      });
+  onSaveTransaction(transactionInfo) {
+    const user: User = JSON.parse(localStorage.getItem('user'));
+    const saveInfo: TransactionInformation =
+      this.normalizeRedeemInfo(transactionInfo);
+    saveInfo.employeeId = user.id;
+    saveInfo.transactionItems = [];
+    saveInfo.transactionPawner = {} as TransactionPawner;
+
+    console.log(saveInfo);
+
+    // this.http
+    //   .post(this.url + 'transaction/addtransaction', saveInfo)
+    //   .subscribe((transaction) => {
+    //     this.router.navigateByUrl('invoicetest', {
+    //       state: { print: transaction },
+    //     });
+    //   });
   }
 
   normalizePawnerInfo(t: any) {
@@ -107,6 +127,12 @@ export class TransactionService {
     return normalizeTrasactionInfo;
   }
 
+  searchTransactionById(id: number) {
+    return this.http.get<TransactionInformation>(
+      this.url + `transaction/${id}`
+    );
+  }
+
   normalizeRedeemInfo(transactionInfo: any) {
     let redeemInfo: TransactionInformation = transactionInfo;
     /* this discounts property is temporary used only because the discount property value is
@@ -127,7 +153,122 @@ export class TransactionService {
     return redeemInfo;
   }
 
-  searchTransactionById(id:number){
-    return this.http.get<TransactionInformation>(this.url + `transaction/${id}`);
+  normalizedTransactionInformation(
+    transactionInfo: TransactionInformation,
+    transactionPawner,
+    TransactionItems
+  ) {
+    transactionInfo.dateTransaction =
+      transactionInfo.dateTransaction === null
+        ? null
+        : new Date(transactionInfo.dateTransaction).toISOString();
+    transactionInfo.dateGranted =
+      transactionInfo.dateGranted === null
+        ? null
+        : new Date(transactionInfo.dateTransaction).toISOString();
+    transactionInfo.dateMatured =
+      transactionInfo.dateMatured === null
+        ? null
+        : new Date(transactionInfo.dateTransaction).toISOString();
+    transactionInfo.dateExpired =
+      transactionInfo.dateExpired === null
+        ? null
+        : new Date(transactionInfo.dateTransaction).toISOString();
+    transactionInfo.totalAppraisal =
+      typeof transactionInfo.totalAppraisal === 'number'
+        ? transactionInfo.totalAppraisal
+        : this.computationService.stringToNumber(transactionInfo.totalAppraisal);
+
+    transactionInfo.principalLoan =
+      typeof transactionInfo.principalLoan === 'number'
+        ? transactionInfo.principalLoan
+        : this.computationService.stringToNumber(transactionInfo.principalLoan);
+
+    transactionInfo.interestRate =
+      typeof transactionInfo.interestRate === 'number'
+        ? transactionInfo.interestRate
+        : this.computationService.stringToNumber(transactionInfo.interestRate);
+
+    transactionInfo.interest =
+      typeof transactionInfo.interest === 'number'
+        ? transactionInfo.interest
+        : this.computationService.stringToNumber(transactionInfo.interest);
+
+    transactionInfo.discount =
+      typeof transactionInfo.discount === 'number'
+        ? transactionInfo.discount
+        : this.computationService.stringToNumber(transactionInfo.discount);
+
+    transactionInfo.penalty =
+      typeof transactionInfo.penalty === 'number'
+        ? transactionInfo.penalty
+        : this.computationService.stringToNumber(transactionInfo.penalty);
+
+    transactionInfo.dueAmount =
+      typeof transactionInfo.dueAmount === 'number'
+        ? transactionInfo.dueAmount
+        : this.computationService.stringToNumber(transactionInfo.dueAmount);
+
+    transactionInfo.discount =
+      typeof transactionInfo.discount === 'number'
+        ? transactionInfo.discount
+        : this.computationService.stringToNumber(transactionInfo.discount);
+
+    transactionInfo.advanceInterest =
+      typeof transactionInfo.advanceInterest === 'number'
+        ? transactionInfo.advanceInterest
+        : this.computationService.stringToNumber(transactionInfo.advanceInterest);
+
+    transactionInfo.advanceServiceCharge =
+      typeof transactionInfo.advanceServiceCharge === 'number'
+        ? transactionInfo.advanceServiceCharge
+        : this.computationService.stringToNumber(transactionInfo.advanceServiceCharge);
+
+    transactionInfo.serviceCharge =
+      typeof transactionInfo.serviceCharge === 'number'
+        ? transactionInfo.serviceCharge
+        : this.computationService.stringToNumber(transactionInfo.serviceCharge);
+
+    transactionInfo.netProceed =
+      typeof transactionInfo.netProceed === 'number'
+        ? transactionInfo.netProceed
+        : this.computationService.stringToNumber(transactionInfo.netProceed);
+
+    transactionInfo.netPayment =
+      typeof transactionInfo.netPayment === 'number'
+        ? transactionInfo.netPayment
+        : this.computationService.stringToNumber(transactionInfo.netPayment);
+
+    transactionInfo.redeemAmount =
+      typeof transactionInfo.redeemAmount === 'number'
+        ? transactionInfo.redeemAmount
+        : this.computationService.stringToNumber(transactionInfo.redeemAmount);
+
+    transactionInfo.partialAmount =
+      typeof transactionInfo.partialAmount === 'number'
+        ? transactionInfo.partialAmount
+        : this.computationService.stringToNumber(transactionInfo.partialAmount);
+
+    transactionInfo.receivedAmount =
+      typeof transactionInfo.receivedAmount === 'number'
+        ? transactionInfo.receivedAmount
+        : this.computationService.stringToNumber(transactionInfo.receivedAmount);
+
+    transactionInfo.change =
+      typeof transactionInfo.change === 'number'
+        ? transactionInfo.change
+        : this.computationService.stringToNumber(transactionInfo.change);
+
+
+        const user: User = JSON.parse(localStorage.getItem('user'));
+
+        transactionInfo.transactionPawner = transactionPawner;
+        transactionInfo.transactionItems = TransactionItems;
+        transactionInfo.employeeId = user.id;
+
+    console.log(transactionInfo);
+
+
+
   }
 }
