@@ -251,4 +251,4 @@ C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\ref\PawnshopAPI
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.pdb
 C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.genruntimeconfig.cache
 C:\Users\Light\Desktop\Pawnshop2021\pawnshopapi\obj\Debug\net5.0\staticwebassets\PawnshopAPI.StaticWebAssets.xml
-C:\Users\LIGHT\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.csproj.CopyComplete
+C:\Users\Light\Desktop\Pawnshop2021\PawnshopAPI\obj\Debug\net5.0\PawnshopAPI.csproj.AssemblyReference.cache
