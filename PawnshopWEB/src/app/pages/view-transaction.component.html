@@ -269,18 +269,6 @@
             type="text"
           />
         </div>
-        <div *ngIf="isNetPayable" class="input-group Net Payable">
-          <span class="col-form-label-sm">Net Payable</span>
-          <input
-            readonly
-            formControlName="netPayable"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
         <div *ngIf="isPartial" class="input-group Partial Amount">
           <span class="col-form-label-sm">Partial Amount</span>
           <input
@@ -309,6 +297,18 @@
           <input
             readonly
             formControlName="advanceServiceCharge"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div *ngIf="isNetPayable" class="input-group Net Payable">
+          <span class="col-form-label-sm">Net Payable</span>
+          <input
+            readonly
+            formControlName="netPayable"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"

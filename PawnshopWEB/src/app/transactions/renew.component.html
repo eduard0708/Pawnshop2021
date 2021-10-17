@@ -1,7 +1,9 @@
 <form [formGroup]="renewForm" (ngSubmit)="save()" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
-    <h2 class="font-monospace transaction-number">  Transaction #: {{ transactionInfo.transactionsId }}</h2>
+    <h2 class="font-monospace transaction-number">
+      Transaction #: {{ transactionInfo.transactionsId }}
+    </h2>
     <h2 class="text-center font-monospace trasaction-title">
       Renew Information
     </h2>
@@ -152,8 +154,8 @@
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">Renew Computation</h2>
       <!-- start computation title -->
-      <div class="computation shadow renew-computation" style="zoom: .95;">
-        <div class="input-group shadow-sm Appraisal Value">
+      <div class="computation shadow renew-computation" style="zoom: 0.95">
+        <div class="input-group Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
             formControlName="totalAppraisal"
@@ -165,7 +167,7 @@
             readonly
           />
         </div>
-        <div class="input-group shadow-sm Principal Loan">
+        <div class="input-group Principal Loan">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
             formControlName="principalLoan"
@@ -177,7 +179,7 @@
             readonly
           />
         </div>
-        <div class="input-group shadow-sm Interest Rate">
+        <div class="input-group Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
             formControlName="interestRate"
@@ -185,9 +187,10 @@
             maxlength="14"
             class="form-control form-control-sm text-right"
             type="text"
+            readonly
           />
         </div>
-        <div class="input-group shadow-sm Interest">
+        <div class="input-group Interest">
           <span class="col-form-label-sm">Interest</span>
           <input
             formControlName="interest"
@@ -199,7 +202,7 @@
             readonly
           />
         </div>
-        <div class="input-group shadow-sm Penalty">
+        <div class="input-group Penalty">
           <span class="col-form-label-sm">Penalty</span>
           <input
             formControlName="penalty"
@@ -208,11 +211,26 @@
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
+            readonly
           />
         </div>
-        <div class="input-group shadow-sm Amount Due">
+        <div class="input-group Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            #discountRef
+            [readonly]="isReadOnlyDiscount"
+            (keyup)="computeDiscount()"
+            formControlName="discount"
+            tabindex="1"
+            class="form-control form-control-sm"
+            style="text-align: center"
+            type="number"
+          />
+        </div>
+        <div class="input-group Amount Due">
           <span class="col-form-label-sm">Amount Due</span>
           <input
+            readonly
             formControlName="dueAmount"
             tabindex="-1"
             maxlength="14"
@@ -221,9 +239,10 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Advance Interest">
+        <div class="input-group Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
+            readonly
             formControlName="advanceInterest"
             tabindex="-1"
             maxlength="14"
@@ -232,9 +251,10 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Adv. Service Charge">
+        <div class="input-group Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
+            readonly
             formControlName="advanceServiceCharge"
             tabindex="-1"
             maxlength="14"
@@ -243,19 +263,7 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Discount">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-          #discountRef
-          (keyup)="computeDiscount()"
-          formControlName="discount"
-          tabindex="1"
-          class="form-control form-control-sm"
-          style="text-align: center;"
-          type="number"
-        />
-        </div>
-        <div class="input-group shadow-sm Net Payment">
+        <div class="input-group Net Payment">
           <span class="col-form-label-sm">Net Payment</span>
           <input
             #netPaymentRef
@@ -265,9 +273,10 @@
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
+            readonly
           />
         </div>
-        <div class="input-group shadow-sm Amount Received">
+        <div class="input-group Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
             #receivedAmountRef
@@ -280,9 +289,10 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Change">
+        <div class="input-group Change">
           <span class="col-form-label-sm">Change</span>
           <input
+            readonly
             formControlName="change"
             tabindex="-1"
             maxlength="14"
@@ -294,7 +304,7 @@
       </div>
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
-         (click)="save()"
+          (click)="save()"
           fxFlex="33"
           class="btn btn-success"
           type="submit"

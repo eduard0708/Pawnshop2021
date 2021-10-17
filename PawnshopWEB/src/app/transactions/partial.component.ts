@@ -167,8 +167,9 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.receivedAmount.setValue('');
       this.receivedAmountRef.nativeElement.focus();
       this.notifierService.info(
-        'Received amount must be equal or greatherthan Reddem amount.'
+        'Received amount must be equal or greatherthan Redeem amount.'
       );
+      return
     }
 
     const _netPayable = this.computationService.stringToNumber(
@@ -342,6 +343,7 @@ export class PartialComponent implements OnInit {
       this.isReadOnlyDiscount = true;
     }
 
+    /* set interest  value use for global */
     this.interest = this.computationService.getInterest(
       this.principalLoan,
       this.transactionInfo.interestRate,
@@ -358,8 +360,6 @@ export class PartialComponent implements OnInit {
     );
 
     this.netPayment = this.principalLoan + this.dueAmount;
-    // this.advanceInterest +
-    // this.advanceServiceCharge;
     this.advanceInterest = this.computationService.getAdvanceInterest(
       this.netPayment,
       this.transactionInfo.interestRate

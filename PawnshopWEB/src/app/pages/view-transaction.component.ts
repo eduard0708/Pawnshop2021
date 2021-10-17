@@ -191,12 +191,11 @@ export class ViewTransactionComponent implements OnInit {
       searchNumber: [''],
     });
   }
-  checkSetDisplay(){
+  checkSetDisplay() {
     if (this.transactionInfo.transactionType === TransactionType.Newloan) {
       this.initDisplay();
       this.newloanDisplay();
     }
-
     if (this.transactionInfo.transactionType === TransactionType.Redeem) {
       this.initDisplay();
       this.redeemDisplay();
@@ -208,6 +207,10 @@ export class ViewTransactionComponent implements OnInit {
     if (this.transactionInfo.transactionType === TransactionType.Additional) {
       this.initDisplay();
       this.additionalDisplay();
+    }
+    if (this.transactionInfo.transactionType === TransactionType.Renew) {
+      this.initDisplay();
+      this.renewDispaly();
     }
   }
   newloanDisplay() {
@@ -261,7 +264,6 @@ export class ViewTransactionComponent implements OnInit {
     this.isChange = true;
   }
   additionalDisplay() {
-
     const _newPrincipalLoan = this.computationService.stringToNumber(
       this.viewForm.controls.principalLoan.value
     );
@@ -269,8 +271,9 @@ export class ViewTransactionComponent implements OnInit {
       this.viewForm.controls.additionalAmount.value
     );
     /* set old value of principal loan to be displayed */
-    this.viewForm.controls.principalLoan.setValue(_newPrincipalLoan - _additionalAmount);
-
+    this.viewForm.controls.principalLoan.setValue(
+      _newPrincipalLoan - _additionalAmount
+    );
 
     this.isInterest = true;
     this.isPenalty = true;
@@ -284,6 +287,19 @@ export class ViewTransactionComponent implements OnInit {
     this.isNewPrincipal = true;
     this.isNetProceed = true;
   }
+  renewDispaly(){
+    this.isInterest = true;
+    this.isPenalty = true;
+    this.isDueAmount = true;
+    this.isDiscounts = true;
+    this.isServiceCharge = true;
+    this.isAdvnterest = true;
+    this.isAdvServiceCharge = true;
+    this.isNetPayable = true;
+    this.isAmountReceived = true;
+    this.isChange = true;
+  }
+
   initDisplay() {
     this.isInterest = false;
     this.isPenalty = false;
@@ -298,5 +314,6 @@ export class ViewTransactionComponent implements OnInit {
     this.isChange = false;
     this.isPartial = false;
     this.isRedeemAmount = false;
+    this.isNewPrincipal = false;
   }
 }

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { Pawner } from '../_model/pawner/Pawner';
@@ -31,6 +32,7 @@ export class RenewComponent implements OnInit {
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   renewForm: FormGroup;
   moments;
+  isReadOnlyDiscount = false;
 
   principalLoan: number;
   daysCount: number;
@@ -140,7 +142,6 @@ export class RenewComponent implements OnInit {
 
     this.setComputation();
   }
-
   setDate() {
     const _transactionDate = new Date();
     const _maturedDate = new Date(_transactionDate).setMonth(
@@ -157,18 +158,27 @@ export class RenewComponent implements OnInit {
     this.renewForm.controls.dateExpired.setValue(new Date(_expiredDate));
   }
   save() {
-    const amountReceived = this.computationService.stringToNumber(
+    const _amountReceived = this.computationService.stringToNumber(
       this.renewForm.controls.receivedAmount.value
     );
-    const netPayment = this.computationService.stringToNumber(
+    const _netPayment = this.computationService.stringToNumber(
       this.renewForm.controls.netPayment.value
     );
 
-    if (netPayment > amountReceived) {
+    if (_netPayment > _amountReceived) {
       this.renewForm.controls.receivedAmount.setValue('');
       this.receivedAmountRef.nativeElement.focus();
-      alert('Enter valid amount received');
+      this.notifierService.info(
+        'Received amount must be equal or greatherthan Net Payment amount.'
+      );
+      return
     }
+
+    this.transactionService.normalizedTransactionInformation(
+      this.renewForm.value,
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.transactionItems
+    );
   }
   // reset the transaction
   reset() {
@@ -191,7 +201,6 @@ export class RenewComponent implements OnInit {
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
-
   //set value of interest, penalty and due amount during the value changes of discount
   computeDiscount() {
     /* take value of discount to be used in computation of th discount */
@@ -250,7 +259,6 @@ export class RenewComponent implements OnInit {
         )
     );
   }
-
   /*  set to disable the discount if focus already in additional amount */
   amountReceivedFocus() {
     this.renewForm.controls.discount.disable();
@@ -261,17 +269,32 @@ export class RenewComponent implements OnInit {
     this.interestRate = this.computationService.stringToNumber(
       this.transactionInfo.interestRate
     );
-    /* set discount disabled if not eligible for the discount  */
-    if (
+   //get the total days in moments
+   this.totalDays = this.computationService.getTotalDays(
+    this.countYYMMDD.days,
+    this.countYYMMDD.months,
+    this.countYYMMDD.years
+  );
+
+  this.principalLoan = this.transactionInfo.principalLoan;
+    this.daysCount = this.computationService.getTotalDays(
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
+    );
+
+     // set discount readOnly if preMature
+     if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMatured)
       )
     ) {
       this.renewForm.controls.discount.setValue(0);
-      this.renewForm.controls.discount.disable();
+      this.isReadOnlyDiscount = true;
     }
     /* set principal loan value use for global */
     this.principalLoan = this.transactionInfo.principalLoan;
+
     /* set interest  value use for global */
     this.interest = this.computationService.getInterest(
       this.principalLoan,
@@ -332,30 +355,43 @@ export class RenewComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
+
   }
 
   initRenewForm() {
     this.renewForm = this.fb.group({
-      redeemAmount: [],
-      dateTransaction: [new Date()],
+      previousTransactionId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.trackingId],
+      dateTransaction: [],
       dateGranted: [],
       dateMatured: [],
       dateExpired: [],
-      totalAppraisal: [],
-      transaction: [],
+      transactionType: [TransactionType.Renew],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
+      totalAppraisal: [0],
       principalLoan: [0],
       interestRate: [0],
       interest: [0],
       penalty: [0],
       dueAmount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]],
       advanceInterest: [0],
       advanceServiceCharge: [0],
-      discount: [0],
+      serviceCharge: [0],
+      netProceed: [0],
       netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      availlableAmount: [0], //for additional only
+      additionalAmount: [0], //for additional only
+      newPrincipalLoan: [0], //for additional and Partial
       receivedAmount: [0],
       change: [0],
-      status: [this.dateStatus.status()],
-      moments: [this.dateStatus.moments()],
     });
+
+    this.setDate();
   }
 }
