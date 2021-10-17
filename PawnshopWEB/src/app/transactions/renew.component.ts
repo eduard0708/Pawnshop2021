@@ -7,10 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
+import { Pawner } from '../_model/pawner/Pawner';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
+import { NotifierService } from '../_service/notifier.service';
+import { PawnerService } from '../_service/pawner.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -69,7 +72,9 @@ export class RenewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private computationService: ComputationService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private notifierService: NotifierService,
+    private pawnerService: PawnerService
   ) {
     /* get the pawner information from the params of the link, from dialog-transaction component
     pawner info will go to transaction-pawner-info component */
@@ -81,8 +86,6 @@ export class RenewComponent implements OnInit {
           this.router.getCurrentNavigation().extras.state.transaction;
       }
     });
-;
-
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
@@ -90,28 +93,8 @@ export class RenewComponent implements OnInit {
       new Date(this.transactionInfo.dateExpired)
     );
 
-    this.renewForm = fb.group({
-      redeemAmount: [],
-      dateTransaction: [new Date()],
-      dateGranted: [],
-      dateMatured: [],
-      dateExpired: [],
-      totalAppraisal: [],
-      transaction: [],
-      principalLoan: [0],
-      interestRate: [0],
-      interest: [0],
-      penalty: [0],
-      dueAmount: [0],
-      advanceInterest: [0],
-      advanceServiceCharge: [0],
-      discount: [0],
-      netPayment: [0],
-      receivedAmount: [0],
-      change: [0],
-      status: [this.dateStatus.status()],
-      moments: [this.dateStatus.moments()],
-    });
+    /* initialzed form field */
+    this.initRenewForm();
     //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
@@ -124,15 +107,21 @@ export class RenewComponent implements OnInit {
           this.transactionInfo.transactionItems
         ) ?? [];
 
+    /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+      to transaction-pawner-info.component to display */
+    const pawner = this.pawnerService.normalizedPawnerInfo(
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.dateTransaction,
+      this.transactionInfo.dateGranted,
+      this.transactionInfo.dateMatured,
+      this.transactionInfo.dateExpired
+    );
+
+    this.pawnerService.takePawnerInfo(pawner);
+
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
       new Date(this.transactionInfo.dateMatured)
-    );
-    //get the total days in moments
-    this.totalDays = this.computationService.getTotalDays(
-      this.countYYMMDD.days,
-      this.countYYMMDD.months,
-      this.countYYMMDD.years
     );
 
     //set change during the value change in received amount
@@ -152,6 +141,21 @@ export class RenewComponent implements OnInit {
     this.setComputation();
   }
 
+  setDate() {
+    const _transactionDate = new Date();
+    const _maturedDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 1
+    );
+    const _expiredDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 4
+    );
+    this.renewForm.controls.dateTransaction.setValue(
+      new Date(_transactionDate)
+    );
+    this.renewForm.controls.dateGranted.setValue(new Date(_transactionDate));
+    this.renewForm.controls.dateMatured.setValue(new Date(_maturedDate));
+    this.renewForm.controls.dateExpired.setValue(new Date(_expiredDate));
+  }
   save() {
     const amountReceived = this.computationService.stringToNumber(
       this.renewForm.controls.receivedAmount.value
@@ -166,10 +170,10 @@ export class RenewComponent implements OnInit {
       alert('Enter valid amount received');
     }
   }
-
+  // reset the transaction
   reset() {
     this.renewForm.reset();
-    this.setComputation();
+    this.setDate();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -328,5 +332,30 @@ export class RenewComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
+  }
+
+  initRenewForm() {
+    this.renewForm = this.fb.group({
+      redeemAmount: [],
+      dateTransaction: [new Date()],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
+      totalAppraisal: [],
+      transaction: [],
+      principalLoan: [0],
+      interestRate: [0],
+      interest: [0],
+      penalty: [0],
+      dueAmount: [0],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
+      discount: [0],
+      netPayment: [0],
+      receivedAmount: [0],
+      change: [0],
+      status: [this.dateStatus.status()],
+      moments: [this.dateStatus.moments()],
+    });
   }
 }

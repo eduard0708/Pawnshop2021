@@ -84,14 +84,15 @@ export class PartialComponent implements OnInit {
           this.router.getCurrentNavigation().extras.state.transaction;
       }
     });
-
     //call function for date helper to know the difference of the date of maturity and expired
     this.dateStatus = new DateHelper(
       new Date(this.transactionInfo.dateTransaction),
       new Date(this.transactionInfo.dateMatured),
       new Date(this.transactionInfo.dateExpired)
     );
+    /* initialzed form field */
     this.initPartialForm();
+    //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
 
@@ -113,12 +114,6 @@ export class PartialComponent implements OnInit {
     );
 
     this.pawnerService.takePawnerInfo(pawner);
-
-    this.dateStatus = new DateHelper(
-      new Date(this.transactionInfo.dateTransaction),
-      new Date(this.transactionInfo.dateMatured),
-      new Date(this.transactionInfo.dateExpired)
-    );
 
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
@@ -203,7 +198,6 @@ export class PartialComponent implements OnInit {
   reset() {
     this.partialForm.reset();
     this.setDate();
-
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
