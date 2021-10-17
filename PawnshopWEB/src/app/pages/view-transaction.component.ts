@@ -119,19 +119,7 @@ export class ViewTransactionComponent implements OnInit {
     this.pawnerService.takePawnerInfo(pawner);
     this.dataSource.data = this.transactionInfo.transactionItems as any;
 
-    if (this.transactionInfo.transactionType === TransactionType.Newloan) {
-      this.initDisplay();
-      this.newloanDisplay();
-    }
-
-    if (this.transactionInfo.transactionType === TransactionType.Redeem) {
-      this.initDisplay();
-      this.redeemDisplay();
-    }
-    if (this.transactionInfo.transactionType === TransactionType.Partial) {
-      this.initDisplay();
-      this.partialDisplay();
-    }
+    this.checkSetDisplay();
   }
 
   search() {
@@ -144,18 +132,7 @@ export class ViewTransactionComponent implements OnInit {
       .subscribe((transaction) => {
         this.transactionInfo = transaction;
         this.initViewForm();
-        if (this.transactionInfo.transactionType === TransactionType.Newloan) {
-          this.initDisplay();
-          this.newloanDisplay();
-        }
-        if (this.transactionInfo.transactionType === TransactionType.Redeem) {
-          this.initDisplay();
-          this.redeemDisplay();
-        }
-        if (this.transactionInfo.transactionType === TransactionType.Partial) {
-          this.initDisplay();
-          this.partialDisplay();
-        }
+        this.checkSetDisplay();
 
         /* send data to pawnerService to normalalized asa pawnerInfo Type and send
         to transaction-pawner-info.component to display*/
@@ -209,12 +186,30 @@ export class ViewTransactionComponent implements OnInit {
       searchNumber: [''],
     });
   }
+  checkSetDisplay(){
+    if (this.transactionInfo.transactionType === TransactionType.Newloan) {
+      this.initDisplay();
+      this.newloanDisplay();
+    }
+
+    if (this.transactionInfo.transactionType === TransactionType.Redeem) {
+      this.initDisplay();
+      this.redeemDisplay();
+    }
+    if (this.transactionInfo.transactionType === TransactionType.Partial) {
+      this.initDisplay();
+      this.partialDisplay();
+    }
+    if (this.transactionInfo.transactionType === TransactionType.Additional) {
+      this.initDisplay();
+      this.additionalDisplay();
+    }
+  }
   newloanDisplay() {
     this.isAdvServiceCharge = true;
     this.isAdvnterest = true;
     this.isNetProceed = true;
   }
-
   redeemDisplay() {
     this.isInterest = true;
     this.isPenalty = true;
@@ -225,18 +220,13 @@ export class ViewTransactionComponent implements OnInit {
     this.isRedeemAmount = true;
     this.isChange = true;
   }
-
   partialDisplay() {
     /* to take the old principal loan is to add the principalLoan and the partial amount*/
     const _newPrincipalLoan = this.computationService.stringToNumber(
       this.viewForm.controls.principalLoan.value
     );
-    this.viewForm.controls.newPrincipal.setValue(
-      _newPrincipalLoan
-    );
-    // this.viewForm.controls.newPrincipal.setValue(
-    //   _netPayable - _partialAmount + _advanceInterest + _advanceServiceCharge
-    // );
+    this.viewForm.controls.newPrincipal.setValue(_newPrincipalLoan);
+
     const _partialAmount = this.computationService.stringToNumber(
       this.viewForm.controls.partialAmount.value
     );
@@ -256,12 +246,6 @@ export class ViewTransactionComponent implements OnInit {
         (_advanceInterest + _advanceServiceCharge + _dueAmount)
     );
 
-    const _netPayable = this.computationService.stringToNumber(
-      this.viewForm.controls.netPayable.value
-    );
-
-
-
     this.isInterest = true;
     this.isPenalty = true;
     this.isDiscounts = true;
@@ -273,13 +257,17 @@ export class ViewTransactionComponent implements OnInit {
     this.isNewPrincipal = true;
     this.isAmountReceived = true;
     this.isChange = true;
-
-    // this.isServiceCharge = true;
-    // this.isNetProceed = true;
-
-    // this.isRedeemAmount = true;
   }
-
+  additionalDisplay() {
+    this.isInterest = true;
+    this.isPenalty = true;
+    this.isDueAmount = true;
+    this.isDiscounts = true;
+    this.isServiceCharge = true;
+    this.isAmountReceived = true;
+    this.isRedeemAmount = true;
+    this.isChange = true;
+  }
   initDisplay() {
     this.isInterest = false;
     this.isPenalty = false;

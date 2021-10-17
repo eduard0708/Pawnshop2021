@@ -5,12 +5,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+import { TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
 import { ComputationService } from '../_service/computation.service';
+import { NotifierService } from '../_service/notifier.service';
+import { PawnerService } from '../_service/pawner.service';
 import { TransactionService } from '../_service/transaction.service';
 
 @Component({
@@ -43,6 +46,7 @@ export class AdditionalComponent implements OnInit {
   interestRate: number;
   countYYMMDD: TotalYYMMDD;
   dateStatus;
+  isReadOnlyDiscount = false;
 
   //declare the columns of the table
   displayColumns: string[] = [
@@ -70,9 +74,11 @@ export class AdditionalComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private computationService: ComputationService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private pawnerService: PawnerService,
+    private notifierService: NotifierService
   ) {
-     // get the pawner information from the params of the link, from dialog-transaction component
+    // get the pawner information from the params of the link, from dialog-transaction component
     // pawner info will go to transaction-pawner-info component
     this.activatedRoute.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -88,31 +94,8 @@ export class AdditionalComponent implements OnInit {
       new Date(this.transactionInfo.dateExpired)
     );
 
-    this.additionalForm = fb.group({
-      dateTransaction: [new Date()],
-      dateGranted: [],
-      dateMatured: [],
-      dateExpired: [],
-      totalAppraisal: [],
-      transaction: [],
-      // totalDays: [dateStatus.days()],
-      // totalMonths: [dateStatus.months()],
-      // totalYears: [dateStatus.years()],
-      principalLoan: [0],
-      interestRate: [0],
-      interest: [0],
-      penalty: [0],
-      dueAmount: [0],
-      advanceInterest: [0],
-      advanceServiceCharge: [0],
-      discount: [0],
-      netPayment: [0],
-      availlableAmount: [0],
-      additionalAmount: [0],
-      netProceed: [0],
-      status: [this.dateStatus.status()],
-      moments: [this.dateStatus.moments()],
-    });
+    this.initAdditionalForm();
+
     //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
@@ -124,6 +107,17 @@ export class AdditionalComponent implements OnInit {
         this.transactionService.normalizeItemsForTable(
           this.transactionInfo.transactionItems
         ) ?? [];
+
+    /* send data to pawnerService to normalalized asa pawnerInfo Type and send
+      to transaction-pawner-info.component to display */
+    const pawner = this.pawnerService.normalizedPawnerInfo(
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.dateTransaction,
+      this.transactionInfo.dateGranted,
+      this.transactionInfo.dateMatured,
+      this.transactionInfo.dateExpired
+    );
+    this.pawnerService.takePawnerInfo(pawner);
 
     //get the total number of years, months and days
     this.countYYMMDD = this.dateStatus.getmoments(
@@ -140,25 +134,46 @@ export class AdditionalComponent implements OnInit {
     //intialize all computation fields during initialization
     this.setComputation();
   }
-
-  save() {
-    // const amountReceived = this.computationService.stringToNumber(
-    //   this.additionalForm.controls.receivedAmount.value
-    // );
-    // const addintonalAmount = this.computationService.stringToNumber(
-    //   this.additionalForm.controls.addintonalAmount.value
-    // );
-    // if (addintonalAmount > amountReceived) {
-    //   this.additionalForm.controls.receivedAmount.setValue('');
-    //   // this.receivedAmountRef.nativeElement.focus();
-    //   alert('Enter valid amount received');
-    // }
+  setDate() {
+    const _transactionDate = new Date();
+    const _maturedDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 1
+    );
+    const _expiredDate = new Date(_transactionDate).setMonth(
+      new Date(_transactionDate).getMonth() + 4
+    );
+    this.additionalForm.controls.dateTransaction.setValue(
+      new Date(_transactionDate)
+    );
+    this.additionalForm.controls.dateGranted.setValue(
+      new Date(_transactionDate)
+    );
+    this.additionalForm.controls.dateMatured.setValue(new Date(_maturedDate));
+    this.additionalForm.controls.dateExpired.setValue(new Date(_expiredDate));
   }
+  save() {
+    const _netProceed = this.computationService.stringToNumber(
+      this.additionalForm.controls.netProceed.value
+    );
+    if (_netProceed < 0)
+      this.notifierService.info('Net Proceed must not be lessthan zero.');
 
+    this.additionalForm.controls.principalLoan.setValue(
+      this.computationService.stringToNumber(
+        this.additionalForm.controls.newPrincipalLoan.value
+      )
+    );
+
+    this.transactionService.normalizedTransactionInformation(
+      this.additionalForm.value,
+      this.transactionInfo.transactionPawner,
+      this.transactionInfo.transactionItems
+    );
+  }
   // reset the transaction
   reset() {
     this.additionalForm.reset();
-    this.setComputation();
+    this.setDate();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -168,17 +183,22 @@ export class AdditionalComponent implements OnInit {
         this.countYYMMDD.months === 0 &&
         this.countYYMMDD.years === 0)
     ) {
-      this.additionalForm.controls.discount.enable();
+      this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
   }
-
   //go to dashboard if cancel the transaction
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
+
+  /*  set to readOnly the discount if focus already in additional amount */
+  focusPartialAmountReadOnlyDiscount() {
+    this.isReadOnlyDiscount = true;
+  }
+
   //set value of interest, penalty and due amount during the value changes of discount
-  computeDiscount(e) {
+  computeDiscount() {
     /* take value of discount to be used in computation of th discount */
     let discountNumber = this.computationService.stringToNumber(
       this.additionalForm.controls.discount.value
@@ -197,11 +217,13 @@ export class AdditionalComponent implements OnInit {
       this.interestRate,
       this.computationService.stringToNumber(discountNumber)
     );
+
     const _interest = this.interest;
     //set value of interest
     this.additionalForm.controls.interest.setValue(
-      _interest - _discountInterest
+      _interest - _discountInterest < 0 ? 0 : _interest - _discountInterest
     );
+
     /* end computation for interest here */
     const _penalty = this.computationService.getDiscountPenalty(
       this.principalLoan,
@@ -273,18 +295,14 @@ export class AdditionalComponent implements OnInit {
           this.additionalForm.controls.dueAmount.value
         )
     );
-    /*  //  this block of code will going to set the net payment to zero to avoid negative value
-    //  of net payment
-     const _netProceed = this.computationService.stringToNumber(
-       this.additionalForm.controls.netProceed.value)
-
-     if (_netProceed < 0)
-       this.additionalForm.controls.netProceed.setValue(0); */
+    this.additionalForm.controls.newPrincipalLoan.setValue(
+      _additionalAmount + this.principalLoan
+    );
   }
 
   /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
-    this.additionalForm.controls.discount.disable();
+    this.isReadOnlyDiscount = true;
   }
   /* load all computation field during initialization and use for reset also */
   setComputation() {
@@ -296,15 +314,16 @@ export class AdditionalComponent implements OnInit {
     this.principalLoan = this.computationService.stringToNumber(
       this.transactionInfo.principalLoan
     );
-    /* set discount disabled if not eligible for the discount  */
+    // set discount readOnly if preMature
     if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMatured)
       )
     ) {
       this.additionalForm.controls.discount.setValue(0);
-      this.additionalForm.controls.discount.disable();
+      this.isReadOnlyDiscount = true;
     }
+
     /* set interest  value use for global */
     this.interest = this.computationService.getInterest(
       this.principalLoan,
@@ -348,10 +367,8 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.penalty.setValue(this.penalty);
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
     this.additionalForm.controls.discount.setValue('');
-    this.additionalForm.controls.advanceInterest.setValue(this.advanceInterest);
-    this.additionalForm.controls.advanceServiceCharge.setValue(
-      this.advanceServiceCharge
-    );
+    this.additionalForm.controls.advanceInterest.setValue(0);
+    this.additionalForm.controls.advanceServiceCharge.setValue(0);
     this.additionalForm.controls.availlableAmount.setValue(
       this.availlableAmount
     );
@@ -367,5 +384,41 @@ export class AdditionalComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.additionalAmountRef.nativeElement.focus();
     }, 100);
+  }
+
+  initAdditionalForm() {
+    this.additionalForm = this.fb.group({
+      previousTransactionId: [this.transactionInfo.transactionsId],
+      trackingId: [this.transactionInfo.trackingId],
+      dateTransaction: [],
+      dateGranted: [],
+      dateMatured: [],
+      dateExpired: [],
+      transactionType: [TransactionType.Additional],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
+      totalAppraisal: [0],
+      principalLoan: [0],
+      interestRate: [0],
+      interest: [0],
+      penalty: [0],
+      dueAmount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
+      serviceCharge: [0],
+      netProceed: [0],
+      netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      newPrincipalLoan: [0], // for partial
+      additionalAmount: [0], //for additional only
+      availlableAmount: [0], //for additional only
+      receivedAmount: [0],
+      change: [0],
+    });
+    this.setDate();
   }
 }

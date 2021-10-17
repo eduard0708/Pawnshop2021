@@ -111,6 +111,7 @@ export class PartialComponent implements OnInit {
       this.transactionInfo.dateMatured,
       this.transactionInfo.dateExpired
     );
+
     this.pawnerService.takePawnerInfo(pawner);
 
     this.dateStatus = new DateHelper(
@@ -212,7 +213,7 @@ export class PartialComponent implements OnInit {
         this.countYYMMDD.months === 0 &&
         this.countYYMMDD.years === 0)
     ) {
-      this.partialForm.controls.discount.enable();
+      this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
   }
@@ -312,7 +313,7 @@ export class PartialComponent implements OnInit {
     );
   }
 
-  /*  set to disable the discount if focus already in additional amount */
+  /*  set to readOnly the discount if focus already in additional amount */
   focusPartialAmountReadOnlyDiscount() {
     this.isReadOnlyDiscount = true;
   }
@@ -337,7 +338,7 @@ export class PartialComponent implements OnInit {
       this.countYYMMDD.years
     );
 
-    // set discount disabled
+    // set discount readOnly if preMature
     if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMatured)

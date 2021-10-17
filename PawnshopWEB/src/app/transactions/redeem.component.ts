@@ -212,9 +212,10 @@ export class RedeemComponent implements OnInit {
         this.countYYMMDD.months === 0 &&
         this.countYYMMDD.years === 0)
     ) {
-      this.redeemForm.controls.discount.enable();
+      this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
+    this.isReadOnlyDiscount = false;
   }
 
   home() {
