@@ -118,15 +118,16 @@ export class TransactionService {
     transactionInfo.dateGranted =
       transactionInfo.dateGranted === null
         ? null
-        : new Date(transactionInfo.dateTransaction).toISOString();
+        : new Date(transactionInfo.dateMatured).toISOString();
     transactionInfo.dateMatured =
       transactionInfo.dateMatured === null
         ? null
-        : new Date(transactionInfo.dateTransaction).toISOString();
+        : new Date(transactionInfo.dateExpired).toISOString();
     transactionInfo.dateExpired =
       transactionInfo.dateExpired === null
         ? null
-        : new Date(transactionInfo.dateTransaction).toISOString();
+        : new Date(transactionInfo.dateExpired).toISOString();
+
     transactionInfo.totalAppraisal =
       typeof transactionInfo.totalAppraisal === 'number'
         ? transactionInfo.totalAppraisal

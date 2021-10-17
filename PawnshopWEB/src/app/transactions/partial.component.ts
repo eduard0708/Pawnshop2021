@@ -96,7 +96,6 @@ export class PartialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setDate();
     //convert datatrasactionItems as Items to load in table dataSource
     if (this.transactionInfo.transactionItems.length !== 0)
       this.dataSource.data =
@@ -129,7 +128,7 @@ export class PartialComponent implements OnInit {
     this.partialForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
         const _newPrincipalLoan = this.computationService.stringToNumber(
-          this.partialForm.controls.newPrincipalLoan.value
+          this.partialForm.controls.partialAmount.value
         );
         let _recivedAmount =
           this.computationService.stringToNumber(amountReceived);
@@ -179,9 +178,17 @@ export class PartialComponent implements OnInit {
     const _netPayable = this.computationService.stringToNumber(
       this.partialForm.controls.netPayment.value
     );
+    const _advanceInterest = this.computationService.stringToNumber(
+      this.partialForm.controls.advanceInterest.value
+    );
+    const _advanceServiceCharge = this.computationService.stringToNumber(
+      this.partialForm.controls.advanceServiceCharge.value
+    );
+    // this.partialForm.controls.dateTransaction.setValue()
 
+    /* set newprincipal amount to princiaplLoan before saving to database */
     this.partialForm.controls.principalLoan.setValue(
-      _netPayable - _partialAmount
+      _netPayable - _partialAmount + _advanceInterest + _advanceServiceCharge
     );
 
     this.transactionService.normalizedTransactionInformation(
@@ -193,7 +200,7 @@ export class PartialComponent implements OnInit {
 
   // reset the transaction
   reset() {
-  this.partialForm.reset();
+    this.partialForm.reset();
     this.setDate();
 
     // start condition to enable the discount field and focus if the discount is availlable
@@ -236,7 +243,9 @@ export class PartialComponent implements OnInit {
     );
     const _interest = this.interest;
     //set value of interest
-    this.partialForm.controls.interest.setValue(_interest - _discountInterest);
+    this.partialForm.controls.interest.setValue(
+      _interest - _discountInterest < 0 ? 0 : _interest - _discountInterest
+    );
     /* end computation for interest here */
     const _penalty = this.computationService.getDiscountPenalty(
       this.principalLoan,
@@ -433,5 +442,7 @@ export class PartialComponent implements OnInit {
       receivedAmount: [0],
       change: [0],
     });
+
+    this.setDate();
   }
 }

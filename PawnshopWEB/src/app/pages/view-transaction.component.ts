@@ -227,12 +227,39 @@ export class ViewTransactionComponent implements OnInit {
   }
 
   partialDisplay() {
-    const _principalLoan = this.computationService.stringToNumber(this.viewForm.controls.principalLoan.value);
-    const _partialAmount = this.computationService.stringToNumber(this.viewForm.controls.partialAmount.value);
-    this.viewForm.controls.principalLoan.setValue(_principalLoan + _partialAmount);
+    /* to take the old principal loan is to add the principalLoan and the partial amount*/
+    const _newPrincipalLoan = this.computationService.stringToNumber(
+      this.viewForm.controls.principalLoan.value
+    );
+    this.viewForm.controls.newPrincipal.setValue(
+      _newPrincipalLoan
+    );
+    // this.viewForm.controls.newPrincipal.setValue(
+    //   _netPayable - _partialAmount + _advanceInterest + _advanceServiceCharge
+    // );
+    const _partialAmount = this.computationService.stringToNumber(
+      this.viewForm.controls.partialAmount.value
+    );
+    const _advanceInterest = this.computationService.stringToNumber(
+      this.viewForm.controls.advanceInterest.value
+    );
+    const _advanceServiceCharge = this.computationService.stringToNumber(
+      this.viewForm.controls.advanceServiceCharge.value
+    );
+    const _dueAmount = this.computationService.stringToNumber(
+      this.viewForm.controls.dueAmount.value
+    );
+    /* calculation to restore the old principalLoan for viewing purpose only */
+    this.viewForm.controls.principalLoan.setValue(
+      _newPrincipalLoan +
+        _partialAmount -
+        (_advanceInterest + _advanceServiceCharge + _dueAmount)
+    );
 
-    const _oldPrincipal = this.computationService.stringToNumber(this.viewForm.controls.principalLoan.value)
-    this.viewForm.controls.newPrincipal.setValue(_oldPrincipal - _partialAmount);
+    const _netPayable = this.computationService.stringToNumber(
+      this.viewForm.controls.netPayable.value
+    );
+
 
 
     this.isInterest = true;
@@ -251,7 +278,6 @@ export class ViewTransactionComponent implements OnInit {
     // this.isNetProceed = true;
 
     // this.isRedeemAmount = true;
-
   }
 
   initDisplay() {
