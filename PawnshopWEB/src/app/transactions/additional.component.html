@@ -216,18 +216,6 @@
             type="text"
           />
         </div>
-        <div class="input-group Due Amount">
-          <span class="col-form-label-sm">Due Amount</span>
-          <input
-            readonly
-            formControlName="dueAmount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
         <div class="input-group Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
@@ -239,6 +227,18 @@
           class="form-control form-control-sm bold-red"
           style="text-align: center"
           type="number"
+          />
+        </div>
+        <div class="input-group Due Amount">
+          <span class="col-form-label-sm">Due Amount</span>
+          <input
+            readonly
+            formControlName="dueAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
           />
         </div>
         <div class="input-group Available Amount">

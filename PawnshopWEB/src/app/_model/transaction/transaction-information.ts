@@ -26,7 +26,9 @@ export interface TransactionInformation {
   netPayment: number; // for partial
   redeemAmount: number; //for redeem only
   partialAmount:number; //for partial
-  addtionalAmount:number; //for additional only
+  availlableAmount:number; //for additional only
+  additionalAmount:number; //for additional only
+  newPrincipalLoan:number; //for additional and Partial
   receivedAmount: number;
   change: number;
   employeeId: number;

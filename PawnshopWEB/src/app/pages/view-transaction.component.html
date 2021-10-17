@@ -162,7 +162,7 @@
       </h2>
       <!-- start computation title -->
       <div class="computation shadow view-computation">
-        <div class="input-group shadow-sm Appraisal Value">
+        <div class="input-group Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
             formControlName="totalAppraisal"
@@ -174,7 +174,7 @@
             readonly
           />
         </div>
-        <div class="input-group shadow-sm Principal Loan">
+        <div class="input-group Principal Loan">
           <span class="col-form-label-sm">Principal Loan</span>
           <input
             formControlName="principalLoan"
@@ -186,7 +186,7 @@
             readonly
           />
         </div>
-        <div class="input-group shadow-sm Interest Rate">
+        <div class="input-group Interest Rate">
           <span class="col-form-label-sm">Interest Rate</span>
           <input
             readonly
@@ -197,7 +197,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isInterest" class="input-group shadow-sm Interest">
+        <div *ngIf="isInterest" class="input-group Interest">
           <span class="col-form-label-sm">Interest</span>
           <input
             formControlName="interest"
@@ -209,7 +209,7 @@
             readonly
           />
         </div>
-        <div *ngIf="isPenalty" class="input-group shadow-sm Penalty">
+        <div *ngIf="isPenalty" class="input-group Penalty">
           <span class="col-form-label-sm">Penalty</span>
           <input
             readonly
@@ -221,7 +221,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isDiscounts" class="input-group shadow-sm Discount">
+        <div *ngIf="isDiscounts" class="input-group Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
             readonly
@@ -233,7 +233,7 @@
             type="number"
           />
         </div>
-        <div *ngIf="isDueAmount" class="input-group shadow-sm Amount Due">
+        <div *ngIf="isDueAmount" class="input-group Amount Due">
           <span class="col-form-label-sm">Amount Due</span>
           <input
             readonly
@@ -245,7 +245,31 @@
             type="text"
           />
         </div>
-        <div *ngIf="isNetPayable" class="input-group shadow-sm Net Payable">
+        <div *ngIf="isAvaillableAmount" class="input-group Availlable Amount">
+          <span class="col-form-label-sm">Availlable Amount</span>
+          <input
+            readonly
+            formControlName="availlableAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div *ngIf="isAdditionalAmount" class="input-group Additional Amount">
+          <span class="col-form-label-sm">Additional Amount</span>
+          <input
+            readonly
+            formControlName="additionalAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div *ngIf="isNetPayable" class="input-group Net Payable">
           <span class="col-form-label-sm">Net Payable</span>
           <input
             readonly
@@ -257,7 +281,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isPartial" class="input-group shadow-sm Partial Amount">
+        <div *ngIf="isPartial" class="input-group Partial Amount">
           <span class="col-form-label-sm">Partial Amount</span>
           <input
             formControlName="partialAmount"
@@ -268,10 +292,7 @@
             type="text"
           />
         </div>
-        <div
-          *ngIf="isAdvnterest"
-          class="input-group shadow-sm Advance Interest"
-        >
+        <div *ngIf="isAdvnterest" class="input-group Advance Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
             readonly
@@ -283,10 +304,7 @@
             type="text"
           />
         </div>
-        <div
-          *ngIf="isAdvServiceCharge"
-          class="input-group shadow-sm Adv. Service Charge"
-        >
+        <div *ngIf="isAdvServiceCharge" class="input-group Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
             readonly
@@ -298,7 +316,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isNetProceed" class="input-group shadow-sm Net Proceed">
+        <div *ngIf="isNetProceed" class="input-group Net Proceed">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
             readonly
@@ -310,10 +328,10 @@
             type="text"
           />
         </div>
-        <div *ngIf="isNewPrincipal" class="input-group shadow-sm New Principal">
+        <div *ngIf="isNewPrincipal" class="input-group New Principal">
           <span class="col-form-label-sm">New Principal Loan</span>
           <input
-            formControlName="newPrincipal"
+            formControlName="newPrincipalLoan"
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
@@ -321,7 +339,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isRedeemAmount" class="input-group shadow-sm Redeem Amount">
+        <div *ngIf="isRedeemAmount" class="input-group Redeem Amount">
           <span class="col-form-label-sm">Redeem Amount</span>
           <input
             readonly
@@ -333,10 +351,7 @@
             type="text"
           />
         </div>
-        <div
-          *ngIf="isAmountReceived"
-          class="input-group shadow-sm Amount Received"
-        >
+        <div *ngIf="isAmountReceived" class="input-group Amount Received">
           <span class="col-form-label-sm">Amount Received</span>
           <input
             readonly
@@ -348,7 +363,7 @@
             type="text"
           />
         </div>
-        <div *ngIf="isChange" class="input-group shadow-sm Change">
+        <div *ngIf="isChange" class="input-group  Change">
           <span class="col-form-label-sm">Change</span>
           <input
             readonly

@@ -191,12 +191,10 @@ export class AdditionalComponent implements OnInit {
   home() {
     this.router.navigateByUrl('main/dashboard');
   }
-
   /*  set to readOnly the discount if focus already in additional amount */
   focusPartialAmountReadOnlyDiscount() {
     this.isReadOnlyDiscount = true;
   }
-
   //set value of interest, penalty and due amount during the value changes of discount
   computeDiscount() {
     /* take value of discount to be used in computation of th discount */
@@ -299,7 +297,6 @@ export class AdditionalComponent implements OnInit {
       _additionalAmount + this.principalLoan
     );
   }
-
   /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
     this.isReadOnlyDiscount = true;
@@ -413,9 +410,9 @@ export class AdditionalComponent implements OnInit {
       netPayment: [0],
       redeemAmount: [0, Validators.required], //for redeem only
       partialAmount: [0], // for partial
-      newPrincipalLoan: [0], // for partial
-      additionalAmount: [0], //for additional only
       availlableAmount: [0], //for additional only
+      additionalAmount: [0], //for additional only
+      newPrincipalLoan: [0], // for partial
       receivedAmount: [0],
       change: [0],
     });

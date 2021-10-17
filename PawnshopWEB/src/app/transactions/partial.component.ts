@@ -438,8 +438,9 @@ export class PartialComponent implements OnInit {
       netPayment: [0],
       redeemAmount: [0, Validators.required], //for redeem only
       partialAmount: [0], // for partial
-      newPrincipalLoan: [0], // for partial
-      addtionalAmount: [0], //for additional only
+      availlableAmount: [0], //for additional only
+      additionalAmount: [0], //for additional only
+      newPrincipalLoan: [0], //for additional and Partial
       receivedAmount: [0],
       change: [0],
     });

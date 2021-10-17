@@ -44,6 +44,8 @@ export class ViewTransactionComponent implements OnInit {
   isChange = false;
   isPartial = false;
   isNewPrincipal = false;
+  isAvaillableAmount = false;
+  isAdditionalAmount = false;
   isRedeemAmount = false;
 
   principalLoan: number;
@@ -180,6 +182,9 @@ export class ViewTransactionComponent implements OnInit {
       newPrincipal: [this.principalLoan],
       redeemAmount: [this.transactionInfo.redeemAmount],
       receivedAmount: [this.transactionInfo.receivedAmount],
+      availlableAmount: [this.transactionInfo.availlableAmount], //for additional only
+      additionalAmount: [this.transactionInfo.additionalAmount], //for additional only
+      newPrincipalLoan: [this.transactionInfo.newPrincipalLoan], // for partial
       change: [this.transactionInfo.change],
       status: [this.transactionInfo.status],
       moments: [this.transactionInfo.moments],
@@ -225,8 +230,6 @@ export class ViewTransactionComponent implements OnInit {
     const _newPrincipalLoan = this.computationService.stringToNumber(
       this.viewForm.controls.principalLoan.value
     );
-    this.viewForm.controls.newPrincipal.setValue(_newPrincipalLoan);
-
     const _partialAmount = this.computationService.stringToNumber(
       this.viewForm.controls.partialAmount.value
     );
@@ -245,7 +248,6 @@ export class ViewTransactionComponent implements OnInit {
         _partialAmount -
         (_advanceInterest + _advanceServiceCharge + _dueAmount)
     );
-
     this.isInterest = true;
     this.isPenalty = true;
     this.isDiscounts = true;
@@ -259,14 +261,28 @@ export class ViewTransactionComponent implements OnInit {
     this.isChange = true;
   }
   additionalDisplay() {
+
+    const _newPrincipalLoan = this.computationService.stringToNumber(
+      this.viewForm.controls.principalLoan.value
+    );
+    const _additionalAmount = this.computationService.stringToNumber(
+      this.viewForm.controls.additionalAmount.value
+    );
+    /* set old value of principal loan to be displayed */
+    this.viewForm.controls.principalLoan.setValue(_newPrincipalLoan - _additionalAmount);
+
+
     this.isInterest = true;
     this.isPenalty = true;
     this.isDueAmount = true;
     this.isDiscounts = true;
     this.isServiceCharge = true;
-    this.isAmountReceived = true;
-    this.isRedeemAmount = true;
-    this.isChange = true;
+    this.isAvaillableAmount = true;
+    this.isAdditionalAmount = true;
+    this.isAdvnterest = true;
+    this.isAdvServiceCharge = true;
+    this.isNewPrincipal = true;
+    this.isNetProceed = true;
   }
   initDisplay() {
     this.isInterest = false;

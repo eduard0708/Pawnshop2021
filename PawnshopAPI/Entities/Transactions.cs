@@ -31,6 +31,9 @@ namespace PawnshopAPI.Entities
         public double ReceivedAmount { get; set; }
         public double RedeemAmount { get; set; }
         public double ServiceCharge { get; set; }
+        public double AvaillableAmount { get; set; }
+        public double AdditionalAmount { get; set; }
+        public double NewPrincipalLoan { get; set; }
         public string Status { get; set; }
         public double TotalAppraisal { get; set; }
         public string TransactionType { get; set; }

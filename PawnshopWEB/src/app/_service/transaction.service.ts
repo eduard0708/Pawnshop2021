@@ -65,8 +65,6 @@ export class TransactionService {
   }
 
   onSaveTransaction(transactionInfo) {
-    console.log(transactionInfo);
-
     this.http
       .post(this.url + 'transaction/addtransaction', transactionInfo)
       .subscribe((transaction) => {
@@ -216,6 +214,24 @@ export class TransactionService {
         ? transactionInfo.receivedAmount
         : this.computationService.stringToNumber(
             transactionInfo.receivedAmount
+          );
+    transactionInfo.additionalAmount =
+      typeof transactionInfo.additionalAmount === 'number'
+        ? transactionInfo.additionalAmount
+        : this.computationService.stringToNumber(
+            transactionInfo.additionalAmount
+          );
+    transactionInfo.availlableAmount =
+      typeof transactionInfo.availlableAmount === 'number'
+        ? transactionInfo.availlableAmount
+        : this.computationService.stringToNumber(
+            transactionInfo.availlableAmount
+          );
+    transactionInfo.newPrincipalLoan =
+      typeof transactionInfo.newPrincipalLoan === 'number'
+        ? transactionInfo.newPrincipalLoan
+        : this.computationService.stringToNumber(
+            transactionInfo.newPrincipalLoan
           );
 
     transactionInfo.change =
