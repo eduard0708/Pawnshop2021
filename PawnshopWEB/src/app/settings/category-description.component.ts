@@ -48,11 +48,14 @@ export class CategoryDescriptionComponent implements OnInit {
     this.categoryDescriptionForm.valueChanges.subscribe(() => {
       this.isAdd = !this.categoryDescriptionForm.valid;
     });
-    this.getCategories();
+
     setTimeout(() => {
       this.categoryRef.focus();
       this.dataSource.paginator = this.paginator;
     }, 100);
+
+    this.getCategories();
+    this.getCategoriesDescription();
   }
 
   search() {}
@@ -82,5 +85,9 @@ export class CategoryDescriptionComponent implements OnInit {
       this.categories = categories;
     });
   }
-  getBarangays() {}
+  getCategoriesDescription() {
+    this.itemService.getCategoryDescription().subscribe(catDesc => {
+      this.dataSource.data = catDesc
+    })
+  }
 }

@@ -69,9 +69,9 @@
       <div class="barangay-table-wrapper" fxFlex="100">
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>Barangay Id</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Cat. Desc. Id</mat-header-cell>
             <mat-cell *matCellDef="let categoryDescription">{{
-              categoryDescription.id
+              categoryDescription.categoryDescriptionId
             }}</mat-cell>
           </ng-container>
 

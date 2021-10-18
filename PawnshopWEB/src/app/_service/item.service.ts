@@ -24,22 +24,6 @@ export class ItemService {
     this.items = [];
   }
 
-  addCategoryDescription(categoryDescription: AddCategoryDescription) {
-    return this.http.post(this.apiUrl + 'add-category-description', categoryDescription);
-  }
-
-  getCategories() {
-    return this.http.get<Category[]>(this.apiUrl + 'category')
-  }
-
-  getCategoryDescriptionById(id:number){
-    return this.http.get<CategoryDescription[]>(this.apiUrl + `${id}`)
-  }
-
-  addCategory(category){
-    return this.http.post(this.apiUrl + 'add-category',category)
-  }
-
   add(item: Item) {
     this.items.push(item);
     this.items$.next(this.items);
@@ -65,5 +49,26 @@ export class ItemService {
     });
     this.items$.next(this.items);
   }
+
+  addCategory(category){
+    return this.http.post(this.apiUrl + 'add-category',category)
+  }
+
+  addCategoryDescription(categoryDescription: AddCategoryDescription) {
+    return this.http.post(this.apiUrl + 'add-category-description', categoryDescription);
+  }
+
+  getCategories() {
+    return this.http.get<Category[]>(this.apiUrl + 'category')
+  }
+
+  getCategoryDescription(){
+    return this.http.get<CategoryDescription[]>(this.apiUrl + 'category-descriptions')
+  }
+  getCategoryDescriptionById(id:number){
+    return this.http.get<CategoryDescription[]>(this.apiUrl + `${id}`)
+  }
+
+
 
 }
