@@ -224,6 +224,14 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
   //add items
   onAdd() {
+
+    let itemValue = this.computationService.stringToNumber(this.newLoanForm.controls.appraisalValue.value)
+    if(itemValue <= 0){
+      this.notifierService.info("Invalid Item Value.");
+      this.appraisalValueRef.nativeElement.focus();
+      return
+    }
+
     let itemTotalValue = this.itemService.items.reduce(
       (accumulator, current) =>
         accumulator +

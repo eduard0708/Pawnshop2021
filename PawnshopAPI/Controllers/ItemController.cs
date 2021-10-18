@@ -61,7 +61,7 @@ namespace PawnshopAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<CategoryDescriptionDto>>> GetCategoryDescriptionById(int id)
         {
-            var categoryDesc = await _context.CategoryDescriptions.Where(x => x.CategoryDescriptionId == id).ToListAsync();
+            var categoryDesc = await _context.CategoryDescriptions.Where(x => x.CategoryId == id).ToListAsync();
       
             return Ok(categoryDesc);
         }
