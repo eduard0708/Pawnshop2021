@@ -27,13 +27,13 @@ namespace PawnshopAPI.Controllers
         }
 
         [HttpPost("add-category")]
-        public async Task<ActionResult> AddCategory(AddCategoryDto addCategoryDto)
+        public async Task<ActionResult<Category>> AddCategory(AddCategoryDto addCategoryDto)
         {
             var category = _mapper.Map<Category>(addCategoryDto);
             await _context.Categories.AddAsync(category);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return Ok();    
+            return Ok(category);    
         }
 
         [HttpGet("category")]

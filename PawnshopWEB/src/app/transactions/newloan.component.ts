@@ -195,7 +195,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
 
     //  load category dropdown
     this.itemService.getCategories().subscribe((data) => {
-      this.categories = data;
+      this.categories = data as any;
     });
   }
 

@@ -53,6 +53,9 @@ export class HeaderComponent implements OnInit {
   category() {
     this.router.navigateByUrl('main/settings/category')
   }
+  categoryDescription() {
+    this.router.navigateByUrl('main/settings/categoryDescription')
+  }
 
   employee() {
     const config = new MatDialogConfig();

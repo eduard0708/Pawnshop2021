@@ -8,6 +8,7 @@ import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxMaskModule } from 'ngx-mask';
 import { CategoryComponent } from './category.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryDescriptionComponent } from './category-description.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CategoryDescriptionComponent } from './category-description.component';
     ReactiveFormsModule,
     MaterialModule,
     InputMaskModule,
+    FlexLayoutModule,
     NgxMaskModule.forRoot(),
   ]
 })

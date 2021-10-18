@@ -1,17 +1,19 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { City } from '../_model/address/city';
-import { AddressService } from '../_service/address.service';
+
+import { Category } from '../_model/item/category';
+
+import { ItemService } from '../_service/item.service';
 import { NotifierService } from '../_service/notifier.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['../_sass/settings_scss/category.scss']
+  styleUrls: ['../_sass/settings_scss/category.scss'],
 })
 export class CategoryComponent implements OnInit {
   @ViewChild('categoryRef', { static: true }) categoryRef: ElementRef;
@@ -20,66 +22,61 @@ export class CategoryComponent implements OnInit {
   categoryForm: FormGroup;
   isAdd = true;
   tableLength: number;
-  city: City;
-  cities: City[] = [];
+  category: Category;
+  categories: Category[] = [];
   displayedColumns: string[] = ['id', 'name', 'action'];
-  public dataSource: MatTableDataSource<City>;
+  public dataSource: MatTableDataSource<Category>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private notifierService: NotifierService,
-    private addressService: AddressService
+    private itemService: ItemService
   ) {
-    this.categoryForm = fb.group({
-      id: [],
-      cityName: ['', Validators.required],
+    this.categoryForm = this.fb.group({
+      categoryId: [],
+      categoryName: ['', Validators.required],
     });
 
-    this.dataSource = new MatTableDataSource<City>();
+    this.dataSource = new MatTableDataSource<Category>();
   }
 
   ngOnInit() {
     setTimeout(() => {
       this.categoryRef.nativeElement.focus();
+      this.dataSource.paginator = this.paginator;
     }, 100);
-    this.getCity();
+
     this.categoryForm.valueChanges.subscribe(() => {
       this.isAdd = !this.categoryForm.valid;
-    }, (error) => { console.log(error) }
-    );
+    });
+    this.getCategories();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  search() { }
+  search() {}
   reset() {
     this.categoryForm.reset();
     this.categoryRef.nativeElement.focus();
   }
   cancel() {
-    this.router.navigateByUrl('main/dashboard')
+    this.router.navigateByUrl('main/dashboard');
   }
   save() {
-    const city = {
-      cityName: this.categoryForm.controls.cityName.value,
-    };
-    this.addressService.addCity(city).subscribe((city) => {
-      this.city = city;
-      this.notifierService.success(`New city: ${this.city.cityName}`)
-    });
+    this.itemService
+      .addCategory(this.categoryForm.value)
+      .subscribe((category) => {
+        console.log(category);
+
+        // this.dataSource.data = category as any;
+      });
+
     this.categoryForm.reset();
     this.categoryRef.nativeElement.focus();
-    this.getCity();
   }
 
-  getCity() {
-    this.addressService.getCities().subscribe((cities) => {
-      this.cities = cities as any;
-      this.dataSource.data = this.cities
-      this.tableLength = this.dataSource.data.length;
-    }, error => console.log(error));
+  getCategories() {
+    this.itemService.getCategories().subscribe((categories) => {
+      this.dataSource.data = categories as any;
+    });
   }
 }

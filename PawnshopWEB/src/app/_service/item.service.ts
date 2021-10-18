@@ -28,7 +28,11 @@ export class ItemService {
   }
 
   getCategories() {
-    return this.http.get<Category[]>(this.jsonUrl + 'category');
+    return this.http.get<Category[]>(this.apiUrl + '/category')
+  }
+
+  addCategory(category){
+    return this.http.post(this.apiUrl + '/add-category',category)
   }
 
   add(item: Item) {

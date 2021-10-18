@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from '../pages/notfound.component';
 import { BarangayComponent } from './barangay.component';
+import { CategoryDescriptionComponent } from './category-description.component';
+
 import { CategoryComponent } from './category.component';
 import { CityComponent } from './city.component';
 import { PawnerComponent } from './pawner.component';
@@ -17,7 +19,8 @@ const routes: Routes = [{
     { path: 'pawner', component: PawnerComponent },
     { path: 'voucher', component: VoucherComponent },
     { path: 'vouchersetting', component: VouchersettingComponent },
-    { path: 'category', component: CategoryComponent }
+    { path: 'category', component: CategoryComponent },
+    { path: 'categoryDescription', component: CategoryDescriptionComponent },
   ]
 },
 {path:'**',component: NotfoundComponent}
