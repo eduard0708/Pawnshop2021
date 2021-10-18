@@ -50,6 +50,9 @@ export class HeaderComponent implements OnInit {
   voucherSetting() {
     this.router.navigateByUrl('main/settings/vouchersetting')
   }
+  category() {
+    this.router.navigateByUrl('main/settings/category')
+  }
 
   employee() {
     const config = new MatDialogConfig();

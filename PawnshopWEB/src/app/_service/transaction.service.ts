@@ -254,12 +254,12 @@ export class TransactionService {
     this.onSaveTransaction(transactionInfo);
   }
   updateDashBoardData() {
-    this.http.get(this.url + 'dashboard').subscribe((dashboardData) => {
+    this.http.get<DashBoardData[]>(this.url + 'dashboard').subscribe((dashboardData) => {
       this.dashBoardDataSource.next(dashboardData as any);
     });
   }
 
   getDashBoardData() {
-   return this.http.get<DashBoardData>(this.url + 'dashboard');
+   return this.http.get<DashBoardData[]>(this.url + 'dashboard');
   }
 }

@@ -1,0 +1,68 @@
+//start dialog-newcategory.component scxx
+@import "../main";
+
+.category-wrapper {
+  padding: 0.5rem;
+  box-shadow: $box-shadow-black-all-lg;
+  background: $bg-linear-gradient;
+  width: 33%;
+  margin: 0 auto;
+  margin-top: .6rem;
+  transform: scale(.95);
+  .category-body {
+    padding: 1rem;
+    background-color: whitesmoke;
+    .newcategory-header {
+      position: absolute;
+      width: 90%;
+      margin-top: -2.5rem;
+      .category-title {
+        background: $bg-gradient-circle;
+        color: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        font-family: monospace;
+      }
+    }
+    .newcategory-wrapper {
+      border-radius: 0.3rem;
+      padding: 0 1rem;
+      padding-top: 0.7rem;
+      margin: 0 auto;
+      margin-top: 1rem;
+      height: 3.5rem;
+      transform: scale(1);
+      .category-input{
+        text-align: center;
+
+      }
+      .my-form-field .mat-form-field-wrapper {
+        margin-bottom: -1.25em;
+      }
+      .btn-add {
+        transform: scale(0.8);
+      }
+    }
+    .category-button-wrapper {
+      margin: .3rem auto 1rem;
+
+      .btn {
+        border-radius: 1rem;
+        transform: scaleY(0.8);
+      }
+    }
+    .category-table-wrapper {
+      margin-top: -.8rem;
+      mat-table{
+        transform: scaleY(.9);
+      }
+    }
+    .category-paginator {
+      margin-top: -1.25rem;
+      transform: scaleY(0.8);
+    }
+  }
+}
+//end dialog-newcategory.component scxx

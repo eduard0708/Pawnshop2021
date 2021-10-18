@@ -7,10 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxMaskModule } from 'ngx-mask';
+import { CategoryComponent } from './category.component';
+import { CategoryDescriptionComponent } from './category-description.component';
 
 @NgModule({
   declarations: [
     SetingsComponent,
+    CategoryComponent,
+    CategoryDescriptionComponent,
   ],
   imports: [
     CommonModule,
