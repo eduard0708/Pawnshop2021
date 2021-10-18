@@ -8,7 +8,6 @@ import { createMask } from '@ngneat/input-mask';
 import { TransactionStatus, TransactionType } from '../_enum/enums';
 import { DateHelper } from '../_model/DateHelper';
 import { Item } from '../_model/item/item';
-import { Pawner } from '../_model/pawner/Pawner';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { TotalYYMMDD } from '../_model/totalYYMMDD';
 import { NewTransaction } from '../_model/transaction/new-transaction';
@@ -141,6 +140,7 @@ export class RenewComponent implements OnInit {
     );
 
     this.setComputation();
+
   }
   setDate() {
     const _transactionDate = new Date();
@@ -179,6 +179,9 @@ export class RenewComponent implements OnInit {
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
     );
+
+    // console.log(this.renewForm.value);
+
   }
   // reset the transaction
   reset() {
@@ -360,7 +363,7 @@ export class RenewComponent implements OnInit {
 
   initRenewForm() {
     this.renewForm = this.fb.group({
-      previousTransactionId: [this.transactionInfo.transactionsId],
+      // previousTransactionId: [this.transactionInfo.transactionsId],
       trackingId: [this.transactionInfo.trackingId],
       dateTransaction: [],
       dateGranted: [],

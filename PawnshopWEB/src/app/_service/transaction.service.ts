@@ -65,13 +65,16 @@ export class TransactionService {
   }
 
   onSaveTransaction(transactionInfo) {
-    this.http
-      .post(this.url + 'transaction/addtransaction', transactionInfo)
-      .subscribe((transaction) => {
-        this.router.navigateByUrl('invoicetest', {
-          state: { print: transaction },
-        });
-      });
+
+    console.log(transactionInfo);
+
+    // this.http
+    //   .post(this.url + 'transaction/addtransaction', transactionInfo)
+    //   .subscribe((transaction) => {
+    //     this.router.navigateByUrl('invoicetest', {
+    //       state: { print: transaction },
+    //     });
+    //   });
   }
 
   normalizePawnerInfo(t: any) {

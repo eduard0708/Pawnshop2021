@@ -1,4 +1,4 @@
-<form [formGroup]="renewForm" (ngSubmit)="save()" autocomplete="off">
+<form [formGroup]="renewForm" autocomplete="off">
   <!-- start pawner info title and transaction number -->
   <div class="shadow-sm text-white pawner-title">
     <h2 class="font-monospace transaction-number">
@@ -307,7 +307,7 @@
           (click)="save()"
           fxFlex="33"
           class="btn btn-success"
-          type="submit"
+          type="button"
           tabindex="3"
           mat-raised-button
         >
