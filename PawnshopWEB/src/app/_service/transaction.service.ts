@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ItemStatus, TransactionType } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
+import { DashBoardData } from '../_model/transaction/dashboard-data';
 import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { TransactionItems } from '../_model/transaction/transaction-items';
 import { TransactionPawner } from '../_model/transaction/transaction-pawner';
@@ -19,6 +21,10 @@ export class TransactionService {
   saveRedeemInfo: TransactionInformation;
   transactionInfo: TransactionInformation;
   url = environment.baseUrl;
+
+  public dashBoardDataSource = new ReplaySubject<DashBoardData>(1);
+  dashBoardDataSource$ = this.dashBoardDataSource.asObservable();
+
   constructor(
     private computationService: ComputationService,
     private http: HttpClient,
@@ -65,9 +71,6 @@ export class TransactionService {
   }
 
   onSaveTransaction(transactionInfo) {
-
-    console.log(transactionInfo);
-
     this.http
       .post(this.url + 'transaction/addtransaction', transactionInfo)
       .subscribe((transaction) => {
@@ -75,6 +78,7 @@ export class TransactionService {
           state: { print: transaction },
         });
       });
+    this.updateDashBoardData();
   }
 
   normalizePawnerInfo(t: any) {
@@ -248,5 +252,14 @@ export class TransactionService {
     transactionInfo.transactionItems = [] as any;
     transactionInfo.employeeId = user.id;
     this.onSaveTransaction(transactionInfo);
+  }
+  updateDashBoardData() {
+    this.http.get(this.url + 'dashboard').subscribe((dashboardData) => {
+      this.dashBoardDataSource.next(dashboardData as any);
+    });
+  }
+
+  getDashBoardData() {
+   return this.http.get<DashBoardData>(this.url + 'dashboard');
   }
 }

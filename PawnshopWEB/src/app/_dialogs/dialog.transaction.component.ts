@@ -76,7 +76,7 @@ export class DialogTransacitonComponent implements OnInit {
   }
 
   onTransaction(transactionType: string) {
-    if (transactionType === 'New Loan')
+    if (transactionType === 'Newloan')
       this.pawnerService
         .findPawnerByContactNumber(+this.searchNumber.value)
         .subscribe((pawner) => {
@@ -98,7 +98,7 @@ export class DialogTransacitonComponent implements OnInit {
           }
         });
     //navigate to other transaction if not new loan
-    if (transactionType !== 'New Loan') {
+    if (transactionType !== 'Newloan') {
       this.dialogService
         .searchTransactionId(+this.searchNumber.value)
         .subscribe((transaction) => {

@@ -1,19 +1,19 @@
 <div
   class="card d-card "
   style="cursor: pointer"
-  (click)="newTransaction(cardData.transactionName)"
+  (click)="newTransaction(cardData.name)"
 >
   <div class="card-body">
-    <h5 class="card-title">{{cardData.transactionName}}</h5>
+    <h5 class="card-title">{{cardData.name}}</h5>
     <div style="display: flex; align-items: center; height: 3rem">
       <p
         class="card-text"
         style="width: 10rem; font-size: 1.2em; margin-top: 0.5em"
       >
-        {{cardData.transactionTotal | currency}}
+        {{cardData.sum |  currency:'₱ '}}
       </p>
       <button class="btn btn-primary" style="font-weight: 500; width: 3rem; height: 3rem; border-radius: 50%;">
-       {{cardData.transactionCount }}
+       {{cardData.count }}
       </button>
     </div>
     <mat-divider> </mat-divider>

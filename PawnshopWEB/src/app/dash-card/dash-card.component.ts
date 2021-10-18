@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DashBoardData } from '../_model/transaction/dashboard-data';
 import { TransactionCard } from '../_model/TransactionCard';
 
 @Component({
@@ -8,7 +9,7 @@ import { TransactionCard } from '../_model/TransactionCard';
 })
 export class DashCardComponent implements OnInit {
 
-  @Input() cardData: TransactionCard;
+  @Input() cardData: DashBoardData;
   transactionName: string = '';
   @Output() onNewTransaction: EventEmitter<string> = new EventEmitter();
 
