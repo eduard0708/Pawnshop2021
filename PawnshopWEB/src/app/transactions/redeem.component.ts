@@ -99,7 +99,7 @@ export class RedeemComponent implements OnInit {
       dateGranted: [null],
       dateMatured: [null],
       dateExpired: [null],
-      transcationType: [TransactionType.Redeem],
+      transactionType: [TransactionType.Redeem],
       loanStatus: [this.dateStatus.status()],
       status: [TransactionStatus.Closed],
       moments: [this.dateStatus.moments()],
