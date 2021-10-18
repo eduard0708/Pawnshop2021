@@ -11,7 +11,7 @@
             tabindex="1"
             placeholder="Select Category"
             formControlName="categoryId"
-            #cityRef
+            #categoryRef
           >
             <mat-option *ngFor="let category of categories" [value]="category.categoryId">
               {{ category.categoryName }}
@@ -27,7 +27,7 @@
             tabindex="1"
             type="text"
             matInput
-            formControlName="barangayName"
+            formControlName="categoryDescriptionName"
           />
         </mat-form-field>
       </div>
@@ -70,20 +70,20 @@
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>Barangay Id</mat-header-cell>
-            <mat-cell *matCellDef="let barangay">{{
-              barangay.barangayId
+            <mat-cell *matCellDef="let categoryDescription">{{
+              categoryDescription.id
             }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef>Barangay Name</mat-header-cell>
-            <mat-cell *matCellDef="let barangay">{{
-              barangay.barangayName
+            <mat-header-cell *matHeaderCellDef>Category Description</mat-header-cell>
+            <mat-cell *matCellDef="let categoryDescription">{{
+              categoryDescription.categoryDescriptionName
             }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
-            <td mat-cell *matCellDef="let barangay">
+            <td mat-cell *matCellDef="let categoryDescription">
               <button class="text-info" tabindex="-1" mat-icon-button>
                 <mat-icon>edit</mat-icon>
               </button>

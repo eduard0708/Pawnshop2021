@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddCategoryDescription } from '../_model/item/AddCategoryDescription';
 import { Category } from '../_model/item/category';
+import { CategoryDescription } from '../_model/item/CategoryDescription';
 import { Item } from '../_model/item/item';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class ItemService {
   jsonUrl = 'http://localhost:3000/';
   baseUrl: string = 'http://localhost:5000/';
 
-  apiUrl = environment.baseUrl + 'item';
+  apiUrl = environment.baseUrl + 'item/';
 
   items$: BehaviorSubject<Item[]>;
   items: Array<Item> = [];
@@ -24,15 +25,19 @@ export class ItemService {
   }
 
   addCategoryDescription(categoryDescription: AddCategoryDescription) {
-    return this.http.post(this.apiUrl + 'item', categoryDescription);
+    return this.http.post(this.apiUrl + 'add-category-description', categoryDescription);
   }
 
   getCategories() {
-    return this.http.get<Category[]>(this.apiUrl + '/category')
+    return this.http.get<Category[]>(this.apiUrl + 'category')
+  }
+
+  getCategoryDescriptionById(id:number){
+    return this.http.get<CategoryDescription[]>(this.apiUrl + `${id}`)
   }
 
   addCategory(category){
-    return this.http.post(this.apiUrl + '/add-category',category)
+    return this.http.post(this.apiUrl + 'add-category',category)
   }
 
   add(item: Item) {

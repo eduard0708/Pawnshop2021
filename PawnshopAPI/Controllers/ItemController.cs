@@ -58,14 +58,22 @@ namespace PawnshopAPI.Controllers
             return Ok(categoryReturn);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<CategoryDescriptionDto>>> GetCategoryDescriptionById(int id)
+        {
+            var categoryDesc = await _context.CategoryDescriptions.Where(x => x.CategoryDescriptionId == id).ToListAsync();
+      
+            return Ok(categoryDesc);
+        }
+
         [HttpPost("add-category-description")]
-        public async Task<ActionResult> AddCategoryDescription(AddCategoryDescriptionDto addCategoryDescriptionDto)
+        public async Task<ActionResult<CategoryDescription>> AddCategoryDescription(AddCategoryDescriptionDto addCategoryDescriptionDto)
         {
             var categoryDescription = _mapper.Map<CategoryDescription>(addCategoryDescriptionDto);
             await _context.CategoryDescriptions.AddAsync(categoryDescription);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(categoryDescription);
         }
     }
 }

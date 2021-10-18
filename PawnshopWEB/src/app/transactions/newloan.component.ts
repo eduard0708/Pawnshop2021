@@ -25,6 +25,7 @@ import { Item } from '../_model/item/item';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { ComputationService } from '../_service/computation.service';
+import { map } from 'rxjs/operators';
 
 declare module 'moment' {
   function preciseDiff(
@@ -213,12 +214,13 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   //load category description during selection of category
-  onCategorySelect(e) {
-    this.categoryDescriptions =
-      this.categories[e.value - 1].categoryDescriptions;
-    if (e.value > 0) {
-      this.newLoanForm.controls.category.disable();
-    }
+
+  loadCategoryDescription(){
+  this.itemService.getCategoryDescriptionById(this.newLoanForm.controls.category.value).subscribe(
+      catDesc => {
+        this.categoryDescriptions = catDesc;
+      }
+    )
   }
   //add items
   onAdd() {
