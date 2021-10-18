@@ -93,7 +93,7 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemForm = fb.group({
-      previousTransactionId: [this.transactionInfo.transactionsId],
+      previousTransactionId: [this.transactionInfo.transactionsId], //used to search and mark close the previous number
       trackingId: [this.transactionInfo.transactionsId],
       dateTransaction: [new Date()],
       dateGranted: [null],

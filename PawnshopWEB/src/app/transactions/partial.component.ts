@@ -407,7 +407,7 @@ export class PartialComponent implements OnInit {
 
   initPartialForm() {
     this.partialForm = this.fb.group({
-      previousTransactionId: [this.transactionInfo.transactionsId],
+      previousTransactionId: [this.transactionInfo.transactionsId], //used to search and mark close the previous number
       trackingId: [this.transactionInfo.trackingId],
       dateTransaction: [],
       dateGranted: [],

@@ -363,7 +363,7 @@ export class RenewComponent implements OnInit {
 
   initRenewForm() {
     this.renewForm = this.fb.group({
-      // previousTransactionId: [this.transactionInfo.transactionsId],
+      previousTransactionId: [this.transactionInfo.transactionsId], //used to search and mark close the previous number
       trackingId: [this.transactionInfo.trackingId],
       dateTransaction: [],
       dateGranted: [],
@@ -394,7 +394,6 @@ export class RenewComponent implements OnInit {
       receivedAmount: [0],
       change: [0],
     });
-
     this.setDate();
   }
 }
