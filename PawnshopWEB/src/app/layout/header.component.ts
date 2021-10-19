@@ -47,6 +47,12 @@ export class HeaderComponent implements OnInit {
   voucher() {
     this.router.navigateByUrl('main/settings/voucher')
   }
+  voucherType() {
+    this.router.navigateByUrl('main/settings/voucher-type')
+  }
+  voucherCode() {
+    this.router.navigateByUrl('main/settings/voucher-code')
+  }
   voucherSetting() {
     this.router.navigateByUrl('main/settings/vouchersetting')
   }

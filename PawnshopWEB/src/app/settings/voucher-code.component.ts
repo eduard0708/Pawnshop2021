@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -19,7 +17,15 @@ import { NotifierService } from '../_service/notifier.service';
   templateUrl: './city.component.html',
   styleUrls: ['../_sass/settings_scss/city.scss'],
 })
-export class CityComponent implements OnInit, AfterViewInit {
+
+@Component({
+  selector: 'app-voucher-code',
+  templateUrl: './voucher-code.component.html',
+  styles: [
+  ]
+})
+export class VoucherCodeComponent implements OnInit {
+
   @ViewChild('cityRef', { static: true }) cityRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -37,7 +43,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     private notifierService: NotifierService,
     private addressService: AddressService
   ) {
-    this.cityForm = fb.group({
+    this.cityForm = this.fb.group({
       id: [],
       cityName: ['', Validators.required],
       filterText: [],
@@ -82,10 +88,9 @@ export class CityComponent implements OnInit, AfterViewInit {
       cityName: this.cityForm.controls.cityName.value,
     };
     this.addressService.addCity(city).subscribe((city) => {
-      this.cities = [... this.dataSource.data]
-      this.cities.push(city)
-      this.dataSource.data = this.cities;
-      this.notifierService.success(`New city: ${city.cityName}`);
+      // this.city = city;
+      this.dataSource.data = city as any;
+      this.notifierService.success(`New city: ${this.city.cityName}`);
     });
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();

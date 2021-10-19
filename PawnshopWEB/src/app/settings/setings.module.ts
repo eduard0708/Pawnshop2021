@@ -10,12 +10,16 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CategoryComponent } from './category.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryDescriptionComponent } from './category-description.component';
+import { VoucherCodeComponent } from './voucher-code.component';
+import { VoucherTypeComponent } from './voucher-type.component';
 
 @NgModule({
   declarations: [
     SetingsComponent,
     CategoryComponent,
     CategoryDescriptionComponent,
+    VoucherCodeComponent,
+    VoucherTypeComponent,
   ],
   imports: [
     CommonModule,

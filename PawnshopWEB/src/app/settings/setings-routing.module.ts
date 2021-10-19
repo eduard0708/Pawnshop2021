@@ -8,6 +8,8 @@ import { CategoryComponent } from './category.component';
 import { CityComponent } from './city.component';
 import { PawnerComponent } from './pawner.component';
 import { SetingsComponent } from './setings.component';
+import { VoucherCodeComponent } from './voucher-code.component';
+import { VoucherTypeComponent } from './voucher-type.component';
 import { VoucherComponent } from './voucher.component';
 import { VouchersettingComponent } from './vouchersetting.component';
 
@@ -21,6 +23,8 @@ const routes: Routes = [{
     { path: 'vouchersetting', component: VouchersettingComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'categoryDescription', component: CategoryDescriptionComponent },
+    { path: 'voucher-code', component: VoucherCodeComponent },
+    { path: 'voucher-type', component: VoucherTypeComponent },
   ]
 },
 {path:'**',component: NotfoundComponent}

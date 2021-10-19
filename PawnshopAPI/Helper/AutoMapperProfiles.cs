@@ -4,6 +4,7 @@ using PawnshopAPI.DTO.AddressDTO;
 using PawnshopAPI.DTO.ItemDTO;
 using PawnshopAPI.DTO.PawnerDTO;
 using PawnshopAPI.DTO.TransactionDTO;
+using PawnshopAPI.DTO.VoucherDTO;
 using PawnshopAPI.Entities;
 
 
@@ -17,6 +18,9 @@ namespace PawnshopAPI.Helper
             CreateMap<Pawner, PawnerDto>().ReverseMap();
             CreateMap<Pawner, ReturnPawnerDto>().ReverseMap();
             CreateMap<Pawner, ReturnPawnerFindByContactNumber>().ReverseMap();
+
+            //Voucher
+            CreateMap<VoucherType, VocherTypeDto>().ReverseMap();
 
             //Address Mappings
             CreateMap<Address, AddressDto>().ReverseMap();
