@@ -61,9 +61,9 @@ export class DialogTransacitonComponent implements OnInit {
   ngOnInit(): void {
     //check if newlona it will change the transaction title
     // and the palce holder of the dialog
-    if (this.transactionType === 'New Loan') {
+    if (this.transactionType === 'Newloan') {
       this.buttonNewloan = true;
-      this.placeHolder = 'Contact Number';
+      this.placeHolder = 'Enter Contact Number';
     }
   }
 

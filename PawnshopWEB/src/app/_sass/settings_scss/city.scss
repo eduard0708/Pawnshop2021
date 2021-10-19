@@ -1,43 +1,40 @@
 //start dialog-newcity.component scxx
 @import "../main";
 
-.city-wrapper {
+.main-wrapper {
   padding: 0.5rem;
   box-shadow: $box-shadow-black-all-lg;
   background: $bg-linear-gradient;
   width: 33%;
   margin: 0 auto;
-  margin-top: .6rem;
-  transform: scale(.95);
-  .city-body {
+  margin-top: 1rem;
+  transform: scale(0.95);
+  .body-wrapper {
     padding: 1rem;
     background-color: whitesmoke;
-    .newcity-header {
+    .header {
       position: absolute;
       width: 90%;
       margin-top: -2.5rem;
-      .city-title {
+      .title {
         background: $bg-gradient-circle;
         color: white;
-        padding: 0.5rem;
+        padding: 0.4rem;
         text-align: center;
         font-weight: 500;
         font-size: 1.3rem;
         font-family: monospace;
       }
     }
-    .newcity-wrapper {
+    .content-wrapper {
       border-radius: 0.3rem;
       padding: 0 1rem;
       padding-top: 0.7rem;
       margin: 0 auto;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       height: 3.5rem;
+      text-align: center;
       transform: scale(1);
-      .city-input{
-        text-align: center;
-      
-      }
       .my-form-field .mat-form-field-wrapper {
         margin-bottom: -1.25em;
       }
@@ -45,24 +42,56 @@
         transform: scale(0.8);
       }
     }
-    .city-button-wrapper {
-      margin: .3rem auto 1rem;
-     
+    .button-wrapper {
+      margin: 0.3rem auto 1rem;
+
       .btn {
         border-radius: 1rem;
         transform: scaleY(0.8);
       }
     }
-    .city-table-wrapper {
-      margin-top: -.8rem;
-      mat-table{
-        transform: scaleY(.9);
+    .table-wrapper {
+      width: 100%;
+      margin-top: -1rem;
+      transform: scaleY(.95);
+      table {
+        width: 100% !important;
+
+        .mat-column-id {
+          width: 20%;
+        }
+        .mat-column-name {
+          width: 50%;
+        }
+        .mat-column-action {
+          width: 25%;
+        }
+        button {
+          transform: scale(0.8);
+        }
+      }
+      .paginator {
+        margin-top: -0.3rem;
+        transform: scaleY(0.8);
       }
     }
-    .city-paginator {
-      margin-top: -1.25rem;
-      transform: scaleY(0.8);
-    }
   }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: blueviolet !important;
+  background-color: white;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
 }
 //end dialog-newcity.component scxx

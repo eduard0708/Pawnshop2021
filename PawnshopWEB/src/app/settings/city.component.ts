@@ -24,7 +24,7 @@ export class CityComponent implements OnInit, AfterViewInit {
   tableLength: number;
   city: City;
   cities: City[] = [];
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayColumns: string[] = ['id', 'name', 'action'];
   public dataSource: MatTableDataSource<City>;
 
   constructor(
@@ -36,6 +36,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     this.cityForm = fb.group({
       id: [],
       cityName: ['', Validators.required],
+      filterText: [],
     });
 
     this.dataSource = new MatTableDataSource<City>();
@@ -56,8 +57,12 @@ export class CityComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  search() { }
+  filter() {
+    this.dataSource.filter = this.cityForm.controls.filterText.value
+  }
+
   reset() {
+    this.dataSource.filter = "";
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();
   }
@@ -69,7 +74,8 @@ export class CityComponent implements OnInit, AfterViewInit {
       cityName: this.cityForm.controls.cityName.value,
     };
     this.addressService.addCity(city).subscribe((city) => {
-      this.city = city;
+      // this.city = city;
+      this.dataSource.data = city as any
       this.notifierService.success(`New city: ${this.city.cityName}`)
     });
     this.cityForm.reset();
