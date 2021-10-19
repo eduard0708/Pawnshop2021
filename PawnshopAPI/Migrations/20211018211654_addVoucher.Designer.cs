@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PawnshopAPI.Data;
 
 namespace PawnshopAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211018211654_addVoucher")]
+    partial class addVoucher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -429,36 +431,6 @@ namespace PawnshopAPI.Migrations
                     b.HasKey("VoucherId");
 
                     b.ToTable("Vouchers");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.VoucherCode", b =>
-                {
-                    b.Property<int>("VoucherCodeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("VoucherCodeId");
-
-                    b.ToTable("VoucherCodes");
-                });
-
-            modelBuilder.Entity("PawnshopAPI.Entities.VoucherType", b =>
-                {
-                    b.Property<int>("VoucherTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("TypeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("VoucherTypeId");
-
-                    b.ToTable("VoucherTypes");
                 });
 
             modelBuilder.Entity("PawnshopAPI.Entities.Address", b =>

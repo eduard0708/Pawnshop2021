@@ -219,6 +219,7 @@ export class NewloanComponent implements OnInit, OnDestroy {
   this.itemService.getCategoryDescriptionById(this.newLoanForm.controls.category.value).subscribe(
       catDesc => {
         this.categoryDescriptions = catDesc;
+        this.newLoanForm.controls.category.disable();
       }
     )
   }

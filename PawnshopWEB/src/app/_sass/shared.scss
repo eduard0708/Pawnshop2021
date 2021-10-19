@@ -1,3 +1,4 @@
+@import '../_sass/main.scss';
 //configuration of all content ex. for the transaction content configure in
 //transaction.component.html this content-config applies
 .content-config {
@@ -22,7 +23,7 @@
 .error.mat-snack-bar-container {
   border: 3px solid #f93154;
   border-left: 6px solid fuchsia;
-  background-color: #f93154;
+  background-color: $danger;
   color: white;
   opacity: 0.9 !important;
 }
@@ -38,5 +39,5 @@
   border-left: 6px solid fuchsia;
   background-color: #39c0ed;
   color: white;
-  opacity: 0.9 !important;
+  // opacity: 0.9 !important;
 }
