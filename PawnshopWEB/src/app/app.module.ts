@@ -33,6 +33,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { ViewTransactionComponent } from './pages/view-transaction.component';
 import { TransactionsPawnerInfoComponent } from './_components/transactions-pawner-info.component';
 import { TransactionsModule } from './transactions/transactions.module';
+import { ConfirmComponent } from './_dialogs/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TransactionsModule } from './transactions/transactions.module';
     InvoiceComponent,
     PawnerFoundComponent,
     ViewTransactionComponent,
+    ConfirmComponent,
 
   ],
   imports: [

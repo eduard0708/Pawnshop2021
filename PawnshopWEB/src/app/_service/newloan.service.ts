@@ -50,6 +50,7 @@ export class NewloanService {
         totalAppraisal =
           +s.appraisalValue.toString().replace(/[^\d.-]/g, '') + totalAppraisal;
       });
+
     }
     return totalAppraisal;
   }

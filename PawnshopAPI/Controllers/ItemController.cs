@@ -47,6 +47,7 @@ namespace PawnshopAPI.Controllers
 
             var categoryReturn = _mapper.Map<IEnumerable<ListCategoryDto>> (category);
             return Ok(categoryReturn);
+            
         }
 
 
