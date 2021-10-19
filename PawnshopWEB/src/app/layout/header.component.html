@@ -29,11 +29,10 @@
       <input
         [(ngModel)]="searchNumber"
         (keyup.enter)="invoiceTest()"
-       tabindex="-1"
+        tabindex="-1"
         matInput
         type="number"
         autocomplete="off"
-
       />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
@@ -56,6 +55,14 @@
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="pawner()">
+        <mat-icon>person_add_alt</mat-icon>
+        <span>Pawner</span>
+      </button>
+      <!-- <button mat-menu-item (click)="employee()">
+        <mat-icon>face</mat-icon>
+        <span>User</span>
+      </button> -->
       <button mat-menu-item (click)="city()">
         <mat-icon>layers</mat-icon>
         <span>City</span>
@@ -64,36 +71,29 @@
         <mat-icon>terrain</mat-icon>
         <span>Barangay</span>
       </button>
-      <button mat-menu-item (click)="pawner()">
-        <mat-icon>person_add_alt</mat-icon>
-        <span>Pawner</span>
-      </button>
       <button mat-menu-item (click)="voucher()">
         <mat-icon>receipt</mat-icon>
         <span>Voucher Entry</span>
       </button>
       <button mat-menu-item (click)="voucherCode()">
-        <mat-icon>receipt</mat-icon>
+        <mat-icon>line_style</mat-icon>
         <span>Voucher Code</span>
       </button>
       <button mat-menu-item (click)="voucherType()">
-        <mat-icon>receipt</mat-icon>
+        <mat-icon>bookmarks</mat-icon>
         <span>Voucher Type</span>
       </button>
       <!-- <button mat-menu-item (click)="voucherSetting()">
         <mat-icon>receipt</mat-icon>
         <span>Voucher Setting</span>
       </button> -->
-      <button mat-menu-item (click)="employee()">
-        <mat-icon>face</mat-icon>
-        <span>Employee</span>
-      </button>
+
       <button mat-menu-item (click)="category()">
         <mat-icon>category</mat-icon>
         <span>Category</span>
       </button>
       <button mat-menu-item (click)="categoryDescription()">
-        <mat-icon>category</mat-icon>
+        <mat-icon>widgets</mat-icon>
         <span>Category Description</span>
       </button>
     </mat-menu>

@@ -51,7 +51,7 @@ export class ItemService {
   }
 
   addCategory(category){
-    return this.http.post(this.apiUrl + 'add-category',category)
+    return this.http.post<Category>(this.apiUrl + 'add-category',category)
   }
 
   addCategoryDescription(categoryDescription: AddCategoryDescription) {

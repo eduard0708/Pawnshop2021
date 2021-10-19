@@ -15,8 +15,7 @@ import { NotifierService } from '../_service/notifier.service';
 @Component({
   selector: 'app-barangay',
   templateUrl: './barangay.component.html',
-  styleUrls: ['../_sass/settings_scss/barangay.scss'
-  ]
+  styleUrls: ['../_sass/settings_scss/barangay.scss'],
 })
 export class BarangayComponent implements OnInit {
   @ViewChild('cityRef') cityRef: MatSelect;
@@ -28,7 +27,7 @@ export class BarangayComponent implements OnInit {
   cities: City[] = [];
   city: City[] = [];
   tableLength: number;
-  displayedColumns: string[] = ['id', 'name', 'action']
+  displayedColumns: string[] = ['id', 'name', 'action'];
   // public cityDataSource: MatTableDataSource<City>;
   public dataSource: MatTableDataSource<Barangay>;
   private serviceSubscribe: Subscription;
@@ -39,7 +38,6 @@ export class BarangayComponent implements OnInit {
     private dialogService: DialogsService,
     private addressService: AddressService,
     private notifierService: NotifierService
-
   ) {
     this.barangayForm = fb.group({
       id: [],
@@ -59,14 +57,14 @@ export class BarangayComponent implements OnInit {
 
     setTimeout(() => {
       this.cityRef.focus();
-      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator = this.paginator;
     }, 100);
   }
 
-  search() { }
+  search() {}
 
   cancel() {
-    this.router.navigateByUrl('main/dashboard')
+    this.router.navigateByUrl('main/dashboard');
   }
 
   reset() {
@@ -76,12 +74,14 @@ export class BarangayComponent implements OnInit {
 
   add() {
     const barangay = {
-      "cityId": this.barangayForm.controls.city.value,
-      "barangayName": this.barangayForm.controls.barangayName.value
-    }
-    this.addressService.addBarangay(barangay).subscribe(barangay => {
-      this.barangay = barangay as any
-      this.notifierService.success(`New Barangay: ${this.barangay.barangayName}`)
+      cityId: this.barangayForm.controls.city.value,
+      barangayName: this.barangayForm.controls.barangayName.value,
+    };
+    this.addressService.addBarangay(barangay).subscribe((barangay) => {
+      this.barangay = barangay as any;
+      this.notifierService.success(
+        `New Barangay: ${this.barangay.barangayName}`
+      );
     });
 
     this.barangayForm.reset();
@@ -89,17 +89,17 @@ export class BarangayComponent implements OnInit {
   }
 
   getCities() {
-    this.addressService.getCities().subscribe(
-      cities => this.cities = cities
-    )
+    this.addressService.getCities().subscribe((cities) => {
+      this.cities = cities;
+      console.log(cities);
+    });
   }
   getBarangays() {
-    this.addressService.getBarangays().subscribe(
-      barangay => {
-        this.barangays = barangay as any
-        this.dataSource.data = this.barangays as any;
-        this.tableLength = this.dataSource.data.length;
-      }
-    )
+    this.addressService.getBarangays().subscribe((barangay) => {
+      this.barangays = barangay as any;
+      this.dataSource.data = this.barangays as any;
+      this.tableLength = this.dataSource.data.length;
+      console.log(barangay);
+    });
   }
 }

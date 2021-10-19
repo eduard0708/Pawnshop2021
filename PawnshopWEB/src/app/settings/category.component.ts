@@ -1,14 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-
 import { Category } from '../_model/item/category';
-
 import { ItemService } from '../_service/item.service';
 import { NotifierService } from '../_service/notifier.service';
+import { VoucherService } from '../_service/voucher.service';
 
 @Component({
   selector: 'app-category',
@@ -16,15 +20,14 @@ import { NotifierService } from '../_service/notifier.service';
   styleUrls: ['../_sass/settings_scss/category.scss'],
 })
 export class CategoryComponent implements OnInit {
-  @ViewChild('categoryRef', { static: true }) categoryRef: ElementRef;
+  @ViewChild('categoryNameRef', { static: true }) categoryNameRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   categoryForm: FormGroup;
   isAdd = true;
   tableLength: number;
-  category: Category;
   categories: Category[] = [];
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayColumns: string[] = ['id', 'name', 'action'];
   public dataSource: MatTableDataSource<Category>;
 
   constructor(
@@ -34,8 +37,8 @@ export class CategoryComponent implements OnInit {
     private itemService: ItemService
   ) {
     this.categoryForm = this.fb.group({
-      categoryId: [],
       categoryName: ['', Validators.required],
+      filterText: [],
     });
 
     this.dataSource = new MatTableDataSource<Category>();
@@ -43,40 +46,49 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.categoryRef.nativeElement.focus();
       this.dataSource.paginator = this.paginator;
+      this.categoryNameRef.nativeElement.focus();
     }, 100);
+    this.getCategory();
 
-    this.categoryForm.valueChanges.subscribe(() => {
-      this.isAdd = !this.categoryForm.valid;
-    });
-    this.getCategories();
+    this.categoryForm.valueChanges.subscribe(
+      () => {
+        this.isAdd = !this.categoryForm.valid;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-  search() {}
+  filter() {
+    this.dataSource.filter = this.categoryForm.controls.filterText.value;
+  }
+
   reset() {
+    this.dataSource.filter = '';
     this.categoryForm.reset();
-    this.categoryRef.nativeElement.focus();
+    this.categoryNameRef.nativeElement.focus();
   }
   cancel() {
     this.router.navigateByUrl('main/dashboard');
   }
   save() {
-    this.itemService
-      .addCategory(this.categoryForm.value)
-      .subscribe((category) => {
-        console.log(category);
-
-        // this.dataSource.data = category as any;
-      });
-
+     this.itemService.addCategory(this.categoryForm.value).subscribe((category) => {
+      this.categories = [...this.dataSource.data]
+      this.categories.push(category)
+      this.dataSource.data =  this.categories ;
+      this.notifierService.success(`New Voucher Type: ${category.categoryName}`);
+    });
     this.categoryForm.reset();
-    this.categoryRef.nativeElement.focus();
+    this.categoryNameRef.nativeElement.focus();
   }
 
-  getCategories() {
-    this.itemService.getCategories().subscribe((categories) => {
-      this.dataSource.data = categories as any;
-    });
+  getCategory() {
+   this.itemService.getCategories().subscribe(category => {
+     this.dataSource.data = category;
+     console.log(category);
+
+   })
   }
 }

@@ -29,6 +29,10 @@ namespace PawnshopAPI.Controllers
         [HttpPost("add-category")]
         public async Task<ActionResult<Category>> AddCategory(AddCategoryDto addCategoryDto)
         {
+            var checkCategory = _context.Categories.FirstOrDefault( x => x.CategoryName.ToLower() == addCategoryDto.categoryName.ToLower());
+            if(checkCategory != null)
+            return BadRequest("Already Exist");
+
             var category = _mapper.Map<Category>(addCategoryDto);
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
@@ -84,5 +88,6 @@ namespace PawnshopAPI.Controllers
 
             return Ok(categoryDescription);
         }
+
     }
 }

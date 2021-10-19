@@ -1,5 +1,5 @@
 export interface VoucherCode {
-  codeId:number;
+  voucherCodeId:number;
   codeName:string;
 }
 

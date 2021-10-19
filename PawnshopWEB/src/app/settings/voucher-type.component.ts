@@ -27,7 +27,6 @@ export class VoucherTypeComponent implements OnInit {
   isAdd = true;
   tableLength: number;
   voucherTypes: VoucherType[] = [];
-  voucherType:VoucherType;
   displayColumns: string[] = ['id', 'name', 'action'];
   public dataSource: MatTableDataSource<VoucherType>;
 
@@ -38,7 +37,7 @@ export class VoucherTypeComponent implements OnInit {
     private voucherService: VoucherService
   ) {
     this.voucherTypeForm = this.fb.group({
-      id: [],
+      // id: [],
       typeName: ['', Validators.required],
       filterText: [],
     });
@@ -51,7 +50,7 @@ export class VoucherTypeComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.voucherTypeRef.nativeElement.focus();
     }, 100);
-    this.getCity();
+    this.getVoucherType();
 
     this.voucherTypeForm.valueChanges.subscribe(
       () => {
@@ -77,21 +76,18 @@ export class VoucherTypeComponent implements OnInit {
   }
   save() {
      this.voucherService.addVoucherType(this.voucherTypeForm.value).subscribe((voucherType) => {
-      this.dataSource.data = voucherType as any ;
+      this.voucherTypes = [...this.dataSource.data]
+      this.voucherTypes.push(voucherType)
+      this.dataSource.data =  this.voucherTypes ;
       this.notifierService.success(`New Voucher Type: ${voucherType.typeName}`);
     });
     this.voucherTypeForm.reset();
     this.voucherTypeRef.nativeElement.focus();
-    this.getCity();
   }
 
-  getCity() {
-    // this.addressService.().subscribe(
-    //   (cities) => {
-    //     this.dataSource.data = cities;
-    //     this.tableLength = this.dataSource.data.length;
-    //   },
-    //   (error) => console.log(error)
-    // );
+  getVoucherType() {
+   this.voucherService.getVoucherType().subscribe(voucherType => {
+     this.dataSource.data = voucherType;
+   })
   }
 }

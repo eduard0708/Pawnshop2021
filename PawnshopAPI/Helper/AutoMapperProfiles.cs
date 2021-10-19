@@ -21,6 +21,7 @@ namespace PawnshopAPI.Helper
 
             //Voucher
             CreateMap<VoucherType, VocherTypeDto>().ReverseMap();
+            CreateMap<VoucherCode, VoucherCodeDto>().ReverseMap();
 
             //Address Mappings
             CreateMap<Address, AddressDto>().ReverseMap();

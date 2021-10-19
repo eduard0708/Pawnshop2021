@@ -4,7 +4,7 @@
       <div class="header" fxFlex="100">
         <h3 class="title shadow-sm rounded bg-info">City Settings</h3>
       </div>
-      <div class="content-body" fxLayout="row wrap"fxFlex="100" >
+      <div class="content-body" fxLayout="row wrap" fxFlex="100">
         <div class="content-wrapper" fxFlex="100" fxLayoutGap="2%">
           <mat-form-field
             class="input-outline-custom txt-input"
@@ -13,8 +13,9 @@
           >
             <mat-label>City Name</mat-label>
             <input
-              class="font-monospace"
               #cityRef
+              placeholder="City Name"
+              class="font-monospace"
               tabindex="1"
               type="text"
               matInput
@@ -29,7 +30,7 @@
             <mat-label>Filter</mat-label>
             <input
               class="font-monospace"
-              #cityRef
+              placeholder="Filter"
               tabindex="5"
               type="text"
               matInput

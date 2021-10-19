@@ -89,8 +89,7 @@ export class CityComponent implements OnInit, AfterViewInit {
     });
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();
-    this.getCity();
-  }
+ }
 
   getCity() {
     this.addressService.getCities().subscribe(

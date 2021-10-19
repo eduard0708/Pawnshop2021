@@ -5,61 +5,55 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { City } from '../_model/address/city';
-import { AddressService } from '../_service/address.service';
+import { VoucherCode } from '../_model/voucher/voucher-code';
 import { NotifierService } from '../_service/notifier.service';
-
-@Component({
-  selector: 'app-city',
-  templateUrl: './city.component.html',
-  styleUrls: ['../_sass/settings_scss/city.scss'],
-})
+import { VoucherService } from '../_service/voucher.service';
 
 @Component({
   selector: 'app-voucher-code',
   templateUrl: './voucher-code.component.html',
-  styles: [
-  ]
+  styleUrls: ['../_sass/settings_scss/voucher-code.scss'],
 })
 export class VoucherCodeComponent implements OnInit {
-
-  @ViewChild('cityRef', { static: true }) cityRef: ElementRef;
+  @ViewChild('voucherCodeRef', { static: true }) voucherCodeRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  cityForm: FormGroup;
+  voucherCodeForm: FormGroup;
   isAdd = true;
   tableLength: number;
-  city: City;
-  cities: City[] = [];
+  voucherCodes: VoucherCode[] = [];
   displayColumns: string[] = ['id', 'name', 'action'];
-  public dataSource: MatTableDataSource<City>;
+  public dataSource: MatTableDataSource<VoucherCode>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private notifierService: NotifierService,
-    private addressService: AddressService
+    private voucherService: VoucherService
   ) {
-    this.cityForm = this.fb.group({
-      id: [],
-      cityName: ['', Validators.required],
+    this.voucherCodeForm = this.fb.group({
+      // id: [],
+      codeName: ['', Validators.required],
       filterText: [],
     });
 
-    this.dataSource = new MatTableDataSource<City>();
+    this.dataSource = new MatTableDataSource<VoucherCode>();
   }
 
   ngOnInit() {
     setTimeout(() => {
-      this.cityRef.nativeElement.focus();
+      this.dataSource.paginator = this.paginator;
+      this.voucherCodeRef.nativeElement.focus();
     }, 100);
-    this.getCity();
-    this.cityForm.valueChanges.subscribe(
+    this.getVoucherCode();
+
+    this.voucherCodeForm.valueChanges.subscribe(
       () => {
-        this.isAdd = !this.cityForm.valid;
+        this.isAdd = !this.voucherCodeForm.valid;
       },
       (error) => {
         console.log(error);
@@ -67,43 +61,34 @@ export class VoucherCodeComponent implements OnInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-
   filter() {
-    this.dataSource.filter = this.cityForm.controls.filterText.value;
+    this.dataSource.filter = this.voucherCodeForm.controls.filterText.value;
   }
 
   reset() {
     this.dataSource.filter = '';
-    this.cityForm.reset();
-    this.cityRef.nativeElement.focus();
+    this.voucherCodeForm.reset();
+    this.voucherCodeRef.nativeElement.focus();
   }
   cancel() {
     this.router.navigateByUrl('main/dashboard');
   }
   save() {
-    const city = {
-      cityName: this.cityForm.controls.cityName.value,
-    };
-    this.addressService.addCity(city).subscribe((city) => {
-      // this.city = city;
-      this.dataSource.data = city as any;
-      this.notifierService.success(`New city: ${this.city.cityName}`);
+     this.voucherService.addVoucherCode(this.voucherCodeForm.value).subscribe((voucherCode) => {
+      this.voucherCodes = [...this.dataSource.data]
+      this.voucherCodes.push(voucherCode)
+      this.dataSource.data =  this.voucherCodes ;
+      this.notifierService.success(`New Voucher Type: ${voucherCode.codeName}`);
     });
-    this.cityForm.reset();
-    this.cityRef.nativeElement.focus();
-    this.getCity();
+    this.voucherCodeForm.reset();
+    this.voucherCodeRef.nativeElement.focus();
   }
 
-  getCity() {
-    this.addressService.getCities().subscribe(
-      (cities) => {
-        this.dataSource.data = cities;
-        this.tableLength = this.dataSource.data.length;
-      },
-      (error) => console.log(error)
-    );
+  getVoucherCode() {
+   this.voucherService.getVoucherCode().subscribe(voucherCode => {
+     this.dataSource.data = voucherCode;
+     console.log(voucherCode);
+
+   })
   }
 }
