@@ -92,7 +92,7 @@
 
         <mat-form-field class="status" appearance="outline">
           <mat-label>Status</mat-label>
-          <input matInput placeholder="Status" formControlName="status" />
+          <input matInput placeholder="Status" formControlName="loanStatus" />
         </mat-form-field>
 
         <mat-form-field class="moments" appearance="outline">
@@ -156,7 +156,7 @@
         Partial Computation
       </h2>
       <!-- start computation title -->
-      <div class="computation shadow partial-computation"style="zoom: .9;">
+      <div class="computation shadow partial-computation" style="zoom: 0.9">
         <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
@@ -241,7 +241,7 @@
             type="text"
           />
         </div>
-        <div class="input-group  shadow-sm Net Payable">
+        <div class="input-group shadow-sm Net Payable">
           <span class="col-form-label-sm">Net Payable</span>
           <input
             #netPaymentRef
@@ -333,6 +333,7 @@
       </div>
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
+          [disabled]="isSave"
           fxFlex="33"
           class="btn btn-success"
           type="submit"

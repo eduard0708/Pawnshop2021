@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-import { NotifierComponent } from '../_dialogs/notifier/notifier.component';
-import { AddressService } from '../_service/address.service';
+import { VoucherCode } from '../_model/voucher/voucher-code';
+import { VoucherType } from '../_model/voucher/voucherType';
+import { EmployeeService } from '../_service/employee.service';
 import { NotifierService } from '../_service/notifier.service';
+import { VoucherService } from '../_service/voucher.service';
 
 @Component({
   selector: 'app-voucher',
@@ -20,20 +21,14 @@ import { NotifierService } from '../_service/notifier.service';
 export class VoucherComponent implements OnInit {
   @ViewChild('codeRef') codeRef: MatSelect;
   voucherForm: FormGroup;
-  codes = [
-    { codeId: 1, codeName: 'code 1' },
-    { codeId: 2, codeName: 'code 2' },
-    { codeId: 2, codeName: 'code 3' },
-  ];
-  types = [
-    { typeId: 1, typeName: 'type 1' },
-    { typeId: 2, typeName: 'type 2' },
-    { typeId: 2, typeName: 'type 3' },
-  ];
+  voucherCodes:VoucherCode[]=[];
+  voucherTypes:VoucherType[]=[];
+
   cashCheque = [
     { id: 1, name: 'Cash' },
     { id: 2, name: 'Cheque' },
   ];
+
   isSave: boolean = true;
 
   currencyInputMask = createMask({
@@ -49,6 +44,8 @@ export class VoucherComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private notifierService: NotifierService,
+    private voucherService:VoucherService,
+    private employeeService:EmployeeService
   ) {
     this.voucherForm = fb.group({
       dateEntry: [new Date(), Validators.required],
@@ -57,6 +54,8 @@ export class VoucherComponent implements OnInit {
       cashCheque: ['', Validators.required],
       amount: ['', [Validators.required, Validators.minLength(10)]],
       remarks: ['', Validators.required],
+      employeeId:[],
+      isDeleted:[false]
     });
   }
 
@@ -64,6 +63,8 @@ export class VoucherComponent implements OnInit {
     setTimeout(() => {
       this.codeRef.focus();
     }, 100);
+    this.getVoucherCode();
+    this.getVoucherType();
 
     this.voucherForm.valueChanges.subscribe(() => {
       this.isSave = !this.voucherForm.valid;
@@ -80,5 +81,19 @@ export class VoucherComponent implements OnInit {
     this.codeRef.focus();
   }
 
-  save() {}
+  save() {
+    this.employeeService.currentUser$.subscribe(emp => this.voucherForm.controls.employeeId.setValue(emp.id));
+    this.voucherService.addVoucher(this.voucherForm.value)
+  }
+
+  getVoucherCode(){
+    this.voucherService.getVoucherCode().subscribe(code => {
+      this.voucherCodes = code;
+    })
+  }
+  getVoucherType(){
+    this.voucherService.getVoucherType().subscribe(type => {
+      this.voucherTypes = type;
+    })
+  }
 }

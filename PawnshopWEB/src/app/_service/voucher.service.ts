@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Select } from '../_model/select';
+import { AddVoucher } from '../_model/voucher/addVoucher';
+import { Voucher } from '../_model/voucher/voucher';
 import { VoucherCode } from '../_model/voucher/voucher-code';
 import { VoucherType } from '../_model/voucher/voucherType';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,8 @@ export class VoucherService {
   baseUrl:string = environment.baseUrl + 'voucher/';
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private commonService:CommonService
   ) { }
 
   getVoucherType(){
@@ -30,5 +33,11 @@ export class VoucherService {
     console.log(voucherCode);
 
     return this.http.post<VoucherCode>(this.baseUrl +'add-voucher-code', voucherCode)
+  }
+
+  addVoucher(voucher:AddVoucher){
+    voucher.amount = this.commonService.stringToNumber(voucher.amount)
+    voucher.dateEntry = new Date(voucher.dateEntry).toISOString();
+    console.log(voucher);
   }
 }

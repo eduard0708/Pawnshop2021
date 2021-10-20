@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeLogin } from '../_model/EmployeeLogin';
 import { User } from '../_model/user';
+import { CommonService } from '../_service/common.service';
 import { EmployeeService } from '../_service/employee.service';
 import { UsersService } from '../_service/users.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls:['../_sass/pages-sass/login.scss']  
+  styleUrls:['../_sass/pages-sass/login.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private employeeService:EmployeeService,
     private userService:UsersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
 
     this.loginForm = this.fb.group({
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
+
   }
 
   login(){

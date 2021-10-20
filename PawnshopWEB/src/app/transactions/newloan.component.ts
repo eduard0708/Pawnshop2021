@@ -25,7 +25,6 @@ import { Item } from '../_model/item/item';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { ComputationService } from '../_service/computation.service';
-import { map } from 'rxjs/operators';
 
 declare module 'moment' {
   function preciseDiff(
@@ -109,7 +108,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     });
 
     this.dataSource = new MatTableDataSource<Item>();
-
     this.newLoanForm = this.fb.group({
       dateTransaction: [],
       dateGranted: [],
@@ -214,23 +212,33 @@ export class NewloanComponent implements OnInit, OnDestroy {
   }
 
   //load category description during selection of category
+  loadCategoryDescription() {
 
-  loadCategoryDescription(){
-  this.itemService.getCategoryDescriptionById(this.newLoanForm.controls.category.value).subscribe(
-      catDesc => {
-        this.categoryDescriptions = catDesc;
-        this.newLoanForm.controls.category.disable();
-      }
-    )
+    if (
+      this.newLoanForm.controls.category.value === null ||
+      this.newLoanForm.controls.category.value === ''
+    ) {
+      return;
+    } else {
+      this.itemService
+        .getCategoryDescriptionById(
+          this.newLoanForm.controls.category.value
+        )
+        .subscribe((catDesc) => {
+          this.categoryDescriptions = catDesc;
+          this.newLoanForm.controls.category.disable();
+        });
+    }
   }
   //add items
   onAdd() {
-
-    let itemValue = this.computationService.stringToNumber(this.newLoanForm.controls.appraisalValue.value)
-    if(itemValue <= 0){
-      this.notifierService.info("Invalid Item Value.");
+    let itemValue = this.computationService.stringToNumber(
+      this.newLoanForm.controls.appraisalValue.value
+    );
+    if (itemValue <= 0) {
+      this.notifierService.info('Invalid Item Value.');
       this.appraisalValueRef.nativeElement.focus();
-      return
+      return;
     }
 
     let itemTotalValue = this.itemService.items.reduce(

@@ -8,13 +8,6 @@
   background-color: whitesmoke;
 }
 
-//remove input number arrow up/down
-// input::-webkit-outer-spin-button,
-// input::-webkit-inner-spin-button {
-//   -webkit-appearance: none;
-//   margin: 0;
-// }
-
 //mat snackbar global css
 .mat-snack-bar-container {
   padding: 0 !important;
@@ -41,3 +34,10 @@
   color: white;
   // opacity: 0.9 !important;
 }
+
+//remove input number arrow up/down
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }

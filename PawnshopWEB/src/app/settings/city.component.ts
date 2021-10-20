@@ -1,12 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -19,7 +12,7 @@ import { NotifierService } from '../_service/notifier.service';
   templateUrl: './city.component.html',
   styleUrls: ['../_sass/settings_scss/city.scss'],
 })
-export class CityComponent implements OnInit, AfterViewInit {
+export class CityComponent implements OnInit {
   @ViewChild('cityRef', { static: true }) cityRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -49,6 +42,7 @@ export class CityComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     setTimeout(() => {
       this.cityRef.nativeElement.focus();
+      this.dataSource.paginator = this.paginator;
     }, 100);
     this.getCity();
     this.cityForm.valueChanges.subscribe(
@@ -59,10 +53,6 @@ export class CityComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     );
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
 
   filter() {
@@ -82,14 +72,15 @@ export class CityComponent implements OnInit, AfterViewInit {
       cityName: this.cityForm.controls.cityName.value,
     };
     this.addressService.addCity(city).subscribe((city) => {
-      this.cities = [... this.dataSource.data]
-      this.cities.push(city)
+      this.cities = [...this.dataSource.data];
+      this.cities.push(city);
       this.dataSource.data = this.cities;
       this.notifierService.success(`New city: ${city.cityName}`);
     });
     this.cityForm.reset();
     this.cityRef.nativeElement.focus();
- }
+    this.getCity();
+  }
 
   getCity() {
     this.addressService.getCities().subscribe(

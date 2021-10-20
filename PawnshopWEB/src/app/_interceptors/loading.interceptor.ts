@@ -19,7 +19,7 @@ export class LoadingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     this.spinnerLoader.busy();
     return next.handle(request).pipe(
-      // delay(300),
+      //  delay(300),
       finalize(() => {
         this.spinnerLoader.idle();
       })

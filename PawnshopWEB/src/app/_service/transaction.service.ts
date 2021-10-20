@@ -251,6 +251,8 @@ export class TransactionService {
     // transactionInfo.transactionPawner = {} as any;
     transactionInfo.transactionItems = [] as any;
     transactionInfo.employeeId = user.id;
+
+    /* call save method after normalized the information */
     this.onSaveTransaction(transactionInfo);
   }
   updateDashBoardData() {
