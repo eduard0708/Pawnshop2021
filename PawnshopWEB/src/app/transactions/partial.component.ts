@@ -148,6 +148,21 @@ export class PartialComponent implements OnInit {
     //intialize all computation fields during initialization
     this.setComputation();
   }
+/* validation check the partial amount and the amount received before activating the save button */
+  ngDoCheck(): void {
+    const _partialAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.partialAmount.value
+    );
+    const _receivedAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.receivedAmount.value
+    );
+
+    if (_partialAmount > 0 && _receivedAmount >=  _partialAmount ) {
+      this.isSave = false;
+    } else {
+      this.isSave = true;
+    }
+  }
 
   setDate() {
     const _transactionDate = new Date();
@@ -166,21 +181,9 @@ export class PartialComponent implements OnInit {
   }
 
   save() {
-    const _amountReceived = this.computationService.stringToNumber(
-      this.partialForm.controls.receivedAmount.value
-    );
     const _partialAmount = this.computationService.stringToNumber(
       this.partialForm.controls.partialAmount.value
     );
-
-    if (_partialAmount > _amountReceived) {
-      this.partialForm.controls.receivedAmount.setValue('');
-      this.receivedAmountRef.nativeElement.focus();
-      this.notifierService.info(
-        'Received amount must be equal or greatherthan Redeem amount.'
-      );
-      return;
-    }
 
     const _netPayable = this.computationService.stringToNumber(
       this.partialForm.controls.netPayment.value
@@ -193,9 +196,9 @@ export class PartialComponent implements OnInit {
     );
     // this.partialForm.controls.dateTransaction.setValue()
 
-    /* set newprincipal amount to princiaplLoan before saving to database */
+    /* set newprincipal amount to princiaplLoan before saving to database to update newprincipal loan amount */
     this.partialForm.controls.principalLoan.setValue(
-      _netPayable - _partialAmount + _advanceInterest + _advanceServiceCharge
+      _netPayable - (_partialAmount + _advanceInterest + _advanceServiceCharge)
     );
 
     this.transactionService.normalizedTransactionInformation(

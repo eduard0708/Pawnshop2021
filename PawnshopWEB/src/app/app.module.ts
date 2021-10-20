@@ -31,7 +31,6 @@ import { PawnerFoundComponent } from './_dialogs/pawner-found.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { ViewTransactionComponent } from './pages/view-transaction.component';
-import { TransactionsPawnerInfoComponent } from './_components/transactions-pawner-info.component';
 import { TransactionsModule } from './transactions/transactions.module';
 import { ConfirmComponent } from './_dialogs/confirm/confirm.component';
 

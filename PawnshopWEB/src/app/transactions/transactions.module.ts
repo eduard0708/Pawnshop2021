@@ -14,6 +14,9 @@ import { RenewComponent } from './renew.component';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from '../_interceptors/loading.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -37,8 +40,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     InputMaskModule,
     FlexLayoutModule,
+    NgxSpinnerModule,
 
   ],
-  exports:[TransactionsPawnerInfoComponent]
+  exports:[TransactionsPawnerInfoComponent],
+  providers:[{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },]
 })
 export class TransactionsModule { }

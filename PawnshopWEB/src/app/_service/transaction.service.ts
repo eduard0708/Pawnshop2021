@@ -252,14 +252,8 @@ export class TransactionService {
     transactionInfo.transactionItems = [] as any;
     transactionInfo.employeeId = user.id;
 
-
-    // if(transactionInfo.transactionType !== "Redeem")
-    //        transactionInfo.status = "Active";
-
-    // this.onSaveTransaction(transactionInfo);
-
-    console.log(transactionInfo);
-
+    /* call save method after normalized the information */
+    this.onSaveTransaction(transactionInfo);
   }
   updateDashBoardData() {
     this.http.get<DashBoardData[]>(this.url + 'dashboard').subscribe((dashboardData) => {

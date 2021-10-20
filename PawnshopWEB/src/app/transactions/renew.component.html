@@ -305,6 +305,7 @@
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button
           (click)="save()"
+          [disabled]="isSave"
           fxFlex="33"
           class="btn btn-success"
           type="button"

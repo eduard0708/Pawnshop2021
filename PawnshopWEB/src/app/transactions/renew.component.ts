@@ -32,6 +32,7 @@ export class RenewComponent implements OnInit {
   renewForm: FormGroup;
   moments;
   isReadOnlyDiscount = false;
+  isSave = true;
 
   principalLoan: number;
   daysCount: number;
@@ -125,23 +126,25 @@ export class RenewComponent implements OnInit {
       new Date(this.transactionInfo.dateMatured)
     );
 
-    //set change during the value change in received amount
-    this.renewForm.controls.receivedAmount.valueChanges.subscribe(
-      (amountReceived) => {
-        const netPayment = this.computationService.stringToNumber(
-          this.renewForm.controls.netPayment.value
-        );
-        let recivedAmount =
-          this.computationService.stringToNumber(amountReceived);
-        let change =
-          netPayment > recivedAmount ? 0 : recivedAmount - netPayment;
-        this.renewForm.controls.change.setValue(change ?? 0);
-      }
-    );
-
     this.setComputation();
-
   }
+  /* validation check the partial amount and the amount received before activating the save button */
+  ngDoCheck(): void {
+    const netPayment = this.computationService.stringToNumber(
+      this.renewForm.controls.netPayment.value
+    );
+    let _receivedAmount = this.computationService.stringToNumber(
+      this.renewForm.controls.receivedAmount.value
+    );
+    if (netPayment > 0 && _receivedAmount >= netPayment) {
+      this.isSave = false;
+    } else {
+      this.isSave = true;
+    }
+
+    this.renewForm.controls.change.setValue(_receivedAmount - netPayment);
+  }
+
   setDate() {
     const _transactionDate = new Date();
     const _maturedDate = new Date(_transactionDate).setMonth(
@@ -171,7 +174,7 @@ export class RenewComponent implements OnInit {
       this.notifierService.info(
         'Received amount must be equal or greatherthan Net Payment amount.'
       );
-      return
+      return;
     }
 
     this.transactionService.normalizedTransactionInformation(
@@ -181,11 +184,12 @@ export class RenewComponent implements OnInit {
     );
 
     // console.log(this.renewForm.value);
-
   }
   // reset the transaction
   reset() {
     this.renewForm.reset();
+    this.initRenewForm();
+    this.ngOnInit();
     this.setDate();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
@@ -272,22 +276,22 @@ export class RenewComponent implements OnInit {
     this.interestRate = this.computationService.stringToNumber(
       this.transactionInfo.interestRate
     );
-   //get the total days in moments
-   this.totalDays = this.computationService.getTotalDays(
-    this.countYYMMDD.days,
-    this.countYYMMDD.months,
-    this.countYYMMDD.years
-  );
+    //get the total days in moments
+    this.totalDays = this.computationService.getTotalDays(
+      this.countYYMMDD.days,
+      this.countYYMMDD.months,
+      this.countYYMMDD.years
+    );
 
-  this.principalLoan = this.transactionInfo.principalLoan;
+    this.principalLoan = this.transactionInfo.principalLoan;
     this.daysCount = this.computationService.getTotalDays(
       this.countYYMMDD.days,
       this.countYYMMDD.months,
       this.countYYMMDD.years
     );
 
-     // set discount readOnly if preMature
-     if (
+    // set discount readOnly if preMature
+    if (
       this.computationService.isDiscount(
         new Date(this.transactionInfo.dateMatured)
       )
@@ -324,7 +328,6 @@ export class RenewComponent implements OnInit {
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
 
     this.renewForm.controls.dateTransaction.setValue(new Date());
-    this.renewForm.controls.status.setValue(this.dateStatus.status());
     this.renewForm.controls.moments.setValue(
       `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
@@ -358,7 +361,6 @@ export class RenewComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
-
   }
 
   initRenewForm() {
@@ -371,7 +373,7 @@ export class RenewComponent implements OnInit {
       dateExpired: [],
       transactionType: [TransactionType.Renew],
       loanStatus: [this.dateStatus.status()],
-      status: [TransactionStatus.Closed],
+      status: [TransactionStatus.Active],
       moments: [this.dateStatus.moments()],
       employeeId: [0],
       totalAppraisal: [0],
