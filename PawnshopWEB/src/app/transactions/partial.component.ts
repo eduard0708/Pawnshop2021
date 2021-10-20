@@ -31,6 +31,7 @@ export class PartialComponent implements OnInit {
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   partialForm: FormGroup;
   isReadOnlyDiscount = false;
+  isSave = true;
 
   moments;
   principalLoan: number;
@@ -120,6 +121,15 @@ export class PartialComponent implements OnInit {
       new Date(this.transactionInfo.dateMatured)
     );
 
+    this.partialForm.controls.partialAmount.valueChanges.subscribe(
+      (partialAmount) => {
+        if (this.computationService.stringToNumber(partialAmount) > 0) {
+          this.isSave = false;
+        } else {
+          this.isSave = true;
+        }
+      }
+    );
     //set chane during amount received change value
     this.partialForm.controls.receivedAmount.valueChanges.subscribe(
       (amountReceived) => {
@@ -169,7 +179,7 @@ export class PartialComponent implements OnInit {
       this.notifierService.info(
         'Received amount must be equal or greatherthan Redeem amount.'
       );
-      return
+      return;
     }
 
     const _netPayable = this.computationService.stringToNumber(
@@ -198,7 +208,10 @@ export class PartialComponent implements OnInit {
   // reset the transaction
   reset() {
     this.partialForm.reset();
+    this.initPartialForm();
+    this.ngOnInit();
     this.setDate();
+    this.isSave = true;
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -369,7 +382,6 @@ export class PartialComponent implements OnInit {
     );
 
     this.partialForm.controls.dateTransaction.setValue(new Date());
-    this.partialForm.controls.status.setValue(this.dateStatus.status());
     this.partialForm.controls.moments.setValue(
       `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
@@ -415,7 +427,7 @@ export class PartialComponent implements OnInit {
       dateExpired: [],
       transactionType: [TransactionType.Partial],
       loanStatus: [this.dateStatus.status()],
-      status: [TransactionStatus.Closed],
+      status: [TransactionStatus.Active],
       moments: [this.dateStatus.moments()],
       employeeId: [0],
       totalAppraisal: [0],

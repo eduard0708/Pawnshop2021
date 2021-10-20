@@ -25,7 +25,7 @@ import { Item } from '../_model/item/item';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { ComputationService } from '../_service/computation.service';
-import { map } from 'rxjs/operators';
+
 
 declare module 'moment' {
   function preciseDiff(
@@ -109,7 +109,6 @@ export class NewloanComponent implements OnInit, OnDestroy {
     });
 
     this.dataSource = new MatTableDataSource<Item>();
-
     this.newLoanForm = this.fb.group({
       dateTransaction: [],
       dateGranted: [],

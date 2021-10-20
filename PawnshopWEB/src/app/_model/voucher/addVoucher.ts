@@ -1,7 +1,7 @@
-export interface Voucher {
+export interface AddVoucher {
   voucherId:number;
   employeeId:number;
-  dateEntry:Date;
+  dateEntry:string;
   code:string;
   type:string;
   cashCheque:string;

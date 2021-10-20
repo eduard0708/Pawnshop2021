@@ -33,7 +33,7 @@
             name="city"
             formControlName="code"
           >
-            <mat-option *ngFor="let code of codes" [value]="code.codeId">
+            <mat-option *ngFor="let code of voucherCodes" [value]="code.codeName">
               {{ code.codeName }}
             </mat-option>
           </mat-select>
@@ -45,7 +45,7 @@
             name="city"
             formControlName="type"
           >
-            <mat-option *ngFor="let type of types" [value]="type.typeId">
+            <mat-option *ngFor="let type of voucherTypes" [value]="type.typeName">
               {{ type.typeName }}
             </mat-option>
           </mat-select>
@@ -57,7 +57,7 @@
               name="city"
               formControlName="cashCheque"
             >
-              <mat-option *ngFor="let cc of cashCheque" [value]="cc.id">
+              <mat-option *ngFor="let cc of cashCheque" [value]="cc.name">
                 {{ cc.name }}
               </mat-option>
             </mat-select>
@@ -82,7 +82,7 @@
             ></textarea>
           </mat-form-field>
       </div>
-      <div class="button-wrapper" fxLayout="row" fxFlex="100">
+      <div class="button-wrapper" fxLayout="row" fxFlex="100" fxLayoutGap="1.5%">
         <button
           fxFlex="33"
           [disabled]="isSave"

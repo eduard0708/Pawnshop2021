@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -47,6 +47,7 @@ export class AdditionalComponent implements OnInit {
   countYYMMDD: TotalYYMMDD;
   dateStatus;
   isReadOnlyDiscount = false;
+  isSave = true;
 
   //declare the columns of the table
   displayColumns: string[] = [
@@ -130,9 +131,21 @@ export class AdditionalComponent implements OnInit {
       this.countYYMMDD.months,
       this.countYYMMDD.years
     );
-
     //intialize all computation fields during initialization
     this.setComputation();
+  }
+  /* validate the value of netproceed and the additional amount before activating the save button */
+  ngDoCheck(): void {
+    let  _netProceed = this.additionalForm.controls.netProceed.value
+    let  _additionalAmount = this.additionalForm.controls.additionalAmount.value
+    if (
+      this.computationService.stringToNumber(_additionalAmount) > 0 &&
+      this.computationService.stringToNumber(_netProceed) > 0
+    ) {
+      this.isSave = false;
+    } else {
+      this.isSave = true;
+    }
   }
   setDate() {
     const _transactionDate = new Date();
@@ -173,9 +186,12 @@ export class AdditionalComponent implements OnInit {
   // reset the transaction
   reset() {
     this.additionalForm.reset();
+    this.initAdditionalForm();
+    this.ngOnInit();
     this.setDate();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
+
     if (
       this.countYYMMDD.days === 0 ||
       (this.countYYMMDD.days <= 4 &&
@@ -347,7 +363,6 @@ export class AdditionalComponent implements OnInit {
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
 
     this.additionalForm.controls.dateTransaction.setValue(new Date());
-    this.additionalForm.controls.status.setValue(this.dateStatus.status());
     this.additionalForm.controls.moments.setValue(
       `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
@@ -393,7 +408,7 @@ export class AdditionalComponent implements OnInit {
       dateExpired: [],
       transactionType: [TransactionType.Additional],
       loanStatus: [this.dateStatus.status()],
-      status: [TransactionStatus.Closed],
+      status: [TransactionStatus.Active],
       moments: [this.dateStatus.moments()],
       employeeId: [0],
       totalAppraisal: [0],
