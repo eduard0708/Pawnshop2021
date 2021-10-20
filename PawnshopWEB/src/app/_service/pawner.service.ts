@@ -25,7 +25,9 @@ export class PawnerService {
   }
 
   createPawner(pawner: Pawner) {
-    this.http.post(this.url + 'add-pawner', pawner).subscribe((data) => {});
+    console.log(pawner);
+
+    // this.http.post(this.url + 'add-pawner', pawner).subscribe((data) => {});
   }
 
   addPawner(pawner: AddPawner) {

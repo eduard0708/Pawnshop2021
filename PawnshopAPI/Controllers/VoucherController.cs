@@ -32,7 +32,7 @@ namespace PawnshopAPI.Controllers
             return Ok(newVoucher);
         }
         [HttpPost("add-voucher-type")]
-        public async Task<ActionResult<VoucherType>> AddVoucherType(VocherTypeDto typeName)
+        public async Task<ActionResult<VoucherType>> AddVoucherType(VoucherTypeDto typeName)
         {
             var newType = _mapper.Map<VoucherType>(typeName);
             await _context.VoucherTypes.AddAsync(newType);
@@ -60,6 +60,16 @@ namespace PawnshopAPI.Controllers
         {
             var voucherCodes = await _context.VoucherCodes.ToListAsync();
             return Ok(voucherCodes);
+        }
+
+         [HttpPost("add-voucher")]
+        public async Task<ActionResult<Voucher>> AddVoucher(AddVoucherDto voucher)
+        {
+            var newVoucher = _mapper.Map<Voucher>(voucher);
+            await _context.Vouchers.AddAsync(newVoucher);
+            await _context.SaveChangesAsync();
+
+            return Ok(newVoucher);
         }
     }
 }

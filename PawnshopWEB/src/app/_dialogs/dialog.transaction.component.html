@@ -22,13 +22,13 @@
           (keyup.enter)="onTransaction(transactionType)"
         />
       </mat-form-field>
-      <div *ngIf="buttonNewloan" class="dialog-button" fxLayout="row wrap">
+      <div *ngIf="buttonNewloan" class="dialog-button-newloan" fxLayout="row wrap" fxLayout.xl="row" fxLayoutGap="1%">
         <button
         fxFlex="100"
         (click)="createPawner()"
         tabindex="3"
         mat-raised-button
-        class="btn btn-success mb-2"
+        class="btn btn-success"
       >
         <mat-icon>person_add</mat-icon>
         Pawner
@@ -46,18 +46,18 @@
       </button>
       </div>
 
-      <div *ngIf="!buttonNewloan" class="dialog-button" fxLayout="row wrap" >
-        <button
+      <div *ngIf="!buttonNewloan" class="dialog-button" fxLayout="row" fxLayoutGap="1%" >
+        <!-- <button
           fxFlex="100"
           (click)="cancel()"
           tabindex="3"
           mat-raised-button
           (click)="onTransaction(transactionType)"
-          class="btn btn-success mb-2"
+          class="btn btn-success"
         >
           <mat-icon>search</mat-icon>
           Search
-        </button>
+        </button> -->
         <button
           fxFlex="100"
           (click)="cancel()"

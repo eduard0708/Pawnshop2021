@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,8 +8,15 @@ import {
 import { MatSelect } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
+<<<<<<< HEAD
 import { VoucherCode } from '../_model/voucher/voucher-code';
 import { VoucherType } from '../_model/voucher/voucherType';
+=======
+import { throttleTime } from 'rxjs/operators';
+import { VoucherCode } from '../_model/voucher/voucher-code';
+import { VoucherType } from '../_model/voucher/voucherType';
+import { CommonService } from '../_service/common.service';
+>>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
 import { EmployeeService } from '../_service/employee.service';
 import { NotifierService } from '../_service/notifier.service';
 import { VoucherService } from '../_service/voucher.service';
@@ -20,6 +28,7 @@ import { VoucherService } from '../_service/voucher.service';
 })
 export class VoucherComponent implements OnInit {
   @ViewChild('codeRef') codeRef: MatSelect;
+  @ViewChild('amountRef') amountRef: ElementRef;
   voucherForm: FormGroup;
   voucherCodes:VoucherCode[]=[];
   voucherTypes:VoucherType[]=[];
@@ -45,14 +54,18 @@ export class VoucherComponent implements OnInit {
     private router: Router,
     private notifierService: NotifierService,
     private voucherService:VoucherService,
+<<<<<<< HEAD
     private employeeService:EmployeeService
+=======
+   private commonService: CommonService
+>>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
   ) {
     this.voucherForm = fb.group({
       dateEntry: [new Date(), Validators.required],
       code: ['', Validators.required],
       type: ['', Validators.required],
       cashCheque: ['', Validators.required],
-      amount: ['', [Validators.required, Validators.minLength(10)]],
+      amount: ['', [Validators.required, Validators.maxLength(10)]],
       remarks: ['', Validators.required],
       employeeId:[],
       isDeleted:[false]
@@ -77,13 +90,30 @@ export class VoucherComponent implements OnInit {
 
   reset() {
     this.voucherForm.reset();
-    this.voucherForm.controls.dateEntry.setValue(new Date())
+    this.voucherForm.controls.dateEntry.setValue(new Date());
+    this.voucherForm.controls.isDeleted.setValue(false);
     this.codeRef.focus();
   }
 
   save() {
+<<<<<<< HEAD
     this.employeeService.currentUser$.subscribe(emp => this.voucherForm.controls.employeeId.setValue(emp.id));
     this.voucherService.addVoucher(this.voucherForm.value)
+=======
+    if (this.commonService.stringToNumber(this.voucherForm.controls.amount.value ?? 0) <= 0){
+      this.notifierService.info("Amount must not be Zero.");
+      this.amountRef.nativeElement.focus();
+      return
+    }
+
+    this.voucherService.addVoucher(this.voucherForm.value).subscribe(voucher => {
+      if(voucher)
+      this.notifierService.success("New Voucher Saved...")
+
+    })
+    this.reset();
+    return
+>>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
   }
 
   getVoucherCode(){

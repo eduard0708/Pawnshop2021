@@ -39,7 +39,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 case 404:
                   if(error.error.errorId == 404 && error.error.errorCode == "NotFound")
                       this.notifier.info(error.error.message)
-                  this.router.navigateByUrl('/not-found');
+                  // this.router.navigateByUrl('/not-found');
                 break;
                 case 500:
                   const navigationExtras: NavigationExtras={state:{error:error.error}};

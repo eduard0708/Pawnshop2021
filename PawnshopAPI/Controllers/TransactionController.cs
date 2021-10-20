@@ -61,7 +61,6 @@ namespace PawnshopAPI.Controllers
                 .FirstOrDefaultAsync(t => t.TransactionsId == addTransaction.PreviousTransactionId);
             if (PreviousTransaction == null)
                 return NotFound();
-
             
             var transaction = mapper.Map<Transactions>(addTransaction);
             //mark closed the previous transaction and update
@@ -93,15 +92,12 @@ namespace PawnshopAPI.Controllers
             }
             else
             {
-
                 var pawner = await context.TransactionPawners.FirstOrDefaultAsync(p => p.TrackingId == transaction.TrackingId);
                 var items = await context.TransactionItems.Where(p => p.TrackingId == transaction.TrackingId).ToListAsync();
                 transaction.TransactionPawner = pawner;
                 transaction.TransactionItems = items;
                 var returnedTransaction = mapper.Map<ReturnTransactionsDto>(transaction);
-
                 return Ok(returnedTransaction);
-
             }
         }
 

@@ -2,86 +2,105 @@
   <div class="pawner-container">
     <div class="pawner-body" fxLayout="row wrap">
       <div class="pawner-header header-settings" fxFlex="100">
-        <h3 class="text-center p-2 shadow rounded title">
-          Create New Pawner Information
-        </h3>
+        <h3 class="text-center p-2 shadow rounded title">Create Pawner</h3>
       </div>
-      <mat-divider
-        class="pb-3"
-        style="width: 90%; margin: 0 auto"
-        fxFlex="100"
-      ></mat-divider>
-      <div class="pawner-content" fxFlex="100" fxLayout="row wrap">
-        <div class="row1 mb-2" fxLayout="row wrap" fxFlex="100" fxLayoutGap="2%">
-          <mat-form-field fxFlex="32">
-            <mat-label>First Name</mat-label>
-            <input
-              #firstNameRef
-              tabindex="1"
-              type="text"
-              matInput
-              formControlName="firstName"
-            />
-          </mat-form-field>
-          <mat-form-field fxFlex="32" >
-            <mat-label>Last Name</mat-label>
-            <input tabindex="2" type="text" matInput formControlName="lastName" />
-          </mat-form-field>
-          <mat-form-field fxFlex="32">
-            <mat-label>Contact Number</mat-label>
-            <input
-              tabindex="3"
-              type="text"
-              matInput
-              mask="(000) 000 00 00"
-              formControlName="contactNumber"
-            />
-          </mat-form-field>
-            
-        </div>
-        <div class="row2 mb-2" fxLayout="row wrap" fxFlex="100" fxLayoutGap="2%">
-          <mat-form-field fxFlex="25">
-            <mat-select
-              (blur)="onSelectCity()"
-              tabindex="4"
-              placeholder="City"
-              name="city"
-              formControlName="city"
-            >
-              <mat-option *ngFor="let city of cities" [value]="city.cityId">
-                {{ city.cityName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field fxFlex="28">
-            <mat-select
-              tabindex="5"
-              placeholder="Barangay"
-              name="city"
-              formControlName="barangay"
-            >
-              <mat-option
-                *ngFor="let barangay of barangays"
-                [value]="barangay.barangayName"
+      <mat-divider class="hair-line" fxFlex="100"></mat-divider>
+      <div class="pawner-body">
+        <div class="pawner-content pt-3" fxFlex="100" fxLayout="row wrap">
+          <div
+            class="row1 mb-2"
+            fxLayout="row wrap"
+            fxFlex="100"
+            fxLayoutGap="2%"
+          >
+            <mat-form-field fxFlex="32">
+              <mat-label>First Name</mat-label>
+              <input
+                placeholder="First Name"
+                #firstNameRef
+                tabindex="1"
+                type="text"
+                matInput
+                formControlName="firstName"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="32">
+              <mat-label>Last Name</mat-label>
+              <input
+                placeholder="Last Name"
+                tabindex="2"
+                type="text"
+                matInput
+                formControlName="lastName"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="32">
+              <mat-label>Contact Number</mat-label>
+              <input
+                placeholder="Contact Number"
+                tabindex="3"
+                type="text"
+                matInput
+                mask="(000) 000 00 00"
+                formControlName="contactNumber"
+              />
+            </mat-form-field>
+          </div>
+          <div
+            class="row2 mb-2"
+            fxLayout="row wrap"
+            fxFlex="100"
+            fxLayoutGap="2%"
+          >
+            <mat-form-field fxFlex="25">
+              <mat-select
+                (blur)="onSelectCity()"
+                tabindex="4"
+                placeholder="City"
+                name="city"
+                formControlName="city"
               >
-                {{ barangay.barangayName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field fxFlex="43">
-            <mat-label>Complete Address</mat-label>
-            <input
-              tabindex="6"
-              type="text"
-              matInput
-              formControlName="completeAddress"
-            />
-          </mat-form-field>
+                <mat-option *ngFor="let city of cities" [value]="city.cityId">
+                  {{ city.cityName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="28">
+              <mat-select
+                tabindex="5"
+                placeholder="Barangay"
+                name="city"
+                formControlName="barangay"
+              >
+                <mat-option
+                  *ngFor="let barangay of barangays"
+                  [value]="barangay.barangayName"
+                >
+                  {{ barangay.barangayName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="43">
+              <mat-label>Complete Address</mat-label>
+              <input
+                placeholder="Complete Address"
+                tabindex="6"
+                type="text"
+                matInput
+                formControlName="completeAddress"
+              />
+            </mat-form-field>
+          </div>
         </div>
       </div>
-        <div class="button-wrapper" fxLayout="row" fxFlex="100">
+      <div
+        class="button-wrapper"
+        fxLayout="row"
+        fxFlex="100"
+        fxLayoutGap="1.5%"
+      >
         <button
-        fxFlex="33"
+          fxFlex="33"
           [disabled]="isSave"
           (click)="save()"
           class="btn btn-success"
@@ -93,7 +112,7 @@
           Save
         </button>
         <button
-        fxFlex="33"
+          fxFlex="33"
           class="btn btn-primary"
           type="button"
           (click)="reset()"
@@ -105,7 +124,7 @@
           Reset
         </button>
         <button
-        fxFlex="33"
+          fxFlex="33"
           class="btn btn-danger"
           type="button"
           tabindex="11"

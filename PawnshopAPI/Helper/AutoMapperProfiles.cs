@@ -20,7 +20,8 @@ namespace PawnshopAPI.Helper
             CreateMap<Pawner, ReturnPawnerFindByContactNumber>().ReverseMap();
 
             //Voucher
-            CreateMap<VoucherType, VocherTypeDto>().ReverseMap();
+            CreateMap<Voucher, AddVoucherDto>().ReverseMap();
+            CreateMap<VoucherType, VoucherTypeDto>().ReverseMap();
             CreateMap<VoucherCode, VoucherCodeDto>().ReverseMap();
 
             //Address Mappings

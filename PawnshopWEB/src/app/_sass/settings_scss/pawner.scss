@@ -1,17 +1,25 @@
 @import "../_main.scss";
+
 .pawner-container {
   padding: 0.5rem;
   box-shadow: $box-shadow-black-all-lg;
   background: $bg-linear-gradient;
-  width: 33%;
-  width: 45%;
+  width: 50%;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   transform: scale(0.95);
+  .hair-line{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    margin-bottom: .5rem;
+
+  }
   .pawner-header {
     position: absolute;
     width: 92%;
-    margin-top: -2.5rem;
+    margin-top: -2rem;
+    margin-left: 2.333%;
     .title {
       background: $bg-gradient-circle;
       color: white;
@@ -22,13 +30,22 @@
       font-family: monospace;
     }
   }
-  .pawner-body {
-    padding: 1rem;
+  .pawner-body{
     background-color: whitesmoke !important;
+    padding: .3rem;
+
+    .pawner-content {
+      border-radius: .5rem;
+      padding: 1rem;
+      background-color: whitesmoke !important;
+      box-shadow: $box-shadow-black-all-xsm;
+    }
   }
+
   .button-wrapper {
+    margin: .5rem;
     .btn {
-      transform: scale(0.8);
+      transform: scaleY(0.8);
       border-radius: 1rem;
     }
   }

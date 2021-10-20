@@ -2,7 +2,7 @@
   <div class="voucher-container">
     <div class="voucher-body" fxLayout="row wrap">
       <div class="voucher-header header-settings" fxFlex="100">
-        <h3 class="text-center p-2 shadow rounded title">Vouchers Entries</h3>
+        <h3 class="text-center p-2 shadow rounded title">Voucher's Entry</h3>
       </div>
       <mat-divider
         class="pb-3"
@@ -64,6 +64,7 @@
           </mat-form-field>
           <mat-form-field fxFlex="47">
             <input
+            #amountRef
             tabindex="4"
             maxlength="15"
             [inputMask]="currencyInputMask"
