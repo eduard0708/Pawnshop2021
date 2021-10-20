@@ -11,7 +11,7 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public int TrackingId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ContactNumber { get; set; }
+        public long ContactNumber { get; set; }
         public string City { get; set; }
         public string Barangay { get; set; }
         public string CompleteAddress { get; set; }
