@@ -17,9 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from '../_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
-
-
+import { ErrorInterceptor } from '../_interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +28,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AdditionalComponent,
     TransactionsPawnerInfoComponent,
     PawnerInfoComponent,
-    RenewComponent
+    RenewComponent,
   ],
   imports: [
     CommonModule,
@@ -41,9 +39,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     InputMaskModule,
     FlexLayoutModule,
     NgxSpinnerModule,
-
   ],
-  exports:[TransactionsPawnerInfoComponent],
-  providers:[{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },]
+  exports: [TransactionsPawnerInfoComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+  ],
 })
-export class TransactionsModule { }
+export class TransactionsModule {}

@@ -1,22 +1,11 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { createMask } from '@ngneat/input-mask';
-<<<<<<< HEAD
-import { VoucherCode } from '../_model/voucher/voucher-code';
-import { VoucherType } from '../_model/voucher/voucherType';
-=======
-import { throttleTime } from 'rxjs/operators';
 import { VoucherCode } from '../_model/voucher/voucher-code';
 import { VoucherType } from '../_model/voucher/voucherType';
 import { CommonService } from '../_service/common.service';
->>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
 import { EmployeeService } from '../_service/employee.service';
 import { NotifierService } from '../_service/notifier.service';
 import { VoucherService } from '../_service/voucher.service';
@@ -30,8 +19,8 @@ export class VoucherComponent implements OnInit {
   @ViewChild('codeRef') codeRef: MatSelect;
   @ViewChild('amountRef') amountRef: ElementRef;
   voucherForm: FormGroup;
-  voucherCodes:VoucherCode[]=[];
-  voucherTypes:VoucherType[]=[];
+  voucherCodes: VoucherCode[] = [];
+  voucherTypes: VoucherType[] = [];
 
   cashCheque = [
     { id: 1, name: 'Cash' },
@@ -53,12 +42,8 @@ export class VoucherComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private notifierService: NotifierService,
-    private voucherService:VoucherService,
-<<<<<<< HEAD
-    private employeeService:EmployeeService
-=======
-   private commonService: CommonService
->>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
+    private voucherService: VoucherService,
+    private commonService: CommonService
   ) {
     this.voucherForm = fb.group({
       dateEntry: [new Date(), Validators.required],
@@ -67,8 +52,8 @@ export class VoucherComponent implements OnInit {
       cashCheque: ['', Validators.required],
       amount: ['', [Validators.required, Validators.maxLength(10)]],
       remarks: ['', Validators.required],
-      employeeId:[],
-      isDeleted:[false]
+      employeeId: [],
+      isDeleted: [false],
     });
   }
 
@@ -96,34 +81,33 @@ export class VoucherComponent implements OnInit {
   }
 
   save() {
-<<<<<<< HEAD
-    this.employeeService.currentUser$.subscribe(emp => this.voucherForm.controls.employeeId.setValue(emp.id));
-    this.voucherService.addVoucher(this.voucherForm.value)
-=======
-    if (this.commonService.stringToNumber(this.voucherForm.controls.amount.value ?? 0) <= 0){
-      this.notifierService.info("Amount must not be Zero.");
+    if (
+      this.commonService.stringToNumber(
+        this.voucherForm.controls.amount.value ?? 0
+      ) <= 0
+    ) {
+      this.notifierService.info('Amount must not be Zero.');
       this.amountRef.nativeElement.focus();
-      return
+      return;
     }
 
-    this.voucherService.addVoucher(this.voucherForm.value).subscribe(voucher => {
-      if(voucher)
-      this.notifierService.success("New Voucher Saved...")
-
-    })
+    this.voucherService
+      .addVoucher(this.voucherForm.value)
+      .subscribe((voucher) => {
+        if (voucher) this.notifierService.success('New Voucher Saved...');
+      });
     this.reset();
-    return
->>>>>>> 175d1c7335d5d954a03e59a8046cc9c74996a752
+    return;
   }
 
-  getVoucherCode(){
-    this.voucherService.getVoucherCode().subscribe(code => {
+  getVoucherCode() {
+    this.voucherService.getVoucherCode().subscribe((code) => {
       this.voucherCodes = code;
-    })
+    });
   }
-  getVoucherType(){
-    this.voucherService.getVoucherType().subscribe(type => {
+  getVoucherType() {
+    this.voucherService.getVoucherType().subscribe((type) => {
       this.voucherTypes = type;
-    })
+    });
   }
 }

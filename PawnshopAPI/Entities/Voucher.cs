@@ -9,7 +9,7 @@ namespace PawnshopAPI.Entities
     {
         public int VoucherId { get; set; }
         public int EmployeeId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime DateEntry { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
         public string CashCheque { get; set; }

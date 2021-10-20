@@ -1,6 +1,9 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from '../pages/notfound.component';
+import { ErrorInterceptor } from '../_interceptors/error.interceptor';
+import { LoadingInterceptor } from '../_interceptors/loading.interceptor';
 import { BarangayComponent } from './barangay.component';
 import { CategoryDescriptionComponent } from './category-description.component';
 
@@ -13,25 +16,31 @@ import { VoucherTypeComponent } from './voucher-type.component';
 import { VoucherComponent } from './voucher.component';
 import { VouchersettingComponent } from './vouchersetting.component';
 
-const routes: Routes = [{
-  path: '', component: SetingsComponent,
-  children: [
-    { path: 'city', component: CityComponent },
-    { path: 'barangay', component: BarangayComponent },
-    { path: 'pawner', component: PawnerComponent },
-    { path: 'voucher', component: VoucherComponent },
-    { path: 'vouchersetting', component: VouchersettingComponent },
-    { path: 'category', component: CategoryComponent },
-    { path: 'categoryDescription', component: CategoryDescriptionComponent },
-    { path: 'voucher-code', component: VoucherCodeComponent },
-    { path: 'voucher-type', component: VoucherTypeComponent },
-  ]
-},
-{path:'**',component: NotfoundComponent}
-]
+const routes: Routes = [
+  {
+    path: '',
+    component: SetingsComponent,
+    children: [
+      { path: 'city', component: CityComponent },
+      { path: 'barangay', component: BarangayComponent },
+      { path: 'pawner', component: PawnerComponent },
+      { path: 'voucher', component: VoucherComponent },
+      { path: 'vouchersetting', component: VouchersettingComponent },
+      { path: 'category', component: CategoryComponent },
+      { path: 'categoryDescription', component: CategoryDescriptionComponent },
+      { path: 'voucher-code', component: VoucherCodeComponent },
+      { path: 'voucher-type', component: VoucherTypeComponent },
+    ],
+  },
+  { path: '**', component: NotfoundComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+  ],
 })
-export class SetingsRoutingModule { }
+export class SetingsRoutingModule {}

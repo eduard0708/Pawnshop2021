@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   MatDialog,
   MatDialogConfig,
-  MatDialogRef,
 } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../_service/employee.service';
 import { TransactionService } from '../_service/transaction.service';
 
@@ -19,7 +18,7 @@ export class HeaderComponent implements OnInit {
     private dialog: MatDialog,
     public employeeService: EmployeeService,
     private router: Router,
-    private transactionService:TransactionService
+   private transactionService:TransactionService
     // private dialogRef: MatDialogRef<DialogNewcityComponent>
   ) { }
 
@@ -42,7 +41,8 @@ export class HeaderComponent implements OnInit {
   }
 
   pawner() {
-    this.router.navigateByUrl('main/settings/pawner')
+  /* navigate to create pawner only not with transaction */
+    this.router.navigate(['main/settings/pawner'],{ queryParams: { isCreate: true } });
   }
   voucher() {
     this.router.navigateByUrl('main/settings/voucher')

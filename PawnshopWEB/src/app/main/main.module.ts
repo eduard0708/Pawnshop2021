@@ -7,20 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../_material-moudule/material.module';
 import { HeaderComponent } from '../layout/header.component';
 import { FooterComponent } from '../layout/footer.component';
-import { NewloanComponent } from '../transactions/newloan.component';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { TransactionsPawnerInfoComponent } from '../_components/transactions-pawner-info.component';
 import { TransactionsModule } from '../transactions/transactions.module';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from '../_interceptors/error.interceptor';
+import { LoadingInterceptor } from '../_interceptors/loading.interceptor';
 
 @NgModule({
-  declarations: [
-    MainComponent,
-    HeaderComponent,
-    FooterComponent,
-    // NewloanComponent,
-    // TransactionsPawnerInfoComponent,
-  ],
+  declarations: [MainComponent, HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
@@ -28,7 +22,11 @@ import { TransactionsModule } from '../transactions/transactions.module';
     ReactiveFormsModule,
     MaterialModule,
     InputMaskModule,
-    TransactionsModule
-  ]
+    TransactionsModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+  ],
 })
-export class MainModule { }
+export class MainModule {}

@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { AddPawner } from '../_model/pawner/AddPawner';
 import { Pawner } from '../_model/pawner/Pawner';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
-import { AddressService } from './address.service';
 
 @Injectable({
   providedIn: 'root',

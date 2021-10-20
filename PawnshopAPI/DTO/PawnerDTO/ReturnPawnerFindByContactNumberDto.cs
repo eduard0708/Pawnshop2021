@@ -10,7 +10,7 @@ namespace PawnshopAPI.DTO.PawnerDTO
         public int PawnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ContactNumber { get; set; }
+        public long ContactNumber { get; set; }
         public ICollection<AddressDto> Addresses { get; set; }
     }
 }

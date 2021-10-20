@@ -10,7 +10,7 @@ namespace PawnshopAPI.Entities
         public int PawnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ContactNumber { get; set; }
+        public long ContactNumber { get; set; }
         public int EmployeeId { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }

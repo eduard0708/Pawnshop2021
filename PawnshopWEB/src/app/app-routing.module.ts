@@ -1,14 +1,11 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
-import { ErrorComponent } from './pages/error.component';
 import { InvoiceComponent } from './pages/invoice.component';
 import { LoginComponent } from './pages/login.component';
 import { NotfoundComponent } from './pages/notfound.component';
 import { ServerErrorComponent } from './pages/server-error.component';
 import { ViewTransactionComponent } from './pages/view-transaction.component';
-import { NewloanComponent } from './transactions/newloan.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

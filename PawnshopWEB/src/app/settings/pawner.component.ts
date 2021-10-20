@@ -1,17 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { NotifierComponent } from '../_dialogs/notifier/notifier.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Barangay } from '../_model/address/barangay';
 import { City } from '../_model/address/city';
+import { User } from '../_model/user';
 import { AddressService } from '../_service/address.service';
-import { DialogsService } from '../_service/dialogs.service';
+import { CommonService } from '../_service/common.service';
+import { EmployeeService } from '../_service/employee.service';
 import { NotifierService } from '../_service/notifier.service';
 import { PawnerService } from '../_service/pawner.service';
 
@@ -26,33 +21,40 @@ export class PawnerComponent implements OnInit {
   cities: City[] = [];
   barangays: Barangay[] = [];
   isSave: boolean = true;
-  d: Date;
+  isCreate = false;
+  employeeId: number;
 
   constructor(
     private pawnerService: PawnerService,
     private fb: FormBuilder,
     private router: Router,
-    private dialogService: DialogsService,
     private addressService: AddressService,
     private notifierService: NotifierService,
-    private notifier: MatSnackBar
+    private activatedRoute: ActivatedRoute,
+    private commonService: CommonService,
+    private employeeService: EmployeeService
   ) {
-    this.pawnerForm = fb.group({
+    this.pawnerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       contactNumber: ['', [Validators.required, Validators.minLength(10)]],
       city: ['', Validators.required],
       barangay: ['', Validators.required],
       completeAddress: ['', Validators.required],
+      employeeId: [],
     });
   }
-
-  serializedDate = new FormControl();
 
   ngOnInit(): void {
     setTimeout(() => {
       this.firstNameRef.nativeElement.focus();
     }, 100);
+
+    /* check the parameters if this request came from settings create or transaction create pawner
+    if from create pawner it will re direct to create newloan if not will stay to create pawner */
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.isCreate = params.isCreate;
+    });
 
     this.pawnerForm.valueChanges.subscribe(() => {
       this.isSave = !this.pawnerForm.valid;
@@ -79,7 +81,10 @@ export class PawnerComponent implements OnInit {
   }
 
   save() {
-    const empId = JSON.parse(localStorage.getItem('user'));
+    this.employeeService.currentUser$.subscribe((emp) => {
+      this.employeeId = emp.id;
+    });
+
     const p = this.pawnerForm.value;
     const city: City = this.cities.find((c) => c.cityId === +p.city);
 
@@ -91,28 +96,34 @@ export class PawnerComponent implements OnInit {
       dateCreated: new Date().toISOString(),
       dateUpdated: null,
       isActive: true,
-      employeeId: empId.id,
+      employeeId: this.employeeId,
     };
 
     //convert pawnwer to save in database
     const pawner = {
       firstName: p.firstName,
       lastName: p.lastName,
-      contactNumber: +p.contactNumber,
+      contactNumber: this.commonService.stringToNumber(p.contactNumber),
       addresses: [address],
       dateCreated: new Date().toISOString(),
       dateUpdated: null,
-      employeeId: empId.id,
+      employeeId: this.employeeId,
       isActive: true,
     };
 
-    //call service to add new panwer if add success redirect to newloan
+    /*
+    call service to add new panwer if add success redirect to newloan */
     this.pawnerService.addPawner(pawner).subscribe((newPawner) => {
-      if (Object.keys(newPawner).length > 0){
-        this.notifierService.success(`New pawner added: ${newPawner.firstName} ${ newPawner.lastName}`)
-        this.router.navigateByUrl('main/transactions/newloan/', {
-          state: { pawner: newPawner },
-        });
+      if (Object.keys(newPawner).length > 0) {
+        this.notifierService.success(
+          `New pawner added: ${newPawner.firstName} ${newPawner.lastName}`
+        );
+        if (!this.isCreate)
+          this.router.navigateByUrl('main/transactions/newloan/', {
+            state: { pawner: newPawner },
+          });
+        this.reset();
+        return;
       }
     });
   }
