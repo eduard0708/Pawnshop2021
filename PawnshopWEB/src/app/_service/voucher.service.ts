@@ -6,6 +6,7 @@ import { Voucher } from '../_model/voucher/voucher';
 import { VoucherCode } from '../_model/voucher/voucher-code';
 import { VoucherType } from '../_model/voucher/voucherType';
 import { CommonService } from './common.service';
+import { EmployeeService } from './employee.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class VoucherService {
 
   constructor(
     private http:HttpClient,
-    private commonService:CommonService
+    private commonService:CommonService,
+    private employeeService:EmployeeService,
+
   ) { }
 
   getVoucherType(){
@@ -38,6 +41,8 @@ export class VoucherService {
   addVoucher(voucher:AddVoucher){
     voucher.amount = this.commonService.stringToNumber(voucher.amount)
     voucher.dateEntry = new Date(voucher.dateEntry).toISOString();
-    console.log(voucher);
+    this.employeeService.currentUser$.subscribe(emp => voucher.employeeId = emp.id)
+
+    return this.http.post(this.baseUrl + 'add-voucher', voucher)
   }
 }

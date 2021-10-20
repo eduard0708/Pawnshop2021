@@ -115,6 +115,7 @@ export class DialogTransacitonComponent implements OnInit {
           } else {
             this.notifierService.error(
               `Transaction ${this.searchNumber.value} you entered not exist!`);
+              return
           }
         });
     }

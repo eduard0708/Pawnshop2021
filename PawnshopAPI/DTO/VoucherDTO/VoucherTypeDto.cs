@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PawnshopAPI.DTO.VoucherDTO
 {
-    public class VocherTypeDto
+    public class VoucherTypeDto
     {
         public string TypeName { get; set; }
     }
