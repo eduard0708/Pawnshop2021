@@ -1,24 +1,27 @@
+@import '../_sass/main';
 
-.dashboard-body{
-    background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-     height: 100%;
-     display: flex;
-     width: 100%;
-     justify-content: space-evenly;
-     overflow: hidden;
-     padding-top: 9rem;
-}
-.dash-card{
-    transition: transform .5s ease-in-out, transform .5s;
+.dashboard-body {
+  background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  overflow: hidden;
+  padding: 9rem 1.5rem 0 1.5rem;
+  .dash-card {
+    transition: transform 0.5s ease-in-out, transform 0.5s;
     height: 7rem;
-    width: 13rem;
-    box-shadow: 0 0 8px rgb(156, 154, 154);
-    &:hover{
-        transform: scale(1.05);
-        box-shadow: 0 0 10px rgb(156, 154, 154);
-        color:blue;
+    background-color: transparent;
+    background-color: whitesmoke;
+    border-radius: .5rem;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgb(156, 154, 154);
+      background-color: $info;
+      color:$white;
     }
-
+  }
 }
+

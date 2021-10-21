@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DashBoardData } from '../_model/transaction/dashboard-data';
-import { TransactionCard } from '../_model/TransactionCard';
 
 @Component({
   selector: 'app-dash-card',
@@ -13,6 +12,7 @@ export class DashCardComponent implements OnInit {
   transactionName: string = '';
   @Output() onNewTransaction: EventEmitter<string> = new EventEmitter();
 
+  iconName ='text_snippet'
   constructor() { }
 
   ngOnInit(): void {
@@ -20,6 +20,10 @@ export class DashCardComponent implements OnInit {
 
   newTransaction(transactionName: string){
   this.onNewTransaction.emit(transactionName)
+  }
+
+  viewTransaction(){
+    alert()
   }
 
 }

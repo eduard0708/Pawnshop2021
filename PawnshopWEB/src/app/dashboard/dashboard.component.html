@@ -1,6 +1,6 @@
 <div class="content-config">
-  <div class="dashboard-body">
-    <app-dash-card
+  <div class="dashboard-body" fxLayout="row" fxLayoutGap="1.5%">
+    <app-dash-card fxFlex="95"
       class="dash-card"
       [cardData]="data"
       *ngFor="let data of dataForCard"

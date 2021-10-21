@@ -1,19 +1,13 @@
-<div
-  class="card d-card "
-  style="cursor: pointer"
-  (click)="newTransaction(cardData.name)"
->
+<div class="card-wrapper shadow">
   <div class="card-body">
-    <h5 class="card-title">{{cardData.name}}</h5>
-    <div style="display: flex; align-items: center; height: 3rem">
-      <p
-        class="card-text"
-        style="width: 10rem; font-size: 1.2em; margin-top: 0.5em"
-      >
-        {{cardData.sum |  currency:'₱ '}}
-      </p>
-      <button class="btn btn-primary" style="font-weight: 500; width: 3rem; height: 3rem; border-radius: 50%;">
-       {{cardData.count }}
+    <div class="card-icon shadow" (click)="newTransaction(cardData.name)">
+      <mat-icon class="mat-18">{{ iconName }}</mat-icon>
+    </div>
+    <div class="card-content">
+      <h5 class="card-title">{{ cardData.name }}</h5>
+      <div class="card-amount">{{ cardData.sum | currency: "₱ " }}</div>
+      <button class="btn btn-primary btn-count" (click)="viewTransaction()">
+        {{ cardData.count }}
       </button>
     </div>
     <mat-divider> </mat-divider>
