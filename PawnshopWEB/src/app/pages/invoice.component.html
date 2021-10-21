@@ -4,16 +4,20 @@
   <div class="header">
     <div class="header-right">
       <h1>Transaction #: {{ print.transactionsId }}</h1>
-      <p>Date: {{ print.dateTransaction }}</p>
-      <p>Transaction #: {{ print.dateTransaction }}</p>
+      <p>Date: {{ print.dateTransaction | date}}</p>
+      <p>Transaction #: {{ print.transactionsId }}</p>
       <p>Transaction name: {{ print.transactionType }}</p>
     </div>
     <div class="header-left"></div>
   </div>
-
   <mat-divider style="margin: 2rem auto; width: 90%"></mat-divider>
+<div class="body" style="margin: 0 auto;">
+  <h1>INVOICE UNDER CONSTRUCTIONs....</h1>
+</div>
 
-  <table class="table" style="width: 90%; margin: 0 auto">
+
+
+  <!-- <table class="table" style="width: 90%; margin: 0 auto">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -41,7 +45,7 @@
         <td>@twitter</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
   <div class="footer"></div>
 

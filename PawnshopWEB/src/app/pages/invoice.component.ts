@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { NotifierService } from '../_service/notifier.service';
 
 @Component({
@@ -8,19 +9,14 @@ import { NotifierService } from '../_service/notifier.service';
   styleUrls: ['../_sass/invoice.scss'],
 })
 export class InvoiceComponent implements OnInit {
-  print;
+  print:TransactionInformation;
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
     private notifier:NotifierService
     ) {
     this.print = this.router.getCurrentNavigation().extras.state.print;
-
   }
 
-
-
   ngOnInit(): void {
-    console.log(this.print);
-
     // this.notifier.success('New Loan Saved')
     //working fine but need printer
     // setTimeout(
