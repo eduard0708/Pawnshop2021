@@ -44,11 +44,11 @@ namespace PawnshopAPI.Controllers
             };
 
             List<DashBoardData> data = new List<DashBoardData>();
-            data.Add(new DashBoardData("Newloan", 0, 0));
-            data.Add(new DashBoardData("Redeem", 0, 0));
-            data.Add(new DashBoardData("Partial", 0, 0));
-            data.Add(new DashBoardData("Additional", 0, 0));
-            data.Add(new DashBoardData("Renew", 0, 0));
+            data.Add(new DashBoardData("Newloan", 0, 0, "note_add"));
+            data.Add(new DashBoardData("Redeem", 0, 0, "summarize"));
+            data.Add(new DashBoardData("Partial", 0, 0, "note_alt"));
+            data.Add(new DashBoardData("Additional", 0, 0, "post_add"));
+            data.Add(new DashBoardData("Renew", 0, 0, "task"));
 
             for (int i = 0; i < data.Count; i++)
             {

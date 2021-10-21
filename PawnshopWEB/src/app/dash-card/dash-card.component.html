@@ -1,7 +1,17 @@
 <div class="card-wrapper shadow">
   <div class="card-body">
-    <div class="card-icon shadow" (click)="newTransaction(cardData.name)">
-      <mat-icon class="mat-18">{{ iconName }}</mat-icon>
+    <div
+      [ngClass]="{
+        'bg-icon-blue ': cardData.icon == 'note_add',
+        'bg-icon-indigo ': cardData.icon == 'summarize',
+        'bg-icon-purple ': cardData.icon == 'note_alt',
+        'bg-icon-red ': cardData.icon == 'post_add',
+        'bg-icon-pink ': cardData.icon == 'task'
+      }"
+      class="card-icon shadow"
+      (click)="newTransaction(cardData.name)"
+    >
+      <mat-icon class="mat-18">{{ cardData.icon }}</mat-icon>
     </div>
     <div class="card-content">
       <h5 class="card-title">{{ cardData.name }}</h5>

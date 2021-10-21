@@ -12,10 +12,12 @@ export class DashCardComponent implements OnInit {
   transactionName: string = '';
   @Output() onNewTransaction: EventEmitter<string> = new EventEmitter();
 
-  iconName ='text_snippet'
+  bgColor ='blue'
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.cardData);
+
   }
 
   newTransaction(transactionName: string){
@@ -23,7 +25,7 @@ export class DashCardComponent implements OnInit {
   }
 
   viewTransaction(){
-    alert()
+    alert("Have a nice Day smile...")
   }
 
 }

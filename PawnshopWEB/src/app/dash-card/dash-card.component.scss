@@ -1,26 +1,44 @@
-@import '../_sass/main.scss';
+@import "../_sass/main.scss";
 
 .card-wrapper {
   height: 100% !important;
   position: relative;
   background: transparent;
- .card-icon {
-    background-color: wheat;
-    width: 5rem;
-    height: 5rem;
+
+  .bg-icon-blue {
+    background-color: $blue !important;
+  }
+  .bg-icon-indigo {
+    background-color: $indigo !important;
+  }
+  .bg-icon-purple {
+    background-color: $purple !important;
+  }
+  .bg-icon-red {
+    background-color: $red !important;
+  }
+  .bg-icon-pink {
+    background-color: $pink !important;
+  }
+
+  .card-icon {
+    width: 4.5rem;
+    height: 4.5rem;
     cursor: pointer;
     position: absolute;
-    margin-top: -3rem;
+    margin-top: -2.5rem;
     text-align: center;
     border-radius: 0.3rem;
-    line-height: 115px;
+    line-height: 100px;
 
     mat-icon {
       height: 3rem;
       width: 3rem;
-      color: tomato;
-      font-size: 3rem;
+      color: white;
+      font-size: 2.3rem;
     }
+
+
   }
   .card-content {
     position: relative;

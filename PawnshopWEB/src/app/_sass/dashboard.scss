@@ -19,8 +19,8 @@
     &:hover {
       transform: scale(1.05);
       box-shadow: 0 0 10px rgb(156, 154, 154);
-      background-color: $info;
-      color:$white;
+      background-color: cyan;
+      color:$danger;
     }
   }
 }
