@@ -28,7 +28,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Action</th>
           <td mat-cell *matCellDef="let pawner">
-            <button (click)="selectedPawner(pawner)" mat-icon-button>
+            <button (click)="selectedPawner(pawner)" tabindex="-1" mat-icon-button>
               <mat-icon>face</mat-icon>
             </button>
           </td>

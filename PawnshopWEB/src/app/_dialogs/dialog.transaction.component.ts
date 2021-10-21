@@ -5,7 +5,6 @@ import {
   Inject,
   Input,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {
@@ -82,8 +81,9 @@ export class DialogTransacitonComponent implements OnInit {
         .subscribe((pawner) => {
           if (pawner.length === 0) {
             this.notifierService.error('No pawner exist, create pawner.');
-            this.router.navigateByUrl('main/settings/pawner');
-            this.dialogRef.close();
+            // this.router.navigateByUrl('main/settings/pawner');
+            // this.dialogRef.close();
+            return
           }
           if (pawner.length === 1) {
             this.router.navigateByUrl('main/transactions/newloan/', {
