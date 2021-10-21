@@ -120,6 +120,7 @@ export class DialogTransacitonComponent implements OnInit {
         });
     }
   }
+
   createPawner() {
     this.router.navigateByUrl('main/settings/pawner');
     this.dialogRef.close();
@@ -139,10 +140,10 @@ export class DialogTransacitonComponent implements OnInit {
 
   openPawnerFoundDialog(pawner) {
     const config = new MatDialogConfig();
-    config.position = { top: '5rem' };
+    config.position = { top: '3rem' };
     config.disableClose = true;
     config.data = pawner;
-    config.width = '35vw';
+    config.width = '40%';
     this.dialog.open(PawnerFoundComponent, config);
   }
 }

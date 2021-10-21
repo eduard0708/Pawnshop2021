@@ -1,6 +1,9 @@
+//start dialog-newcity.component scxx
 @import "../main";
 
 .dialog-wrapper {
+  margin: -1rem;
+  margin-top: 0rem;
   min-width: 100% !important;
   min-height: 100% !important;
   padding: 0.5rem;
@@ -34,21 +37,49 @@
       transform: scale(1);
     }
     .dialog-table-wrapper {
-      mat-table {
-        transform: scaleY(0.9);
+      margin-top: 0.5rem;
+      border-radius: 0.3rem;
+      width: 100%;
+      transform: scaleY(0.95);
+      box-shadow: $box-shadow-black-all-sm;
+    }
+    table {
+      width: 100% !important;
+      border-radius: 0.3rem;
+      margin: 0;
+      padding: 0;
+      .mat-header-row {
+        background: $info;
+        height: 3rem;
+      }
+      .mat-header-cell {
+        color: white;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+
+      }
+      .mat-column-contactNumber {
+        width: 25%;
+        text-align: left !important;
+      }
+      .mat-column-firstName {
+        width: 30%;
+      }
+      .mat-column-lastName {
+        width: 30%;
+      }
+      .mat-column-action {
+        width: 15%;
+        text-align: right !important;
       }
     }
-    .dialog-paginator {
-      margin-top: -1.25rem;
-      transform: scaleY(0.8);
-    }
-
     .footer-button {
       width: 100%;
-      margin: 0.5rem auto 0;
+      margin: 0 auto;
       .btn {
         border-radius: 1rem;
-        // transform: scaleY(0.8);
+        transform: scaleY(0.8);
       }
     }
   }
