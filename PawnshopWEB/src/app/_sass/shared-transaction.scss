@@ -208,6 +208,12 @@
         font-size: large;
         font-family: monospace;
         font-weight: 550;
+
+        input:focus {
+          color: red;
+          font-weight: bold;
+          background-color: $warning !important;
+        }
         .col-form-label-sm {
           padding-left: 0.5rem;
           color: white;
@@ -222,6 +228,8 @@
           border: 1.5px solid blue;
           background-color: white;
           border-right: 3px solid blue;
+
+
         }
         .text-right {
           text-align: right;

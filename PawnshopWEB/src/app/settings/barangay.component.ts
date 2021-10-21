@@ -91,7 +91,6 @@ export class BarangayComponent implements OnInit {
   getCities() {
     this.addressService.getCities().subscribe((cities) => {
       this.cities = cities;
-      console.log(cities);
     });
   }
   getBarangays() {
@@ -99,7 +98,6 @@ export class BarangayComponent implements OnInit {
       this.barangays = barangay as any;
       this.dataSource.data = this.barangays as any;
       this.tableLength = this.dataSource.data.length;
-      console.log(barangay);
     });
   }
 }
