@@ -16,8 +16,6 @@ export class DashCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.cardData);
-
   }
 
   newTransaction(transactionName: string){

@@ -16,7 +16,11 @@ export class InvoiceComponent implements OnInit {
 
   }
 
+
+
   ngOnInit(): void {
+    console.log(this.print);
+
     // this.notifier.success('New Loan Saved')
     //working fine but need printer
     // setTimeout(

@@ -176,14 +176,11 @@ export class RenewComponent implements OnInit {
       );
       return;
     }
-
     this.transactionService.normalizedTransactionInformation(
       this.renewForm.value,
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
     );
-
-    // console.log(this.renewForm.value);
   }
   // reset the transaction
   reset() {
@@ -228,9 +225,6 @@ export class RenewComponent implements OnInit {
       this.interestRate,
       this.computationService.stringToNumber(discountNumber)
     );
-    console.log(this.principalLoan);
-    console.log(this.interestRate);
-    console.log(discountNumber);
     const _interest = this.interest;
     //set value of interest
 
