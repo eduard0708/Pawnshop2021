@@ -10,13 +10,15 @@
       }"
       class="card-icon shadow"
       (click)="newTransaction(cardData.name)"
+      (keyup.enter)="newTransaction(cardData.name)"
+      tabindex="1"
     >
       <mat-icon class="mat-18">{{ cardData.icon }}</mat-icon>
     </div>
     <div class="card-content">
       <h5 class="card-title">{{ cardData.name }}</h5>
       <div class="card-amount">{{ cardData.sum | currency: "₱ " }}</div>
-      <button class="btn btn-primary btn-count" (click)="viewTransaction()">
+      <button class="btn btn-primary btn-count" tabindex="-1" (click)="viewTransaction()">
         {{ cardData.count }}
       </button>
     </div>
