@@ -119,8 +119,8 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionInfo.dateExpired
     );
     this.pawnerService.takePawnerInfo(pawner);
-    this.dataSource.data = this.transactionInfo.transactionItems as any;
 
+    this.dataSource.data = this.transactionInfo.transactionItems as any;
     this.checkSetDisplay();
   }
 
@@ -287,7 +287,7 @@ export class ViewTransactionComponent implements OnInit {
     this.isNewPrincipal = true;
     this.isNetProceed = true;
   }
-  renewDispaly(){
+  renewDispaly() {
     this.isInterest = true;
     this.isPenalty = true;
     this.isDueAmount = true;

@@ -22,7 +22,10 @@ export class TransactionsPawnerInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.pawnerService.pawnerSource$.subscribe(pawner => {
-      this.pawnerInfo = pawner;
+       this.pawnerInfo = pawner;
+
+      console.log(pawner);
+
     })
   }
 

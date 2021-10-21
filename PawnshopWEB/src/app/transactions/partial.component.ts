@@ -197,9 +197,8 @@ export class PartialComponent implements OnInit {
     // this.partialForm.controls.dateTransaction.setValue()
 
     /* set newprincipal amount to princiaplLoan before saving to database to update newprincipal loan amount */
-    this.partialForm.controls.principalLoan.setValue(
-      _netPayable - (_partialAmount + _advanceInterest + _advanceServiceCharge)
-    );
+    const _newPrincipalLoan = this.computationService.stringToNumber(this.partialForm.controls.newPrincipalLoan.value)
+    this.partialForm.controls.principalLoan.setValue(_newPrincipalLoan)
 
     this.transactionService.normalizedTransactionInformation(
       this.partialForm.value,

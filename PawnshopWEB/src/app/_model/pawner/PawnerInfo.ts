@@ -6,8 +6,8 @@ export interface PawnerInfo{
     city:string;
     barangay:string;
     completeAddress:string;
-    dateTransaction:Date;
-    dateGranted:Date;
-    dateMatured:Date;
-    dateExpired:Date;
+    dateTransaction?:Date;
+    dateGranted?:Date;
+    dateMatured?:Date;
+    dateExpired?:Date;
 }

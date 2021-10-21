@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AddPawner } from '../_model/pawner/AddPawner';
 import { Pawner } from '../_model/pawner/Pawner';
@@ -46,7 +46,7 @@ export class PawnerService {
   }
 
   normalizedPawnerInfo(pawnerInfo, dateTransaction, DateGranted, dateMatured, dateExpired): PawnerInfo{
-    let pawner:PawnerInfo = pawnerInfo as any
+    let pawner:PawnerInfo = pawnerInfo as any ?? {}
     pawner.dateTransaction = dateTransaction as any;
     pawner.dateGranted =  DateGranted as any;
     pawner.dateMatured =  dateMatured as any;
