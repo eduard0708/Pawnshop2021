@@ -1,5 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,6 +32,7 @@ export class AdditionalComponent implements OnInit {
   @ViewChild('receivedAmountRef') receivedAmountRef: ElementRef;
   @ViewChild('discountRef') discountRef: ElementRef;
   @ViewChild('additionalAmountRef') additionalAmountRef: ElementRef;
+  @ViewChild('totalAppraisalRef') totalAppraisalRef: ElementRef;
 
   transactionInfo: NewTransaction = {} as NewTransaction;
   items: Item[] = [];
@@ -48,6 +55,7 @@ export class AdditionalComponent implements OnInit {
   dateStatus;
   isReadOnlyDiscount = false;
   isSave = true;
+  previousAppriasalValue: number;
 
   //declare the columns of the table
   displayColumns: string[] = [
@@ -133,11 +141,32 @@ export class AdditionalComponent implements OnInit {
     );
     //intialize all computation fields during initialization
     this.setComputation();
+    console.log(this.availlableAmount);
+
   }
   /* validate the value of netproceed and the additional amount before activating the save button */
   ngDoCheck(): void {
-    let  _netProceed = this.additionalForm.controls.netProceed.value
-    let  _additionalAmount = this.additionalForm.controls.additionalAmount.value
+    // console.log(this.previousAppriasalValue);
+
+    // console.log(this.principalLoan);
+    // if (
+    //   this.computationService.stringToNumber(
+    //     this.additionalForm.controls.totalAppraisal.value < this.principalLoan
+    //   )
+    // )
+    //   this.additionalForm.controls.totalAppraisal.setValue(this.principalLoan);
+
+
+    const newAppraisalValue = this.computationService.stringToNumber(
+      this.additionalForm.controls.totalAppraisal.value
+    );
+
+    this.additionalForm.controls.availlableAmount.setValue(
+      this.previousAppriasalValue - this.principalLoan
+    );
+
+    let _netProceed = this.additionalForm.controls.netProceed.value;
+    let _additionalAmount = this.additionalForm.controls.additionalAmount.value;
     if (
       this.computationService.stringToNumber(_additionalAmount) > 0 &&
       this.computationService.stringToNumber(_netProceed) > 0
@@ -164,6 +193,7 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.dateMatured.setValue(new Date(_maturedDate));
     this.additionalForm.controls.dateExpired.setValue(new Date(_expiredDate));
   }
+
   save() {
     const _netProceed = this.computationService.stringToNumber(
       this.additionalForm.controls.netProceed.value
@@ -320,6 +350,8 @@ export class AdditionalComponent implements OnInit {
   /* load all computation field during initialization and use for reset also */
   setComputation() {
     /* set interest value use for global */
+    this.previousAppriasalValue = this.transactionInfo.totalAppraisal;
+
     this.interestRate = this.computationService.stringToNumber(
       this.transactionInfo.interestRate
     );
@@ -358,6 +390,7 @@ export class AdditionalComponent implements OnInit {
     /* set availlable amount  value use for global */
     this.availlableAmount =
       this.transactionInfo.totalAppraisal - this.transactionInfo.principalLoan;
+
     /* set net payment value use for global */
     this.netPayment =
       +this.dueAmount + this.advanceServiceCharge + this.advanceInterest;
@@ -366,9 +399,11 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.moments.setValue(
       `Years: ${this.countYYMMDD.years} Months: ${this.countYYMMDD.months} Days: ${this.countYYMMDD.days}`
     );
-    this.additionalForm.controls.totalAppraisal.setValue(
-      this.transactionInfo.totalAppraisal
-    );
+    // this.additionalForm.controls.totalAppraisal.setValue(
+    //   this.transactionInfo.totalAppraisal
+    // );
+    this.additionalForm.controls.totalAppraisal.setValue('');
+
     this.additionalForm.controls.principalLoan.setValue(
       this.transactionInfo.principalLoan
     );
@@ -381,9 +416,9 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.discount.setValue('');
     this.additionalForm.controls.advanceInterest.setValue(0);
     this.additionalForm.controls.advanceServiceCharge.setValue(0);
-    this.additionalForm.controls.availlableAmount.setValue(
-      this.availlableAmount
-    );
+    // this.additionalForm.controls.availlableAmount.setValue(
+    //  0
+    // );
     this.additionalForm.controls.additionalAmount.setValue('');
 
     /* set paginator and set cursor focus during init */

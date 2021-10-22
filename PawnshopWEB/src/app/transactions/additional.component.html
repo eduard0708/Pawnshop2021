@@ -150,7 +150,7 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper" style="zoom: .89;">
+    <div class="computation-wrapper" >
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">
         Additional Computation
@@ -160,13 +160,14 @@
         <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
+            #totalAppraisalRef
+            placeholder="{{previousAppriasalValue | currency}} "
             formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm  bold-red"
             [inputMask]="currencyInputMask"
             type="text"
-            readonly
           />
         </div>
         <div class="input-group shadow-sm Principal Loan">
