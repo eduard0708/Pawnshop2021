@@ -142,30 +142,9 @@ export class AdditionalComponent implements OnInit {
     );
     //intialize all computation fields during initialization
     this.setComputation();
-    console.log(this.availlableAmount);
-
   }
   /* validate the value of netproceed and the additional amount before activating the save button */
   ngDoCheck(): void {
-    // console.log(this.previousAppriasalValue);
-
-    // console.log(this.principalLoan);
-    // if (
-    //   this.computationService.stringToNumber(
-    //     this.additionalForm.controls.totalAppraisal.value < this.principalLoan
-    //   )
-    // )
-    //   this.additionalForm.controls.totalAppraisal.setValue(this.principalLoan);
-
-
-    const newAppraisalValue = this.computationService.stringToNumber(
-      this.additionalForm.controls.totalAppraisal.value
-    );
-
-    // this.additionalForm.controls.availlableAmount.setValue(
-    //   this.previousAppriasalValue - this.principalLoan
-    // );
-
     let _netProceed = this.additionalForm.controls.netProceed.value;
     let _additionalAmount = this.additionalForm.controls.additionalAmount.value;
     if (
@@ -239,6 +218,9 @@ export class AdditionalComponent implements OnInit {
       this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
+
+    this.isReadOnlyDiscount = this.isDiscount
+
   }
   //go to dashboard if cancel the transaction
   home() {
@@ -357,7 +339,7 @@ export class AdditionalComponent implements OnInit {
           this.additionalForm.controls.dueAmount.value
         )
     );
-    
+
     this.additionalForm.controls.newPrincipalLoan.setValue(
       _additionalAmount + this.principalLoan
     );
@@ -444,12 +426,7 @@ export class AdditionalComponent implements OnInit {
     /* set paginator and set cursor focus during init */
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
-      this.isDiscount = this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMatured)
-      );
-
-      if (!this.isDiscount) this.discountRef.nativeElement.focus();
-      if (this.isDiscount) this.additionalAmountRef.nativeElement.focus();
+      this.validateIfisDiscount();
     }, 100);
   }
 
@@ -488,4 +465,15 @@ export class AdditionalComponent implements OnInit {
     });
     this.setDate();
   }
+
+  validateIfisDiscount(){
+    this.isDiscount = this.computationService.isDiscount(
+      new Date(this.transactionInfo.dateMatured)
+    );
+    // console.log( this.isDiscount);
+
+    if (!this.isDiscount) this.discountRef.nativeElement.focus();
+    if (this.isDiscount) this.additionalAmountRef.nativeElement.focus();
+  }
+
 }

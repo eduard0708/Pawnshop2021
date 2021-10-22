@@ -128,6 +128,7 @@ export class RenewComponent implements OnInit {
 
     this.setComputation();
   }
+
   /* validation check the partial amount and the amount received before activating the save button */
   ngDoCheck(): void {
     const netPayment = this.computationService.stringToNumber(
@@ -141,7 +142,6 @@ export class RenewComponent implements OnInit {
     } else {
       this.isSave = true;
     }
-
     this.renewForm.controls.change.setValue(_receivedAmount - netPayment);
   }
 
@@ -191,6 +191,8 @@ export class RenewComponent implements OnInit {
     this.initRenewForm();
     this.ngOnInit();
     this.setDate();
+    this.isSave = true;
+    this.validateIfisDiscount();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -200,9 +202,13 @@ export class RenewComponent implements OnInit {
         this.countYYMMDD.months === 0 &&
         this.countYYMMDD.years === 0)
     ) {
-      this.renewForm.controls.discount.enable();
+      this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
+    this.isReadOnlyDiscount = this.isDiscount
+
+
+
   }
 
   home() {
@@ -265,7 +271,7 @@ export class RenewComponent implements OnInit {
   }
   /*  set to disable the discount if focus already in additional amount */
   amountReceivedFocus() {
-    this.renewForm.controls.discount.disable();
+    this.isReadOnlyDiscount = true;
   }
 
   setComputation() {
@@ -394,5 +400,13 @@ export class RenewComponent implements OnInit {
       change: [0],
     });
     this.setDate();
+  }
+
+  validateIfisDiscount(){
+    this.isDiscount = this.computationService.isDiscount(
+      new Date(this.transactionInfo.dateMatured)
+    );
+    if (!this.isDiscount) this.discountRef.nativeElement.focus();
+    if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
   }
 }

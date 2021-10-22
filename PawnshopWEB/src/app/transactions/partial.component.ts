@@ -214,6 +214,7 @@ export class PartialComponent implements OnInit {
     this.ngOnInit();
     this.setDate();
     this.isSave = true;
+    this.validateIfisDiscount();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -226,6 +227,7 @@ export class PartialComponent implements OnInit {
       this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
+    this.isReadOnlyDiscount = this.isDiscount
   }
 
   home() {
@@ -414,12 +416,8 @@ export class PartialComponent implements OnInit {
 
     //set paginator and set cursor focus during init
     setTimeout(() => {
-      this.isDiscount = this.computationService.isDiscount(
-        new Date(this.transactionInfo.dateMatured)
-      );
-      this.dataSource.paginator = this.paginator;
-      if (!this.isDiscount) this.discountRef.nativeElement.focus();
-      if (this.isDiscount) this.partialAmountRef.nativeElement.focus();
+    this.dataSource.paginator = this.paginator;
+      this.validateIfisDiscount();
     }, 100);
   }
 
@@ -458,5 +456,13 @@ export class PartialComponent implements OnInit {
     });
 
     this.setDate();
+  }
+
+  validateIfisDiscount(){
+    this.isDiscount = this.computationService.isDiscount(
+      new Date(this.transactionInfo.dateMatured)
+    );
+    if (!this.isDiscount) this.discountRef.nativeElement.focus();
+    if (this.isDiscount) this.partialAmountRef.nativeElement.focus();
   }
 }

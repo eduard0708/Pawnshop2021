@@ -30,6 +30,7 @@ export class RedeemComponent implements OnInit {
   pawnerInfo: PawnerInfo = {} as PawnerInfo;
   redeemForm: FormGroup;
   isReadOnlyDiscount = false;
+  isSave = true;
 
   previousTransactionId;
   moments;
@@ -135,9 +136,15 @@ export class RedeemComponent implements OnInit {
         );
         let recivedAmount =
           this.computationService.stringToNumber(amountReceived);
-        let change =
-          redeemAmount > recivedAmount ? 0 : recivedAmount - redeemAmount;
-        this.redeemForm.controls.change.setValue(change ?? 0);
+
+          this.redeemForm.controls.change.setValue(recivedAmount - redeemAmount)
+
+        if(recivedAmount >= redeemAmount){
+          this.isSave = false;
+        }else{
+          this.isSave = true;
+        }
+
       }
     );
 
@@ -176,6 +183,7 @@ export class RedeemComponent implements OnInit {
     this.redeemForm.reset();
     this.initRedeemForm();
     this.ngOnInit();
+    // this.isSave = true;
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -188,7 +196,7 @@ export class RedeemComponent implements OnInit {
       this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
-    this.isReadOnlyDiscount = false;
+    this.isReadOnlyDiscount = this.isDiscount
   }
 
   home() {
