@@ -106,7 +106,9 @@ namespace PawnshopAPI.Controllers
         public async Task<ActionResult<IEnumerable<ReturnTransactionsDto>>> GetTransactionById(string trasactionType)
         {
             var transaction = await context.Transactions
-                 .Where(x => x.TransactionType == trasactionType && x.DateTransaction.Date == DateTime.Today.Date ).ToListAsync();
+                 .Where(x => x.TransactionType == trasactionType && x.DateTransaction.Date == DateTime.Today.Date )
+                 .Include(p => p.TransactionPawner)
+                 .ToListAsync();
             if (transaction == null)
             {
                 var CustomErrorStatus = new
@@ -119,6 +121,10 @@ namespace PawnshopAPI.Controllers
             }
             else
             {
+                //var pawner = await context.TransactionPawners.FirstOrDefaultAsync(p => p.TrackingId == transaction.TrackingId);
+                //var items = await context.TransactionItems.Where(p => p.TrackingId == transaction.TrackingId).ToListAsync();
+                //transaction.TransactionPawner = pawner;
+                //transaction.TransactionItems = items;
                 var returnedTransaction = mapper.Map<IEnumerable<ReturnTransactionsDto>>(transaction);
                 return Ok(returnedTransaction);
             }

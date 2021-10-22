@@ -230,24 +230,13 @@
           <span class="col-form-label-sm">Discount</span>
           <input
             #discountRef
-            [readonly] ="isReadOnlyDiscount"
+            [readonly]="isReadOnlyDiscount"
             (keyup)="computeDiscount()"
             formControlName="discount"
             tabindex="1"
             class="form-control form-control-sm"
             style="text-align: center"
             type="number"
-          />
-        </div>
-        <div class="input-group shadow-sm Service Charge">
-          <span class="col-form-label-sm">Service Charge</span>
-          <input
-            formControlName="serviceCharge"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
           />
         </div>
         <div class="input-group shadow-sm Redeem Amount">
@@ -257,7 +246,7 @@
             formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm high-light-net "
             [inputMask]="currencyInputMask"
             type="text"
           />

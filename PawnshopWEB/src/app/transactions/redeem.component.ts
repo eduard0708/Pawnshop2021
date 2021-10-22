@@ -278,7 +278,7 @@ export class RedeemComponent implements OnInit {
     );
 
     this.redeemAmount =
-      this.principalLoan + this.dueAmount + this.serviceCharge;
+      this.principalLoan + this.dueAmount;
 
     this.redeemForm.controls.dateTransaction.setValue(new Date());
     this.redeemForm.controls.loanStatus.setValue(this.dateStatus.status());

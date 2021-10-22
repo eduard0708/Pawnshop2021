@@ -279,6 +279,6 @@ export class TransactionService {
 
   /* get all list of transaction of the day as per transaction name... from the dashboard card */
   getViewListTransaction(transactionType:string){
-    return this.http.get<TransactionInformation>(this.url + `transaction/view-list-transaction/${transactionType}`);
+    return this.http.get<TransactionInformation[]>(this.url + `transaction/view-list-transaction/${transactionType}`);
   }
 }

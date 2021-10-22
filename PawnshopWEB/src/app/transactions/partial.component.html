@@ -156,7 +156,7 @@
         Partial Computation
       </h2>
       <!-- start computation title -->
-      <div class="computation shadow partial-computation" style="zoom: 0.9">
+      <div class="computation shadow partial-computation" style="zoom: 0.88">
         <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
@@ -302,6 +302,21 @@
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm New Principal">
+          <span class="col-form-label-sm">Net Proceed</span>
+          <input
+            readonly
+            #partialAmountRef
+            (focus)="focusPartialAmountReadOnlyDiscount()"
+            (keyup)="validatePartialAmount()"
+            formControlName="netProceed"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm high-light-net "
             [inputMask]="currencyInputMask"
             type="text"
           />

@@ -299,8 +299,9 @@ export class PartialComponent implements OnInit {
       this.partialForm.controls.partialAmount.value
     );
 
-    // const _newPartialAmount = _netPayment - _partialAmount;
-    // this.partialForm.controls.newPrincipalLoan.setValue(_newPartialAmount);
+    const _dueAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.dueAmount.value
+    );
 
     if (_partialAmount > _netPayment)
       this.partialForm.controls.partialAmount.setValue(_netPayment);
@@ -308,18 +309,21 @@ export class PartialComponent implements OnInit {
     const _newNetPayment = _netPayment - _partialAmount;
 
     const _advanceInterest = this.computationService.getAdvanceInterest(
-      _newNetPayment,
+      _partialAmount,
       this.interestRate
     );
     const _advanceServiceCharge =
-      this.computationService.getAdvanceServiceCharge(_newNetPayment);
+      this.computationService.getAdvanceServiceCharge(_partialAmount);
 
     this.partialForm.controls.advanceInterest.setValue(_advanceInterest);
     this.partialForm.controls.advanceServiceCharge.setValue(
       _advanceServiceCharge
     );
+    this.partialForm.controls.netProceed.setValue(
+      _partialAmount + _dueAmount + _advanceInterest + _advanceServiceCharge
+    );
     this.partialForm.controls.newPrincipalLoan.setValue(
-      _newNetPayment + _advanceInterest + _advanceServiceCharge
+     this.principalLoan - _partialAmount
     );
   }
 

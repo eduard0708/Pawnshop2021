@@ -90,7 +90,6 @@
       mat-form-field {
         width: 15%;
         margin-right: 0.8rem;
-
       }
       .status {
         text-align: center;
@@ -118,7 +117,7 @@
       input {
         text-align: center;
       }
-      .view-transaction-number{
+      .view-transaction-number {
         color: red;
         font-weight: bold;
       }
@@ -129,7 +128,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transform: scale(.9);
+        transform: scale(0.9);
       }
     }
     .items-table {
@@ -214,6 +213,7 @@
           font-weight: bold;
           background-color: $warning !important;
         }
+
         .col-form-label-sm {
           padding-left: 0.5rem;
           color: white;
@@ -222,14 +222,13 @@
           border-top-right-radius: 8px;
           width: 55%;
         }
+
         .form-control {
           width: 45%;
           border-radius: 10px;
           border: 1.5px solid blue;
           background-color: white;
           border-right: 3px solid blue;
-
-
         }
         .text-right {
           text-align: right;
@@ -237,9 +236,14 @@
         .amout-due {
           background-color: #ff99cc;
         }
-        .bold-red{
+        .bold-red {
           color: red;
           font-weight: 800;
+        }
+        .high-light-net {
+          background-color:$pink;
+          color: white;
+          font-size: 1rem;
         }
       }
     }

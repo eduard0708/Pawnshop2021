@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginComponent } from '../pages/login.component';
 import { City } from '../_model/address/city';
+import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { AddressService } from '../_service/address.service';
 import { NotifierService } from '../_service/notifier.service';
 import { TransactionService } from '../_service/transaction.service';
@@ -23,19 +23,19 @@ export class ViewListTrasactionsComponent implements OnInit {
   tableLength: number;
   city: City;
   cities: City[] = [];
-  displayColumns: string[] = ['id', 'name', 'action'];
+  displayColumns: string[] = ['index', 'id','type','status','date', 'action'];
 
-  transactionType:string;
+  transactionType: string;
 
   public dataSource: MatTableDataSource<City>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private notifierService: NotifierService,
     private addressService: AddressService,
-    private transactionService:TransactionService
+    private transactionService: TransactionService
   ) {
     this.cityForm = fb.group({
       id: [],
@@ -43,9 +43,9 @@ export class ViewListTrasactionsComponent implements OnInit {
       filterText: [],
     });
 
-   this.activatedRoute.queryParams.subscribe(params =>{
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.transactionType = params.transType;
-    })
+    });
 
     this.dataSource = new MatTableDataSource<City>();
   }
@@ -65,10 +65,11 @@ export class ViewListTrasactionsComponent implements OnInit {
       }
     );
 
-      this.transactionService.getViewListTransaction(this.transactionType).subscribe( transactionList =>{
-        console.log(transactionList);
-
-      })
+    this.transactionService
+      .getViewListTransaction(this.transactionType)
+      .subscribe((transactionList) => {
+       this.setTransactionViewList(transactionList);
+      });
   }
 
   filter() {
@@ -107,4 +108,26 @@ export class ViewListTrasactionsComponent implements OnInit {
       (error) => console.log(error)
     );
   }
+  setTransactionViewList(transaction: TransactionInformation[]) {
+    let viewListTrans: ViewListTransaction[] = [];
+    for (let index = 0; index < transaction.length; index++) {
+      const transactionList = transaction[index];
+
+      let viewTrans: ViewListTransaction = {
+        transactionId: transactionList.transactionsId,
+        transctionType: transactionList.transactionType,
+        status: transactionList.status,
+        dateTransaction: transactionList.dateTransaction,
+      };
+      viewListTrans.push(viewTrans);
+    }
+    console.log(viewListTrans);
+  }
+}
+
+export interface ViewListTransaction {
+  transactionId: number;
+  transctionType: string;
+  status: string;
+  dateTransaction: string;
 }
