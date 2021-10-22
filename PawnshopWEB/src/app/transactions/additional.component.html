@@ -162,6 +162,7 @@
           <input
             #totalAppraisalRef
             placeholder="{{previousAppriasalValue | currency: '₱ '}} "
+            (keyup)="appraisalValueAdditional()"
             formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
@@ -224,7 +225,7 @@
           [readonly]="isReadOnlyDiscount"
           (keyup)="computeDiscount()"
           formControlName="discount"
-          tabindex="1"
+          tabindex="-1"
           class="form-control form-control-sm bold-red"
           style="text-align: center"
           type="number"

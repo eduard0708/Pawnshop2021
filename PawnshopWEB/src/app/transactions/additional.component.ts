@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { collectExternalReferences } from '@angular/compiler';
 import {
   Component,
   ElementRef,
@@ -161,9 +162,9 @@ export class AdditionalComponent implements OnInit {
       this.additionalForm.controls.totalAppraisal.value
     );
 
-    this.additionalForm.controls.availlableAmount.setValue(
-      this.previousAppriasalValue - this.principalLoan
-    );
+    // this.additionalForm.controls.availlableAmount.setValue(
+    //   this.previousAppriasalValue - this.principalLoan
+    // );
 
     let _netProceed = this.additionalForm.controls.netProceed.value;
     let _additionalAmount = this.additionalForm.controls.additionalAmount.value;
@@ -192,6 +193,12 @@ export class AdditionalComponent implements OnInit {
     );
     this.additionalForm.controls.dateMatured.setValue(new Date(_maturedDate));
     this.additionalForm.controls.dateExpired.setValue(new Date(_expiredDate));
+  }
+
+  appraisalValueAdditional(){
+    const _principalLoan = this.computationService.stringToNumber(this.additionalForm.controls.principalLoan.value)
+    const _apprailsalValue = this.computationService.stringToNumber(this.additionalForm.controls.totalAppraisal.value)
+    this.additionalForm.controls.availlableAmount.setValue(_apprailsalValue - _principalLoan)
   }
 
   save() {
@@ -285,7 +292,17 @@ export class AdditionalComponent implements OnInit {
       );
     //set value for due amoutn
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
+
+  /* this set the discount set the penalty and interest to zero to avoid abnormal key up of discount if readonly
+    the penalty have value even the discount is readonly if the discount got focus
+  */
+    if(this.isReadOnlyDiscount){
+      this.additionalForm.controls.penalty.setValue(0)
+      this.additionalForm.controls.interest.setValue(0)
+    }
+
   }
+
   /* set value computation during input of the additonal amount */
   additionalAmountCompute() {
     /* take additionalAmount amount during additional amount value changes */
@@ -314,6 +331,7 @@ export class AdditionalComponent implements OnInit {
       _availlableAmount
     ) {
       this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
+
     }
 
     /* set advanceServiceCharge proceed during value changes in additional amount */
@@ -339,9 +357,11 @@ export class AdditionalComponent implements OnInit {
           this.additionalForm.controls.dueAmount.value
         )
     );
+    
     this.additionalForm.controls.newPrincipalLoan.setValue(
       _additionalAmount + this.principalLoan
     );
+
   }
   /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
@@ -416,9 +436,9 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.discount.setValue('');
     this.additionalForm.controls.advanceInterest.setValue(0);
     this.additionalForm.controls.advanceServiceCharge.setValue(0);
-    // this.additionalForm.controls.availlableAmount.setValue(
-    //  0
-    // );
+    this.additionalForm.controls.availlableAmount.setValue(
+      this.availlableAmount
+    );
     this.additionalForm.controls.additionalAmount.setValue('');
 
     /* set paginator and set cursor focus during init */
