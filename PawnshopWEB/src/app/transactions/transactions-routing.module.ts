@@ -6,6 +6,7 @@ import { PartialComponent } from './partial.component';
 import { RedeemComponent } from './redeem.component';
 import { RenewComponent } from './renew.component';
 import { TransactionsComponent } from './transactions.component';
+import { ViewListTrasactionsComponent } from './view-list-trasactions.component';
 
 const routes: Routes = [{
   path: '', component: TransactionsComponent,
@@ -15,6 +16,7 @@ const routes: Routes = [{
     { path: 'partial/:transaction', component: PartialComponent },
     { path: 'additional/:transaction', component: AdditionalComponent },
     { path: 'renew/:transaction', component: RenewComponent },
+    { path: 'view-list-transaction', component: ViewListTrasactionsComponent },
   ]
 }];
 

@@ -18,7 +18,7 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     // this.notifier.success('New Loan Saved')
-    //working fine but need printer
+    // working fine but need printer
     // setTimeout(
     //   () => {
     //     window.print();
@@ -26,8 +26,9 @@ export class InvoiceComponent implements OnInit {
     //   100,
     //   setTimeout(() => {
     //     this.router.navigateByUrl('main/dashboard');
-    //   }, 500)
+    //   }, 2000)
     // );
+
     setTimeout(() => {
       this.router.navigateByUrl('main/dashboard')
     }, 1000);

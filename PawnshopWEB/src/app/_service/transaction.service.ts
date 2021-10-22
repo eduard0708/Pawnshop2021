@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ItemStatus, TransactionType } from '../_enum/enums';
+import { ItemStatus } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
 import { PawnerInfo } from '../_model/pawner/PawnerInfo';
 import { DashBoardData } from '../_model/transaction/dashboard-data';
 import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { TransactionItems } from '../_model/transaction/transaction-items';
-import { TransactionPawner } from '../_model/transaction/transaction-pawner';
 import { User } from '../_model/user';
+import { CommonService } from './common.service';
 import { ComputationService } from './computation.service';
 
 @Injectable({
@@ -28,7 +28,8 @@ export class TransactionService {
   constructor(
     private computationService: ComputationService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private commonService:CommonService
   ) {}
 
   /* normalize items from transaction to assigned in table */
@@ -70,15 +71,19 @@ export class TransactionService {
     };
   }
 
-  onSaveTransaction(transactionInfo) {
+  onSaveTransaction(transactionInfo, transactionPawner, TransactionItems) {
     this.http
       .post(this.url + 'transaction/addtransaction', transactionInfo)
       .subscribe((transaction) => {
+        this.updateDashBoardData();
+        const printInfo: TransactionInformation = transaction as any;
+        printInfo.transactionPawner = transactionPawner;
+        printInfo.transactionItems = TransactionItems;
         this.router.navigateByUrl('invoicetest', {
-          state: { print: transaction },
+          state: { print: printInfo },
         });
       });
-    this.updateDashBoardData();
+
   }
 
   normalizePawnerInfo(t: any) {
@@ -121,19 +126,19 @@ export class TransactionService {
     transactionInfo.dateTransaction =
       transactionInfo.dateTransaction === null
         ? null
-        : new Date(transactionInfo.dateTransaction).toISOString();
+        :  this.commonService.dateToISOstring(transactionInfo.dateTransaction)
     transactionInfo.dateGranted =
       transactionInfo.dateGranted === null
         ? null
-        : new Date(transactionInfo.dateMatured).toISOString();
+        : this.commonService.dateToISOstring(transactionInfo.dateGranted)
     transactionInfo.dateMatured =
       transactionInfo.dateMatured === null
         ? null
-        : new Date(transactionInfo.dateExpired).toISOString();
+        : this.commonService.dateToISOstring(transactionInfo.dateMatured)
     transactionInfo.dateExpired =
       transactionInfo.dateExpired === null
         ? null
-        : new Date(transactionInfo.dateExpired).toISOString();
+        : this.commonService.dateToISOstring(transactionInfo.dateExpired)
 
     transactionInfo.totalAppraisal =
       typeof transactionInfo.totalAppraisal === 'number'
@@ -253,15 +258,27 @@ export class TransactionService {
     transactionInfo.employeeId = user.id;
 
     /* call save method after normalized the information */
-    this.onSaveTransaction(transactionInfo);
+    this.onSaveTransaction(
+      transactionInfo,
+      transactionPawner,
+      TransactionItems
+    );
   }
+
   updateDashBoardData() {
-    this.http.get<DashBoardData[]>(this.url + 'dashboard').subscribe((dashboardData) => {
-      this.dashBoardDataSource.next(dashboardData as any);
-    });
+    this.http
+      .get<DashBoardData[]>(this.url + 'dashboard')
+      .subscribe((dashboardData) => {
+        this.dashBoardDataSource.next(dashboardData as any);
+      });
   }
 
   getDashBoardData() {
-   return this.http.get<DashBoardData[]>(this.url + 'dashboard');
+    return this.http.get<DashBoardData[]>(this.url + 'dashboard');
+  }
+
+  /* get all list of transaction of the day as per transaction name... from the dashboard card */
+  getViewListTransaction(transactionType:string){
+    return this.http.get<TransactionInformation>(this.url + `transaction/view-list-transaction/${transactionType}`);
   }
 }

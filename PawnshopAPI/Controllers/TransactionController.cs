@@ -38,7 +38,7 @@ namespace PawnshopAPI.Controllers
             var transactionId = transaction.TransactionsId;
             transaction.TransactionPawner.TrackingId = transactionId;
             transaction.TrackingId = transactionId;
-          
+
             foreach (var item in transaction.TransactionItems)
             {
                 item.TrackingId = transactionId;
@@ -61,13 +61,13 @@ namespace PawnshopAPI.Controllers
                 .FirstOrDefaultAsync(t => t.TransactionsId == addTransaction.PreviousTransactionId);
             if (PreviousTransaction == null)
                 return NotFound();
-            
+
             var transaction = mapper.Map<Transactions>(addTransaction);
             //mark closed the previous transaction and update
             PreviousTransaction.Status = "Closed";
             context.Update(PreviousTransaction);
 
-            await  context.Transactions.AddAsync(transaction);
+            await context.Transactions.AddAsync(transaction);
             await context.SaveChangesAsync();
 
             var trans = mapper.Map<AddTransactionDto>(transaction);
@@ -100,6 +100,30 @@ namespace PawnshopAPI.Controllers
                 return Ok(returnedTransaction);
             }
         }
+
+        /*get all transaction as per request from the dashboard card for view list of transaction  */
+        [HttpGet("view-list-transaction/{trasactionType}")]
+        public async Task<ActionResult<IEnumerable<ReturnTransactionsDto>>> GetTransactionById(string trasactionType)
+        {
+            var transaction = await context.Transactions
+                 .Where(x => x.TransactionType == trasactionType && x.DateTransaction.Date == DateTime.Today.Date ).ToListAsync();
+            if (transaction == null)
+            {
+                var CustomErrorStatus = new
+                {
+                    ErrorId = 404,
+                    ErrorCode = "NotFound",
+                    Message = $"Transaction Type: {trasactionType} not exist!"
+                };
+                return NotFound(CustomErrorStatus);
+            }
+            else
+            {
+                var returnedTransaction = mapper.Map<IEnumerable<ReturnTransactionsDto>>(transaction);
+                return Ok(returnedTransaction);
+            }
+        }
+
 
     }
 }

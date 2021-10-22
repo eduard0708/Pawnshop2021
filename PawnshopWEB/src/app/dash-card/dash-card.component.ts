@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashBoardData } from '../_model/transaction/dashboard-data';
 
 @Component({
@@ -12,8 +13,7 @@ export class DashCardComponent implements OnInit {
   transactionName: string = '';
   @Output() onNewTransaction: EventEmitter<string> = new EventEmitter();
 
-  bgColor ='blue'
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -22,8 +22,8 @@ export class DashCardComponent implements OnInit {
   this.onNewTransaction.emit(transactionName)
   }
 
-  viewTransaction(){
-    alert("Have a nice Day smile...")
+  viewListTransaction(transName){
+    this.router.navigate(['main/transactions/view-list-transaction'],{ queryParams: { transType: transName } });
   }
 
 }

@@ -24,8 +24,6 @@ export class TransactionsPawnerInfoComponent implements OnInit {
     this.pawnerService.pawnerSource$.subscribe(pawner => {
        this.pawnerInfo = pawner;
 
-      console.log(pawner);
-
     })
   }
 

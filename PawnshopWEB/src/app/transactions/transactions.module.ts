@@ -18,6 +18,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from '../_interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ErrorInterceptor } from '../_interceptors/error.interceptor';
+import { ViewListTrasactionsComponent } from './view-list-trasactions.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ErrorInterceptor } from '../_interceptors/error.interceptor';
     TransactionsPawnerInfoComponent,
     PawnerInfoComponent,
     RenewComponent,
+    ViewListTrasactionsComponent,
   ],
   imports: [
     CommonModule,

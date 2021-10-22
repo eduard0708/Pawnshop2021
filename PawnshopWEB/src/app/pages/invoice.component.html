@@ -1,51 +1,39 @@
-<div class="container shadow" style="margin: 5rem; padding: 1rem">
-  <h1>INVOICE</h1>
-
-  <div class="header">
-    <div class="header-right">
-      <h1>Transaction #: {{ print.transactionsId }}</h1>
-      <p>Date: {{ print.dateTransaction | date}}</p>
-      <p>Transaction #: {{ print.transactionsId }}</p>
-      <p>Transaction name: {{ print.transactionType }}</p>
-    </div>
-    <div class="header-left"></div>
+<div class="invoice-wrapper shadow">
+  <div class="title">
+    <h1>INVOICE TEST ONLY</h1>
   </div>
-  <mat-divider style="margin: 2rem auto; width: 90%"></mat-divider>
-<div class="body" style="margin: 0 auto;">
-  <h1>INVOICE UNDER CONSTRUCTIONs....</h1>
-</div>
-
-
-
-  <!-- <table class="table" style="width: 90%; margin: 0 auto">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table> -->
+  <div class="header">
+    <div class="header">
+      <h1>Transaction #: {{ print.transactionsId }}</h1>
+      <p>Date: {{ print.dateTransaction | date }}</p>
+      <!-- <p>Transaction #: {{ print.transactionsId }}</p> -->
+      <p>Transaction Type: {{ print.transactionType }}</p>
+    </div>
+  </div>
+  <div class="content">
+    <table class="table">
+      <thead style="height: 1rem">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Category</th>
+          <th scope="col">Category Description</th>
+          <th scope="col">Item Description</th>
+          <th scope="col">Appraisal Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of print.transactionItems; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ item.category }}
+          </td>
+          <td>{{ item.categoryDescription }}</td>
+          <td>{{ item.itemDescription }}</td>
+          <td>{{ item.appraisalValue }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="footer"></div>
 

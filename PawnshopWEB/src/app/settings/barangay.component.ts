@@ -78,7 +78,9 @@ export class BarangayComponent implements OnInit {
       barangayName: this.barangayForm.controls.barangayName.value,
     };
     this.addressService.addBarangay(barangay).subscribe((barangay) => {
-      this.barangay = barangay as any;
+      this.barangays = [...this.dataSource.data]
+      this.barangays.push(barangay);
+      this.dataSource.data = this.barangays;
       this.notifierService.success(
         `New Barangay: ${this.barangay.barangayName}`
       );

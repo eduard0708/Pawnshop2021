@@ -91,38 +91,9 @@ export class RedeemComponent implements OnInit {
       new Date(this.transactionInfo.dateMatured),
       new Date(this.transactionInfo.dateExpired)
     );
-
-    this.redeemForm = fb.group({
-      previousTransactionId: [this.transactionInfo.transactionsId], //used to search and mark close the previous number
-      trackingId: [this.transactionInfo.transactionsId],
-      dateTransaction: [new Date()],
-      dateGranted: [null],
-      dateMatured: [null],
-      dateExpired: [null],
-      transactionType: [TransactionType.Redeem],
-      loanStatus: [this.dateStatus.status()],
-      status: [TransactionStatus.Closed],
-      moments: [this.dateStatus.moments()],
-      employeeId: [0],
-      totalAppraisal: [0],
-      principalLoan: [0],
-      interestRate: [0],
-      interest: [0],
-      penalty: [0],
-      dueAmount: [0],
-      discount: [0, [Validators.min(0), Validators.max(3)]],
-      advanceInterest: [0],
-      advanceServiceCharge: [0],
-      serviceCharge: [0],
-      netProceed: [0],
-      netPayment: [0],
-      redeemAmount: [0, Validators.required], //for redeem only
-      partialAmount: [0], // for partial
-      addtionalAmount: [0], //for additional only
-      receivedAmount: [0],
-      change: [0],
-    });
-
+    /* initialzed form field */
+    this.initRedeemForm();
+    //initialized data source as a mat table data source and type Item
     this.dataSource = new MatTableDataSource<Item>();
   }
 
@@ -189,7 +160,7 @@ export class RedeemComponent implements OnInit {
       this.redeemForm.controls.receivedAmount.setValue('');
       return;
     }
-        /* send the form value to the the transactoinService to normalized the value and save to database */
+    /* send the form value to the the transactoinService to normalized the value and save to database */
     // this.transactionService.normalizedTransationInfo(
     //   { transactionInfo: this.redeemForm.value, pawnerInfo: this.transactionInfo.transactionPawner, itemsInfo: this.transactionInfo.transactionItems }    );
 
@@ -203,6 +174,8 @@ export class RedeemComponent implements OnInit {
   // reset the transaction
   reset() {
     this.redeemForm.reset();
+    this.initRedeemForm();
+    this.ngOnInit();
     // start condition to enable the discount field and focus if the discount is availlable
     this.setComputation();
     if (
@@ -340,5 +313,38 @@ export class RedeemComponent implements OnInit {
       if (!this.isDiscount) this.discountRef.nativeElement.focus();
       if (this.isDiscount) this.receivedAmountRef.nativeElement.focus();
     }, 100);
+  }
+
+  initRedeemForm() {
+    this.redeemForm = this.fb.group({
+      previousTransactionId: [this.transactionInfo.transactionsId], //used to search and mark close the previous number
+      trackingId: [this.transactionInfo.trackingId],
+      dateTransaction: [new Date()],
+      dateGranted: [null],
+      dateMatured: [null],
+      dateExpired: [null],
+      transactionType: [TransactionType.Redeem],
+      loanStatus: [this.dateStatus.status()],
+      status: [TransactionStatus.Closed],
+      moments: [this.dateStatus.moments()],
+      employeeId: [0],
+      totalAppraisal: [0],
+      principalLoan: [0],
+      interestRate: [0],
+      interest: [0],
+      penalty: [0],
+      dueAmount: [0],
+      discount: [0, [Validators.min(0), Validators.max(3)]],
+      advanceInterest: [0],
+      advanceServiceCharge: [0],
+      serviceCharge: [0],
+      netProceed: [0],
+      netPayment: [0],
+      redeemAmount: [0, Validators.required], //for redeem only
+      partialAmount: [0], // for partial
+      addtionalAmount: [0], //for additional only
+      receivedAmount: [0],
+      change: [0],
+    });
   }
 }

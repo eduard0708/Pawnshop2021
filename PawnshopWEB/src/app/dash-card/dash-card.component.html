@@ -18,7 +18,7 @@
     <div class="card-content">
       <h5 class="card-title">{{ cardData.name }}</h5>
       <div class="card-amount">{{ cardData.sum | currency: "₱ " }}</div>
-      <button class="btn btn-primary btn-count" tabindex="-1" (click)="viewTransaction()">
+      <button class="btn btn-primary btn-count" tabindex="-1" (click)="viewListTransaction(cardData.name)">
         {{ cardData.count }}
       </button>
     </div>

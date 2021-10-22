@@ -18,8 +18,11 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.transactionService.getDashBoardData().subscribe((data) => {
       this.transactionService.dashBoardDataSource.next(data as any);
+      console.log(data);
+
     });
 
     this.transactionService.dashBoardDataSource$.subscribe((data) => {

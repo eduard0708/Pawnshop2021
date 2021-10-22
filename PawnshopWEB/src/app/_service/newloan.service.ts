@@ -120,7 +120,7 @@ export class NewloanService {
     const saveTransaction: NewTransaction = {
       transactionsId: 0,
       trackingId: 0,
-      dateTransaction: dateTransaction.dateToISOstring(),
+      dateTransaction: dateTransaction.dateToISOstring(), // dateToISOstring is my function to convert to local date from UTC datetimezone
       dateGranted:dateGranted.dateToISOstring(),
       dateMatured: dateMatured.dateToISOstring(),
       dateExpired: dateExpired.dateToISOstring(),

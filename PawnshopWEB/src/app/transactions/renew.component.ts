@@ -160,6 +160,7 @@ export class RenewComponent implements OnInit {
     this.renewForm.controls.dateMatured.setValue(new Date(_maturedDate));
     this.renewForm.controls.dateExpired.setValue(new Date(_expiredDate));
   }
+
   save() {
     const _amountReceived = this.computationService.stringToNumber(
       this.renewForm.controls.receivedAmount.value
@@ -181,6 +182,8 @@ export class RenewComponent implements OnInit {
       this.transactionInfo.transactionPawner,
       this.transactionInfo.transactionItems
     );
+    console.log(this.renewForm.value);
+
   }
   // reset the transaction
   reset() {

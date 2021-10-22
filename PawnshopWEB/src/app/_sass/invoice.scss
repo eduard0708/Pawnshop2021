@@ -1,1 +1,26 @@
-body{background-color: bisque;}
+.invoice-wrapper{
+  margin: 0 auto;
+  margin-top: 2rem;
+  width: 90%;
+  padding: 1rem;
+  .title{
+    width: 25%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .header{
+    margin-left: 1rem;
+  }
+
+  .content{
+    margin: 0 auto;
+    width: 90%;
+    .table{
+
+    }
+  }
+  .footer{
+
+  }
+
+}
