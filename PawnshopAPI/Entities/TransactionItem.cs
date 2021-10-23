@@ -13,7 +13,7 @@ namespace PawnshopAPI.Entities
         public int TrackingId { get; set; }
         public string Category { get; set; }
         public string CategoryDescription { get; set; }
-        public string ItemDescription { get; set; }
+        public string Description { get; set; }
         public double AppraisalValue { get; set; }
         public double SellingPrice { get; set; }
         public bool isSold { get; set; }

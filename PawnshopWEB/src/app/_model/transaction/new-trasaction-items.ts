@@ -6,7 +6,8 @@ export interface NewTransactionItems{
     trackingId:number;
     category:string;
     categoryDescription:string;
-    itemDescription:string
+    // itemDescription:string
+    description:string
     appraisalValue:number;
     sellingPrice:number;
     isSold:boolean;

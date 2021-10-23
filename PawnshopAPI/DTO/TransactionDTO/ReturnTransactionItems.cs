@@ -12,7 +12,7 @@ namespace PawnshopAPI.DTO.TransactionDTO
         public int TrackingId { get; set; }
         public string Category { get; set; }
         public string CategoryDescription { get; set; }
-        public string ItemDescription { get; set; }
+        public string Description { get; set; }
         public double AppraisalValue { get; set; }
     }
 }

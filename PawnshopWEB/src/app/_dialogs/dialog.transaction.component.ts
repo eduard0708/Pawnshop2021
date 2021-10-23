@@ -1,11 +1,5 @@
 import { DataSource } from '@angular/cdk/collections';
-import {
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {
   MatDialog,
@@ -25,7 +19,7 @@ import { PawnerFoundComponent } from './pawner-found.component';
 @Component({
   selector: 'app-dialog-transaciton',
   templateUrl: './dialog.transaction.component.html',
-  styleUrls:['../_sass/dialogs.scss']
+  styleUrls: ['../_sass/dialogs.scss'],
 })
 export class DialogTransacitonComponent implements OnInit {
   @Input() searchIdRef: ElementRef;
@@ -81,9 +75,7 @@ export class DialogTransacitonComponent implements OnInit {
         .subscribe((pawner) => {
           if (pawner.length === 0) {
             this.notifierService.error('No pawner exist, create pawner.');
-            // this.router.navigateByUrl('main/settings/pawner');
-            // this.dialogRef.close();
-            return
+            return;
           }
           if (pawner.length === 1) {
             this.router.navigateByUrl('main/transactions/newloan/', {
@@ -93,7 +85,7 @@ export class DialogTransacitonComponent implements OnInit {
           }
           if (pawner.length > 1) {
             this.notifierService.info(`Multiple pawner found, select one.`);
-            this.openPawnerFoundDialog(pawner)
+            this.openPawnerFoundDialog(pawner);
             this.dialogRef.close();
           }
         });
@@ -102,11 +94,15 @@ export class DialogTransacitonComponent implements OnInit {
       this.dialogService
         .searchTransactionId(+this.searchNumber.value)
         .subscribe((transaction) => {
-          if(transaction.status == TransactionStatus.Closed){
-            this.notifierService.info(`Transaction number: ${transaction.transactionsId} is already closed.`)
-            return
+          if (transaction.status == TransactionStatus.Closed) {
+            this.notifierService.info(
+              `Transaction number: ${transaction.transactionsId} is already closed.`
+            );
+            return;
           }
           if (transaction) {
+            console.log(transaction);
+
             this.router.navigateByUrl(
               `main/transactions/${transactionType.toLocaleLowerCase()}/`,
               { state: { transaction: transaction } }
@@ -114,8 +110,9 @@ export class DialogTransacitonComponent implements OnInit {
             this.dialogRef.close();
           } else {
             this.notifierService.error(
-              `Transaction ${this.searchNumber.value} you entered not exist!`);
-              return
+              `Transaction ${this.searchNumber.value} you entered not exist!`
+            );
+            return;
           }
         });
     }

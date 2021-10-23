@@ -88,7 +88,7 @@ export class NewloanService {
         trackingId: 0,
         category: item.category,
         categoryDescription: item.categoryDescription,
-        itemDescription: item.description,
+        description: item.description,
         appraisalValue: item.appraisalValue,
         sellingPrice: 0,
         isSold: false,

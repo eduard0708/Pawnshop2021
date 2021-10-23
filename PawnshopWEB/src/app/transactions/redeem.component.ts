@@ -83,6 +83,8 @@ export class RedeemComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.transactionInfo =
           this.router.getCurrentNavigation().extras.state.transaction;
+          console.log(this.transactionInfo);
+
       }
     });
 

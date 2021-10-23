@@ -42,7 +42,7 @@ export class TransactionService {
         categoryId: 0,
         category: i.category,
         categoryDescription: i.categoryDescription,
-        description: i.categoryDescription,
+        description: i.description,
         appraisalValue: i.appraisalValue,
       };
       normItem.push(nItem);
