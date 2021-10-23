@@ -5,16 +5,16 @@
   padding: 0.5rem;
   box-shadow: $box-shadow-black-all-lg;
   background: $bg-linear-gradient;
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 2rem;
   transform: scale(0.95);
   .body-wrapper {
     padding: 1rem;
     background-color: whitesmoke;
     .header {
       position: absolute;
-      width: 90%;
+      width: 95.5%;
       margin-top: -2.5rem;
       .title {
         background: $bg-gradient-circle;
@@ -26,36 +26,9 @@
         font-family: monospace;
       }
     }
-    .content-body {
-      border-radius: 0.3rem;
-      box-shadow: $box-shadow-black-all-sm;
-      margin: 0.8rem 0 0.5rem 0;
-      .content-wrapper {
-        border-radius: 0.3rem;
-        padding: 0 1rem;
-        padding-top: 0.5rem;
-        margin: 0 auto;
-        margin-top: 0.5rem;
-        height: 3.5rem;
-        text-align: center;
-        transform: scale(1);
-        .my-form-field .mat-form-field-wrapper {
-          margin-bottom: -1.25em;
-        }
-        .btn-add {
-          transform: scale(0.8);
-        }
-      }
-      .button-wrapper {
-        margin: 0.3rem auto 0.6rem;
-        .btn {
-          border-radius: 1rem;
-          transform: scaleY(0.8);
-        }
-      }
-    }
 
     .table-wrapper {
+      margin-top: 1.5rem;
       border-radius: 0.3rem;
       width: 100%;
       transform: scaleY(0.95);
@@ -74,18 +47,31 @@
           font-weight: 400;
           line-height: 1.5;
         }
+        .mat-column-index {
+          width: 7%;
+        }
         .mat-column-id {
+          width: 12%;
+        }
+        .mat-column-type {
+          width: 12%;
+        }
+        .mat-column-status {
+          width: 10%;
+        }
+        .mat-column-date {
+          width: 15%;
+        }
+        .mat-column-firstname {
           width: 20%;
         }
-        .mat-column-name {
-          width: 50%;
+        .mat-column-lastname {
+          width: 20%;
         }
         .mat-column-action {
-          width: 25%;
+          width: 10%;
         }
-        button {
-          transform: scale(0.8);
-        }
+    
       }
     }
   }

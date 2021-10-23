@@ -281,4 +281,4 @@ export class TransactionService {
   getViewListTransaction(transactionType:string){
     return this.http.get<TransactionInformation[]>(this.url + `transaction/view-list-transaction/${transactionType}`);
   }
-}
+  }

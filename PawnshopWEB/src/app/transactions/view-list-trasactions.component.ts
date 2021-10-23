@@ -15,113 +15,76 @@ import { TransactionService } from '../_service/transaction.service';
   styleUrls: ['../_sass/view-list-transaction.scss'],
 })
 export class ViewListTrasactionsComponent implements OnInit {
-  @ViewChild('cityRef', { static: true }) cityRef: ElementRef;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  cityForm: FormGroup;
-  isAdd = true;
-  tableLength: number;
-  city: City;
-  cities: City[] = [];
-  displayColumns: string[] = ['index', 'id','type','status','date', 'action'];
-
+  displayColumns: string[] = [
+    'index',
+    'id',
+    'type',
+    'status',
+    'date',
+    'firstname',
+    'lastname',
+    'action',
+  ];
   transactionType: string;
-
-  public dataSource: MatTableDataSource<City>;
+  public dataSource: MatTableDataSource<ViewListTransaction>;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private notifierService: NotifierService,
-    private addressService: AddressService,
     private transactionService: TransactionService
   ) {
-    this.cityForm = fb.group({
-      id: [],
-      cityName: ['', Validators.required],
-      filterText: [],
-    });
-
     this.activatedRoute.queryParams.subscribe((params) => {
       this.transactionType = params.transType;
     });
 
-    this.dataSource = new MatTableDataSource<City>();
+    this.dataSource = new MatTableDataSource<ViewListTransaction>();
   }
 
   ngOnInit() {
     setTimeout(() => {
-      this.cityRef.nativeElement.focus();
       this.dataSource.paginator = this.paginator;
     }, 100);
-    this.getCity();
-    this.cityForm.valueChanges.subscribe(
-      () => {
-        this.isAdd = !this.cityForm.valid;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
 
     this.transactionService
       .getViewListTransaction(this.transactionType)
       .subscribe((transactionList) => {
-       this.setTransactionViewList(transactionList);
+        this.setTransactionViewList(transactionList);
       });
   }
 
-  filter() {
-    this.dataSource.filter = this.cityForm.controls.filterText.value;
+  home(){
+    this.router.navigateByUrl('main/dashboard')
   }
 
-  reset() {
-    this.dataSource.filter = '';
-    this.cityForm.reset();
-    this.cityRef.nativeElement.focus();
-  }
-  cancel() {
-    this.router.navigateByUrl('main/dashboard');
-  }
-  save() {
-    const city = {
-      cityName: this.cityForm.controls.cityName.value,
-    };
-    this.addressService.addCity(city).subscribe((city) => {
-      this.cities = [...this.dataSource.data];
-      this.cities.push(city);
-      this.dataSource.data = this.cities;
-      this.notifierService.success(`New city: ${city.cityName}`);
-    });
-    this.cityForm.reset();
-    this.cityRef.nativeElement.focus();
-    this.getCity();
-  }
-
-  getCity() {
-    this.addressService.getCities().subscribe(
-      (cities) => {
-        this.dataSource.data = cities;
-        this.tableLength = this.dataSource.data.length;
-      },
-      (error) => console.log(error)
-    );
-  }
+  // getCity() {
+  //   this.addressService.getCities().subscribe(
+  //     (cities) => {
+  //       this.dataSource.data = cities;
+  //       this.tableLength = this.dataSource.data.length;
+  //     },
+  //     (error) => console.log(error)
+  //   );
+  // }
   setTransactionViewList(transaction: TransactionInformation[]) {
     let viewListTrans: ViewListTransaction[] = [];
     for (let index = 0; index < transaction.length; index++) {
       const transactionList = transaction[index];
-
       let viewTrans: ViewListTransaction = {
         transactionId: transactionList.transactionsId,
         transctionType: transactionList.transactionType,
         status: transactionList.status,
         dateTransaction: transactionList.dateTransaction,
+        firstname: transactionList.transactionPawner.firstName,
+        lastname: transactionList.transactionPawner.lastName,
       };
       viewListTrans.push(viewTrans);
     }
-    console.log(viewListTrans);
+
+    this.dataSource.data = viewListTrans;
   }
 }
 
@@ -130,4 +93,6 @@ export interface ViewListTransaction {
   transctionType: string;
   status: string;
   dateTransaction: string;
+  firstname: string;
+  lastname: string;
 }

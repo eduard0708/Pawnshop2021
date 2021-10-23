@@ -121,12 +121,22 @@ namespace PawnshopAPI.Controllers
             }
             else
             {
-                //var pawner = await context.TransactionPawners.FirstOrDefaultAsync(p => p.TrackingId == transaction.TrackingId);
-                //var items = await context.TransactionItems.Where(p => p.TrackingId == transaction.TrackingId).ToListAsync();
-                //transaction.TransactionPawner = pawner;
-                //transaction.TransactionItems = items;
-                var returnedTransaction = mapper.Map<IEnumerable<ReturnTransactionsDto>>(transaction);
-                return Ok(returnedTransaction);
+                var returnedTransaction = mapper.Map<List<ReturnTransactionsDto>>(transaction);
+                List<ReturnTransactionsDto> trans = new List<ReturnTransactionsDto>();
+                for (int i = 0; i < returnedTransaction.Count(); i++)
+                {
+                    var pawner = context.TransactionPawners.FirstOrDefault(x => x.TrackingId == returnedTransaction[i].TrackingId);
+                    //returnedTransaction[i].TransactionPawner.Barangay = pawner.Barangay;
+                    //returnedTransaction[i].TransactionPawner.City = pawner.City;
+                    //returnedTransaction[i].TransactionPawner.CompleteAddress = pawner.CompleteAddress;
+                    //returnedTransaction[i].TransactionPawner.ContactNumber = pawner.ContactNumber;
+                    returnedTransaction[i].TransactionPawner.FirstName = pawner.FirstName;
+                    returnedTransaction[i].TransactionPawner.LastName = pawner.LastName;
+
+                    trans.Add(returnedTransaction[i]);
+                }
+               
+                return Ok(trans);
             }
         }
 
