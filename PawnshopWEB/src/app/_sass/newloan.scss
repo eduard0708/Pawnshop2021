@@ -210,6 +210,16 @@
           background-color: white;
           border-right: 3px solid blue;
         }
+        .high-light-proceed {
+          background-color:$pink;
+          color: white;
+          font-size: 1rem;
+        }
+        .font-red-bold{
+          color: $red;
+          font-weight: bold;
+          font-size: 1rem;
+        }
       }
     }
     .button-wrapper {
