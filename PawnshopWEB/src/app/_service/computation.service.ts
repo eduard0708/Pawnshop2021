@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
@@ -128,9 +129,11 @@ export class ComputationService {
     let penalty = 0;
 
     if (discountNumber > 0 && discountNumber <= 3) {
-      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)).toFixed(2);
+      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)).toFixed(
+        2
+      );
     } else {
-       penalty =
+      penalty =
         (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
         (principalLoan * 0.02);
     }
@@ -153,5 +156,42 @@ export class ComputationService {
     return isDiscount;
   }
 
+  getInterestPerDay(
+    loanAmount: number,
+    numberOfDays: number,
+    interestRate: number
+  ) {
+    let interestPerDay = (loanAmount * interestRate) / 30;
+
+    return interestPerDay * numberOfDays;
+  }
+
+  additionalCompute(
+    additionalAmount: number,
+    interestRate,
+    previousLoan: number,
+    daysCount:number,
+    interest:number,
+    penalty:number
+  ) {
+
+    const rate = (interestRate / 100)
+    /* if less than 3 days from dateTransaction additional amount only will have advance interest
+    if morethan 3 days from dateTransaction the previousloan and addtional loan will have advance interest */
+    const advanctInterest = daysCount <= 3 ? additionalAmount * rate :(additionalAmount + previousLoan) * rate;
+    const advanceServiceCharge = this.getServiceCharge(additionalAmount);
+    const netProceed =
+      additionalAmount - (advanctInterest + advanceServiceCharge);
+
+    let compute = {
+      advanctInterest: advanctInterest,
+      advanceServiceCharge: advanceServiceCharge,
+      newPrincipal: previousLoan + additionalAmount,
+      netProceed: netProceed - (interest + penalty),
+      redeemAmount: previousLoan + interest + penalty,
+      isSave:  (netProceed - (interest + penalty)) < 0 ? true : false
+    };
+    return compute;
+  }
 
 }

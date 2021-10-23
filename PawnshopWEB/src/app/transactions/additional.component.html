@@ -171,8 +171,33 @@
             type="text"
           />
         </div>
+        <div class="input-group Available Amount">
+          <span class="col-form-label-sm">Available Amount</span>
+          <input
+            readonly
+            formControlName="availlableAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+          #discountRef
+          [readonly]="isReadOnlyDiscount"
+          (keyup)="computeDiscount()"
+          formControlName="discount"
+          tabindex="-1"
+          class="form-control form-control-sm bold-red"
+          style="text-align: center"
+          type="number"
+          />
+        </div>
         <div class="input-group shadow-sm Principal Loan">
-          <span class="col-form-label-sm">Principal Loan</span>
+          <span class="col-form-label-sm">Previous Loan</span>
           <input
             formControlName="principalLoan"
             tabindex="-1"
@@ -183,17 +208,7 @@
             readonly
           />
         </div>
-        <div class="input-group Interest Rate">
-          <span class="col-form-label-sm">Interest Rate</span>
-          <input
-            readonly
-            formControlName="interestRate"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm text-right"
-            type="text"
-          />
-        </div>
+
         <div class="input-group Interest">
           <span class="col-form-label-sm">Interest</span>
           <input
@@ -218,43 +233,6 @@
             type="text"
           />
         </div>
-        <div class="input-group Discount">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-          #discountRef
-          [readonly]="isReadOnlyDiscount"
-          (keyup)="computeDiscount()"
-          formControlName="discount"
-          tabindex="-1"
-          class="form-control form-control-sm bold-red"
-          style="text-align: center"
-          type="number"
-          />
-        </div>
-        <div class="input-group Due Amount">
-          <span class="col-form-label-sm">Due Amount</span>
-          <input
-            readonly
-            formControlName="dueAmount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group Available Amount">
-          <span class="col-form-label-sm">Available Amount</span>
-          <input
-            readonly
-            formControlName="availlableAmount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
         <div class="input-group Additional Amount">
           <span class="col-form-label-sm">Additional Amount</span>
           <input
@@ -266,6 +244,29 @@
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group New PrincipalLoan">
+          <span class="col-form-label-sm">New Principal Loan</span>
+          <input
+            readonly
+            formControlName="newPrincipalLoan"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group Interest Rate">
+          <span class="col-form-label-sm">Interest Rate</span>
+          <input
+            readonly
+            formControlName="interestRate"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm text-right"
             type="text"
           />
         </div>
@@ -293,18 +294,6 @@
             type="text"
           />
         </div>
-        <div class="input-group PrincipalLoan">
-          <span class="col-form-label-sm">New PrincipalLoan</span>
-          <input
-            readonly
-            formControlName="newPrincipalLoan"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
         <div class="input-group Net Proceed">
           <span class="col-form-label-sm">Net Proceed</span>
           <input
@@ -313,6 +302,18 @@
             tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm high-light-net "
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group Due Amount">
+          <span class="col-form-label-sm">Redeem Amount</span>
+          <input
+            readonly
+            formControlName="redeemAmount"
+            tabindex="-1"
+            maxlength="14"
+            class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
           />

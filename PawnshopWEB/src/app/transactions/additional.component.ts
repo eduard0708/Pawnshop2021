@@ -57,7 +57,7 @@ export class AdditionalComponent implements OnInit {
   isReadOnlyDiscount = false;
   isSave = true;
   previousAppriasalValue: number;
-  daysCountFromDateTransaction:TotalYYMMDD;
+  daysCountFromDateTransaction: TotalYYMMDD;
 
   //declare the columns of the table
   displayColumns: string[] = [
@@ -143,19 +143,6 @@ export class AdditionalComponent implements OnInit {
     );
     //intialize all computation fields during initialization
     this.setComputation();
-  }
-  /* validate the value of netproceed and the additional amount before activating the save button */
-  ngDoCheck(): void {
-    let _netProceed = this.additionalForm.controls.netProceed.value;
-    let _additionalAmount = this.additionalForm.controls.additionalAmount.value;
-    if (
-      this.computationService.stringToNumber(_additionalAmount) > 0 &&
-      this.computationService.stringToNumber(_netProceed) > 0
-    ) {
-      this.isSave = false;
-    } else {
-      this.isSave = true;
-    }
   }
   setDate() {
     const _transactionDate = new Date();
@@ -292,70 +279,24 @@ export class AdditionalComponent implements OnInit {
 
   /* set value computation during input of the additonal amount */
   additionalAmountCompute() {
-    /* check if the condition if pass or within 3 days, if pass 3 days computation of advance interest will be included the previous loan,
-    if not pass 3 days, only the additional has 3 days interest */
-let _advanceInterest:number;
-let _advanceServiceCharge:number;
-
     this.daysCountFromDateTransaction =
       this.dateStatus.getNumberOfDaysFromDateTransaction(
         this.transactionInfo.dateTransaction
       );
-      console.log(this.daysCountFromDateTransaction.days);
-
+    const _interest = this.computationService.stringToNumber(
+      this.additionalForm.controls.interest.value
+    );
+    const _penalty = this.computationService.stringToNumber(
+      this.additionalForm.controls.penalty.value
+    );
     /* take additionalAmount amount during additional amount value changes */
     const _additionalAmount = this.computationService.stringToNumber(
       this.additionalForm.controls.additionalAmount.value
     );
-
-    if (this.daysCountFromDateTransaction.days <= 3) {
-      console.log("<<<" + this.daysCountFromDateTransaction.days);
-      _advanceServiceCharge = this.computationService.getServiceCharge(
-        this.computationService.stringToNumber(_additionalAmount)
-      );
-      /* take advanceInterest amount during additional amount value changes */
-      _advanceInterest = this.computationService.getAdvanceInterest(
-        this.computationService.stringToNumber(
-          this.additionalForm.controls.additionalAmount.value
-        ),
-        this.interestRate
-      );
-
-    /* set advanceServiceCharge proceed during value changes in additional amount */
-    this.additionalForm.controls.advanceServiceCharge.setValue(
-      _advanceServiceCharge
-    );
-    /* set advanceInterest  proceed during value changes in additional amount */
-    this.additionalForm.controls.advanceInterest.setValue(_advanceInterest);
-
-    }else{
-      console.log(">3" + this.daysCountFromDateTransaction.days);
-
-      _advanceServiceCharge = this.computationService.getServiceCharge(
-        this.computationService.stringToNumber(_additionalAmount)
-      );
-      /* take advanceInterest amount during additional amount value changes */
-      _advanceInterest = this.computationService.getAdvanceInterest(
-        this.computationService.stringToNumber(
-          _additionalAmount + this.principalLoan
-        ),
-        this.interestRate
-      );
-
-    /* set advanceServiceCharge proceed during value changes in additional amount */
-    this.additionalForm.controls.advanceServiceCharge.setValue(
-      _advanceServiceCharge
-    );
-    /* set advanceInterest  proceed during value changes in additional amount */
-    this.additionalForm.controls.advanceInterest.setValue(_advanceInterest);
-
-    }
-
     /* take availlableAmount amount during additional amount value changes */
     const _availlableAmount = this.computationService.stringToNumber(
       this.additionalForm.controls.availlableAmount.value
     );
-    /* take advanceServiceCharge amount during additional amount value changes */
 
     /* set additional amount not morethan availlable amount during additional amount value changes */
     if (
@@ -365,26 +306,29 @@ let _advanceServiceCharge:number;
       this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
     }
 
-    /* set net proceed during value changes in additional amount */
-    this.additionalForm.controls.netProceed.setValue(
-      this.computationService.stringToNumber(
-        this.additionalForm.controls.additionalAmount.value
-      ) -
-        this.computationService.stringToNumber(
-          this.additionalForm.controls.advanceInterest.value
-        ) -
-        this.computationService.stringToNumber(
-          this.additionalForm.controls.advanceServiceCharge.value
-        ) -
-        this.computationService.stringToNumber(
-          this.additionalForm.controls.dueAmount.value
-        )
+    const _Compute = this.computationService.additionalCompute(
+      _additionalAmount,
+      this.interestRate,
+      this.transactionInfo.principalLoan,
+      this.daysCountFromDateTransaction.days,
+      _interest,
+      _penalty
     );
 
-    this.additionalForm.controls.newPrincipalLoan.setValue(
-      _additionalAmount + this.principalLoan
+    this.additionalForm.controls.advanceServiceCharge.setValue(
+      _Compute.advanceServiceCharge
     );
+    this.additionalForm.controls.advanceInterest.setValue(
+      _Compute.advanctInterest
+    );
+    this.additionalForm.controls.newPrincipalLoan.setValue(
+      _Compute.newPrincipal
+    );
+    this.additionalForm.controls.netProceed.setValue(_Compute.netProceed);
+    this.additionalForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
+    this.isSave = _Compute.isSave;
   }
+
   /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
     this.isReadOnlyDiscount = true;
