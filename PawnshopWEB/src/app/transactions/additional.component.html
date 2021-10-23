@@ -92,7 +92,11 @@
 
         <mat-form-field class="status" appearance="outline">
           <mat-label>Loan Status</mat-label>
-          <input matInput placeholder="Loan Status" formControlName="loanStatus" />
+          <input
+            matInput
+            placeholder="Loan Status"
+            formControlName="loanStatus"
+          />
         </mat-form-field>
 
         <mat-form-field class="moments" appearance="outline">
@@ -150,23 +154,22 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper" >
+    <div class="computation-wrapper" style="zoom: 0.9">
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">
         Additional Computation
       </h2>
       <!-- start computation title -->
       <div class="computation">
-        <div class="input-group shadow-sm Appraisal Value">
+        <div class="input-group Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
             #totalAppraisalRef
-            placeholder="{{previousAppriasalValue | currency: '₱ '}} "
-            (keyup)="appraisalValueAdditional()"
+            placeholder="{{ previousAppriasalValue | currency: '₱ ' }} "
             formControlName="totalAppraisal"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm  bold-red"
+            class="form-control form-control-sm bold-red"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -186,29 +189,28 @@
         <div class="input-group Discount">
           <span class="col-form-label-sm">Discount</span>
           <input
-          #discountRef
-          [readonly]="isReadOnlyDiscount"
-          (keyup)="computeDiscount()"
-          formControlName="discount"
-          tabindex="-1"
-          class="form-control form-control-sm bold-red"
-          style="text-align: center"
-          type="number"
+            #discountRef
+            [readonly]="isReadOnlyDiscount"
+            (keyup)="computeDiscount()"
+            formControlName="discount"
+            tabindex="-1"
+            class="form-control form-control-sm bold-red"
+            style="text-align: center"
+            type="number"
           />
         </div>
-        <div class="input-group shadow-sm Principal Loan">
+        <div class="input-group Previous Principal Loan">
           <span class="col-form-label-sm">Previous Loan</span>
           <input
             formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
             readonly
           />
         </div>
-
         <div class="input-group Interest">
           <span class="col-form-label-sm">Interest</span>
           <input
@@ -238,11 +240,10 @@
           <input
             #additionalAmountRef
             (focus)="focusAdditional()"
-            (keyup)="additionalAmountCompute()"
             formControlName="additionalAmount"
             tabindex="2"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -254,7 +255,7 @@
             formControlName="newPrincipalLoan"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -270,7 +271,7 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Adv. Interest">
+        <div class="input-group Adv. Interest">
           <span class="col-form-label-sm">Advance Interest</span>
           <input
             readonly
@@ -282,7 +283,7 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Adv. Service Charge">
+        <div class="input-group  Adv. Service Charge">
           <span class="col-form-label-sm">Adv. Service Charge</span>
           <input
             readonly
@@ -301,24 +302,23 @@
             formControlName="netProceed"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm high-light-net "
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />
         </div>
-        <div class="input-group Due Amount">
+        <div class="input-group Redeem Amount">
           <span class="col-form-label-sm">Redeem Amount</span>
           <input
             readonly
             formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm high-light-redeem"
             [inputMask]="currencyInputMask"
             type="text"
           />
         </div>
-        <!-- <div class="container bg-light"><h1>{{pawner.firstName}}</h1></div> -->
       </div>
       <div class="button-wrapper" fxLayout="row" fxLayoutGap="1%">
         <button

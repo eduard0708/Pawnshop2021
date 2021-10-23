@@ -154,7 +154,7 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper" style="zoom: 0.88">
+    <div class="computation-wrapper" style="zoom:.9">
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">
         Partial Computation
@@ -192,7 +192,7 @@
             formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
             readonly
@@ -238,11 +238,10 @@
           <input
             #partialAmountRef
             (focus)="focusPartialAmountReadOnlyDiscount()"
-            (keyup)="partialCompute()"
             formControlName="partialAmount"
             tabindex="2"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -256,7 +255,7 @@
             formControlName="newPrincipalLoan"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -293,7 +292,7 @@
             formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm fw-bold high-light-net"
+            class="form-control form-control-sm high-light-redeem"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -305,7 +304,7 @@
             formControlName="netPayment"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
           />

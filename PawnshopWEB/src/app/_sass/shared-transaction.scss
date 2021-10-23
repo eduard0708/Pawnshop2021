@@ -236,15 +236,18 @@
         .amout-due {
           background-color: #ff99cc;
         }
-        .bold-red {
-          color: red;
-          font-weight: 800;
-        }
-        .high-light-net {
+        //this part for the high light of the field
+        .high-light-redeem {
           background-color:$pink;
           color: white;
           font-size: 1rem;
         }
+        .font-red-bold{
+          color: $red;
+          font-weight: bold;
+          font-size: 1rem;
+        }
+
       }
     }
 

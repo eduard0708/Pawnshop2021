@@ -144,6 +144,70 @@ export class AdditionalComponent implements OnInit {
     //intialize all computation fields during initialization
     this.setComputation();
   }
+
+  /* DoCheck will do the computation if there was changes happen in the form */
+  ngDoCheck(): void {
+    const _principalLoan = this.computationService.stringToNumber(
+      this.additionalForm.controls.principalLoan.value
+    );
+    const _apprailsalValue = this.computationService.stringToNumber(
+      this.additionalForm.controls.totalAppraisal.value
+    );
+    /* set condition to avoid negative value of availlable amount */
+    this.additionalForm.controls.availlableAmount.setValue(
+      _apprailsalValue - _principalLoan < 0
+        ? 0
+        : _apprailsalValue - _principalLoan
+    );
+
+    this.daysCountFromDateTransaction =
+      this.dateStatus.getNumberOfDaysFromDateTransaction(
+        this.transactionInfo.dateTransaction
+      );
+
+    const _interest = this.computationService.stringToNumber(
+      this.additionalForm.controls.interest.value
+    );
+    const _penalty = this.computationService.stringToNumber(
+      this.additionalForm.controls.penalty.value
+    );
+    /* take additionalAmount amount during additional amount value changes */
+    const _additionalAmount = this.computationService.stringToNumber(
+      this.additionalForm.controls.additionalAmount.value
+    );
+    /* take availlableAmount amount during additional amount value changes */
+    const _availlableAmount = this.computationService.stringToNumber(
+      this.additionalForm.controls.availlableAmount.value
+    );
+
+    if (_additionalAmount > _availlableAmount) {
+      _additionalAmount < 0 ? 0 : _additionalAmount;
+      this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
+    }
+
+    /* send additional computation information to computation service to generate the output */
+    const _Compute = this.computationService.additionalCompute(
+      _additionalAmount,
+      this.interestRate,
+      this.transactionInfo.principalLoan,
+      this.daysCountFromDateTransaction.days,
+      _interest,
+      _penalty
+    );
+
+    this.additionalForm.controls.advanceServiceCharge.setValue(
+      _Compute.advanceServiceCharge
+    );
+    this.additionalForm.controls.advanceInterest.setValue(
+      _Compute.advanctInterest
+    );
+    this.additionalForm.controls.newPrincipalLoan.setValue(
+      _Compute.newPrincipal
+    );
+    this.additionalForm.controls.netProceed.setValue(_Compute.netProceed);
+    this.additionalForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
+    this.isSave = _Compute.isSave;
+  }
   setDate() {
     const _transactionDate = new Date();
     const _maturedDate = new Date(_transactionDate).setMonth(
@@ -160,18 +224,6 @@ export class AdditionalComponent implements OnInit {
     );
     this.additionalForm.controls.dateMatured.setValue(new Date(_maturedDate));
     this.additionalForm.controls.dateExpired.setValue(new Date(_expiredDate));
-  }
-
-  appraisalValueAdditional() {
-    const _principalLoan = this.computationService.stringToNumber(
-      this.additionalForm.controls.principalLoan.value
-    );
-    const _apprailsalValue = this.computationService.stringToNumber(
-      this.additionalForm.controls.totalAppraisal.value
-    );
-    this.additionalForm.controls.availlableAmount.setValue(
-      _apprailsalValue - _principalLoan
-    );
   }
 
   save() {
@@ -276,59 +328,6 @@ export class AdditionalComponent implements OnInit {
       this.additionalForm.controls.interest.setValue(0);
     }
   }
-
-  /* set value computation during input of the additonal amount */
-  additionalAmountCompute() {
-    this.daysCountFromDateTransaction =
-      this.dateStatus.getNumberOfDaysFromDateTransaction(
-        this.transactionInfo.dateTransaction
-      );
-    const _interest = this.computationService.stringToNumber(
-      this.additionalForm.controls.interest.value
-    );
-    const _penalty = this.computationService.stringToNumber(
-      this.additionalForm.controls.penalty.value
-    );
-    /* take additionalAmount amount during additional amount value changes */
-    const _additionalAmount = this.computationService.stringToNumber(
-      this.additionalForm.controls.additionalAmount.value
-    );
-    /* take availlableAmount amount during additional amount value changes */
-    const _availlableAmount = this.computationService.stringToNumber(
-      this.additionalForm.controls.availlableAmount.value
-    );
-
-    /* set additional amount not morethan availlable amount during additional amount value changes */
-    if (
-      this.computationService.stringToNumber(_additionalAmount) >
-      _availlableAmount
-    ) {
-      this.additionalForm.controls.additionalAmount.setValue(_availlableAmount);
-    }
-
-    const _Compute = this.computationService.additionalCompute(
-      _additionalAmount,
-      this.interestRate,
-      this.transactionInfo.principalLoan,
-      this.daysCountFromDateTransaction.days,
-      _interest,
-      _penalty
-    );
-
-    this.additionalForm.controls.advanceServiceCharge.setValue(
-      _Compute.advanceServiceCharge
-    );
-    this.additionalForm.controls.advanceInterest.setValue(
-      _Compute.advanctInterest
-    );
-    this.additionalForm.controls.newPrincipalLoan.setValue(
-      _Compute.newPrincipal
-    );
-    this.additionalForm.controls.netProceed.setValue(_Compute.netProceed);
-    this.additionalForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
-    this.isSave = _Compute.isSave;
-  }
-
   /*  set to disable the discount if focus already in additional amount */
   focusAdditional() {
     this.isReadOnlyDiscount = true;
@@ -396,6 +395,9 @@ export class AdditionalComponent implements OnInit {
     this.additionalForm.controls.interestRate.setValue(
       `${this.transactionInfo.interestRate}%`
     );
+    this.additionalForm.controls.totalAppraisal.setValue(
+      this.transactionInfo.totalAppraisal
+    );
     this.additionalForm.controls.interest.setValue(this.interest);
     this.additionalForm.controls.penalty.setValue(this.penalty);
     this.additionalForm.controls.dueAmount.setValue(this.dueAmount);
@@ -450,6 +452,7 @@ export class AdditionalComponent implements OnInit {
     this.setDate();
   }
 
+  /* validate the discount property if availlable and focus direct to discount */
   validateIfisDiscount() {
     this.isDiscount = this.computationService.isDiscount(
       new Date(this.transactionInfo.dateMatured)

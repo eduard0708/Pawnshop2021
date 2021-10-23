@@ -150,11 +150,11 @@
     <!--70% start pawner-items-wrapper -->
 
     <!-- computation start 30% -->
-    <div class="computation-wrapper">
+    <div class="computation-wrapper" style="zoom: 0.9">
       <!-- start computation title -->
       <h2 class="shadow font-monospace computation-title">Renew Computation</h2>
       <!-- start computation title -->
-      <div class="computation shadow renew-computation" style="zoom: 0.95">
+      <div class="computation shadow renew-computation" >
         <div class="input-group Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
@@ -173,7 +173,7 @@
             formControlName="principalLoan"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
             readonly
@@ -270,7 +270,7 @@
             formControlName="netPayment"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm high-light-net "
+            class="form-control form-control-sm font-red-bold"
             [inputMask]="currencyInputMask"
             type="text"
             readonly

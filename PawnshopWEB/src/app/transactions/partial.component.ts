@@ -126,6 +126,46 @@ export class PartialComponent implements OnInit {
     this.setComputation();
   }
 
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+    const _partialAmount = this.computationService.stringToNumber(
+      this.partialForm.controls.partialAmount.value
+    );
+
+    if (_partialAmount > this.principalLoan)
+      this.partialForm.controls.partialAmount.setValue(this.principalLoan);
+
+    const _interest = this.computationService.stringToNumber(
+      this.partialForm.controls.interest.value
+    );
+    const _penalty = this.computationService.stringToNumber(
+      this.partialForm.controls.penalty.value
+    );
+
+    const _Compute = this.computationService.partialCompute(
+      this.principalLoan,
+      _partialAmount,
+      this.interestRate,
+      _interest,
+      _penalty
+    );
+
+    this.partialForm.controls.advanceInterest.setValue(
+      _Compute.advanctInterest
+    );
+
+    this.partialForm.controls.advanceServiceCharge.setValue(
+      _Compute.advanceServiceCharge
+    );
+    this.partialForm.controls.netPayment.setValue(_Compute.netPayment);
+
+    this.partialForm.controls.newPrincipalLoan.setValue(
+      _Compute.newPrincipalLoan
+    );
+    this.partialForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
+
+  }
   /* validate the amount receviced and compute the change and activate the saved button */
   validateAmountReceived() {
     const _netPayment = this.computationService.stringToNumber(
@@ -278,44 +318,6 @@ export class PartialComponent implements OnInit {
           this.partialForm.controls.advanceServiceCharge.value
         )
     );
-  }
-  //validate partial amount will not exceed in net payable amount
-  partialCompute() {
-    const _partialAmount = this.computationService.stringToNumber(
-      this.partialForm.controls.partialAmount.value
-    );
-
-    if (_partialAmount > this.principalLoan)
-      this.partialForm.controls.partialAmount.setValue(this.principalLoan);
-
-    const _interest = this.computationService.stringToNumber(
-      this.partialForm.controls.interest.value
-    );
-    const _penalty = this.computationService.stringToNumber(
-      this.partialForm.controls.penalty.value
-    );
-
-    const _Compute = this.computationService.partialCompute(
-      this.principalLoan,
-      _partialAmount,
-      this.interestRate,
-      _interest,
-      _penalty
-    );
-
-    this.partialForm.controls.advanceInterest.setValue(
-      _Compute.advanctInterest
-    );
-
-    this.partialForm.controls.advanceServiceCharge.setValue(
-      _Compute.advanceServiceCharge
-    );
-    this.partialForm.controls.netPayment.setValue(_Compute.netPayment);
-
-    this.partialForm.controls.newPrincipalLoan.setValue(
-      _Compute.newPrincipalLoan
-    );
-    this.partialForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
   }
 
   /*  set to readOnly the discount if focus already in additional amount */
