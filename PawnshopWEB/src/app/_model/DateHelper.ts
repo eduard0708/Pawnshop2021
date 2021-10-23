@@ -56,7 +56,7 @@ export class DateHelper {
   }
 
   //retuned number of years, months
-  getmoments(dateMatured: Date):MomentCountYYMMDD {
+  getmoments(dateMatured: Date): MomentCountYYMMDD {
     let numberOfYYMMYY;
     //to get the difference of the two dates and returned each diff.. by days, month and year
     let pastMoment = moment.preciseDiff(
@@ -115,6 +115,15 @@ export class DateHelper {
       totalYears: this.totalYears,
     };
     return momentsInYearMonthDays;
+  }
+
+  getNumberOfDaysFromDateTransaction(dateTransaction: Date): MomentCountYYMMDD {
+    let numDays = moment.preciseDiff(
+      new Date(dateTransaction),
+      this.todayDate,
+      true
+    );
+    return numDays;
   }
 
   private getDays(moments: string) {
