@@ -121,47 +121,30 @@ export class PartialComponent implements OnInit {
       new Date(this.transactionInfo.dateMatured)
     );
 
-    this.partialForm.controls.partialAmount.valueChanges.subscribe(
-      (partialAmount) => {
-        if (this.computationService.stringToNumber(partialAmount) > 0) {
-          this.isSave = false;
-        } else {
-          this.isSave = true;
-        }
-      }
-    );
-    //set chane during amount received change value
-    this.partialForm.controls.receivedAmount.valueChanges.subscribe(
-      (amountReceived) => {
-        const _newPrincipalLoan = this.computationService.stringToNumber(
-          this.partialForm.controls.partialAmount.value
-        );
-        let _recivedAmount =
-          this.computationService.stringToNumber(amountReceived);
-
-        this.partialForm.controls.change.setValue(
-          _recivedAmount - _newPrincipalLoan
-        );
-      }
-    );
 
     //intialize all computation fields during initialization
     this.setComputation();
   }
-/* validation check the partial amount and the amount received before activating the save button */
-  ngDoCheck(): void {
-    const _partialAmount = this.computationService.stringToNumber(
-      this.partialForm.controls.partialAmount.value
+
+  /* validate the amount receviced and compute the change and activate the saved button */
+  validateAmountReceived() {
+    const _netPayment = this.computationService.stringToNumber(
+      this.partialForm.controls.netPayment.value
     );
-    const _receivedAmount = this.computationService.stringToNumber(
+    const _amountReceived = this.computationService.stringToNumber(
       this.partialForm.controls.receivedAmount.value
     );
 
-    if (_partialAmount > 0 && _receivedAmount >=  _partialAmount ) {
-      this.isSave = false;
-    } else {
-      this.isSave = true;
-    }
+    const validateResult = this.computationService.validateAmountReceived(
+      _amountReceived,
+      _netPayment
+    );
+    console.log(validateResult);
+
+    this.partialForm.controls.change.setValue(
+      this.computationService.stringToNumber(validateResult.change)
+    );
+    this.isSave = validateResult.isSave;
   }
 
   setDate() {
@@ -197,8 +180,10 @@ export class PartialComponent implements OnInit {
     // this.partialForm.controls.dateTransaction.setValue()
 
     /* set newprincipal amount to princiaplLoan before saving to database to update newprincipal loan amount */
-    const _newPrincipalLoan = this.computationService.stringToNumber(this.partialForm.controls.newPrincipalLoan.value)
-    this.partialForm.controls.principalLoan.setValue(_newPrincipalLoan)
+    const _newPrincipalLoan = this.computationService.stringToNumber(
+      this.partialForm.controls.newPrincipalLoan.value
+    );
+    this.partialForm.controls.principalLoan.setValue(_newPrincipalLoan);
 
     this.transactionService.normalizedTransactionInformation(
       this.partialForm.value,
@@ -227,7 +212,7 @@ export class PartialComponent implements OnInit {
       this.isReadOnlyDiscount = false;
     }
     // end condition to enable the discount field and focus if the discount is availlable
-    this.isReadOnlyDiscount = this.isDiscount
+    this.isReadOnlyDiscount = this.isDiscount;
   }
 
   home() {
@@ -254,17 +239,20 @@ export class PartialComponent implements OnInit {
       this.interestRate,
       this.computationService.stringToNumber(discountNumber)
     );
+
     const _interest = this.interest;
     //set value of interest
     this.partialForm.controls.interest.setValue(
       _interest - _discountInterest < 0 ? 0 : _interest - _discountInterest
     );
+
     /* end computation for interest here */
     const _penalty = this.computationService.getDiscountPenalty(
       this.principalLoan,
       this.countYYMMDD,
       this.computationService.stringToNumber(discountNumber)
     );
+
     //set value for penalty
     this.partialForm.controls.penalty.setValue(_penalty);
     this.dueAmount =
@@ -292,41 +280,42 @@ export class PartialComponent implements OnInit {
     );
   }
   //validate partial amount will not exceed in net payable amount
-  validatePartialAmount() {
-    const _netPayment = this.computationService.stringToNumber(
-      this.partialForm.controls.netPayment.value
-    );
-
+  partialCompute() {
     const _partialAmount = this.computationService.stringToNumber(
       this.partialForm.controls.partialAmount.value
     );
 
-    const _dueAmount = this.computationService.stringToNumber(
-      this.partialForm.controls.dueAmount.value
+    if (_partialAmount > this.principalLoan)
+      this.partialForm.controls.partialAmount.setValue(this.principalLoan);
+
+    const _interest = this.computationService.stringToNumber(
+      this.partialForm.controls.interest.value
+    );
+    const _penalty = this.computationService.stringToNumber(
+      this.partialForm.controls.penalty.value
     );
 
-    if (_partialAmount > _netPayment)
-      this.partialForm.controls.partialAmount.setValue(_netPayment);
-
-    const _newNetPayment = _netPayment - _partialAmount;
-
-    const _advanceInterest = this.computationService.getAdvanceInterest(
+    const _Compute = this.computationService.partialCompute(
+      this.principalLoan,
       _partialAmount,
-      this.interestRate
+      this.interestRate,
+      _interest,
+      _penalty
     );
-    const _advanceServiceCharge =
-      this.computationService.getAdvanceServiceCharge(_partialAmount);
 
-    this.partialForm.controls.advanceInterest.setValue(_advanceInterest);
+    this.partialForm.controls.advanceInterest.setValue(
+      _Compute.advanctInterest
+    );
+
     this.partialForm.controls.advanceServiceCharge.setValue(
-      _advanceServiceCharge
+      _Compute.advanceServiceCharge
     );
-    this.partialForm.controls.netProceed.setValue(
-      _partialAmount + _dueAmount + _advanceInterest + _advanceServiceCharge
-    );
+    this.partialForm.controls.netPayment.setValue(_Compute.netPayment);
+
     this.partialForm.controls.newPrincipalLoan.setValue(
-     this.principalLoan - _partialAmount
+      _Compute.newPrincipalLoan
     );
+    this.partialForm.controls.redeemAmount.setValue(_Compute.redeemAmount);
   }
 
   /*  set to readOnly the discount if focus already in additional amount */
@@ -410,13 +399,13 @@ export class PartialComponent implements OnInit {
     this.partialForm.controls.discount.setValue('');
     this.partialForm.controls.advanceInterest.setValue(0);
     this.partialForm.controls.advanceServiceCharge.setValue(0);
-    this.partialForm.controls.netPayment.setValue(this.netPayment);
+    this.partialForm.controls.netPayment.setValue(0);
     this.partialForm.controls.partialAmount.setValue('');
     this.partialForm.controls.receivedAmount.setValue('');
 
     //set paginator and set cursor focus during init
     setTimeout(() => {
-    this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
       this.validateIfisDiscount();
     }, 100);
   }
@@ -458,7 +447,7 @@ export class PartialComponent implements OnInit {
     this.setDate();
   }
 
-  validateIfisDiscount(){
+  validateIfisDiscount() {
     this.isDiscount = this.computationService.isDiscount(
       new Date(this.transactionInfo.dateMatured)
     );

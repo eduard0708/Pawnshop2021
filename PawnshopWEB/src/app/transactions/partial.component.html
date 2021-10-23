@@ -92,7 +92,11 @@
 
         <mat-form-field class="status" appearance="outline">
           <mat-label>Loan Status</mat-label>
-          <input matInput placeholder="Loan Status" formControlName="loanStatus" />
+          <input
+            matInput
+            placeholder="Loan Status"
+            formControlName="loanStatus"
+          />
         </mat-form-field>
 
         <mat-form-field class="moments" appearance="outline">
@@ -156,7 +160,7 @@
         Partial Computation
       </h2>
       <!-- start computation title -->
-      <div class="computation shadow partial-computation" >
+      <div class="computation shadow partial-computation">
         <div class="input-group shadow-sm Appraisal Value">
           <span class="col-form-label-sm">Appraisal Value</span>
           <input
@@ -167,6 +171,19 @@
             [inputMask]="currencyInputMask"
             type="text"
             readonly
+          />
+        </div>
+        <div class="input-group shadow-sm Discount">
+          <span class="col-form-label-sm">Discount</span>
+          <input
+            #discountRef
+            [readonly]="isReadOnlyDiscount"
+            (keyup)="computeDiscount()"
+            formControlName="discount"
+            tabindex="1"
+            class="form-control form-control-sm bold-red"
+            style="text-align: center"
+            type="number"
           />
         </div>
         <div class="input-group shadow-sm Principal Loan">
@@ -216,51 +233,28 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm Discount">
-          <span class="col-form-label-sm">Discount</span>
-          <input
-            #discountRef
-            [readonly]="isReadOnlyDiscount"
-            (keyup)="computeDiscount()"
-            formControlName="discount"
-            tabindex="1"
-            class="form-control form-control-sm bold-red"
-            style="text-align: center"
-            type="number"
-          />
-        </div>
-        <div class="input-group shadow-sm Amount Due">
-          <span class="col-form-label-sm">Amount Due</span>
-          <input
-            readonly
-            formControlName="dueAmount"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm amout-due bold-red"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm Net Payable">
-          <span class="col-form-label-sm">Net Payable</span>
-          <input
-            #netPaymentRef
-            formControlName="netPayment"
-            tabindex="-1"
-            maxlength="14"
-            class="form-control form-control-sm fw-bold"
-            [inputMask]="currencyInputMask"
-            type="text"
-          />
-        </div>
-        <div class="input-group shadow-sm Partial Amount">
-          <span class="col-form-label-sm">Partial Amount</span>
+        <div class="input-group shadow-sm Partial Pay">
+          <span class="col-form-label-sm">Partial Pay</span>
           <input
             #partialAmountRef
             (focus)="focusPartialAmountReadOnlyDiscount()"
-            (keyup)="validatePartialAmount()"
+            (keyup)="partialCompute()"
             formControlName="partialAmount"
             tabindex="2"
+            maxlength="14"
+            class="form-control form-control-sm"
+            [inputMask]="currencyInputMask"
+            type="text"
+          />
+        </div>
+        <div class="input-group shadow-sm New Principal Loan">
+          <span class="col-form-label-sm">New Principal Loan</span>
+          <input
+            readonly
+            #partialAmountRef
+            (focus)="focusPartialAmountReadOnlyDiscount()"
+            formControlName="newPrincipalLoan"
+            tabindex="-1"
             maxlength="14"
             class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
@@ -291,32 +285,27 @@
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm New Principal">
-          <span class="col-form-label-sm">New Principal</span>
+        <div class="input-group shadow-sm Redeem Amount">
+          <span class="col-form-label-sm"> Redeem Amount</span>
           <input
+            #netPaymentRef
             readonly
-            #partialAmountRef
-            (focus)="focusPartialAmountReadOnlyDiscount()"
-            (keyup)="validatePartialAmount()"
-            formControlName="newPrincipalLoan"
+            formControlName="redeemAmount"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm"
+            class="form-control form-control-sm fw-bold high-light-net"
             [inputMask]="currencyInputMask"
             type="text"
           />
         </div>
-        <div class="input-group shadow-sm New Principal">
-          <span class="col-form-label-sm">Net Proceed</span>
+        <div class="input-group shadow-sm Net Payment">
+          <span class="col-form-label-sm">Net Payment</span>
           <input
             readonly
-            #partialAmountRef
-            (focus)="focusPartialAmountReadOnlyDiscount()"
-            (keyup)="validatePartialAmount()"
-            formControlName="netProceed"
+            formControlName="netPayment"
             tabindex="-1"
             maxlength="14"
-            class="form-control form-control-sm high-light-net "
+            class="form-control form-control-sm"
             [inputMask]="currencyInputMask"
             type="text"
           />
@@ -325,6 +314,7 @@
           <span class="col-form-label-sm">Amount Received</span>
           <input
             #receivedAmountRef
+            (keyup)="validateAmountReceived()"
             formControlName="receivedAmount"
             tabindex="3"
             maxlength="14"

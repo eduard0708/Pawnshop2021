@@ -194,4 +194,29 @@ export class ComputationService {
     return compute;
   }
 
+  partialCompute(principalLoan:number, partialPay:number,interestRate:number, interest:number, penalty:number){
+    const rate = (interestRate / 100);
+    const newPrincipalLoan = principalLoan - partialPay ;
+    const advanctInterest = newPrincipalLoan * rate;
+    const advanceServiceCharge = this.getServiceCharge(newPrincipalLoan);
+
+    let compute = {
+      newPrincipalLoan:newPrincipalLoan,
+      advanctInterest:advanctInterest,
+      advanceServiceCharge: advanceServiceCharge,
+      redeemAmount:principalLoan + interest + penalty,
+      netPayment: partialPay + advanctInterest + advanceServiceCharge
+    }
+    return compute
+  }
+
+  validateAmountReceived(amountReceived:number, amountToValidate:number){
+
+    const validateResult = {
+      change:amountReceived - amountToValidate,
+      isSave: amountReceived < amountToValidate ? true : false
+    }
+
+    return validateResult
+  }
 }
