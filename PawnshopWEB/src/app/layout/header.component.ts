@@ -35,11 +35,9 @@ export class HeaderComponent implements OnInit {
   city() {
     this.router.navigateByUrl('main/settings/city');
   }
-
   barangay() {
     this.router.navigateByUrl('main/settings/barangay');
   }
-
   pawner() {
   /* navigate to create pawner only not with transaction */
     this.router.navigate(['main/settings/pawner'],{ queryParams: { isCreate: true } });

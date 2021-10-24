@@ -18,7 +18,7 @@ import { TransactionService } from '../_service/transaction.service';
 @Component({
   selector: 'app-view-transaction',
   templateUrl: './view-transaction.component.html',
-  styleUrls: ['../_sass/shared-transaction.scss'],
+  styleUrls: ['../_sass/view-transaction.scss'],
 })
 export class ViewTransactionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

@@ -12,7 +12,6 @@ import { TransactionService } from '../_service/transaction.service';
   styleUrls: ['../_sass/view-list-transaction.scss'],
 })
 export class ViewListTrasactionsComponent implements OnInit {
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayColumns: string[] = [
@@ -45,20 +44,22 @@ export class ViewListTrasactionsComponent implements OnInit {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
     }, 100);
-
     this.transactionService
       .getViewListTransaction(this.transactionType)
       .subscribe((transactionList) => {
         this.dataSource.data = transactionList;
-console.log(transactionList);
-
-
       });
   }
-
-  home(){
-    this.router.navigateByUrl('main/dashboard')
+  home() {
+    this.router.navigateByUrl('main/dashboard');
   }
 
+
+  viewTransaction(transaction){
+    this.transactionService.searchTransactionById(transaction.transactionId).subscribe(data => {
+      if(data)
+       this.router.navigateByUrl('view-transaction', {state:{transaction: data}})
+    });
+  }
 
 }
