@@ -62,4 +62,8 @@ export class ViewListTrasactionsComponent implements OnInit {
     });
   }
 
+  filter(){
+    
+  }
+
 }

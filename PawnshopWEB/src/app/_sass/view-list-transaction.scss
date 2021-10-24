@@ -28,9 +28,12 @@
     }
     .search-wrapper {
       margin-top: 1rem;
-      button{
-        zoom: .9;
+      .btn-dashboard {
+        zoom: 0.9;
         margin-right: 2rem;
+      }
+      .btn-icon {
+        margin-right: -0.5rem;
       }
     }
     .table-wrapper {
