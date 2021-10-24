@@ -7,7 +7,7 @@
   background: $bg-linear-gradient;
   width: 75%;
   margin: 0 auto;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   transform: scale(0.95);
   .body-wrapper {
     padding: 1rem;
@@ -50,28 +50,28 @@
         .mat-column-index {
           width: 7%;
         }
-        .mat-column-id {
+        .mat-column-transactionId {
           width: 12%;
         }
-        .mat-column-type {
+        .mat-column-transactionType {
           width: 12%;
         }
-        .mat-column-status {
+        .mat-column-loanStatus {
           width: 10%;
         }
-        .mat-column-date {
+        .mat-column-dateTransaction {
           width: 15%;
         }
-        .mat-column-firstname {
+        .mat-column-firstName {
           width: 20%;
         }
-        .mat-column-lastname {
+        .mat-column-lastName {
           width: 20%;
         }
         .mat-column-action {
-          width: 10%;
+          width: 5%;
         }
-    
+
       }
     }
   }

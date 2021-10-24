@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ViewListTrasactionsComponent } from '../transactions/view-list-trasactions.component';
 import { ItemStatus } from '../_enum/enums';
 import { Item } from '../_model/item/item';
 import { ItemAuditTrail } from '../_model/item/item-audit-trail';
@@ -11,6 +12,7 @@ import { DashBoardData } from '../_model/transaction/dashboard-data';
 import { TransactionInformation } from '../_model/transaction/transaction-information';
 import { TransactionItems } from '../_model/transaction/transaction-items';
 import { User } from '../_model/user';
+import { ViewTransactionList } from '../_model/view-transaction-list';
 import { CommonService } from './common.service';
 import { ComputationService } from './computation.service';
 
@@ -279,6 +281,6 @@ export class TransactionService {
 
   /* get all list of transaction of the day as per transaction name... from the dashboard card */
   getViewListTransaction(transactionType:string){
-    return this.http.get<TransactionInformation[]>(this.url + `transaction/view-list-transaction/${transactionType}`);
+    return this.http.get<ViewTransactionList[]>(this.url + `transaction/view-list-transaction/${transactionType}`);
   }
   }

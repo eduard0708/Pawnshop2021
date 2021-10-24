@@ -121,25 +121,30 @@ namespace PawnshopAPI.Controllers
             }
             else
             {
-                var returnedTransaction = mapper.Map<List<ReturnTransactionsDto>>(transaction);
-                List<ReturnTransactionsDto> trans = new List<ReturnTransactionsDto>();
-                for (int i = 0; i < returnedTransaction.Count(); i++)
-                {
-                    var pawner = context.TransactionPawners.FirstOrDefault(x => x.TrackingId == returnedTransaction[i].TrackingId);
-                    //returnedTransaction[i].TransactionPawner.Barangay = pawner.Barangay;
-                    //returnedTransaction[i].TransactionPawner.City = pawner.City;
-                    //returnedTransaction[i].TransactionPawner.CompleteAddress = pawner.CompleteAddress;
-                    //returnedTransaction[i].TransactionPawner.ContactNumber = pawner.ContactNumber;
-                    returnedTransaction[i].TransactionPawner.FirstName = pawner.FirstName;
-                    returnedTransaction[i].TransactionPawner.LastName = pawner.LastName;
+                var rt = mapper.Map<List<ReturnTransactionsDto>>(transaction);
+                List<ListViewTransaction> _listTrans = new List<ListViewTransaction>();
 
-                    trans.Add(returnedTransaction[i]);
+                for (int i = 0; i < rt.Count(); i++)
+                {
+                    var p = context.TransactionPawners.FirstOrDefault(x => x.TrackingId == rt[i].TrackingId);
+
+                    ListViewTransaction lt = new ListViewTransaction
+                    {
+                        TransactionId = rt[i].TransactionsId,
+                        TransactionType = rt[i].TransactionType,
+                        LoanStatus = rt[i].Status,
+                        DateTransaction = rt[i].DateTransaction,
+                        FirstName = p.FirstName,
+                        LastName = p.LastName
+                    };
+                    _listTrans.Add(lt);
+
                 }
                
-                return Ok(trans);
+                return Ok(_listTrans);
             }
-        }
-
-
+     
     }
+
+}
 }
