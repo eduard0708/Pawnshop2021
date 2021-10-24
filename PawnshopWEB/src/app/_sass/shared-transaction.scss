@@ -209,6 +209,7 @@
         font-weight: 550;
 
         input:focus {
+          font-size: 1rem;
           color: red;
           font-weight: bold;
           background-color: $warning !important;

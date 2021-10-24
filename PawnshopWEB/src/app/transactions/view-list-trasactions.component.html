@@ -4,7 +4,29 @@
       <div class="header" fxFlex="100">
         <h3 class="title shadow-sm rounded bg-info">View Transaction List</h3>
       </div>
-
+      <div class="search-wrapper">
+        <button mat-fab (click)="home()" class=" mt-1" color="primary">
+            <mat-icon class="mat-18">dashboard</mat-icon>
+        </button>
+        <mat-form-field>
+          <mat-label>Search Date</mat-label>
+          <input
+            tabindex="-1"
+            matInput
+            formControlName="dateEntry"
+            [matDatepicker]="dateEntry"
+            placeholder="Date Entry"
+          />
+          <button matSuffix mat-icon-button color="accent" style="font-size: large; font-weight: bold;" >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>  <mat-datepicker-toggle
+        tabindex="-1"
+        matSuffix
+        [for]="dateEntry"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dateEntry></mat-datepicker>
+      </div>
       <!-- table start -->
       <div class="table-wrapper">
         <table tabindex="-1" mat-table #table [dataSource]="dataSource">
@@ -70,10 +92,6 @@
         ></mat-paginator>
       </div>
       <!-- table end -->
-      <div>
-        <button mat-fab (click)="home()" class=" mt-1" color="primary">
-            <mat-icon class="mat-18">dashboard</mat-icon>
-        </button>
-      </div>
+
     </div>
 </div>
