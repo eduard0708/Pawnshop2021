@@ -17,6 +17,10 @@ declare module 'moment' {
 export class ComputationService {
   constructor() {}
 
+  rate(interestRate:number){
+    return interestRate / 100;
+  }
+
   getServiceCharge(amount: number) {
     let advanceInterest = 0;
     if (amount >= 500) {
@@ -40,8 +44,8 @@ export class ComputationService {
   penalty(principalLoan: number, countYYMMDD: TotalYYMMDD): number {
     let penalty = 0;
     if (countYYMMDD.days > 0) {
-      //   penalty = +(countYYMMDD.days * ((principalLoan * 0.02) / 30)).toFixed(2);
-      // } else {
+        penalty = +(countYYMMDD.days * ((principalLoan * 0.02) / 30)).toFixed(2);
+      } else {
       //   // penalty will be calculated by month, if days count morethan 3 days will be considered 1 month
       penalty =
         (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
@@ -156,6 +160,10 @@ export class ComputationService {
     return isDiscount;
   }
 
+  _isDiscount(days:number){
+    return days === 0 ? true : false
+  }
+
   getInterestPerDay(
     loanAmount: number,
     numberOfDays: number,
@@ -170,15 +178,17 @@ export class ComputationService {
     additionalAmount: number,
     interestRate,
     previousLoan: number,
-    daysCount:number,
-    interest:number,
-    penalty:number
+    daysCount: number,
+    interest: number,
+    penalty: number
   ) {
-
-    const rate = (interestRate / 100)
+    const rate = interestRate / 100;
     /* if less than 3 days from dateTransaction additional amount only will have advance interest
     if morethan 3 days from dateTransaction the previousloan and addtional loan will have advance interest */
-    const advanctInterest = daysCount <= 3 ? additionalAmount * rate :(additionalAmount + previousLoan) * rate;
+    const advanctInterest =
+      daysCount <= 3
+        ? additionalAmount * rate
+        : (additionalAmount + previousLoan) * rate;
     const advanceServiceCharge = this.getServiceCharge(additionalAmount);
     const netProceed =
       additionalAmount - (advanctInterest + advanceServiceCharge);
@@ -189,34 +199,83 @@ export class ComputationService {
       newPrincipal: previousLoan + additionalAmount,
       netProceed: netProceed - (interest + penalty),
       redeemAmount: previousLoan + interest + penalty,
-      isSave:  (netProceed - (interest + penalty)) < 0 ? true : false
+      isSave: netProceed - (interest + penalty) < 0 ? true : false,
     };
     return compute;
   }
 
-  partialCompute(principalLoan:number, partialPay:number,interestRate:number, interest:number, penalty:number){
-    const rate = (interestRate / 100);
-    const newPrincipalLoan = principalLoan - partialPay ;
+  partialCompute(
+    principalLoan: number,
+    partialPay: number,
+    interestRate: number,
+    interest: number,
+    penalty: number
+  ) {
+    const rate = interestRate / 100;
+    const newPrincipalLoan = principalLoan - partialPay;
     const advanctInterest = newPrincipalLoan * rate;
     const advanceServiceCharge = this.getServiceCharge(newPrincipalLoan);
 
     let compute = {
-      newPrincipalLoan:newPrincipalLoan,
-      advanctInterest:advanctInterest,
+      newPrincipalLoan: newPrincipalLoan,
+      advanctInterest: advanctInterest,
       advanceServiceCharge: advanceServiceCharge,
-      redeemAmount:principalLoan + interest + penalty,
-      netPayment: partialPay + advanctInterest + advanceServiceCharge
-    }
-    return compute
+      redeemAmount: principalLoan + interest + penalty,
+      netPayment: partialPay + advanctInterest + advanceServiceCharge,
+    };
+    return compute;
   }
 
-  validateAmountReceived(amountReceived:number, amountToValidate:number){
+  redeemCompute(
+    principalLoan: number,
+    interestRate: number,
+    countYYMMDD: TotalYYMMDD,
+  ) {
+  /* if less than 3 days from dateTransaction additional amount only will have advance interest
+    if morethan 3 days from dateTransaction the previousloan and addtional loan will have advance interest */
+    // const penalty =
+    // days <= 3
+    //     ? principalLoan * this.rate(interestRate)
+    //     : (additionalAmount + previousLoan) * rate;
 
+
+  }
+
+  validateAmountReceived(amountReceived: number, amountToValidate: number) {
     const validateResult = {
-      change:amountReceived - amountToValidate,
-      isSave: amountReceived < amountToValidate ? true : false
-    }
+      change: amountReceived - amountToValidate,
+      isSave: amountReceived < amountToValidate ? true : false,
+    };
 
-    return validateResult
+    return validateResult;
+  }
+
+  _getInterest(
+    principalLoan: number,
+    interestRate: number,
+    days: number,
+    months: number,
+    years: number
+  ) {}
+
+  _additionalCompute(
+    additionalAmount: number,
+    previousLoan: number,
+    interestRate: number,
+    days: number,
+    months: number,
+    years: number
+  ) {
+    const rate = interestRate / 100;
+    /* if less than 3 days from dateTransaction additional amount only will have advance interest
+      if morethan 3 days from dateTransaction the previousloan and addtional loan will have advance interest */
+    const advanctInterest =
+      days <= 3
+        ? additionalAmount * rate * (months + years * 12)
+        : (additionalAmount + previousLoan) * rate * (months + years * 12);
+
+    const advanceServiceCharge = this.getServiceCharge(additionalAmount);
+    const netProceed =
+      additionalAmount - (advanctInterest + advanceServiceCharge);
   }
 }
