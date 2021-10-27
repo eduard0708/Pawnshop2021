@@ -133,12 +133,39 @@ export class ComputationService {
     let penalty = 0;
 
     if (discountNumber > 0 && discountNumber <= 3) {
-      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)).toFixed(
+      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)  ).toFixed(
         2
       );
     } else {
       penalty =
         (countYYMMDD.months + 1 + countYYMMDD.years * 12) *
+        (principalLoan * 0.02);
+    }
+    return +penalty.toFixed(2);
+  }
+
+  _getDiscountPenalty(
+    principalLoan: number,
+    countYYMMDD: TotalYYMMDD,
+    discountNumber: number
+  ): number {
+    let penalty = 0;
+
+    if(countYYMMDD.days > 3){
+      penalty =
+      (countYYMMDD.months  + countYYMMDD.years * 12) *
+      (principalLoan * 0.02);
+
+      return penalty
+    }
+
+    if (discountNumber > 0 && discountNumber <= 3) {
+      penalty = +((3 - discountNumber) * ((principalLoan * 0.02) / 30)).toFixed(
+        2
+      );
+    } else {
+      penalty =
+        (countYYMMDD.months + countYYMMDD.years * 12) *
         (principalLoan * 0.02);
     }
     return +penalty.toFixed(2);

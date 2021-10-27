@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -147,6 +146,8 @@ export class RenewComponent implements OnInit {
     /* set the penalty to zero if arrow up press, to avoid unusual computation when days count is zero */
     if(this.countYYMMDD.days === 0)
       this.renewForm.controls.penalty.setValue(0)
+
+
     this.renewForm.controls.change.setValue(_receivedAmount - netPayment);
 
 
@@ -172,10 +173,13 @@ export class RenewComponent implements OnInit {
     //set value of interest
 
     this.renewForm.controls.interest.setValue(_interest - _discountInterest);
-    /* end computation for interest here */
-    const _penalty = this.computationService.getDiscountPenalty(
+
+
+    let YYMMDD = this.dateStatus.getmoments(new Date(this.transactionInfo.dateTransaction));
+
+    const _penalty = this.computationService._getDiscountPenalty(
       this.principalLoan,
-      this.countYYMMDD,
+      YYMMDD,
       this.computationService.stringToNumber(discountNumber)
     );
     //set value for penalty
@@ -344,11 +348,6 @@ export class RenewComponent implements OnInit {
     );
 
     this.principalLoan = this.transactionInfo.principalLoan;
-    this.daysCount = this.computationService.getTotalDays(
-      this.countYYMMDD.days,
-      this.countYYMMDD.months,
-      this.countYYMMDD.years
-    );
 
     // // set discount readOnly if preMature
     // if (
